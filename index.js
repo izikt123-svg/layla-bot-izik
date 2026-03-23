@@ -1,8 +1,14 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const express = require('express');
 
-// חיבור למפתח ה-API שהגדרנו ב-Render
+// שרת קטן כדי להשתיק את Render
+const app = express();
+const port = process.env.PORT || 3000;
+app.get('/', (req, res) => res.send('Layla is alive!'));
+app.listen(port, () => console.log('Server is running'));
+
 const genAI = new GoogleGenerativeAI(process.env.API_KEY); 
 
 const client = new Client({
@@ -12,27 +18,22 @@ const client = new Client({
     }
 });
 
-// הצגת הברקוד ביומנים של Render
 client.on('qr', (qr) => {
     qrcode.generate(qr, {small: true});
-    console.log('✅ הברקוד מוכן לסריקה:');
+    console.log('✅ הברקוד מוכן! סרוק אותו עכשיו:');
 });
 
 client.on('ready', () => {
     console.log('🔥 לילה מחוברת ומוכנה לעזור לאיציק!');
 });
 
-// מענה להודעות בעזרת הבינה המלאכותית
 client.on('message', async message => {
     if (message.fromMe) return; 
     try {
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-        const prompt = `את לילה, שותפה אסטרטגית של איציק טהורי ב-GoTours. תעני בצורה מקצועית: ${message.body}`;
-        const result = await model.generateContent(prompt);
+        const result = await model.generateContent(`את לילה, שותפה של איציק ב-GoTours. תעני בקצרה: ${message.body}`);
         await message.reply(result.response.text());
-    } catch (e) {
-        console.error("Error:", e);
-    }
+    } catch (e) { console.error(e); }
 });
 
 client.initialize();
