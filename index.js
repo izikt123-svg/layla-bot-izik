@@ -7,7 +7,6 @@ const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
-        executablePath: '/usr/bin/google-chrome-stable',
         args: ['--no-sandbox', '--disable-setuid-sandbox']
     }
 });
@@ -18,14 +17,14 @@ client.on('qr', (qr) => {
 });
 
 client.on('ready', () => {
-    console.log('🔥 לילה מחוברת ומוכנה לעבודה!');
+    console.log('🔥 לילה מחוברת!');
 });
 
 client.on('message', async message => {
     if (message.fromMe) return; 
     try {
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-        const result = await model.generateContent(`את לילה, שותפה של איציק. תעני בקצרה להודעה: ${message.body}`);
+        const result = await model.generateContent(`את לילה, שותפה של איציק. תעני בקצרה: ${message.body}`);
         await message.reply(result.response.text());
     } catch (e) { console.error(e); }
 });
