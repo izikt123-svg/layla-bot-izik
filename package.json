@@ -1,0 +1,11 @@
+{
+  "name": "layla-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": { "start": "node index.js" },
+  "dependencies": {
+    "whatsapp-web.js": "^1.23.0",
+    "qrcode-terminal": "^0.12.0",
+    "@google/generative-ai": "^0.2.1"
+  }
+}
