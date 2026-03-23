@@ -7,17 +7,18 @@ const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
+        executablePath: '/usr/bin/google-chrome-stable',
         args: ['--no-sandbox', '--disable-setuid-sandbox']
     }
 });
 
 client.on('qr', (qr) => {
     qrcode.generate(qr, {small: true});
-    console.log('✅ הברקוד מוכן לסריקה:');
+    console.log('✅ הברקוד מוכן! סרוק אותו עכשיו:');
 });
 
 client.on('ready', () => {
-    console.log('🔥 לילה מחוברת!');
+    console.log('🔥 לילה מחוברת ומוכנה לעבודה!');
 });
 
 client.on('message', async message => {
