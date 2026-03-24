@@ -3,46 +3,50 @@ const qrcode = require('qrcode-terminal');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const express = require('express');
 
+// שרת אינטרנט בסיסי כדי למנוע מ-Render לקרוס
 const app = express();
-const port = process.env.PORT || 10000; // Render אוהב את פורט 10000
-app.get('/', (req, res) => res.send('Layla is alive!'));
+const port = process.env.PORT || 10000;
+app.get('/', (req, res) => res.send('Layla is alive and working for GoTours!'));
 app.listen(port, () => console.log('Server is running on port ' + port));
 
+// חיבור לבינה המלאכותית
 const genAI = new GoogleGenerativeAI(process.env.API_KEY); 
 
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
-        // הסרנו את הנתיב הישן - המערכת תמצא אותו לבד בזכות ה-Build Command
+        // הכתובת הקבועה של כרום בשרתים של Render (חוסך התקנות מסובכות)
+        executablePath: '/usr/bin/google-chrome-stable',
         args: [
             '--no-sandbox', 
             '--disable-setuid-sandbox',
             '--disable-dev-shm-usage',
-            '--disable-accelerated-2d-canvas',
-            '--no-first-run',
             '--no-zygote',
-            '--single-process',
-            '--disable-gpu'
+            '--single-process'
         ]
     }
 });
 
+// הצגת הברקוד בתוך ה-Logs של Render
 client.on('qr', (qr) => {
     qrcode.generate(qr, {small: true});
-    console.log('✅ הברקוד מוכן! איציק, סרוק אותי עכשיו:');
+    console.log('✅ איציק, הברקוד מוכן! סרוק אותו עכשיו ב-Logs:');
 });
 
 client.on('ready', () => {
-    console.log('🔥 לילה מחוברת ומוכנה לעזור ב-GoTours!');
+    console.log('🔥 לילה מחוברת בהצלחה ומוכנה לעזור לאיציק ב-GoTours!');
 });
 
+// מענה להודעות
 client.on('message', async message => {
     if (message.fromMe) return; 
     try {
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-        const result = await model.generateContent(`את לילה, שותפה של איציק ב-GoTours. תעני בקצרה: ${message.body}`);
+        const result = await model.generateContent(`את לילה, שותפה אסטרטגית של איציק ב-GoTours. תעני בקצרה ובערך אישי: ${message.body}`);
         await message.reply(result.response.text());
-    } catch (e) { console.error(e); }
+    } catch (e) { 
+        console.error('Error with Gemini:', e); 
+    }
 });
 
 client.initialize();
