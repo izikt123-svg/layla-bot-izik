@@ -4,26 +4,24 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 const express = require('express');
 
 const app = express();
-// זה החלק שמונע שגיאת 502 - אנחנו חייבים להקשיב לפורט ש-Render נותן לנו
 const port = process.env.PORT || 10000;
-
-app.get('/', (req, res) => res.send('Layla is alive!'));
-app.listen(port, '0.0.0.0', () => {
-    console.log(`Server is running on port ${port}`);
-});
+app.get('/', (req, res) => res.send('Layla is online!'));
+app.listen(port, '0.0.0.0', () => console.log('Server is running on port ' + port));
 
 const genAI = new GoogleGenerativeAI(process.env.API_KEY); 
 
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
-        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--no-zygote']
+        // זה הנתיב המדויק שראינו ב-Logs שלך!
+        executablePath: '/opt/render/.cache/puppeteer/chrome/linux-146.0.7680.153/chrome-linux64/chrome',
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
     }
 });
 
 client.on('qr', (qr) => {
     qrcode.generate(qr, {small: true});
-    console.log('✅ QR Code is ready! Scan it now in the Logs:');
+    console.log('✅ QR Code is ready! Scan it now:');
 });
 
 client.on('ready', () => {
