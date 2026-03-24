@@ -2,10 +2,9 @@ const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const express = require('express');
-const path = require('path');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 10000; // Render אוהב את פורט 10000
 app.get('/', (req, res) => res.send('Layla is alive!'));
 app.listen(port, () => console.log('Server is running on port ' + port));
 
@@ -14,19 +13,27 @@ const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
-        // זה התיקון הקריטי - הנתיב המדויק מה-Logs שלך:
-        executablePath: '/opt/render/.cache/puppeteer/chrome/linux-146.0.7680.153/chrome-linux64/chrome',
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
+        // הסרנו את הנתיב הישן - המערכת תמצא אותו לבד בזכות ה-Build Command
+        args: [
+            '--no-sandbox', 
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-accelerated-2d-canvas',
+            '--no-first-run',
+            '--no-zygote',
+            '--single-process',
+            '--disable-gpu'
+        ]
     }
 });
 
 client.on('qr', (qr) => {
     qrcode.generate(qr, {small: true});
-    console.log('✅ הברקוד מוכן לסריקה:');
+    console.log('✅ הברקוד מוכן! איציק, סרוק אותי עכשיו:');
 });
 
 client.on('ready', () => {
-    console.log('🔥 לילה מחוברת ומוכנה לעבודה!');
+    console.log('🔥 לילה מחוברת ומוכנה לעזור ב-GoTours!');
 });
 
 client.on('message', async message => {
