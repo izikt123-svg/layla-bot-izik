@@ -3,7 +3,7 @@ const qrcode = require('qrcode-terminal');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const express = require('express');
 
-// שרת אינטרנט בסיסי כדי למנוע מ-Render לקרוס
+// שרת אינטרנט בסיסי למניעת קריסה
 const app = express();
 const port = process.env.PORT || 10000;
 app.get('/', (req, res) => res.send('Layla is alive and working for GoTours!'));
@@ -15,19 +15,17 @@ const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
-        // הכתובת הקבועה של כרום בשרתים של Render (חוסך התקנות מסובכות)
-        executablePath: '/usr/bin/google-chrome-stable',
+        // בגרסה הזו אנחנו נותנים למערכת למצוא את הכרום אוטומטית
         args: [
             '--no-sandbox', 
             '--disable-setuid-sandbox',
             '--disable-dev-shm-usage',
-            '--no-zygote',
-            '--single-process'
+            '--no-zygote'
         ]
     }
 });
 
-// הצגת הברקוד בתוך ה-Logs של Render
+// הצגת הברקוד
 client.on('qr', (qr) => {
     qrcode.generate(qr, {small: true});
     console.log('✅ איציק, הברקוד מוכן! סרוק אותו עכשיו ב-Logs:');
