@@ -1,0 +1,115 @@
+/* ============================================================
+   KZ GOOGLE AUTH — Sign-in button + user chip
+   ============================================================ */
+
+/* Sign-In button — visible in topbar */
+.kz-google-signin{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #fff;
+  border: 1.5px solid #dadce0;
+  border-radius: 100px;
+  font-family: 'Heebo', 'Roboto', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #3c4043;
+  cursor: pointer;
+  transition: all .25s var(--ease-spring, cubic-bezier(.34,1.56,.64,1));
+  box-shadow: 0 2px 4px rgba(0,0,0,.06);
+  margin-inline-end: 6px;
+  white-space: nowrap;
+}
+.kz-google-signin:hover{
+  background: #f8f9fa;
+  border-color: #b0b4ba;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(66,133,244,.18);
+}
+.kz-google-signin:active{ transform: translateY(0); }
+.kz-google-signin svg{ flex-shrink: 0; }
+
+@media (max-width: 600px){
+  .kz-google-signin span{ display: none; }
+  .kz-google-signin{
+    padding: 8px;
+    width: 38px; height: 38px;
+    justify-content: center;
+  }
+}
+
+/* Logged-in user chip */
+.kz-user-chip{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 14px 4px 4px;
+  background: linear-gradient(135deg, var(--cream, #FDFBF4), #fff);
+  border: 1.5px solid var(--gold, #B8935A);
+  border-radius: 100px;
+  font-family: var(--sans, sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink, #0B1F3A);
+  cursor: pointer;
+  transition: all .25s var(--ease-spring, cubic-bezier(.34,1.56,.64,1));
+  box-shadow: 0 4px 10px rgba(184,147,90,.15);
+  margin-inline-end: 6px;
+}
+.kz-user-chip:hover{
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, var(--gold-soft, #E9D9B7), var(--cream));
+  box-shadow: 0 8px 18px rgba(184,147,90,.25);
+}
+.kz-user-chip img{
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--white, #fff);
+}
+.kz-user-chip-initials{
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold-2, #D4B07A), var(--gold, #B8935A));
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif, serif);
+  font-weight: 700;
+  font-size: 14px;
+}
+.kz-user-chip-name{
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@media (max-width: 600px){
+  .kz-user-chip-name{ display: none; }
+}
+
+/* Toast */
+.kz-google-toast{
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: linear-gradient(135deg, var(--ink, #0B1F3A), var(--ink-2, #1A2D4D));
+  color: #f1d597;
+  padding: 12px 24px;
+  border-radius: 100px;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 14px;
+  z-index: 9999;
+  box-shadow: 0 16px 40px rgba(11,31,58,.4);
+  border: 1px solid rgba(212,176,122,.4);
+  opacity: 0;
+  transition: all .35s var(--ease-spring, cubic-bezier(.34,1.56,.64,1));
+}
+.kz-google-toast.is-visible{
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}

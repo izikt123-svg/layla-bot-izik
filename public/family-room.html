@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>חדר המשפחה · תפילות משפחה · יארצייט · תהלים יחד | מרכז התפילה</title>
+  <meta name="description" content="חדר התפילות הפרטי של המשפחה — תפילות משותפות, יארצייט, תהלים מחולק, נר זיכרון, רגעי חיים. דור לדור." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta property="og:title" content="חדר המשפחה · מרכז התפילה" />
+  <meta property="og:description" content="המקום בו המשפחה מתפללת יחד · דור לדור · בכל מקום בעולם" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="kz.css" />
+  <link rel="stylesheet" href="kz-elevate.css" />
+  <link rel="stylesheet" href="kz-alive.css" />
+  <link rel="stylesheet" href="kz-i18n.css" />
+  <link rel="stylesheet" href="kz-vocalized.css" />
+  <link rel="stylesheet" href="kz-supreme.css" />
+  <link rel="stylesheet" href="kz-nav-anim.css" />
+  <link rel="stylesheet" href="kz-ai-chat.css" />
+  <link rel="stylesheet" href="kz-prominent.css" />
+  <link rel="stylesheet" href="kz-google-auth.css" />
+  <link rel="stylesheet" href="kz-responsive.css" />
+  <link rel="stylesheet" href="family-room.css" />
+</head>
+<body>
+  <div class="page-grain" aria-hidden="true"></div>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <a class="brand-wrap" href="/index.html">
+      <div class="star" aria-hidden="true">
+        <svg viewBox="0 0 64 64" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round">
+          <polygon points="32,6 40,22 58,22 46,34 50,52 32,42 14,52 18,34 6,22 24,22" />
+        </svg>
+      </div>
+      <div class="brand">
+        <span class="brand-main kz-vocalized">הַבַּיִת הַיְּהוּדִי שֶׁלְּךָ בָּעוֹלָם</span>
+        <span class="brand-sub">חדר המשפחה</span>
+      </div>
+    </a>
+    <nav class="nav" aria-label="ניווט ראשי">
+      <a href="/index.html">בית</a>
+      <a href="/find-jewish.html">מפת היהדות</a>
+      <a href="memorial.html">ספר נשמות</a>
+      <a href="learning.html">לימוד</a>
+      <a href="ask-rabbi.html">שאל רב</a>
+    </nav>
+    <div class="top-actions">
+      <a href="/index.html#create" class="user-btn" style="text-decoration:none">
+        <span class="user-avatar">✦</span>
+        <span class="user-label">בקש תפילה</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Empty state: no family yet -->
+  <main id="frEmpty" class="fr-empty">
+    <div class="fr-empty-glow" aria-hidden="true"></div>
+    <div class="fr-empty-card">
+      <div class="fr-empty-ornament">
+        <svg viewBox="0 0 80 80" width="64" height="64">
+          <defs>
+            <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#f1d597"/>
+              <stop offset="100%" stop-color="#7a5a23"/>
+            </linearGradient>
+          </defs>
+          <g fill="none" stroke="url(#goldGrad)" stroke-width="2.4" stroke-linejoin="round">
+            <polygon points="40,6 50,26 30,26"/>
+            <polygon points="40,74 50,54 30,54"/>
+          </g>
+          <circle cx="40" cy="40" r="6" fill="#f1d597" opacity=".7"/>
+        </svg>
+      </div>
+      <span class="fr-tag">חדר התפילה הפרטי של המשפחה</span>
+      <h1>כל משפחה — בית תפילה אחד</h1>
+      <p class="fr-empty-lead">
+        חדר משפחתי שבו אתם מתפללים יחד, גם כשאתם רחוקים אחד מהשני.
+        תפילות פרטיות לבני המשפחה, יארצייט אוטומטי, תהלים מחולק, נרות זיכרון, ורגעי חיים.
+        דור לדור. בכל מקום בעולם.
+      </p>
+
+      <div class="fr-empty-features">
+        <div class="fr-feat">
+          <div class="fr-feat-ico">🕯</div>
+          <div>
+            <strong>תפילות פרטיות למשפחה</strong>
+            <span>רק בני המשפחה רואים · אחד מתפלל, כולם נושאים יחד</span>
+          </div>
+        </div>
+        <div class="fr-feat">
+          <div class="fr-feat-ico">📖</div>
+          <div>
+            <strong>תהלים יחד</strong>
+            <span>מחלקים את 150 הפרקים בין כל המשפחה · מסיימים יחד תוך שעה</span>
+          </div>
+        </div>
+        <div class="fr-feat">
+          <div class="fr-feat-ico">📅</div>
+          <div>
+            <strong>יארצייט אוטומטי</strong>
+            <span>תאריך עברי · התראה לכל המשפחה · נר 24 שעות</span>
+          </div>
+        </div>
+        <div class="fr-feat">
+          <div class="fr-feat-ico">✦</div>
+          <div>
+            <strong>רגעי חיים</strong>
+            <span>בריתות · בר מצוות · חתונות · ימי הולדת — בלוח אחד מקודש</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fr-empty-actions">
+        <button class="fr-btn fr-btn-primary" id="frCreateBtn">
+          <span>צור חדר משפחה</span>
+          <span class="fr-btn-ico">←</span>
+        </button>
+        <button class="fr-btn fr-btn-secondary" id="frJoinBtn">
+          הצטרף לחדר קיים
+        </button>
+      </div>
+
+      <div class="fr-empty-hint">
+        <small>הנתונים שלך נשמרים מקומית במכשיר שלך. אין צורך בהרשמה.</small>
+      </div>
+    </div>
+  </main>
+
+  <!-- Active family room -->
+  <main id="frRoom" class="fr-room" hidden>
+    <!-- Family header -->
+    <header class="fr-header">
+      <div class="fr-header-info">
+        <div class="fr-header-name">
+          <h1 id="frFamName">משפחת —</h1>
+          <button class="fr-edit-btn" id="frEditNameBtn" title="ערוך שם משפחה">✎</button>
+        </div>
+        <div class="fr-header-meta">
+          <span class="fr-header-code">קוד: <strong id="frFamCode">—</strong></span>
+          <button class="fr-share-code" id="frShareCodeBtn">העתק והזמן</button>
+          <span class="fr-header-since">נוסד <span id="frFamSince">—</span></span>
+        </div>
+      </div>
+      <div class="fr-header-members" id="frMembersBar"></div>
+      <div class="fr-header-actions">
+        <button class="fr-icon-btn" id="frAddMemberBtn" title="הוסף בן משפחה">＋</button>
+        <button class="fr-icon-btn" id="frSettingsBtn" title="הגדרות">⚙</button>
+      </div>
+    </header>
+
+    <!-- Live activity ribbon -->
+    <div class="fr-activity" id="frActivity" aria-live="polite">
+      <span class="fr-activity-pulse"></span>
+      <span class="fr-activity-text" id="frActivityText">חדר חי — מאזין…</span>
+    </div>
+
+    <!-- Main grid: 3 columns on desktop -->
+    <section class="fr-grid">
+
+      <!-- Column 1: Family Prayers -->
+      <div class="fr-col fr-col-prayers">
+        <div class="fr-card">
+          <div class="fr-card-head">
+            <span class="fr-card-tag">תפילות משפחה</span>
+            <h2>בקשות פעילות</h2>
+            <button class="fr-mini-btn" id="frAddPrayerBtn">＋ בקשה</button>
+          </div>
+          <div class="fr-prayers-list" id="frPrayersList"></div>
+        </div>
+      </div>
+
+      <!-- Column 2: Center stage (candles + tehillim + yahrzeit) -->
+      <div class="fr-col fr-col-center">
+
+        <!-- Candle wall -->
+        <div class="fr-card fr-candles-card">
+          <div class="fr-card-head">
+            <span class="fr-card-tag">קיר הנרות</span>
+            <h2>נר לכל נשמה</h2>
+            <button class="fr-mini-btn" id="frLightCandleBtn">🕯 הדלק נר</button>
+          </div>
+          <div class="fr-candles-grid" id="frCandlesGrid"></div>
+          <div class="fr-candles-empty" id="frCandlesEmpty">
+            הקיר ריק. הדלק נר ראשון לכבוד יקיריך.
+          </div>
+        </div>
+
+        <!-- Tehillim split -->
+        <div class="fr-card fr-tehillim-card">
+          <div class="fr-card-head">
+            <span class="fr-card-tag">תהלים יחד</span>
+            <h2 id="frTehTitle">תהלים מחולק למשפחה</h2>
+            <button class="fr-mini-btn" id="frNewTehBtn">חלק חדש</button>
+          </div>
+          <div id="frTehBody"></div>
+        </div>
+
+      </div>
+
+      <!-- Column 3: Yahrzeit + Life events -->
+      <div class="fr-col fr-col-side">
+
+        <!-- Yahrzeit -->
+        <div class="fr-card fr-yahrzeit-card">
+          <div class="fr-card-head">
+            <span class="fr-card-tag">יארצייט</span>
+            <h2>זיכרון נשמות</h2>
+            <button class="fr-mini-btn" id="frAddYahrzeitBtn">＋</button>
+          </div>
+          <div class="fr-yahrzeit-list" id="frYahrzeitList"></div>
+          <div class="fr-empty-mini" id="frYahrzeitEmpty">
+            רשום יארצייט לזיכרון משפחתי
+          </div>
+        </div>
+
+        <!-- Life events -->
+        <div class="fr-card fr-events-card">
+          <div class="fr-card-head">
+            <span class="fr-card-tag">רגעי חיים</span>
+            <h2>שמחות והודיה</h2>
+            <button class="fr-mini-btn" id="frAddEventBtn">＋</button>
+          </div>
+          <div class="fr-events-list" id="frEventsList"></div>
+          <div class="fr-empty-mini" id="frEventsEmpty">
+            הוסף ברית, בר מצווה, חתונה או יום הולדת
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Modals -->
+  <div class="fr-modal" id="frCreateModal" hidden>
+    <div class="fr-modal-back" data-close></div>
+    <div class="fr-modal-card">
+      <button class="fr-modal-close" data-close aria-label="סגור">✕</button>
+      <span class="fr-tag">חדר חדש</span>
+      <h2>בוא ניצור את חדר המשפחה</h2>
+      <p>שם המשפחה יוצג בכותרת. תוכל לערוך אותו תמיד.</p>
+      <label>שם המשפחה</label>
+      <input id="frNewFamName" type="text" placeholder="משפחת כהן" />
+      <label>שמך (יוצג לבני המשפחה)</label>
+      <input id="frNewMyName" type="text" placeholder="לדוגמה: אבא · אמא · יוסי" />
+      <button class="fr-btn fr-btn-primary fr-btn-wide" id="frCreateConfirm">פתח חדר</button>
+    </div>
+  </div>
+
+  <div class="fr-modal" id="frJoinModal" hidden>
+    <div class="fr-modal-back" data-close></div>
+    <div class="fr-modal-card">
+      <button class="fr-modal-close" data-close aria-label="סגור">✕</button>
+      <span class="fr-tag">הצטרפות</span>
+      <h2>הזן את קוד המשפחה</h2>
+      <p>קיבלת קוד מבן משפחה? הקלד אותו כאן.</p>
+      <label>קוד משפחה</label>
+      <input id="frJoinCode" type="text" placeholder="COHEN-7XK" style="text-transform:uppercase" />
+      <label>שמך</label>
+      <input id="frJoinMyName" type="text" placeholder="לדוגמה: יוסי" />
+      <button class="fr-btn fr-btn-primary fr-btn-wide" id="frJoinConfirm">הצטרף</button>
+    </div>
+  </div>
+
+  <div class="fr-modal" id="frPrayerModal" hidden>
+    <div class="fr-modal-back" data-close></div>
+    <div class="fr-modal-card">
+      <button class="fr-modal-close" data-close aria-label="סגור">✕</button>
+      <span class="fr-tag">בקשה משפחתית</span>
+      <h2>הוסף בקשת תפילה</h2>
+      <label>תחום</label>
+      <select id="frPrayerCat">
+        <option>רפואה</option>
+        <option>פרנסה</option>
+        <option>זוגיות</option>
+        <option>שלום בית</option>
+        <option>ילדים ופוריות</option>
+        <option>הצלחה</option>
+        <option>הודיה</option>
+        <option>זיכרון</option>
+        <option>כללי</option>
+      </select>
+      <label>למי</label>
+      <input id="frPrayerFor" type="text" placeholder="לדוגמה: סבא משה בן רבקה" />
+      <label>הבקשה</label>
+      <textarea id="frPrayerText" maxlength="400" placeholder="כתוב מהלב…"></textarea>
+      <button class="fr-btn fr-btn-primary fr-btn-wide" id="frPrayerConfirm">הוסף לחדר</button>
+    </div>
+  </div>
+
+  <div class="fr-modal" id="frCandleModal" hidden>
+    <div class="fr-modal-back" data-close></div>
+    <div class="fr-modal-card">
+      <button class="fr-modal-close" data-close aria-label="סגור">✕</button>
+      <span class="fr-tag">נר זיכרון</span>
+      <h2>הדלק נר לכבוד</h2>
+      <label>למי הנר</label>
+      <input id="frCandleFor" type="text" placeholder="לדוגמה: אבא ז"ל · ר' משה בן יעקב" />
+      <label>הקדשה (אופציונלי)</label>
+      <input id="frCandleNote" type="text" placeholder="לעילוי נשמת · לרפואה · להצלחה" />
+      <button class="fr-btn fr-btn-primary fr-btn-wide" id="frCandleConfirm">הדלק</button>
+    </div>
+  </div>
+
+  <div class="fr-modal" id="frYahrzeitModal" hidden>
+    <div class="fr-modal-back" data-close></div>
+    <div class="fr-modal-card">
+      <button class="fr-modal-close" data-close aria-label="סגור">✕</button>
+      <span class="fr-tag">יארצייט</span>
+      <h2>הוסף יארצייט</h2>
+      <label>שם הנפטר/ת</label>
+      <input id="frYzName" type="text" placeholder="לדוגמה: סבתא רחל בת לאה" />
+      <label>קרבה</label>
+      <input id="frYzRelation" type="text" placeholder="סבתא · אבא · דוד" />
+      <label>תאריך פטירה (לועזי)</label>
+      <input id="frYzDate" type="date" />
+      <button class="fr-btn fr-btn-primary fr-btn-wide" id="frYzConfirm">שמור</button>
+    </div>
+  </div>
+
+  <div class="fr-modal" id="frEventModal" hidden>
+    <div class="fr-modal-back" data-close></div>
+    <div class="fr-modal-card">
+      <button class="fr-modal-close" data-close aria-label="סגור">✕</button>
+      <span class="fr-tag">רגע חיים</span>
+      <h2>הוסף שמחה משפחתית</h2>
+      <label>סוג</label>
+      <select id="frEvType">
+        <option value="brit">ברית</option>
+        <option value="bar">בר מצווה</option>
+        <option value="bat">בת מצווה</option>
+        <option value="wedding">חתונה</option>
+        <option value="birth">לידה</option>
+        <option value="birthday">יום הולדת</option>
+        <option value="aliyah">עלייה</option>
+        <option value="other">אחר</option>
+      </select>
+      <label>של מי</label>
+      <input id="frEvName" type="text" placeholder="לדוגמה: יואב · מיכל ויונתן" />
+      <label>תאריך</label>
+      <input id="frEvDate" type="date" />
+      <button class="fr-btn fr-btn-primary fr-btn-wide" id="frEvConfirm">שמור</button>
+    </div>
+  </div>
+
+  <div class="fr-modal" id="frMemberModal" hidden>
+    <div class="fr-modal-back" data-close></div>
+    <div class="fr-modal-card">
+      <button class="fr-modal-close" data-close aria-label="סגור">✕</button>
+      <span class="fr-tag">בן משפחה</span>
+      <h2>הוסף בן משפחה</h2>
+      <p>בני משפחה מקבלים גישה דרך קוד החדר. כאן תוכל לרשום אותם כדי שיופיעו בחדר.</p>
+      <label>שם</label>
+      <input id="frMemName" type="text" placeholder="אבא · אמא · יוסי" />
+      <label>קרבה (אופציונלי)</label>
+      <input id="frMemRole" type="text" placeholder="אבא · אמא · בן · בת · סבא" />
+      <button class="fr-btn fr-btn-primary fr-btn-wide" id="frMemConfirm">הוסף</button>
+    </div>
+  </div>
+
+  <!-- Tehillim split picker modal -->
+  <div class="fr-modal" id="frTehModal" hidden>
+    <div class="fr-modal-back" data-close></div>
+    <div class="fr-modal-card fr-modal-wide">
+      <button class="fr-modal-close" data-close aria-label="סגור">✕</button>
+      <span class="fr-tag">תהלים יחד</span>
+      <h2>חלוקת ספר תהלים</h2>
+      <p>חלוקת 150 הפרקים לכל המשפחה. כל אחד מקבל פרקים, מסמן כשסיים, וכולם מסיימים יחד.</p>
+      <label>לכבוד / זכות</label>
+      <input id="frTehOccasion" type="text" placeholder="לרפואת אבא · לעילוי נשמת סבתא · להצלחת..." />
+      <button class="fr-btn fr-btn-primary fr-btn-wide" id="frTehConfirm">חלק עכשיו</button>
+    </div>
+  </div>
+
+  <script src="kz-elevate.js" defer></script>
+  <script src="kz-alive.js" defer></script>
+  <script src="data/jewish-places.js" defer></script>
+  <script src="family-room.js" defer></script>
+  <script src="kz-i18n.js" defer></script>
+  <script src="kz-supreme.js" defer></script>
+  <script src="kz-ai-chat.js" defer></script>
+  <script src="kz-prominent.js" defer></script>
+  <script src="kz-google-auth.js" defer></script>
+
+  <!-- מירב — Pill prominent (replaces old bot) -->
+  <button id="kzMiravInlineFab" type="button" aria-label="פתח שיחה עם מירב"
+          style="position:fixed;bottom:22px;inset-inline-end:22px;display:inline-flex;align-items:center;gap:10px;padding:10px 18px 10px 12px;border-radius:100px;background:linear-gradient(135deg,#0B1F3A,#1A2D4D);border:2px solid #B8935A;color:#f1d597;cursor:pointer;z-index:9000;box-shadow:0 14px 30px rgba(11,31,58,.4);font-family:'Frank Ruhl Libre',serif;font-weight:700;animation:kzMiravBeacon 2.6s ease-in-out infinite;"
+          onclick="event.preventDefault();if(window.KZ_AI_CHAT)window.KZ_AI_CHAT.toggle();else if(window.kzMiravToggle)window.kzMiravToggle();">
+    <span style="display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#D4B07A,#B8935A);color:#0B1F3A;font-weight:900;font-size:20px;box-shadow:0 0 0 2px rgba(241,213,151,.5);position:relative;flex-shrink:0;pointer-events:none;">מ<span style="position:absolute;bottom:0;inset-inline-end:0;width:11px;height:11px;border-radius:50%;background:#4ade80;border:2px solid #0B1F3A;"></span></span>
+    <span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.2;pointer-events:none;"><span style="font-size:14px;color:#f1d597;">מירב</span><span style="font-size:10px;color:rgba(255,255,255,.65);font-family:Heebo,sans-serif;">חברה · איתך תמיד</span></span>
+  </button>
+  <style>@keyframes kzMiravBeacon{0%,100%{box-shadow:0 14px 30px rgba(11,31,58,.4),0 0 0 0 rgba(241,213,151,.5)}50%{box-shadow:0 14px 30px rgba(11,31,58,.4),0 0 0 12px rgba(241,213,151,0)}}@media(max-width:600px){#kzMiravInlineFab>span:last-of-type span:last-child{display:none!important}}</style>
+</body>
+</html>

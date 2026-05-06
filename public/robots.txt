@@ -1,0 +1,19 @@
+# הבית היהודי שלך בעולם · my-hom.net
+# ===================================
+# Welcome, search engine bots!
+
+User-agent: *
+Allow: /
+
+# Block admin / private paths
+Disallow: /admin.html
+Disallow: /data/
+
+# Crawl delay (be gentle)
+Crawl-delay: 1
+
+# Sitemap
+Sitemap: https://my-hom.net/sitemap.xml
+
+# Preferred host
+Host: https://my-hom.net

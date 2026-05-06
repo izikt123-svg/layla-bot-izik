@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>מפת היהדות העולמית · בתי חב"ד · בתי כנסת · מקוואות · קברי צדיקים | מרכז התפילה</title>
+  <meta name="description" content="מפה אינטראקטיבית של כל המקומות היהודיים בעולם — בתי חב״ד, בתי כנסת, מקוואות, מסעדות כשרות, קברי צדיקים, ישיבות. כפתור Waze לכל כתובת." />
+  <meta name="keywords" content="בתי חב״ד, בתי כנסת, מקווה, כשרות, קבר צדיק, ישיבה, מפת יהדות, קהילה יהודית, ניווט לכותל" />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="מפת היהדות העולמית · מרכז התפילה" />
+  <meta property="og:description" content="כל יהודי, בכל מקום — מקווה, מניין, חב״ד, מסעדה כשרה, ניווט מיידי בלחיצה." />
+  <meta property="og:locale" content="he_IL" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="kz.css" />
+  <link rel="stylesheet" href="kz-elevate.css" />
+  <link rel="stylesheet" href="kz-i18n.css" />
+  <link rel="stylesheet" href="kz-vocalized.css" />
+  <link rel="stylesheet" href="kz-supreme.css" />
+  <link rel="stylesheet" href="kz-nav-anim.css" />
+  <link rel="stylesheet" href="kz-ai-chat.css" />
+  <link rel="stylesheet" href="kz-prominent.css" />
+  <link rel="stylesheet" href="kz-google-auth.css" />
+  <link rel="stylesheet" href="kz-responsive.css" />
+  <link rel="stylesheet" href="find-jewish.css" />
+
+  <style>
+    /* Flex layout — robust to Mirav bar / sliders / banners above topbar */
+    body{
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow: hidden;
+      margin: 0;
+    }
+    .topbar{ position: relative !important; flex-shrink: 0; }
+    .kz-mirav-bar, .kz-holy-strip.kz-top-banner{ flex-shrink: 0; }
+    .fj-shell{
+      flex: 1 1 auto !important;
+      height: auto !important;
+      min-height: 0 !important;
+    }
+  </style>
+</head>
+<body>
+  <!-- Topbar (shared shell) -->
+  <header class="topbar">
+    <a class="brand-wrap" href="/index.html">
+      <div class="star" aria-hidden="true">
+        <svg viewBox="0 0 64 64" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round">
+          <polygon points="32,6 40,22 58,22 46,34 50,52 32,42 14,52 18,34 6,22 24,22" />
+        </svg>
+      </div>
+      <div class="brand">
+        <span class="brand-main kz-vocalized">הַבַּיִת הַיְּהוּדִי שֶׁלְּךָ בָּעוֹלָם</span>
+        <span class="brand-sub">מפת היהדות העולמית</span>
+      </div>
+    </a>
+    <nav class="nav" aria-label="ניווט ראשי">
+      <a href="/index.html">בית</a>
+      <a href="unity.html">כל זכות יהודי</a>
+      <a href="memorial.html">ספר נשמות</a>
+      <a href="ask-rabbi.html">שאל רב</a>
+      <a href="chesed.html">חסד</a>
+      <a href="learning.html">לימוד</a>
+    </nav>
+    <div class="top-actions">
+      <a href="/index.html#create" class="user-btn" style="text-decoration:none">
+        <span class="user-avatar">✦</span>
+        <span class="user-label">בקש תפילה</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main shell: header + sidebar + map -->
+  <main id="fjShell" class="fj-shell">
+
+    <!-- Section header -->
+    <div class="fj-header">
+      <span class="fj-header-tag">חי · מתעדכן בזמן אמת</span>
+      <h1>מפת היהדות <span>העולמית</span></h1>
+      <div class="fj-stat">
+        <strong id="fjResultCount">0</strong> מקומות מוצגים
+        <span style="margin-inline-start:14px">·</span>
+        <strong id="fjTotalPlaces">0</strong> במאגר
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="fj-side" aria-label="חיפוש ורשימה">
+      <div class="fj-search-wrap">
+        <div class="fj-search">
+          <input id="fjSearchInput" type="search" placeholder="חפש עיר, מקום, רב, קהילה…" aria-label="חיפוש" />
+          <span class="fj-search-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          </span>
+        </div>
+        <button class="fj-gps-btn" id="fjGpsBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 0-8 8c0 5 8 12 8 12s8-7 8-12a8 8 0 0 0-8-8z"/></svg>
+          השתמש במיקום שלי
+        </button>
+      </div>
+
+      <div class="fj-filters" id="fjFilters" aria-label="סינון לפי קטגוריה"></div>
+
+      <div class="fj-results-head">
+        מקומות קרובים אליך · <strong id="fjResultCount2">0</strong>
+        <span style="opacity:.5">·</span>
+        מסודר לפי חשיבות / מרחק
+      </div>
+      <div class="fj-list" id="fjList" aria-label="רשימת תוצאות"></div>
+    </aside>
+
+    <!-- Map -->
+    <div class="fj-map-wrap">
+      <div class="fj-map-loading">טוען מפה…</div>
+      <div id="fjMap"></div>
+      <div class="fj-map-controls">
+        <button class="fj-map-btn" id="fjMapHome" title="חזור לישראל" aria-label="חזור לישראל">🏠</button>
+        <button class="fj-map-btn" id="fjMapMe" title="מצא את המיקום שלי" aria-label="מצא את המיקום שלי">🎯</button>
+      </div>
+      <button class="fj-toggle-list" id="fjToggleList">↓ הסתר רשימה</button>
+    </div>
+
+  </main>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+  <!-- Curated dataset + page logic -->
+  <script src="data/jewish-places.js"></script>
+  <script src="find-jewish.js"></script>
+  <script src="kz-i18n.js" defer></script>
+  <script src="kz-supreme.js" defer></script>
+  <script src="kz-ai-chat.js" defer></script>
+  <script src="kz-prominent.js" defer></script>
+  <script src="kz-google-auth.js" defer></script>
+  <script>
+    // Mirror result count to second placeholder
+    const observer = new MutationObserver(() => {
+      const a = document.getElementById('fjResultCount');
+      const b = document.getElementById('fjResultCount2');
+      if (a && b) b.textContent = a.textContent;
+    });
+    const target = document.getElementById('fjResultCount');
+    if (target) observer.observe(target, { childList: true, characterData: true, subtree: true });
+  </script>
+
+  <!-- מירב — Pill prominent (replaces old bot) -->
+  <button id="kzMiravInlineFab" type="button" aria-label="פתח שיחה עם מירב"
+          style="position:fixed;bottom:22px;inset-inline-end:22px;display:inline-flex;align-items:center;gap:10px;padding:10px 18px 10px 12px;border-radius:100px;background:linear-gradient(135deg,#0B1F3A,#1A2D4D);border:2px solid #B8935A;color:#f1d597;cursor:pointer;z-index:9000;box-shadow:0 14px 30px rgba(11,31,58,.4);font-family:'Frank Ruhl Libre',serif;font-weight:700;animation:kzMiravBeacon 2.6s ease-in-out infinite;"
+          onclick="event.preventDefault();if(window.KZ_AI_CHAT)window.KZ_AI_CHAT.toggle();else if(window.kzMiravToggle)window.kzMiravToggle();">
+    <span style="display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#D4B07A,#B8935A);color:#0B1F3A;font-weight:900;font-size:20px;box-shadow:0 0 0 2px rgba(241,213,151,.5);position:relative;flex-shrink:0;pointer-events:none;">מ<span style="position:absolute;bottom:0;inset-inline-end:0;width:11px;height:11px;border-radius:50%;background:#4ade80;border:2px solid #0B1F3A;"></span></span>
+    <span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.2;pointer-events:none;"><span style="font-size:14px;color:#f1d597;">מירב</span><span style="font-size:10px;color:rgba(255,255,255,.65);font-family:Heebo,sans-serif;">חברה · איתך תמיד</span></span>
+  </button>
+  <style>@keyframes kzMiravBeacon{0%,100%{box-shadow:0 14px 30px rgba(11,31,58,.4),0 0 0 0 rgba(241,213,151,.5)}50%{box-shadow:0 14px 30px rgba(11,31,58,.4),0 0 0 12px rgba(241,213,151,0)}}@media(max-width:600px){#kzMiravInlineFab>span:last-of-type span:last-child{display:none!important}}</style>
+</body>
+</html>

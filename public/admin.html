@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>אדמין | מרכז התפילה</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700&family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="admin-body">
+  <header class="topbar">
+    <a class="brand-wrap" href="index.html">
+      <div class="star">
+        <svg viewBox="0 0 64 64" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round">
+          <polygon points="32,6 40,22 58,22 46,34 50,52 32,42 14,52 18,34 6,22 24,22" />
+        </svg>
+      </div>
+      <div class="brand">
+        <span class="brand-main">אדמין · מרכז התפילה</span>
+        <span class="brand-sub">עריכה מקומית · localStorage</span>
+      </div>
+    </a>
+    <nav class="nav">
+      <a href="index.html">חזרה לאתר</a>
+    </nav>
+  </header>
+
+  <main class="admin-main">
+    <div class="admin-hello">
+      <div>
+        <div class="section-tag">לוח בקרה</div>
+        <h1>שלום, מנהל 👋</h1>
+        <p style="color:var(--muted);margin:6px 0 0">עריכת תוכן האתר, סטטוס חי, ופעולות מהירות.</p>
+      </div>
+      <div class="pill"><span class="dot"></span><span>מערכת פעילה</span></div>
+    </div>
+
+    <section class="admin-grid">
+      <div class="card">
+        <div class="section-tag"><span class="mini-ornament">✦</span> עריכת פסוק יומי</div>
+        <h2>פסוק יומי</h2>
+        <label>טקסט הפסוק</label>
+        <textarea id="adminVerseText">ה׳ קרוב לכל קוראיו, לכל אשר יקראוהו באמת</textarea>
+        <label>מקור</label>
+        <input id="adminVerseSource" type="text" value="תהילים קמ״ה, י״ח" />
+        <button id="saveVerse" class="btn btn-primary wide">שמור פסוק</button>
+      </div>
+
+      <div class="card">
+        <div class="section-tag"><span class="mini-ornament">✦</span> עריכת אודות</div>
+        <h2>טקסט אודות</h2>
+        <label>כותרת</label>
+        <input id="adminAboutTitle" type="text" value="אודות מרכז התפילה" />
+        <label>טקסט</label>
+        <textarea id="adminAboutText">מרכז התפילה הוא פלטפורמה דיגיטלית ייחודית שנוצרה מתוך אמונה עמוקה כי כל תפילה — ולו הקטנה ביותר — יכולה לשנות מציאות.</textarea>
+        <button id="saveAbout" class="btn btn-primary wide">שמור אודות</button>
+      </div>
+
+      <div class="card">
+        <div class="section-tag"><span class="mini-ornament">✦</span> שליטה מהירה</div>
+        <h2>נתונים לדוגמה</h2>
+        <div class="admin-stats">
+          <div><span>משתמשים</span><strong>128</strong></div>
+          <div><span>תפילות היום</span><strong>41</strong></div>
+          <div><span>בקשות פעילות</span><strong>64</strong></div>
+          <div><span>חיבורים רוחניים</span><strong>12</strong></div>
+        </div>
+        <p class="helper" style="margin-top:14px;text-align:start">
+          זהו אדמין בסיסי לעריכה מקומית דרך localStorage.
+          בפרויקט מלא נחבר כאן ניהול משתמשים, בקשות, קטגוריות, מאגר תפילות, פניות ודשבורד חי.
+        </p>
+      </div>
+
+      <div class="card inverse wide">
+        <div class="section-tag light">סטטוס חי</div>
+        <h2>פעילות מערכת אחרונה</h2>
+        <div class="sparkline" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <p style="margin-top:14px">המערכת רצה, התפילות זורמות, והנר דולק. אפשר לערוך תוכן בלי לנגוע בקוד.</p>
+      </div>
+
+      <div class="card">
+        <div class="section-tag"><span class="mini-ornament">✦</span> איפוס</div>
+        <h2>חזרה לברירת מחדל</h2>
+        <p style="color:var(--muted);font-size:14px">מוחק את עריכות התוכן השמורות בדפדפן זה.</p>
+        <button id="resetAll" class="btn btn-secondary wide">אפס תוכן</button>
+      </div>
+    </section>
+
+    <!-- ================= WORDPRESS-STYLE CONTENT MANAGER (additive) ================= -->
+    <section class="admin-cms">
+      <div class="admin-cms-head">
+        <div>
+          <div class="section-tag"><span class="mini-ornament">✦</span> לוח בקרה מורחב</div>
+          <h2>ניהול עמודים ופוסטים</h2>
+          <p class="admin-cms-lead">
+            ממשק בסגנון וורדפרס · הוספת עמודים ופוסטים, עריכה מהירה, גרירה לסידור מחדש.
+            הנתונים נשמרים ב־Netlify Blobs ונותרים בין דפדפנים ומכשירים.
+          </p>
+        </div>
+        <div class="admin-cms-tabs" role="tablist" aria-label="בחר סוג תוכן">
+          <button class="admin-tab active" data-cms-tab="pages" role="tab" aria-selected="true">עמודים</button>
+          <button class="admin-tab" data-cms-tab="posts" role="tab" aria-selected="false">פוסטים</button>
+        </div>
+      </div>
+
+      <div class="admin-cms-status" id="cmsStatus" aria-live="polite"></div>
+
+      <!-- PAGES TAB -->
+      <div class="admin-cms-panel" id="cmsPagesPanel" data-cms-panel="pages">
+        <div class="admin-cms-grid">
+          <form class="card admin-editor" id="pageForm" novalidate>
+            <div class="section-tag">הוסף / ערוך עמוד</div>
+            <h3 id="pageFormTitle">עמוד חדש</h3>
+            <input type="hidden" id="pageId" value="" />
+            <label for="pageTitle">כותרת העמוד</label>
+            <input id="pageTitle" type="text" placeholder="לדוגמה: מי אנחנו" maxlength="160" />
+            <label for="pageSlug">כתובת (slug)</label>
+            <input id="pageSlug" type="text" placeholder="about-us · אם משאירים ריק ייווצר אוטומטית" maxlength="120" />
+            <label for="pageContent">תוכן העמוד</label>
+            <textarea id="pageContent" rows="8" placeholder="כתוב כאן את תוכן העמוד. אפשר לכלול פסקאות, ציטוטים, והוראות." maxlength="20000"></textarea>
+            <div class="admin-editor-actions">
+              <button type="submit" class="btn btn-primary" id="pageSaveBtn">שמור עמוד</button>
+              <button type="button" class="btn btn-secondary" id="pageCancelBtn" hidden>בטל עריכה</button>
+              <a id="pageViewLink" class="btn btn-ghost" target="_blank" rel="noopener" hidden>פתח תצוגה ←</a>
+            </div>
+            <p class="helper">העמודים שתיצור יהיו זמינים בכתובת <code>/page.html?slug=…</code></p>
+          </form>
+
+          <div class="card admin-listing">
+            <div class="admin-listing-head">
+              <div>
+                <div class="section-tag">עמודים פעילים</div>
+                <h3>גרור כדי לסדר מחדש</h3>
+              </div>
+              <button type="button" class="btn btn-ghost admin-refresh" data-refresh="pages">רענן</button>
+            </div>
+            <ul class="admin-list" id="pagesList" data-type="pages">
+              <li class="admin-empty">טוען עמודים…</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- POSTS TAB -->
+      <div class="admin-cms-panel" id="cmsPostsPanel" data-cms-panel="posts" hidden>
+        <div class="admin-cms-grid">
+          <form class="card admin-editor" id="postForm" novalidate>
+            <div class="section-tag">הוסף / ערוך פוסט</div>
+            <h3 id="postFormTitle">פוסט חדש</h3>
+            <input type="hidden" id="postId" value="" />
+            <label for="postTitle">כותרת הפוסט</label>
+            <input id="postTitle" type="text" placeholder="לדוגמה: רגע של השראה" maxlength="160" />
+            <label for="postExcerpt">תקציר קצר</label>
+            <input id="postExcerpt" type="text" placeholder="משפט אחד שיופיע ברשימה" maxlength="400" />
+            <label for="postBody">גוף הפוסט</label>
+            <textarea id="postBody" rows="8" placeholder="כתוב כאן את הטקסט המלא של הפוסט." maxlength="20000"></textarea>
+            <label for="postAuthor">שם המחבר</label>
+            <input id="postAuthor" type="text" placeholder="מנהל" maxlength="120" />
+            <div class="admin-editor-actions">
+              <button type="submit" class="btn btn-primary" id="postSaveBtn">שמור פוסט</button>
+              <button type="button" class="btn btn-secondary" id="postCancelBtn" hidden>בטל עריכה</button>
+            </div>
+            <p class="helper">הפוסטים נשמרים בענן ומוכנים להצגה בכל מקום באתר.</p>
+          </form>
+
+          <div class="card admin-listing">
+            <div class="admin-listing-head">
+              <div>
+                <div class="section-tag">פוסטים פעילים</div>
+                <h3>גרור כדי לסדר מחדש</h3>
+              </div>
+              <button type="button" class="btn btn-ghost admin-refresh" data-refresh="posts">רענן</button>
+            </div>
+            <ul class="admin-list" id="postsList" data-type="posts">
+              <li class="admin-empty">טוען פוסטים…</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="saved-toast" id="toast">נשמר ✓</div>
+
+  <script>
+    const verseText = document.getElementById('adminVerseText');
+    const verseSource = document.getElementById('adminVerseSource');
+    const aboutTitle = document.getElementById('adminAboutTitle');
+    const aboutText = document.getElementById('adminAboutText');
+    const toast = document.getElementById('toast');
+
+    verseText.value = localStorage.getItem('pc_verse_text') || verseText.value;
+    verseSource.value = localStorage.getItem('pc_verse_source') || verseSource.value;
+    aboutTitle.value = localStorage.getItem('pc_about_title') || aboutTitle.value;
+    aboutText.value = localStorage.getItem('pc_about_text') || aboutText.value;
+
+    function ping(msg){
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1800);
+    }
+
+    document.getElementById('saveVerse').onclick = () => {
+      localStorage.setItem('pc_verse_text', verseText.value);
+      localStorage.setItem('pc_verse_source', verseSource.value);
+      ping('הפסוק נשמר ✓');
+    };
+
+    document.getElementById('saveAbout').onclick = () => {
+      localStorage.setItem('pc_about_title', aboutTitle.value);
+      localStorage.setItem('pc_about_text', aboutText.value);
+      ping('עמוד האודות נשמר ✓');
+    };
+
+    document.getElementById('resetAll').onclick = () => {
+      ['pc_verse_text','pc_verse_source','pc_about_title','pc_about_text'].forEach(k => localStorage.removeItem(k));
+      ping('התוכן אופס ✓');
+    };
+  </script>
+
+  <!-- ============== WORDPRESS-STYLE CMS (additive) ============== -->
+  <script>
+  (function(){
+    const API = '/.netlify/functions/admin-content';
+    const status = document.getElementById('cmsStatus');
+    function flash(msg, tone){
+      if (!status) return;
+      status.textContent = msg;
+      status.dataset.tone = tone || 'ok';
+      status.classList.add('show');
+      clearTimeout(flash._t);
+      flash._t = setTimeout(() => status.classList.remove('show'), 2400);
+    }
+
+    // Tabs
+    document.querySelectorAll('.admin-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.cmsTab;
+        document.querySelectorAll('.admin-tab').forEach(b => {
+          const on = b === btn;
+          b.classList.toggle('active', on);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        document.querySelectorAll('.admin-cms-panel').forEach(p => {
+          p.hidden = p.dataset.cmsPanel !== target;
+        });
+      });
+    });
+
+    async function api(method, body, search){
+      const url = search ? `${API}?${search}` : API;
+      const opts = { method, headers: {} };
+      if (body){ opts.headers['content-type'] = 'application/json'; opts.body = JSON.stringify(body); }
+      const r = await fetch(url, opts);
+      let data = {};
+      try { data = await r.json(); } catch {}
+      if (!r.ok || !data.ok) throw new Error(data.error || `HTTP ${r.status}`);
+      return data;
+    }
+
+    // --------- PAGES ---------
+    const pagesList = document.getElementById('pagesList');
+    const pageForm = document.getElementById('pageForm');
+    const pageFormTitle = document.getElementById('pageFormTitle');
+    const pageId = document.getElementById('pageId');
+    const pageTitle = document.getElementById('pageTitle');
+    const pageSlug = document.getElementById('pageSlug');
+    const pageContent = document.getElementById('pageContent');
+    const pageSaveBtn = document.getElementById('pageSaveBtn');
+    const pageCancelBtn = document.getElementById('pageCancelBtn');
+    const pageViewLink = document.getElementById('pageViewLink');
+
+    function resetPageForm(){
+      pageId.value = '';
+      pageTitle.value = '';
+      pageSlug.value = '';
+      pageContent.value = '';
+      pageFormTitle.textContent = 'עמוד חדש';
+      pageSaveBtn.textContent = 'שמור עמוד';
+      pageCancelBtn.hidden = true;
+      pageViewLink.hidden = true;
+    }
+
+    function fillPageForm(item){
+      pageId.value = item.id;
+      pageTitle.value = item.title || '';
+      pageSlug.value = item.slug || '';
+      pageContent.value = item.content || '';
+      pageFormTitle.textContent = 'עריכת עמוד: ' + item.title;
+      pageSaveBtn.textContent = 'עדכן עמוד';
+      pageCancelBtn.hidden = false;
+      if (item.slug) {
+        pageViewLink.href = `page.html?slug=${encodeURIComponent(item.slug)}`;
+        pageViewLink.hidden = false;
+      }
+      window.scrollTo({ top: pageForm.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+    }
+
+    pageCancelBtn.addEventListener('click', resetPageForm);
+
+    pageForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        type: 'pages',
+        action: pageId.value ? 'update' : 'create',
+        id: pageId.value || undefined,
+        title: pageTitle.value,
+        slug: pageSlug.value,
+        content: pageContent.value
+      };
+      if (!payload.title.trim() || !payload.content.trim()){
+        flash('נא למלא כותרת ותוכן', 'err');
+        return;
+      }
+      pageSaveBtn.disabled = true;
+      try {
+        await api('POST', payload);
+        flash(payload.action === 'create' ? 'העמוד נוצר ✓' : 'העמוד עודכן ✓');
+        resetPageForm();
+        loadList('pages');
+      } catch (err) {
+        flash('שמירה נכשלה: ' + err.message, 'err');
+      } finally {
+        pageSaveBtn.disabled = false;
+      }
+    });
+
+    // --------- POSTS ---------
+    const postsList = document.getElementById('postsList');
+    const postForm = document.getElementById('postForm');
+    const postFormTitle = document.getElementById('postFormTitle');
+    const postId = document.getElementById('postId');
+    const postTitleEl = document.getElementById('postTitle');
+    const postExcerpt = document.getElementById('postExcerpt');
+    const postBody = document.getElementById('postBody');
+    const postAuthor = document.getElementById('postAuthor');
+    const postSaveBtn = document.getElementById('postSaveBtn');
+    const postCancelBtn = document.getElementById('postCancelBtn');
+
+    function resetPostForm(){
+      postId.value = '';
+      postTitleEl.value = '';
+      postExcerpt.value = '';
+      postBody.value = '';
+      postAuthor.value = '';
+      postFormTitle.textContent = 'פוסט חדש';
+      postSaveBtn.textContent = 'שמור פוסט';
+      postCancelBtn.hidden = true;
+    }
+
+    function fillPostForm(item){
+      postId.value = item.id;
+      postTitleEl.value = item.title || '';
+      postExcerpt.value = item.excerpt || '';
+      postBody.value = item.body || '';
+      postAuthor.value = item.author || '';
+      postFormTitle.textContent = 'עריכת פוסט: ' + item.title;
+      postSaveBtn.textContent = 'עדכן פוסט';
+      postCancelBtn.hidden = false;
+      window.scrollTo({ top: postForm.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+    }
+
+    postCancelBtn.addEventListener('click', resetPostForm);
+
+    postForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        type: 'posts',
+        action: postId.value ? 'update' : 'create',
+        id: postId.value || undefined,
+        title: postTitleEl.value,
+        excerpt: postExcerpt.value,
+        body: postBody.value,
+        author: postAuthor.value
+      };
+      if (!payload.title.trim() || !payload.body.trim()){
+        flash('נא למלא כותרת וגוף הפוסט', 'err');
+        return;
+      }
+      postSaveBtn.disabled = true;
+      try {
+        await api('POST', payload);
+        flash(payload.action === 'create' ? 'הפוסט נוצר ✓' : 'הפוסט עודכן ✓');
+        resetPostForm();
+        loadList('posts');
+      } catch (err) {
+        flash('שמירה נכשלה: ' + err.message, 'err');
+      } finally {
+        postSaveBtn.disabled = false;
+      }
+    });
+
+    // --------- list rendering + drag/drop + edit/delete ---------
+    function itemRow(type, item){
+      const li = document.createElement('li');
+      li.className = 'admin-item';
+      li.draggable = true;
+      li.dataset.id = item.id;
+      const sub = type === 'pages'
+        ? `<span class="admin-item-slug">/page.html?slug=${item.slug || ''}</span>`
+        : `<span class="admin-item-slug">${item.excerpt ? item.excerpt : 'ללא תקציר'}</span>`;
+      li.innerHTML = `
+        <span class="admin-drag" aria-hidden="true" title="גרור כדי לסדר">⋮⋮</span>
+        <div class="admin-item-body">
+          <div class="admin-item-title"></div>
+          ${sub}
+        </div>
+        <div class="admin-item-actions">
+          ${type === 'pages' ? `<a class="btn btn-ghost" target="_blank" rel="noopener" href="page.html?slug=${encodeURIComponent(item.slug || '')}">תצוגה</a>` : ''}
+          <button type="button" class="btn btn-ghost" data-edit>ערוך</button>
+          <button type="button" class="btn btn-ghost danger" data-delete>מחק</button>
+        </div>
+      `;
+      li.querySelector('.admin-item-title').textContent = item.title || '(ללא כותרת)';
+      li.querySelector('[data-edit]').addEventListener('click', () => {
+        type === 'pages' ? fillPageForm(item) : fillPostForm(item);
+      });
+      li.querySelector('[data-delete]').addEventListener('click', async () => {
+        if (!confirm(`למחוק "${item.title}"?`)) return;
+        try {
+          await api('POST', { type, action: 'delete', id: item.id });
+          flash('נמחק ✓');
+          loadList(type);
+        } catch (err) { flash('מחיקה נכשלה: ' + err.message, 'err'); }
+      });
+      bindDnd(li, type);
+      return li;
+    }
+
+    let dragSrc = null;
+    function bindDnd(li, type){
+      li.addEventListener('dragstart', (e) => {
+        dragSrc = li;
+        li.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        try { e.dataTransfer.setData('text/plain', li.dataset.id); } catch {}
+      });
+      li.addEventListener('dragend', () => {
+        li.classList.remove('dragging');
+        document.querySelectorAll('.admin-item.drop-hover').forEach(x => x.classList.remove('drop-hover'));
+        dragSrc = null;
+      });
+      li.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        if (!dragSrc || dragSrc === li) return;
+        const rect = li.getBoundingClientRect();
+        const after = (e.clientY - rect.top) > rect.height / 2;
+        li.classList.add('drop-hover');
+        li.parentNode.insertBefore(dragSrc, after ? li.nextSibling : li);
+      });
+      li.addEventListener('dragleave', () => li.classList.remove('drop-hover'));
+      li.addEventListener('drop', async (e) => {
+        e.preventDefault();
+        li.classList.remove('drop-hover');
+        const listEl = document.querySelector(`.admin-list[data-type="${type}"]`);
+        const order = Array.from(listEl.querySelectorAll('.admin-item')).map(x => x.dataset.id);
+        try {
+          await api('POST', { type, action: 'reorder', order });
+          flash('סדר עודכן ✓');
+        } catch (err) { flash('סידור נכשל: ' + err.message, 'err'); }
+      });
+    }
+
+    async function loadList(type){
+      const listEl = document.querySelector(`.admin-list[data-type="${type}"]`);
+      listEl.innerHTML = '<li class="admin-empty">טוען…</li>';
+      try {
+        const data = await api('GET', null, `type=${type}`);
+        listEl.innerHTML = '';
+        if (!data.items.length){
+          const empty = document.createElement('li');
+          empty.className = 'admin-empty';
+          empty.textContent = type === 'pages' ? 'עדיין אין עמודים. הוסף את הראשון!' : 'עדיין אין פוסטים. כתוב את הראשון!';
+          listEl.appendChild(empty);
+          return;
+        }
+        data.items.forEach(item => listEl.appendChild(itemRow(type, item)));
+      } catch (err) {
+        listEl.innerHTML = `<li class="admin-empty admin-error">טעינה נכשלה: ${err.message}</li>`;
+      }
+    }
+
+    document.querySelectorAll('.admin-refresh').forEach(btn => {
+      btn.addEventListener('click', () => loadList(btn.dataset.refresh));
+    });
+
+    loadList('pages');
+    loadList('posts');
+  })();
+  </script>
+</body>
+</html>

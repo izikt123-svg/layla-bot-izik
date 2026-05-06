@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>מרכז התפילה | המקום בו התפילות מתגשמות</title>
+  <meta name="description" content="מרכז התפילה — מרחב תפילה יהודי, אישי, אינטימי ואנונימי. רשת של אור, תקווה ואמונה." />
+  <meta name="keywords" content="תפילה, מרכז התפילה, תהילים, יהדות, פרשת השבוע, בקשת תפילה, לזכר נשמת, רפואה שלמה" />
+  <meta name="author" content="מרכז התפילה העולמי · אלון טהורי" />
+  <meta name="theme-color" content="#0B1F3A" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0B1F3A" media="(prefers-color-scheme: dark)" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="format-detection" content="telephone=no" />
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/favicon.svg" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="מרכז התפילה" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="application-name" content="מרכז התפילה" />
+
+  <!-- Google Search Console verification — replace YOUR_CODE after registering at search.google.com/search-console -->
+  <meta name="google-site-verification" content="REPLACE_WITH_YOUR_GOOGLE_VERIFICATION_CODE" />
+
+  <!-- Google Analytics 4 — replace G-XXXXXXXXXX with your Measurement ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-REPLACE_ME"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-REPLACE_ME', { anonymize_ip: true });
+  </script>
+
+  <!-- Search engine specific meta -->
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <meta name="googlebot" content="index, follow" />
+
+  <!-- Canonical + Open Graph (sharing on WhatsApp, Facebook, Telegram) -->
+  <link rel="canonical" href="https://my-hom.net/" />
+  <meta property="og:url" content="https://my-hom.net/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="הבית היהודי שלך בעולם" />
+  <meta property="og:title" content="הבית היהודי שלך בעולם | המקום בו התפילות מתגשמות" />
+  <meta property="og:description" content="מרחב תפילה יהודי, אישי, אינטימי ואנונימי. רשת של אור, תקווה ואמונה." />
+  <meta property="og:image" content="/favicon.svg" />
+  <meta property="og:locale" content="he_IL" />
+  <meta property="og:locale:alternate" content="en_US" />
+
+  <!-- Twitter / X cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="מרכז התפילה | המקום בו התפילות מתגשמות" />
+  <meta name="twitter:description" content="מרחב תפילה יהודי, אישי, אינטימי ואנונימי." />
+  <meta name="twitter:image" content="/favicon.svg" />
+
+  <!-- Performance: preconnect & font preload -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.hebcal.com" crossorigin>
+  <link rel="preconnect" href="https://upload.wikimedia.org" crossorigin>
+  <link rel="preconnect" href="https://flagcdn.com" crossorigin>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="dns-prefetch" href="https://overpass-api.de">
+  <link rel="dns-prefetch" href="https://nominatim.openstreetmap.org">
+  <!-- Preload first hero photo for instant display -->
+  <link rel="preload" as="image" href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Western_Wall%2C_Jerusalem%2C_20101212.jpg/1280px-Western_Wall%2C_Jerusalem%2C_20101212.jpg" fetchpriority="high">
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="kz-guide.css" />
+  <!-- Old AI bot removed — replaced by Mirav -->
+  <link rel="stylesheet" href="kz-elevate.css" />
+  <link rel="stylesheet" href="kz-alive.css" />
+  <link rel="stylesheet" href="kz-i18n.css" />
+  <link rel="stylesheet" href="kz-vocalized.css" />
+  <link rel="stylesheet" href="kz-hero-slider.css" />
+  <link rel="stylesheet" href="kz-supreme.css" />
+  <link rel="stylesheet" href="kz-nav-anim.css" />
+  <link rel="stylesheet" href="kz-or-yom.css" />
+  <link rel="stylesheet" href="kz-ai-chat.css" />
+  <link rel="stylesheet" href="kz-prominent.css" />
+  <link rel="stylesheet" href="kz-google-auth.css" />
+  <link rel="stylesheet" href="kz-dedication.css" />
+  <link rel="stylesheet" href="kz-responsive.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+  <!-- Structured data — rich results for Google (WebSite + Organization + SearchAction) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://my-hom.net/#website",
+        "name": "הבית היהודי שלך בעולם",
+        "alternateName": ["מרכז התפילה", "Your Jewish Home", "Merkaz HaTefila"],
+        "url": "https://my-hom.net/",
+        "inLanguage": ["he", "en", "fr", "es", "ru", "de", "ar"],
+        "description": "מרחב תפילה יהודי עולמי · בקשת תפילה · מפת היהדות · חדר משפחה · קיר זיכרון · תרומה · 20 שפות",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://my-hom.net/find-jewish.html?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://my-hom.net/#organization",
+        "name": "הבית היהודי שלך בעולם",
+        "alternateName": "מרכז התפילה העולמי",
+        "url": "https://my-hom.net/",
+        "logo": "https://my-hom.net/favicon.svg",
+        "founder": {
+          "@type": "Person",
+          "name": "אלון טהורי",
+          "alternateName": "Alon Tahori"
+        },
+        "foundingDate": "2026",
+        "description": "פלטפורמה דיגיטלית לתפילות, זיכרון, חסד וקהילה יהודית עולמית",
+        "areaServed": "Worldwide",
+        "knowsAbout": ["יהדות", "תפילה", "תהלים", "יארצייט", "חב\"ד", "בתי כנסת", "Jewish prayer", "Synagogues", "Memorial"]
+      },
+      {
+        "@type": "WebApplication",
+        "name": "הבית היהודי שלך בעולם",
+        "url": "https://my-hom.net/",
+        "applicationCategory": "LifestyleApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "ILS" },
+        "featureList": [
+          "בקשת תפילה אנונימית",
+          "מפת בתי חב\"ד וקהילות יהודיות עולמית",
+          "חדר תפילה משפחתי",
+          "קיר נרות זיכרון לאומי",
+          "לוח עברי מלא · פרשה · דף יומי · זמני שבת",
+          "AI חברתי בעברית · מירב",
+          "20 שפות"
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <div class="page-grain" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand-wrap" href="#hero" aria-label="מרכז התפילה — לעמוד הבית">
+      <div class="star" aria-hidden="true">
+        <svg viewBox="0 0 64 64" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round">
+          <polygon points="32,6 40,22 58,22 46,34 50,52 32,42 14,52 18,34 6,22 24,22" />
+        </svg>
+      </div>
+      <div class="brand">
+        <span class="brand-main kz-vocalized">הַבַּיִת הַיְּהוּדִי שֶׁלְּךָ בָּעוֹלָם</span>
+        <span class="brand-sub">מרכז התפילה · רשת יהודית עולמית</span>
+      </div>
+    </a>
+    <nav class="nav" aria-label="ניווט ראשי">
+      <div class="nav-item has-sub">
+        <a href="#hero">בית</a>
+        <button type="button" class="nav-caret" aria-label="פתח תת-תפריט של בית" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="nav-drop" role="menu">
+          <a href="#hero" role="menuitem">לוח תפילה חי</a>
+          <a href="#hero" role="menuitem">הפסוק של היום</a>
+          <a href="#calendar" role="menuitem">לוח שנה יהודי</a>
+          <a href="#stories" role="menuitem">סיפורי אמונה</a>
+        </div>
+      </div>
+
+      <div class="nav-item has-sub">
+        <a href="#create">בקש תפילה</a>
+        <button type="button" class="nav-caret" aria-label="פתח תת-תפריט של בקש תפילה" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="nav-drop" role="menu">
+          <a href="#create" role="menuitem">טופס בקשת תפילה</a>
+          <a href="#create?cat=רפואה" data-prefill-cat="רפואה" role="menuitem">רפואה</a>
+          <a href="#create?cat=פרנסה" data-prefill-cat="פרנסה" role="menuitem">פרנסה</a>
+          <a href="#create?cat=זוגיות" data-prefill-cat="זוגיות" role="menuitem">זוגיות</a>
+          <a href="#create?cat=שלום בית" data-prefill-cat="שלום בית" role="menuitem">שלום בית</a>
+          <a href="#create?cat=ילדים ופוריות" data-prefill-cat="ילדים ופוריות" role="menuitem">ילדים ופוריות</a>
+          <a href="#create?cat=הצלחה" data-prefill-cat="הצלחה" role="menuitem">הצלחה</a>
+          <a href="#create?cat=הודיה" data-prefill-cat="הודיה" role="menuitem">הודיה</a>
+        </div>
+      </div>
+
+      <div class="nav-item has-sub">
+        <a href="#feed">פיד</a>
+        <button type="button" class="nav-caret" aria-label="פתח תת-תפריט של פיד" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="nav-drop" role="menu">
+          <a href="#feed" role="menuitem">הפיד הכללי</a>
+          <a href="#feed" data-feed-tab="match" role="menuitem">מותאם לך</a>
+          <a href="#feed" data-feed-filter="רפואה" role="menuitem">רפואה</a>
+          <a href="#feed" data-feed-filter="פרנסה" role="menuitem">פרנסה</a>
+          <a href="#feed" data-feed-filter="זוגיות" role="menuitem">זוגיות</a>
+          <a href="#feed" data-feed-filter="שלום בית" role="menuitem">שלום בית</a>
+          <a href="#feed" data-feed-filter="הודיה" role="menuitem">הודיה</a>
+        </div>
+      </div>
+
+      <div class="nav-item has-sub">
+        <a href="#me">אזור אישי</a>
+        <button type="button" class="nav-caret" aria-label="פתח תת-תפריט של אזור אישי" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="nav-drop" role="menu">
+          <a href="#me" data-me-tab="mine" role="menuitem">הבקשות שלי</a>
+          <a href="#me" data-me-tab="praying" role="menuitem">אני מתפלל על</a>
+          <a href="#me" data-me-tab="bonds" role="menuitem">חיבורים רוחניים</a>
+          <a href="family-room.html" role="menuitem" style="color:var(--gold-deep,#8A6A3A);font-weight:600">🏠 חדר המשפחה ←</a>
+        </div>
+      </div>
+
+      <div class="nav-item has-sub">
+        <a href="family-room.html" style="color:var(--gold-deep,#8A6A3A);font-weight:700">חדר המשפחה</a>
+        <button type="button" class="nav-caret" aria-label="פתח תת-תפריט של חדר המשפחה" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="nav-drop" role="menu">
+          <a href="family-room.html" role="menuitem">פתח חדר משפחה</a>
+          <a href="family-room.html#tehillim" role="menuitem">תהלים יחד</a>
+          <a href="family-room.html#yahrzeit" role="menuitem">יארצייט וזיכרון</a>
+          <a href="family-room.html#events" role="menuitem">רגעי חיים</a>
+        </div>
+      </div>
+
+      <div class="nav-item has-sub">
+        <a href="find-jewish.html">מפת היהדות</a>
+        <button type="button" class="nav-caret" aria-label="פתח תת-תפריט של מפת היהדות" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="nav-drop" role="menu">
+          <a href="find-jewish.html" role="menuitem">מפה עולמית · GPS</a>
+          <a href="find-jewish.html#chabad" role="menuitem">בתי חב״ד בעולם</a>
+          <a href="find-jewish.html#synagogue" role="menuitem">בתי כנסת</a>
+          <a href="find-jewish.html#tomb" role="menuitem">קברי צדיקים</a>
+          <a href="find-jewish.html#mikveh" role="menuitem">מקוואות</a>
+          <a href="find-jewish.html#kosher" role="menuitem">כשרות</a>
+        </div>
+      </div>
+
+      <div class="nav-item has-sub is-memorial">
+        <a href="national-memorial.html">הזיכרון הלאומי</a>
+        <button type="button" class="nav-caret" aria-label="פתח תת-תפריט של הזיכרון הלאומי" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="nav-drop" role="menu">
+          <a href="national-memorial.html#war-shoah" role="menuitem">השואה</a>
+          <a href="national-memorial.html#war-1948" role="menuitem">תש"ח · עצמאות</a>
+          <a href="national-memorial.html#war-1967" role="menuitem">ששת הימים</a>
+          <a href="national-memorial.html#war-1973" role="menuitem">יום כיפור</a>
+          <a href="national-memorial.html#war-lebanon" role="menuitem">לבנון</a>
+          <a href="national-memorial.html#war-oct7" role="menuitem">7 באוקטובר</a>
+          <a href="national-memorial.html#war-terror" role="menuitem">קרבנות טרור</a>
+          <a href="national-memorial.html" role="menuitem" style="border-top:1px dashed currentColor;margin-top:4px;padding-top:8px!important;font-weight:700">🕯 כל הקיר →</a>
+        </div>
+      </div>
+
+      <div class="nav-item has-sub">
+        <a href="#library">מאגר תפילות</a>
+        <button type="button" class="nav-caret" aria-label="פתח תת-תפריט של מאגר תפילות" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="nav-drop" role="menu">
+          <a href="#library" role="menuitem">מאגר לפי קטגוריה</a>
+          <a href="learning.html" role="menuitem">לימוד יומי</a>
+          <a href="customs.html" role="menuitem">מנהגים ועדות</a>
+          <a href="dictionary.html" role="menuitem">עברית יהודית 101</a>
+          <a href="what-to-say.html" role="menuitem">מה אומרים כש…</a>
+          <a href="ask-rabbi.html" role="menuitem">שאל רב</a>
+        </div>
+      </div>
+
+      <div class="nav-item has-sub">
+        <a href="#stories">סיפורים</a>
+        <button type="button" class="nav-caret" aria-label="פתח תת-תפריט של סיפורים" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="nav-drop" role="menu">
+          <a href="#stories" role="menuitem">מקורות שמחזקים את הלב</a>
+          <a href="national-memorial.html" role="menuitem" style="color:var(--gold-deep,#8A6A3A);font-weight:700">🕯 הזיכרון הלאומי ←</a>
+          <a href="#stories" role="menuitem">תקומה</a>
+          <a href="#stories" role="menuitem">אמונה</a>
+          <a href="#stories" role="menuitem">מצוקה</a>
+          <a href="memorial.html" role="menuitem">ספר נשמות</a>
+          <a href="life-events.html" role="menuitem">אירועי חיים</a>
+        </div>
+      </div>
+
+      <div class="nav-item has-sub">
+        <a href="unity.html" style="color:var(--gold-deep,#c6a054);font-weight:700">כל זכות יהודי</a>
+        <button type="button" class="nav-caret" aria-label="פתח תת-תפריט של כל זכות יהודי" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="nav-drop" role="menu">
+          <a href="unity.html" role="menuitem">רשת הזכויות</a>
+          <a href="find-jewish.html" role="menuitem">איתור קהילה</a>
+          <a href="chesed.html" role="menuitem">חסד והתנדבות</a>
+          <a href="aliyah-traveler.html" role="menuitem">עלייה ונסיעה</a>
+          <a href="kids.html" role="menuitem">פינת ילדים</a>
+          <a href="memorial.html" role="menuitem">ספר נשמות</a>
+        </div>
+      </div>
+
+      <div class="nav-item has-sub">
+        <a href="#about">אודות</a>
+        <button type="button" class="nav-caret" aria-label="פתח תת-תפריט של אודות" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="nav-drop" role="menu">
+          <a href="#about" role="menuitem">על מרכז התפילה</a>
+          <a href="#contact" role="menuitem">צור קשר</a>
+          <a href="privacy.html" role="menuitem">מדיניות פרטיות</a>
+          <a href="terms.html" role="menuitem">תנאי שימוש</a>
+          <a href="accessibility.html" role="menuitem">הצהרת נגישות</a>
+        </div>
+      </div>
+
+      <div class="nav-item has-sub nav-item-help">
+        <a href="handbook.html">עזרה</a>
+        <button type="button" class="nav-caret" aria-label="פתח תת-תפריט של עזרה" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="nav-drop" role="menu">
+          <a href="handbook.html" target="_blank" rel="noopener" role="menuitem">חוברת הדרכה · PDF</a>
+          <a href="#kzGuideLauncher" data-open-guide="tour" role="menuitem">מדריך האתר · סיור מונפש</a>
+          <a href="#" role="menuitem" onclick="event.preventDefault();if(window.KZ_AI_CHAT)window.KZ_AI_CHAT.open();else if(window.kzMiravToggle)window.kzMiravToggle();" style="color:var(--gold-deep,#8A6A3A);font-weight:700">🌟 דברו עם מירב</a>
+          <a href="#kzShowOpen" data-open-guide="showcase" role="menuitem">חווית האתר · הצגה מלאה</a>
+        </div>
+      </div>
+
+      <a href="admin.html" class="admin-link">אדמין</a>
+    </nav>
+    <div class="top-actions">
+      <div class="lang-switch" role="group" aria-label="בחירת שפה / Language">
+        <button type="button" class="lang-flag active" id="langHe" data-lang="he" title="עברית" aria-label="עברית">
+          <svg viewBox="0 0 60 40" width="22" height="16" aria-hidden="true">
+            <rect width="60" height="40" fill="#fff"/>
+            <rect y="4" width="60" height="5" fill="#0038B8"/>
+            <rect y="31" width="60" height="5" fill="#0038B8"/>
+            <g fill="none" stroke="#0038B8" stroke-width="1.6">
+              <polygon points="30,14 35,22 25,22"/>
+              <polygon points="30,26 25,18 35,18"/>
+            </g>
+          </svg>
+          <span>עב</span>
+        </button>
+        <button type="button" class="lang-flag" id="langEn" data-lang="en" title="English" aria-label="English">
+          <svg viewBox="0 0 60 40" width="22" height="16" aria-hidden="true">
+            <rect width="60" height="40" fill="#012169"/>
+            <path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="6"/>
+            <path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" stroke-width="2.4"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="10"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="6"/>
+          </svg>
+          <span>EN</span>
+        </button>
+      </div>
+      <button class="icon-btn help-btn" id="helpBtn" aria-label="הוראות הפעלה" title="הוראות הפעלה">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.9.4-1.5 1-1.5 2"/>
+          <circle cx="12" cy="17" r=".6" fill="currentColor"/>
+        </svg>
+        <span class="help-pulse" aria-hidden="true"></span>
+      </button>
+      <button class="icon-btn tour-btn" id="tourBtn" aria-label="סיור מודרך באתר" title="סיור מודרך — כל התפריטים והקטגוריות">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/>
+          <circle cx="12" cy="12" r="9"/>
+        </svg>
+        <span class="tour-btn-pulse" aria-hidden="true"></span>
+      </button>
+      <button class="icon-btn" id="notifBtn" aria-label="התראות">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+          <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+        </svg>
+        <span class="icon-badge" id="notifBadge">3</span>
+      </button>
+      <button class="user-btn" id="userBtn">
+        <span class="user-avatar" id="userAvatar">?</span>
+        <span class="user-label" id="userLabel">התחברות</span>
+      </button>
+      <button class="menu-btn" aria-label="פתיחת תפריט" id="menuBtn">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= MEGA SEARCH ================= -->
+    <section class="mega-search" id="megaSearch" aria-label="חיפוש מקיף במרכז התפילה">
+      <div class="mega-search-inner">
+        <div class="mega-search-eyebrow">
+          <span class="mega-search-dot"></span>
+          חיפוש חכם במרכז התפילה
+        </div>
+        <h2 class="mega-search-title">חפש כל מה שקרוב ללב</h2>
+        <p class="mega-search-lead">תפילות, מנהגים, עדות, סיפורי אמונה, קהילות, אירועי חיים, צדיקים — הכל במקום אחד.</p>
+
+        <form class="mega-search-form" role="search" id="megaSearchForm" autocomplete="off">
+          <span class="mega-search-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="7"/>
+              <path d="M21 21l-4.3-4.3"/>
+            </svg>
+          </span>
+          <input
+            type="search"
+            class="mega-search-input"
+            id="megaSearchInput"
+            placeholder="חפש תפילה, מנהג, עדה, עיר, צדיק, פרשה, סיפור…"
+            aria-label="מה אתה מחפש?"
+          />
+          <button type="button" class="mega-search-clear" id="megaSearchClear" aria-label="נקה חיפוש" hidden>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
+          <button type="submit" class="mega-search-submit">
+            <span>חפש</span>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </button>
+        </form>
+
+        <div class="mega-search-suggestions" id="megaSearchSuggestions" role="listbox" hidden></div>
+
+        <div class="mega-search-chips" aria-label="חיפושים פופולריים">
+          <span class="mega-search-chips-label">פופולרי:</span>
+          <button type="button" class="ms-chip" data-q="רפואה שלמה">רפואה שלמה</button>
+          <button type="button" class="ms-chip" data-q="פרנסה">פרנסה</button>
+          <button type="button" class="ms-chip" data-q="זיווג">זיווג</button>
+          <button type="button" class="ms-chip" data-q="שלום בית">שלום בית</button>
+          <button type="button" class="ms-chip" data-q="תהילים">תהילים</button>
+          <button type="button" class="ms-chip" data-q="ספר נשמות">ספר נשמות</button>
+          <button type="button" class="ms-chip" data-q="שאל רב">שאל רב</button>
+          <button type="button" class="ms-chip" data-q="עלייה">עלייה</button>
+          <button type="button" class="ms-chip" data-q="חסד">חסד</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= HERO + DASHBOARD ================= -->
+    <section class="hero" id="hero">
+      <div class="hero-backdrop" aria-hidden="true">
+        <div class="hero-glow"></div>
+        <div class="hero-rays"></div>
+      </div>
+
+      <div class="hero-inner">
+        <div class="hero-left">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            רגע של תפילה שקטה
+          </div>
+          <h1>המקום בו <span>התפילות מתגשמות</span></h1>
+          <p class="hero-copy">
+            מרחב תפילה יהודי, אישי, אינטימי ואנונימי —
+            מקום שבו אפשר לכתוב מהלב, להתפלל על אחרים, ולהתחבר לרשת של אור, תקווה ואמונה.
+          </p>
+
+          <div class="daily-zmanim card" id="zmanimCard" aria-live="polite">
+            <div class="mini-title">
+              <span class="mini-ornament">✦</span>
+              זמני תפילה · חי
+              <span class="zmanim-live-dot" aria-hidden="true"></span>
+            </div>
+            <div class="zmanim-city-row">
+              <label for="zmanimCity" class="zmanim-city-label">עיר:</label>
+              <select id="zmanimCity" class="zmanim-city" aria-label="בחירת עיר לזמני תפילה">
+                <option value="281184">ירושלים</option>
+                <option value="293397">תל אביב</option>
+                <option value="294801">חיפה</option>
+                <option value="295530">באר שבע</option>
+                <option value="293100">צפת</option>
+                <option value="5128581">ניו יורק</option>
+                <option value="2643743">לונדון</option>
+                <option value="2988507">פריז</option>
+              </select>
+              <span class="zmanim-date" id="zmanimDate"></span>
+            </div>
+            <ul class="zmanim-list" id="zmanimList">
+              <li class="zmanim-row zmanim-skeleton"><span>עלות השחר</span><span>טוען…</span></li>
+              <li class="zmanim-row zmanim-skeleton"><span>נץ החמה</span><span>טוען…</span></li>
+              <li class="zmanim-row zmanim-skeleton"><span>חצות היום</span><span>טוען…</span></li>
+              <li class="zmanim-row zmanim-skeleton"><span>מנחה גדולה</span><span>טוען…</span></li>
+              <li class="zmanim-row zmanim-skeleton"><span>שקיעה</span><span>טוען…</span></li>
+              <li class="zmanim-row zmanim-skeleton"><span>צאת הכוכבים</span><span>טוען…</span></li>
+            </ul>
+            <div class="zmanim-footer">
+              <span id="zmanimNote">זמנים משתנים לפי עיר ותאריך. מוצג לפי שיטת Hebcal.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- =============== LIVE DASHBOARD =============== -->
+        <aside class="hero-dash" aria-label="לוח תפילה חי">
+          <div class="hero-dash-halo" aria-hidden="true"></div>
+          <div class="hero-dash-stars" aria-hidden="true">
+            <i style="--x:12%;--y:18%;--d:.2s"></i>
+            <i style="--x:84%;--y:12%;--d:1.1s"></i>
+            <i style="--x:92%;--y:64%;--d:.6s"></i>
+            <i style="--x:26%;--y:82%;--d:1.7s"></i>
+            <i style="--x:64%;--y:4%;--d:.9s"></i>
+          </div>
+
+          <header class="hero-dash-head">
+            <div class="hero-dash-title">
+              <span class="hero-dash-flame" aria-hidden="true">
+                <span class="f-core"></span>
+                <span class="f-halo"></span>
+              </span>
+              <div>
+                <div class="hero-dash-kicker">רשת התפילה · חיה ברגע זה</div>
+                <div class="hero-dash-sub">126 לבבות נושאים תפילה יחד, עכשיו</div>
+              </div>
+            </div>
+            <div class="hero-dash-pill">
+              <span class="dot"></span>
+              פעילה
+            </div>
+          </header>
+
+          <div class="hero-dash-metrics">
+            <div class="dash-metric metric-a">
+              <div class="dash-metric-head">
+                <div class="dash-metric-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round">
+                    <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/>
+                  </svg>
+                </div>
+                <div class="dash-metric-trend up">+12%</div>
+              </div>
+              <div class="dash-metric-num" id="liveUsers">126</div>
+              <div class="dash-metric-label">לבבות מחוברים לרשת</div>
+              <div class="dash-metric-bar"><span style="--w:72%"></span></div>
+            </div>
+
+            <div class="dash-metric metric-b">
+              <div class="dash-metric-head">
+                <div class="dash-metric-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3c1.5 2 2.5 3.5 2.5 5a2.5 2.5 0 1 1-5 0c0-1.5 1-3 2.5-5z"/>
+                    <rect x="9" y="10" width="6" height="10" rx="1.2"/>
+                    <path d="M8 20h8"/>
+                  </svg>
+                </div>
+                <div class="dash-metric-trend live"><span class="ping"></span>חי</div>
+              </div>
+              <div class="dash-metric-num" id="livePrayers">49</div>
+              <div class="dash-metric-label">מתפללים ברגע זה</div>
+              <div class="dash-metric-bar"><span style="--w:54%"></span></div>
+            </div>
+
+            <div class="dash-metric metric-c">
+              <div class="dash-metric-head">
+                <div class="dash-metric-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round">
+                    <polygon points="12,3 14.5,9 21,9 15.8,13 17.8,20 12,16 6.2,20 8.2,13 3,9 9.5,9"/>
+                  </svg>
+                </div>
+                <div class="dash-metric-trend up">השבוע</div>
+              </div>
+              <div class="dash-metric-num" id="weekPrayers">2,184</div>
+              <div class="dash-metric-label">תפילות שנישאו</div>
+              <div class="dash-metric-bar"><span style="--w:88%"></span></div>
+            </div>
+          </div>
+
+          <div class="hero-dash-ctas">
+            <a class="dash-cta primary" href="#create">
+              <div class="dash-cta-ico">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 3v18M3 12h18"/>
+                </svg>
+              </div>
+              <div class="dash-cta-text">
+                <span class="dash-cta-title">בקש תפילה</span>
+                <span class="dash-cta-sub">כתוב מהלב · אנונימי לחלוטין</span>
+              </div>
+              <span class="dash-cta-arrow" aria-hidden="true">←</span>
+            </a>
+            <a class="dash-cta secondary" href="#feed">
+              <div class="dash-cta-ico">
+                <span class="cta-mini-candle" aria-hidden="true"><span class="cta-mini-flame"></span></span>
+              </div>
+              <div class="dash-cta-text">
+                <span class="dash-cta-title">התחל להתפלל</span>
+                <span class="dash-cta-sub">הצטרף לאלפים שמתפללים עבור אחרים</span>
+              </div>
+              <span class="dash-cta-arrow" aria-hidden="true">←</span>
+            </a>
+          </div>
+
+          <div class="hero-dash-ticker" aria-live="polite">
+            <div class="ticker-title">
+              <span class="ping gold"></span>
+              עדכוני רשת
+            </div>
+            <ul class="ticker-list" id="dashTicker">
+              <li><span class="t-dot"></span><span class="t-text">פלוני בן פלונית ביקש תפילה לרפואה</span><span class="t-time">כעת</span></li>
+              <li><span class="t-dot"></span><span class="t-text">18 מתפללים הצטרפו לבקשה לפרנסה</span><span class="t-time">לפני דקה</span></li>
+              <li><span class="t-dot"></span><span class="t-text">סטטוס עודכן: "הבקשה נענתה"</span><span class="t-time">לפני 3 דק׳</span></li>
+              <li><span class="t-dot"></span><span class="t-text">חיבור רוחני הדדי נוצר בין שני מתפללים</span><span class="t-time">לפני 6 דק׳</span></li>
+            </ul>
+          </div>
+
+          <div class="daily-verse card hero-dash-verse">
+            <div class="mini-title">
+              <span class="mini-ornament">✦</span>
+              הפסוק של היום
+            </div>
+            <div class="verse-text" id="dailyVerseText">ה׳ קרוב לכל קוראיו, לכל אשר יקראוהו באמת</div>
+            <div class="verse-source" id="dailyVerseSource">תהילים קמ״ה, י״ח</div>
+          </div>
+        </aside>
+      </div>
+
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+          <span>רפואה שלמה · פרנסה · זיווג · שלום בית · הצלחה · ילדים · הודיה · ישועה · תקומה · נחמה ·</span>
+          <span>רפואה שלמה · פרנסה · זיווג · שלום בית · הצלחה · ילדים · הודיה · ישועה · תקומה · נחמה ·</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CREATE PRAYER ================= -->
+    <section class="create-section section" id="create">
+      <div class="split">
+        <div class="card soft-card create-intro">
+          <div class="section-tag">רגע אישי של תפילה</div>
+          <h2>כתוב כאן את בקשת הלב שלך</h2>
+          <p>
+            קח רגע של שקט. כתוב בפשטות, באמונה, את אשר על לבך.
+            כאן אפשר לכתוב כאב, תקווה, משאלה, תפילה או בקשה אישית.
+          </p>
+          <blockquote>
+            <span class="quote-mark">„</span>
+            שפכי כמים לבך נוכח פני ה׳
+            <span class="quote-source">איכה ב׳, י״ט</span>
+          </blockquote>
+          <div class="candle-inline">
+            <div class="small-candle"><div class="small-flame"></div></div>
+            <span>כל תפילה שנכתבת כאן נאמרת מתוך כבוד, שקט ואמונה.</span>
+          </div>
+          <ul class="tips">
+            <li><span>1</span> נשום עמוק ושחרר רגע אחד.</li>
+            <li><span>2</span> בחר את תחום הבקשה הקרוב ללבך.</li>
+            <li><span>3</span> כתוב בשקט — גם מילה אחת מספיקה.</li>
+            <li><span>4</span> הבקשה תוצג תחת השם האנונימי "פלוני בן פלונית".</li>
+          </ul>
+          <div class="validity-note">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <span>כל בקשה פעילה 30 יום ממועד יצירתה · ניתן לחדש בעת הצורך.</span>
+          </div>
+        </div>
+
+        <form class="card form-card" id="prayerForm" novalidate>
+          <div class="anon-badge">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a6 6 0 0 0-6 6h12a6 6 0 0 0-6-6z"/><circle cx="12" cy="8" r="4"/></svg>
+            <span>תוצג כ־<strong id="anonName">פלוני בן פלונית</strong></span>
+          </div>
+
+          <label for="category">תחום הבקשה</label>
+          <select id="category">
+            <option>רפואה</option>
+            <option>פרנסה</option>
+            <option>זוגיות</option>
+            <option>שלום בית</option>
+            <option>תעסוקה</option>
+            <option>ילדים ופוריות</option>
+            <option>הצלחה</option>
+            <option>הודיה</option>
+            <option>כללי</option>
+          </select>
+
+          <label for="prayerText">בקשת התפילה</label>
+          <div class="mic-field">
+            <textarea id="prayerText" maxlength="300" placeholder="כתוב כאן בשקט את אשר על לבך... או לחץ על המיקרופון והקרא"></textarea>
+            <button type="button" class="mic-btn" id="micPrayer" aria-label="הקראת הבקשה במיקרופון" title="הקרא את הבקשה במיקרופון">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="3" width="6" height="12" rx="3"/>
+                <path d="M5 11a7 7 0 0 0 14 0"/>
+                <path d="M12 18v3"/>
+                <path d="M8 21h8"/>
+              </svg>
+              <span class="mic-ring" aria-hidden="true"></span>
+            </button>
+            <div class="mic-status" id="micPrayerStatus" aria-live="polite"></div>
+          </div>
+          <div class="counter"><span id="charCount">0</span>/300</div>
+
+          <label class="agree">
+            <input type="checkbox" id="agreeBox" />
+            <span>אני מאשר שהבקשה תישלח באופן אנונימי, לפי תנאי השימוש ועקרון האנונימיות המלא של המערכת.</span>
+          </label>
+
+          <button id="submitPrayer" type="button" class="btn btn-primary wide">
+            שלח תפילה
+            <span class="btn-ico" aria-hidden="true">✦</span>
+          </button>
+          <div class="helper">כשתהיה מוכן, שלח את תפילתך.</div>
+          <div class="signature-line">כל תפילה שנשלחת – מגיעה</div>
+
+          <div id="submitExperience" class="submit-experience hidden">
+            <div class="small-candle big"><div class="small-flame"></div></div>
+            <div class="light-rise"></div>
+            <div class="light-rise delay"></div>
+            <div class="light-rise delay2"></div>
+            <div class="sent-title">התפילה שלך נשלחה</div>
+            <div class="sent-message" id="sentMessage">אין תפילה שאובדת.</div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ================= FEED ================= -->
+    <section class="section" id="feed">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">פיד חי של תפילות</div>
+          <h2>בקשות פעילות</h2>
+          <p class="section-lead">הצטרף לאלפים המתפללים יחד. כל לחיצה על "להתפלל" — מצטרפת לזכות הגדולה.</p>
+        </div>
+        <div class="feed-tabs" role="tablist">
+          <button class="feed-tab active" data-feed="all">הפיד הכללי</button>
+          <button class="feed-tab" data-feed="match">מותאם לך</button>
+        </div>
+      </div>
+
+      <div class="chips" id="feedChips">
+        <button class="chip active" data-filter="all">הכל</button>
+        <button class="chip" data-filter="רפואה">רפואה</button>
+        <button class="chip" data-filter="פרנסה">פרנסה</button>
+        <button class="chip" data-filter="זוגיות">זוגיות</button>
+        <button class="chip" data-filter="שלום בית">שלום בית</button>
+        <button class="chip" data-filter="תעסוקה">תעסוקה</button>
+        <button class="chip" data-filter="ילדים ופוריות">ילדים ופוריות</button>
+        <button class="chip" data-filter="הצלחה">הצלחה</button>
+        <button class="chip" data-filter="הודיה">הודיה</button>
+      </div>
+
+      <div class="cards-grid" id="feedGrid"></div>
+      <div class="feed-empty hidden" id="feedEmpty">אין בקשות תואמות כרגע.</div>
+    </section>
+
+    <!-- ================= PERSONAL AREA ================= -->
+    <section class="section" id="me">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">אזור אישי</div>
+          <h2 id="meHeading">הבקשות שלי · אני מתפלל על · חיבורים</h2>
+          <p class="section-lead" id="meLead">ניהול הבקשות שלך, התפילות שאתה נושא ובני אדם שנוצר עמם חיבור רוחני.</p>
+        </div>
+        <div class="feed-tabs" role="tablist">
+          <button class="feed-tab active" data-me="mine">הבקשות שלי</button>
+          <button class="feed-tab" data-me="praying">אני מתפלל על</button>
+          <button class="feed-tab" data-me="bonds">חיבורים</button>
+        </div>
+      </div>
+
+      <div class="me-guest hidden" id="meGuest">
+        <div class="card guest-cta">
+          <div class="section-tag">מצב אורח</div>
+          <h3>כדי לבקש תפילה על עצמך יש להירשם</h3>
+          <p>במצב אורח ניתן להתפלל על אחרים בלבד. הרשמה מאפשרת לבקש תפילה, לקבל התראות ולבנות חיבורים רוחניים.</p>
+          <div class="guest-actions">
+            <button class="btn btn-primary" id="openAuthSignup">הרשמה חינם</button>
+            <button class="btn btn-secondary" id="openAuthLogin">התחברות</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="meContent">
+        <div class="cards-grid" id="mineGrid"></div>
+        <div class="cards-grid hidden" id="prayingGrid"></div>
+        <div class="bonds-wrap hidden" id="bondsWrap"></div>
+      </div>
+    </section>
+
+    <!-- ================= STORIES + CALENDAR + COMPASS ================= -->
+    <section class="section split reverse" id="stories">
+      <div class="card stories-card">
+        <div class="section-tag">סיפורי צדיקים, אמונה ותקומה</div>
+        <h2>מקורות שמחזקים את הלב</h2>
+        <div class="story">
+          <div class="story-cat">תקומה</div>
+          <h3>מן הצרה אל התקומה</h3>
+          <p>סיפור על אדם שנשבר עד היסוד, ובכוח אמונה פשוטה, תפילה והתמדה מצא אור חדש.</p>
+          <a href="#" class="story-link">קרא עוד ←</a>
+        </div>
+        <div class="story">
+          <div class="story-cat">אמונה</div>
+          <h3>בין כאב לקבלה</h3>
+          <p>כיצד קבלה פנימית ותפילה שקטה פותחות לב חדש גם בתוך כאב.</p>
+          <a href="#" class="story-link">קרא עוד ←</a>
+        </div>
+        <div class="story">
+          <div class="story-cat">מצוקה</div>
+          <h3>אור בתוך ההשפלה</h3>
+          <p>גם במקום שבו האדם הושפל ונשבר, האמונה לא כבתה והולידה התחלה חדשה.</p>
+          <a href="#" class="story-link">קרא עוד ←</a>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="card calendar-card" id="calendar">
+          <div class="section-tag">לוח שנה יהודי</div>
+          <h2>כ״א בניסן · שביעי של פסח</h2>
+          <p>יום של גאולה, אמונה וישועה. זמן של פתיחת לב, הודיה והתבוננות בדרך שבה ה׳ מנהיג את האדם.</p>
+          <div class="times">
+            <div><span>כניסת חג</span><strong>18:12</strong></div>
+            <div><span>יציאת חג</span><strong>19:23</strong></div>
+            <div><span>זמן קריאת שמע</span><strong>09:08</strong></div>
+            <div><span>שקיעה</span><strong>18:54</strong></div>
+          </div>
+        </div>
+
+        <div class="card compass-card">
+          <div class="section-tag">מצפן חי</div>
+          <h2>הלב מכוון לירושלים</h2>
+          <div class="compass-wrap">
+            <div class="compass">
+              <div class="compass-ring"></div>
+              <div class="compass-marks">
+                <span>צ</span><span>מ</span><span>ד</span><span>מע</span>
+              </div>
+              <div class="arrow"></div>
+              <div class="compass-center"></div>
+            </div>
+            <p>בכל מקום שבו האדם נמצא, המצפן מפנה את הלב לכיוון ירושלים — לזיכרון, אמונה וקִרבה.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PRAYER LIBRARY ================= -->
+    <section class="section" id="library">
+      <div class="section-head">
+        <div>
+          <div class="section-tag">מאגר תפילות בסיסי</div>
+          <h2>נוסחי תפילה · לפי קטגוריה</h2>
+          <p class="section-lead">מבחר נוסחים מהמסורת היהודית — לקריאה שקטה, לאמירה אישית או לעת שצריך את המילים הנכונות.</p>
+        </div>
+      </div>
+      <div class="library-grid" id="libraryGrid"></div>
+    </section>
+
+    <!-- ================= ABOUT + CONTACT ================= -->
+    <section class="section split" id="about">
+      <div class="card about-card">
+        <div class="section-tag">אודות מרכז התפילה</div>
+        <h2 id="aboutTitle">אודות מרכז התפילה</h2>
+        <p id="aboutText">
+          מרכז התפילה הוא פלטפורמה דיגיטלית ייחודית שנוצרה מתוך אמונה עמוקה כי כל תפילה — ולו הקטנה ביותר —
+          יכולה לשנות מציאות. המערכת מאפשרת לכל אדם, מכל רקע ועדה, לבקש תפילה עבור עצמו או עבור יקיריו,
+          ובמקביל לקחת חלק בזכות הגדולה של תפילה עבור אחרים — מתוך אנונימיות מלאה, כבוד הדדי ואמון.
+        </p>
+
+        <div class="dedication" lang="he" dir="rtl">
+          <div class="dedication-verse">
+            <span class="dedication-orn" aria-hidden="true">✦</span>
+            <em>
+              "וַאֲנִי תְפִלָּתִי לְךָ ה' עֵת רָצוֹן, אֱלֹהִים בְּרָב חַסְדֶּךָ עֲנֵנִי בֶּאֱמֶת יִשְׁעֶךָ."
+            </em>
+            <span class="dedication-source">תהלים ס"ט, י"ד</span>
+          </div>
+
+          <div class="dedication-tag">הקדשה</div>
+          <h3 class="dedication-title">"מרכז התפילה העולמי" מוקדש ונתרם באהבת חינם על ידי אלון טהורי</h3>
+
+          <p>
+            זהו סיפור על איש של חסד. יהודי, ישראלי גאה, ועמוד התווך של משפחתו —
+            בן מדהים להוריו, בעל אוהב, אב מסור ואח מיוחד במינו. אלון שירת את המדינה בנאמנות עמוקה,
+            ויצא לכבוש את דרכו בעולם כשהוא סולל אותה בעשר אצבעותיו. נגד כל הסיכויים הוא הוביל עסק עצמאי מצליח,
+            אך מעולם לא שכח מהיכן בא ולאן פניו מועדות.
+          </p>
+          <p>
+            מתוך צניעות וענווה, אלון פותח את לבו וכיסו בתרומות לכוללים ולצבא,
+            וכעת — מעניק לעולם כולו את המתנה הגדולה ביותר: את הזכות להתפלל.
+            בזכות אדם אחד, רב הליכות ומלח הארץ, נפתחים שערי שמיים עבור כל מבקש תפילה באשר הוא.
+          </p>
+        </div>
+
+        <div class="stats">
+          <div><strong>12,470</strong><span>תפילות פעילות</span></div>
+          <div><strong>3,120</strong><span>קהילה מתפללת</span></div>
+          <div><strong>24/7</strong><span>הנר דולק</span></div>
+        </div>
+
+        <!-- ============ אור היום · DAILY LIGHT — replaces old logo tray ============ -->
+        <div class="kz-or-yom" id="orYom" aria-label="אור היום">
+          <div class="kz-or-yom-head">
+            <span class="kz-or-tag">אוֹר הַיּוֹם · רגע של אור</span>
+            <h3>הָאוֹר שֶׁל הַיּוֹם</h3>
+            <p>פסוק, חכמה, תזכורת — שלושה רגעים יומיים שמשפיעים על האור בלב.</p>
+          </div>
+
+          <div class="kz-or-grid">
+            <!-- Verse of the day -->
+            <div class="kz-or-card kz-or-verse">
+              <div class="kz-or-icon">✦</div>
+              <span class="kz-or-mini-tag">פסוק היום</span>
+              <p class="kz-or-text" id="kzOrVerse">"ה׳ קרוב לכל קוראיו, לכל אשר יקראוהו באמת"</p>
+              <div class="kz-or-source" id="kzOrVerseSource">תהלים קמ״ה, י״ח</div>
+              <button class="kz-or-share" data-share="verse">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg>
+                שתף
+              </button>
+            </div>
+
+            <!-- Wisdom of the day -->
+            <div class="kz-or-card kz-or-wisdom">
+              <div class="kz-or-icon">📜</div>
+              <span class="kz-or-mini-tag">חכמת חז"ל</span>
+              <p class="kz-or-text" id="kzOrWisdom">"איזהו חכם? הלומד מכל אדם"</p>
+              <div class="kz-or-source" id="kzOrWisdomSource">פרקי אבות ד׳, א׳</div>
+              <button class="kz-or-share" data-share="wisdom">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
+                שתף
+              </button>
+            </div>
+
+            <!-- Daily reminder / mitzvah -->
+            <div class="kz-or-card kz-or-tip">
+              <div class="kz-or-icon">🕯</div>
+              <span class="kz-or-mini-tag">תזכורת היום</span>
+              <p class="kz-or-text" id="kzOrTip">היום — תאמר תודה רבה לאדם אחד שעוזר לך תמיד.</p>
+              <div class="kz-or-source">מצווה קטנה · אור גדול</div>
+              <button class="kz-or-share" data-share="tip">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
+                שתף
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="contact">
+        <div class="section-tag">צור קשר</div>
+        <h2>נשמח לשמוע ממך</h2>
+        <label for="contactName">שם</label>
+        <input id="contactName" type="text" placeholder="שם מלא" />
+        <label for="contactEmail">אימייל</label>
+        <input id="contactEmail" type="email" placeholder="you@example.com" />
+        <label for="contactMsg">הודעה</label>
+        <div class="mic-field">
+          <textarea id="contactMsg" placeholder="כתוב כאן את הודעתך... או הקרא במיקרופון"></textarea>
+          <button type="button" class="mic-btn" id="micContact" aria-label="הקראת ההודעה במיקרופון" title="הקרא את ההודעה במיקרופון">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="3" width="6" height="12" rx="3"/>
+              <path d="M5 11a7 7 0 0 0 14 0"/>
+              <path d="M12 18v3"/>
+              <path d="M8 21h8"/>
+            </svg>
+            <span class="mic-ring" aria-hidden="true"></span>
+          </button>
+          <div class="mic-status" id="micContactStatus" aria-live="polite"></div>
+        </div>
+        <button class="btn btn-primary wide" type="button" id="contactSend">שלח הודעה</button>
+        <div class="helper" id="contactHelp">אנו משתדלים להשיב בתוך יום עסקים.</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= הקדשה גדולה לאלון ================= -->
+  <section class="kz-dedication-section" aria-label="הקדשה">
+    <!-- 4 corner ornaments — gold flourishes -->
+    <svg class="kz-dedication-corner tl" viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+      <path d="M2 22 Q2 2 22 2"/>
+      <path d="M8 22 Q8 8 22 8"/>
+      <circle cx="22" cy="2" r="1.5" fill="currentColor"/>
+      <circle cx="2" cy="22" r="1.5" fill="currentColor"/>
+      <path d="M14 14 L20 20" />
+      <circle cx="14" cy="14" r="2" fill="currentColor" opacity=".7"/>
+    </svg>
+    <svg class="kz-dedication-corner tr" viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+      <path d="M2 22 Q2 2 22 2"/>
+      <path d="M8 22 Q8 8 22 8"/>
+      <circle cx="22" cy="2" r="1.5" fill="currentColor"/>
+      <circle cx="2" cy="22" r="1.5" fill="currentColor"/>
+      <path d="M14 14 L20 20"/>
+      <circle cx="14" cy="14" r="2" fill="currentColor" opacity=".7"/>
+    </svg>
+    <svg class="kz-dedication-corner bl" viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+      <path d="M2 22 Q2 2 22 2"/>
+      <path d="M8 22 Q8 8 22 8"/>
+      <circle cx="22" cy="2" r="1.5" fill="currentColor"/>
+      <circle cx="2" cy="22" r="1.5" fill="currentColor"/>
+      <path d="M14 14 L20 20"/>
+      <circle cx="14" cy="14" r="2" fill="currentColor" opacity=".7"/>
+    </svg>
+    <svg class="kz-dedication-corner br" viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+      <path d="M2 22 Q2 2 22 2"/>
+      <path d="M8 22 Q8 8 22 8"/>
+      <circle cx="22" cy="2" r="1.5" fill="currentColor"/>
+      <circle cx="2" cy="22" r="1.5" fill="currentColor"/>
+      <path d="M14 14 L20 20"/>
+      <circle cx="14" cy="14" r="2" fill="currentColor" opacity=".7"/>
+    </svg>
+    <div class="kz-dedication-glow" aria-hidden="true"></div>
+    <div class="kz-dedication-inner">
+      <span class="kz-dedication-tag">הַקְדָּשָׁה · בְּאַהֲבַת חִנָּם</span>
+
+      <div class="kz-dedication-verse">
+        <span class="kz-orn">✦</span>
+        <em>"וַאֲנִי תְפִלָּתִי לְךָ ה' עֵת רָצוֹן, אֱלֹהִים בְּרָב חַסְדֶּךָ עֲנֵנִי בֶּאֱמֶת יִשְׁעֶךָ."</em>
+        <small>תהלים ס"ט, י"ד</small>
+      </div>
+
+      <h2 class="kz-dedication-title">"הַבַּיִת הַיְּהוּדִי שֶׁלְּךָ בָּעוֹלָם" מוקדש ונתרם<br>באהבת חינם על ידי <span class="gold">אלון טהורי</span></h2>
+
+      <div class="kz-dedication-text">
+        <p>זהו סיפור על <strong>איש של חסד</strong>. יהודי, ישראלי גאה, ועמוד התווך של משפחתו —
+        בן מדהים להוריו, בעל אוהב, אב מסור ואח מיוחד במינו. אלון שירת את המדינה בנאמנות עמוקה,
+        ויצא לכבוש את דרכו בעולם כשהוא סולל אותה בעשר אצבעותיו. נגד כל הסיכויים הוא הוביל עסק עצמאי מצליח,
+        אך מעולם לא שכח מהיכן בא ולאן פניו מועדות.</p>
+
+        <p>מתוך צניעות וענווה, אלון פותח את לבו וכיסו בתרומות לכוללים ולצבא,
+        וכעת — <em>מעניק לעולם כולו את המתנה הגדולה ביותר: את הזכות להתפלל</em>.
+        בזכות אדם אחד, רב הליכות ומלח הארץ, נפתחים שערי שמיים עבור כל מבקש תפילה באשר הוא.</p>
+      </div>
+
+      <div class="kz-dedication-stats">
+        <div><strong>12,470+</strong><span>תפילות פעילות</span></div>
+        <div><strong>3,120</strong><span>קהילה מתפללת</span></div>
+        <div><strong>24/7</strong><span>הנר דולק</span></div>
+        <div><strong>20</strong><span>שפות</span></div>
+      </div>
+
+      <div class="kz-dedication-by">
+        <span class="kz-dedication-orn-line">✦ — ✦ — ✦</span>
+        <p class="kz-dedication-by-text">
+          האתר נבנה בְּאַהֲבָה עַל יְדֵי <strong>אִיצִיק טַהוֹרִי</strong> — אביו של אלון.<br>
+          <small>"מַהוּ אָב? אַחַד הָאַחַד שֶׁמַּצְמִיחַ נְשָׁמָה אַחֶרֶת בְּעוֹלָמוֹ."</small>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <div class="star" aria-hidden="true">✡</div>
+        <div>
+          <div class="brand-main">מרכז התפילה</div>
+          <div class="brand-sub">כל תפילה שנשלחת – מגיעה · נבנה ע"י איציק טהורי</div>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="family-room.html" style="color:var(--gold-deep,#8A6A3A);font-weight:600">🏠 חדר המשפחה</a>
+        <a href="find-jewish.html" style="color:var(--gold-deep,#8A6A3A);font-weight:600">🌍 מפת היהדות</a>
+        <a href="national-memorial.html" style="color:var(--gold-deep,#8A6A3A);font-weight:600">🕯 הזיכרון הלאומי</a>
+        <a href="admin.html">אדמין</a>
+        <a href="#about">אודות</a>
+        <a href="#contact">צור קשר</a>
+        <a href="#library">מאגר תפילות</a>
+        <a href="#stories">סיפורי אמונה</a>
+        <a href="unity.html">כל זכות יהודי</a>
+        <a href="life-events.html">אירועי חיים</a>
+        <a href="customs.html">מנהגים ועדות</a>
+        <a href="what-to-say.html">מה אומרים כש…</a>
+        <a href="find-jewish.html">איתור קהילה</a>
+        <a href="kids.html">פינת ילדים</a>
+        <a href="memorial.html">ספר נשמות</a>
+        <a href="ask-rabbi.html">שאל רב</a>
+        <a href="learning.html">לימוד יומי</a>
+        <a href="aliyah-traveler.html">עלייה ונסיעה</a>
+        <a href="chesed.html">חסד והתנדבות</a>
+        <a href="dictionary.html">עברית יהודית 101</a>
+        <a href="privacy.html">מדיניות פרטיות</a>
+        <a href="terms.html">תנאי שימוש</a>
+        <a href="accessibility.html">הצהרת נגישות</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© מרכז התפילה · כל הזכויות שמורות</div>
+      <div>נוצר בשקט, באמונה.</div>
+    </div>
+  </footer>
+
+  <!-- ============ NOTIFICATIONS PANEL ============ -->
+  <div class="notif-panel" id="notifPanel" hidden>
+    <div class="notif-head">
+      <div>
+        <div class="section-tag">מרכז התראות</div>
+        <h3>מה חדש ברשת</h3>
+      </div>
+      <button class="chip" id="markAllRead">סמן הכול כנקרא</button>
+    </div>
+    <ul class="notif-list" id="notifList"></ul>
+  </div>
+
+  <!-- ============ AUTH MODAL ============ -->
+  <div class="modal" id="authModal" hidden>
+    <div class="modal-back" data-close></div>
+    <div class="modal-card">
+      <button class="modal-close" data-close aria-label="סגור">✕</button>
+      <div class="section-tag">הצטרפות למרכז התפילה</div>
+      <h2 id="authTitle">הרשמה</h2>
+      <p class="section-lead">אפשר להתפלל על אחרים כאורח · כדי לבקש תפילה יש להירשם במלואו.</p>
+
+      <div class="auth-modes">
+        <button class="auth-mode active" data-mode="registered">משתמש רשום</button>
+        <button class="auth-mode" data-mode="guest">מצב אורח</button>
+      </div>
+
+      <button type="button" class="btn btn-secondary wide google-top-btn" id="googleAuth">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <path fill="#4285F4" d="M22 12.2c0-.7-.1-1.3-.2-2H12v3.8h5.6c-.2 1.3-1 2.4-2 3.2v2.7h3.3c2-1.8 3.1-4.5 3.1-7.7z"/>
+          <path fill="#34A853" d="M12 22c2.7 0 5-.9 6.7-2.4l-3.3-2.6c-.9.6-2 1-3.4 1-2.6 0-4.8-1.7-5.6-4.1H3v2.6A10 10 0 0 0 12 22z"/>
+          <path fill="#FBBC04" d="M6.4 13.9A6 6 0 0 1 6 12c0-.7.1-1.3.3-1.9V7.5H3a10 10 0 0 0 0 9z"/>
+          <path fill="#EA4335" d="M12 6c1.5 0 2.8.5 3.8 1.5l2.9-2.9A10 10 0 0 0 3 7.5l3.4 2.6C7.2 7.7 9.4 6 12 6z"/>
+        </svg>
+        <span id="googleAuthLabel">המשך עם Google</span>
+      </button>
+      <div class="auth-divider auth-top-divider"><span>או המשך עם פרטים</span></div>
+
+      <form id="authForm" class="auth-form">
+        <div class="auth-fields" id="authFields">
+          <div class="field-row">
+            <div>
+              <label for="authFirstName">שם פרטי <em>*</em></label>
+              <input id="authFirstName" type="text" placeholder="שם פרטי" />
+            </div>
+            <div>
+              <label for="authMother">שם האם <em>*</em></label>
+              <input id="authMother" type="text" placeholder="שם האם" />
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div>
+              <label for="authGender">מגדר</label>
+              <select id="authGender">
+                <option value="">לא צוין</option>
+                <option>גבר</option>
+                <option>אישה</option>
+              </select>
+            </div>
+            <div>
+              <label for="authCommunity">שיוך עדתי</label>
+              <select id="authCommunity">
+                <option value="">לא צוין</option>
+                <option>ספרדי</option>
+                <option>חסידי</option>
+                <option>אשכנזי</option>
+              </select>
+            </div>
+          </div>
+
+          <label for="authIdentity">הגדרה עצמית</label>
+          <select id="authIdentity">
+            <option value="">לא צוין</option>
+            <option>חילוני</option>
+            <option>מסורתי</option>
+            <option>דתי לאומי</option>
+            <option>חרדי</option>
+            <option>חסיד</option>
+            <option>לא יודע</option>
+          </select>
+
+          <div class="auth-registered-only">
+            <label for="authEmail">אימייל <em>*</em></label>
+            <input id="authEmail" type="email" placeholder="you@example.com" />
+            <label for="authPhone">טלפון נייד <span class="opt-mark">(לקבלת SMS כשמברכים אותך)</span></label>
+            <input id="authPhone" type="tel" placeholder="05X-XXXXXXX" inputmode="tel" />
+            <label for="authPass">סיסמה <em>*</em></label>
+            <input id="authPass" type="password" placeholder="לפחות 6 תווים" />
+
+            <div class="notify-prefs">
+              <div class="notify-prefs-title">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                איך לקבל עדכון כשמברכים אותך?
+              </div>
+              <label class="notify-row">
+                <input type="checkbox" id="notifyEmail" checked />
+                <span><strong>מייל</strong> — כל פעם שמישהו מתפלל או משיב</span>
+              </label>
+              <label class="notify-row">
+                <input type="checkbox" id="notifySms" />
+                <span><strong>SMS</strong> — הודעת טקסט קצרה לנייד שלך</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="auth-error" id="authError"></div>
+        <button type="button" class="btn btn-primary wide" id="authSubmit">הירשם</button>
+        <div class="auth-toggle">
+          <span id="authToggleText">כבר יש לך חשבון?</span>
+          <button type="button" class="link-btn" id="authToggleBtn">התחבר</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============ LIBRARY MODAL ============ -->
+  <div class="modal" id="libraryModal" hidden>
+    <div class="modal-back" data-close></div>
+    <div class="modal-card library-modal">
+      <button class="modal-close" data-close aria-label="סגור">✕</button>
+      <div class="section-tag" id="libModalTag">תפילה</div>
+      <h2 id="libModalTitle"></h2>
+      <div class="lib-text" id="libModalText"></div>
+    </div>
+  </div>
+
+  <!-- ============ STATUS MODAL ============ -->
+  <div class="modal" id="statusModal" hidden>
+    <div class="modal-back" data-close></div>
+    <div class="modal-card">
+      <button class="modal-close" data-close aria-label="סגור">✕</button>
+      <div class="section-tag">עדכון סטטוס בקשה</div>
+      <h2>איך הדברים נראים עכשיו?</h2>
+      <p class="section-lead">בעת שינוי סטטוס תישלח התראה לכל מי שהתפלל על הבקשה.</p>
+      <div class="status-options">
+        <button class="status-opt" data-status="פעילה">עדיין פעילה</button>
+        <button class="status-opt" data-status="המצב השתפר">המצב השתפר</button>
+        <button class="status-opt" data-status="נענתה">הבקשה נענתה</button>
+        <button class="status-opt" data-status="תודה">תודה לכל מי שהתפלל</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="saved-toast" id="toast"></div>
+
+  <!-- ============ ONBOARDING TOUR ============ -->
+  <div class="tour-overlay" id="tourOverlay" hidden>
+    <div class="tour-back" data-tour-close></div>
+    <div class="tour-card" role="dialog" aria-labelledby="tourTitle" aria-modal="true">
+      <button class="tour-close" id="tourClose" aria-label="סגור">✕</button>
+      <div class="tour-progress" id="tourProgress" aria-hidden="true"></div>
+
+      <div class="tour-stage" id="tourStage">
+        <!-- step 1 -->
+        <section class="tour-step is-active" data-step="1">
+          <div class="tour-art tour-art-welcome" aria-hidden="true">
+            <div class="tour-star">
+              <svg viewBox="0 0 64 64" width="56" height="56" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
+                <polygon points="32,6 40,22 58,22 46,34 50,52 32,42 14,52 18,34 6,22 24,22"/>
+              </svg>
+              <span class="tour-halo"></span>
+              <span class="tour-spark s1"></span>
+              <span class="tour-spark s2"></span>
+              <span class="tour-spark s3"></span>
+            </div>
+          </div>
+          <div class="section-tag">ברוך הבא · הוראות הפעלה</div>
+          <h2 id="tourTitle">שלום, נעים שהגעת</h2>
+          <p>
+            מרכז התפילה הוא מרחב שקט לתפילה אישית ואנונימית.
+            כמה צעדים קצרים שיעזרו להכיר את המקום — אפשר לדלג בכל רגע.
+          </p>
+        </section>
+
+        <!-- step 2 -->
+        <section class="tour-step" data-step="2">
+          <div class="tour-art tour-art-write" aria-hidden="true">
+            <div class="tour-quill">
+              <svg viewBox="0 0 64 64" width="56" height="56" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 50 L50 14"/>
+                <path d="M50 14 C54 18, 54 26, 48 32 C42 26, 42 18, 50 14 Z"/>
+                <path d="M14 50 L20 48 L16 44 Z"/>
+              </svg>
+              <span class="tour-ink"></span>
+            </div>
+          </div>
+          <div class="section-tag">צעד 1 · בקשת תפילה</div>
+          <h2>איך מבקשים תפילה</h2>
+          <p>
+            גוללים לקטע <strong>"כתוב כאן את בקשת הלב שלך"</strong>,
+            בוחרים תחום (רפואה, פרנסה, זוגיות ועוד) וכותבים בשקט מה על הלב.
+            הבקשה תוצג באופן אנונימי בלבד — בשם כמו "פלוני בן פלונית".
+          </p>
+        </section>
+
+        <!-- step 3 -->
+        <section class="tour-step" data-step="3">
+          <div class="tour-art tour-art-mic" aria-hidden="true">
+            <div class="tour-mic">
+              <svg viewBox="0 0 64 64" width="56" height="56" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="24" y="10" width="16" height="30" rx="8"/>
+                <path d="M14 30a18 18 0 0 0 36 0"/>
+                <path d="M32 48v8"/>
+                <path d="M22 56h20"/>
+              </svg>
+              <span class="tour-mic-ring r1"></span>
+              <span class="tour-mic-ring r2"></span>
+              <span class="tour-mic-ring r3"></span>
+            </div>
+          </div>
+          <div class="section-tag">חדש · הקראה במיקרופון</div>
+          <h2>אפשר גם להקריא את הבקשה</h2>
+          <p>
+            לא חייבים להקליד. לוחצים על כפתור המיקרופון שליד שדה הבקשה,
+            מדברים בקול רגוע, והמערכת תמלל את הדברים שלך לעברית.
+            לחיצה נוספת על המיקרופון עוצרת את ההקלטה.
+          </p>
+        </section>
+
+        <!-- step 4 -->
+        <section class="tour-step" data-step="4">
+          <div class="tour-art tour-art-heart" aria-hidden="true">
+            <div class="tour-heart">
+              <svg viewBox="0 0 64 64" width="56" height="56" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M32 54s-18-10-18-24a10 10 0 0 1 18-6 10 10 0 0 1 18 6c0 14-18 24-18 24z"/>
+              </svg>
+              <span class="tour-beat"></span>
+            </div>
+          </div>
+          <div class="section-tag">צעד 2 · להתפלל על אחרים</div>
+          <h2>להשתתף בזכות הגדולה</h2>
+          <p>
+            בקטע <strong>"בקשות פעילות"</strong> אפשר לראות את הפיד החי
+            וללחוץ על <strong>"להתפלל"</strong> בכל בקשה. אפילו רגע אחד של כוונה
+            מצטרף לרשת של אור — ומוצג למבקש כהתראה אנונימית.
+          </p>
+        </section>
+
+        <!-- step 5 -->
+        <section class="tour-step" data-step="5">
+          <div class="tour-art tour-art-bell" aria-hidden="true">
+            <div class="tour-bell">
+              <svg viewBox="0 0 64 64" width="56" height="56" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 22a16 16 0 0 1 32 0c0 18 8 24 8 24H8s8-5 8-24"/>
+                <path d="M27 52a5 5 0 0 0 10 0"/>
+              </svg>
+              <span class="tour-bell-sparkle"></span>
+            </div>
+          </div>
+          <div class="section-tag">צעד 3 · האזור האישי</div>
+          <h2>התראות ותשובות</h2>
+          <p>
+            ב<strong>"אזור אישי"</strong> רואים מי התפלל עליך, ואפשר להשיב באחת
+            מכמה תשובות מוכנות (״תודה, המצב השתפר״, ״הבעיה נפתרה״ ועוד).
+            בפעמון שלמעלה מתקבלות התראות — ובהרשמה אפשר לבחור לקבלן גם במייל או ב־SMS.
+          </p>
+        </section>
+
+        <!-- step 6 -->
+        <section class="tour-step" data-step="6">
+          <div class="tour-art tour-art-candle" aria-hidden="true">
+            <div class="tour-candle">
+              <div class="tour-candle-flame"><span></span></div>
+              <div class="tour-candle-body"></div>
+              <span class="tour-candle-glow"></span>
+            </div>
+          </div>
+          <div class="section-tag">יהי רצון</div>
+          <h2>מוכן להתחיל</h2>
+          <p>
+            זהו — אתה יודע הכל. אפשר לבקש תפילה, להתפלל על אחרים, להשיב
+            ולהיות חלק מרשת של אור. תמיד אפשר לפתוח שוב את ההוראות
+            מכפתור <strong>?</strong> שלמעלה בפינה.
+          </p>
+        </section>
+      </div>
+
+      <footer class="tour-foot">
+        <div class="tour-dots" id="tourDots"></div>
+        <div class="tour-buttons">
+          <button class="btn btn-secondary" id="tourPrev" type="button">הקודם</button>
+          <button class="link-btn tour-skip" id="tourSkip" type="button">דלג על ההסבר</button>
+          <button class="btn btn-primary" id="tourNext" type="button">הבא</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ============ WHO-PRAYED TABLE MODAL ============ -->
+  <div class="modal" id="prayedByModal" hidden>
+    <div class="modal-back" data-close></div>
+    <div class="modal-card prayed-by-modal">
+      <button class="modal-close" data-close aria-label="סגור">✕</button>
+      <div class="section-tag">המברכים שלך</div>
+      <h2 id="prayedByTitle">מי התפלל עבורך</h2>
+      <p class="section-lead">אפשר להשיב לכל אחד במילה טובה. הבחירה תישלח למברך כהתראה אנונימית.</p>
+
+      <div class="prayed-by-wrap">
+        <table class="prayed-by-table" id="prayedByTable">
+          <thead>
+            <tr><th>מברך</th><th>התפלל</th><th>תגובה אחרונה</th><th>פעולה</th></tr>
+          </thead>
+          <tbody id="prayedByBody"></tbody>
+        </table>
+      </div>
+
+      <div class="reply-panel hidden" id="replyPanel">
+        <div class="reply-to">משיב ל־<strong id="replyToName"></strong></div>
+        <div class="reply-options">
+          <button class="reply-opt" data-reply="תודה, המצב השתפר">תודה, המצב השתפר</button>
+          <button class="reply-opt" data-reply="תודה, הבעיה נפתרה">תודה, הבעיה נפתרה</button>
+          <button class="reply-opt" data-reply="תודה, אבל הבעיה עדיין נשארה — אשמח להמשך תפילה">תודה, אבל הבעיה עדיין נשארה — המשיכו להתפלל</button>
+          <button class="reply-opt" data-reply="תודה מעומק הלב על התפילה">תודה מעומק הלב</button>
+        </div>
+        <button class="link-btn reply-cancel" id="replyCancel">ביטול</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ STORY MODAL ============ -->
+  <div class="modal" id="storyModal" hidden>
+    <div class="modal-back" data-close></div>
+    <div class="modal-card story-modal">
+      <button class="modal-close" data-close aria-label="סגור">✕</button>
+      <div class="section-tag" id="storyModalTag">סיפור</div>
+      <h2 id="storyModalTitle"></h2>
+      <div class="story-modal-text" id="storyModalText"></div>
+      <div class="story-modal-foot">
+        <span class="story-modal-source" id="storyModalSource"></span>
+        <button type="button" class="btn btn-secondary small" data-close>סגור</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SHARE RAIL (additive) ============ -->
+  <aside class="share-rail" id="shareRail" aria-label="שיתוף האתר">
+    <button type="button" class="share-toggle" id="shareToggle" aria-expanded="true" title="הסתר שיתוף">
+      <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="share-rail-label">שתפו</div>
+    <a class="share-btn share-fb" href="#" data-share="facebook" title="שיתוף בפייסבוק" aria-label="שיתוף בפייסבוק" rel="noopener">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.7c0-.93.26-1.57 1.6-1.57H17V4.24A22.1 22.1 0 0 0 14.56 4c-2.42 0-4.06 1.47-4.06 4.18V10.8H8v3.2h2.5V22h3Z"/></svg>
+    </a>
+    <a class="share-btn share-tw" href="#" data-share="twitter" title="שיתוף בטוויטר / X" aria-label="שיתוף בטוויטר" rel="noopener">
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M17.53 3H20.5l-6.48 7.41L22 21h-6.77l-4.8-6.27L4.8 21H1.83l6.94-7.93L1.5 3h6.93l4.34 5.74L17.53 3Zm-1.2 16h1.62L7.77 4.87H6.05L16.33 19Z"/></svg>
+    </a>
+    <a class="share-btn share-wa" href="#" data-share="whatsapp" title="שיתוף בוואטסאפ" aria-label="שיתוף בוואטסאפ" rel="noopener">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M20 12a8 8 0 0 1-12.2 6.8L3.5 20l1.3-4.2A8 8 0 1 1 20 12Zm-8-6.4a6.4 6.4 0 0 0-5.5 9.7L5.7 18l2.8-.73A6.4 6.4 0 1 0 12 5.6Zm3.6 8.2c-.1-.17-.36-.27-.76-.47-.4-.2-2.36-1.16-2.73-1.3-.37-.13-.63-.2-.9.2-.26.4-1.02 1.3-1.25 1.56-.23.27-.46.3-.86.1-.4-.2-1.7-.63-3.24-2-1.2-1.07-2-2.4-2.23-2.8-.23-.4-.02-.62.18-.82.18-.18.4-.46.6-.7.2-.23.27-.4.4-.67.13-.27.07-.5-.03-.7-.1-.2-.9-2.17-1.24-2.97-.32-.77-.66-.67-.9-.68h-.76c-.27 0-.7.1-1.06.5-.36.4-1.4 1.37-1.4 3.33 0 1.97 1.43 3.87 1.63 4.13.2.27 2.83 4.3 6.86 6.03 2.57 1.1 3.57 1.2 4.85 1 .78-.12 2.37-.97 2.7-1.9.34-.94.34-1.74.23-1.9Z"/></svg>
+    </a>
+    <button class="share-btn share-copy" type="button" data-share="copy" title="העתק קישור" aria-label="העתק קישור">
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+    </button>
+  </aside>
+
+  <!-- ============ SPAM TOAST ============ -->
+  <div class="spam-toast" id="spamToast" hidden>
+    <span class="spam-shield" aria-hidden="true">🛡</span>
+    <div>
+      <strong>הבקשה נחסמה</strong>
+      <span id="spamToastMsg">זוהו ניסוחים לא הולמים. הודעה אוטומטית נשלחה לצוות השמירה.</span>
+    </div>
+  </div>
+
+  <!-- ============ COOKIE BANNER (GDPR / חוק הגנת הפרטיות) ============ -->
+  <div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="הודעת עוגיות">
+    <p>
+      אנחנו משתמשים ב־Cookies חיוניים בלבד כדי לזכור את העדפות השפה ומצב הבוט.
+      אין מעקב פרסומי ואין שיתוף עם צד שלישי.
+      קרא את <a href="privacy.html">מדיניות הפרטיות</a> שלנו.
+    </p>
+    <div class="cookie-actions">
+      <button type="button" id="cookieDecline">רק חיוני</button>
+      <button type="button" id="cookieAccept" class="primary">אישור · המשך</button>
+    </div>
+  </div>
+
+  <!-- ============ PWA INSTALL CHIP ============ -->
+  <div class="pwa-install-chip" id="pwaInstallChip" role="button" tabindex="0" aria-label="התקן את האפליקציה למסך הבית">
+    <span aria-hidden="true">⤓</span>
+    <span>התקן אפליקציה למסך הבית</span>
+    <button type="button" class="pwa-x" id="pwaInstallDismiss" aria-label="סגור">✕</button>
+  </div>
+
+  <!-- KZ Alive: seed demo data BEFORE script.js so personal area + feed feel alive on first visit -->
+  <script>
+  (function(){
+    try {
+      var has = function(k){ var v = localStorage.getItem(k); return v && v !== 'null' && v !== '[]' && v !== '{}'; };
+      var now = Date.now();
+
+      if (!has('pc_praying')){
+        localStorage.setItem('pc_praying', JSON.stringify([
+          { id:'p1', name:'יצחק בן שרה',  cat:'רפואה',     text:'מבקש תפילה לרפואה שלמה, לחיזוק הגוף והנפש ולישועה קרובה.', startedAt: now - 1000*60*60*4 },
+          { id:'p6', name:'שרה בת אסתר',  cat:'רפואה',     text:'תפילה לרפואת ילד חולה — שיקבל כוחות, שמחה ובריאות.',          startedAt: now - 1000*60*60*8 },
+          { id:'p4', name:'לאה בת רחל',   cat:'שלום בית',  text:'מבקשת תפילה לשלום בית, לרוך, לסבלנות ולאהבה מחודשת.',         startedAt: now - 1000*60*60*22 }
+        ]));
+      }
+      if (!has('pc_mine')){
+        localStorage.setItem('pc_mine', JSON.stringify([
+          { id:'m-' + now, name:'אלון בן רחל', cat:'הצלחה', gender:'גבר',
+            text:'בקשה לזכות, להצלחה ולסיעתא דשמיא בכל מעשי ידיי.',
+            created: now - 1000*60*30, count:7, status:'פעילה' }
+        ]));
+      }
+      if (!has('pc_prayed_log')){
+        localStorage.setItem('pc_prayed_log', JSON.stringify({
+          'p1': now - 1000*60*60*4,
+          'p6': now - 1000*60*60*8,
+          'p4': now - 1000*60*60*22
+        }));
+      }
+    } catch(_){}
+  })();
+  </script>
+  <script src="script.js" defer></script>
+  <script src="kz-auth.js" defer></script>
+  <script src="kz-guide.js" defer></script>
+  <!-- Old AI bot script removed — replaced by Mirav -->
+  <script src="kz-showcase.js" defer></script>
+  <script src="kz-zmanim.js" defer></script>
+  <script src="kz-elevate.js" defer></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
+  <script src="data/jewish-places.js" defer></script>
+  <script src="kz-alive.js" defer></script>
+  <script src="kz-i18n.js" defer></script>
+  <script src="kz-hero-slider.js" defer></script>
+  <script src="kz-supreme.js" defer></script>
+  <script src="kz-or-yom.js" defer></script>
+  <script src="kz-ai-chat.js" defer></script>
+  <script src="kz-prominent.js" defer></script>
+  <script src="kz-google-auth.js" defer></script>
+
+  <!-- ====== מירב — Pill prominent FAB with name + avatar (replaces old AI bot) ====== -->
+  <button id="kzMiravInlineFab"
+          type="button"
+          aria-label="פתח שיחה עם מירב"
+          title="מירב · חברה דיגיטלית"
+          style="position:fixed;bottom:22px;inset-inline-end:22px;display:inline-flex;align-items:center;gap:10px;padding:10px 18px 10px 12px;border-radius:100px;background:linear-gradient(135deg,#0B1F3A,#1A2D4D);border:2px solid #B8935A;color:#f1d597;cursor:pointer;z-index:9000;box-shadow:0 14px 30px rgba(11,31,58,.4),0 0 0 0 rgba(241,213,151,.5);font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:15px;transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;animation:kzMiravBeacon 2.6s ease-in-out infinite;"
+          onclick="event.preventDefault();event.stopPropagation();
+                   if(window.KZ_AI_CHAT&&window.KZ_AI_CHAT.toggle){window.KZ_AI_CHAT.toggle();}
+                   else if(window.kzMiravToggle){window.kzMiravToggle();}
+                   else{alert('מירב טוענת... אנא רענן את הדף');}"
+          onmouseover="this.style.transform='translateY(-3px) scale(1.04)';this.style.boxShadow='0 18px 40px rgba(11,31,58,.55),0 0 0 6px rgba(241,213,151,.2)';"
+          onmouseout="this.style.transform='';this.style.boxShadow='0 14px 30px rgba(11,31,58,.4)';">
+    <span style="display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#D4B07A,#B8935A);color:#0B1F3A;font-family:'Frank Ruhl Libre',serif;font-weight:900;font-size:20px;box-shadow:0 0 0 2px rgba(241,213,151,.5),inset 0 -2px 4px rgba(0,0,0,.2);position:relative;flex-shrink:0;pointer-events:none;">
+      מ
+      <span style="position:absolute;bottom:0;inset-inline-end:0;width:11px;height:11px;border-radius:50%;background:#4ade80;border:2px solid #0B1F3A;box-shadow:0 0 6px #4ade80;"></span>
+    </span>
+    <span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.2;text-align:start;pointer-events:none;">
+      <span style="font-size:14px;color:#f1d597;font-weight:700;">מירב</span>
+      <span style="font-size:10px;color:rgba(255,255,255,.65);font-weight:500;letter-spacing:.04em;font-family:Heebo,sans-serif;">חברה · איתך תמיד</span>
+    </span>
+  </button>
+  <style>
+    @keyframes kzMiravBeacon{
+      0%, 100% { box-shadow: 0 14px 30px rgba(11,31,58,.4), 0 0 0 0 rgba(241,213,151,.5); }
+      50%      { box-shadow: 0 14px 30px rgba(11,31,58,.4), 0 0 0 12px rgba(241,213,151,0); }
+    }
+    @media (max-width: 600px){
+      #kzMiravInlineFab{ padding: 8px 14px 8px 10px !important; font-size: 13px !important; }
+      #kzMiravInlineFab > span:first-of-type{ width: 32px !important; height: 32px !important; font-size: 16px !important; }
+      #kzMiravInlineFab > span:last-of-type span:last-child{ display: none !important; }
+    }
+  </style>
+</body>
+</html>

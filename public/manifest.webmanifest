@@ -1,0 +1,66 @@
+{
+  "name": "מרכז התפילה העולמי · כל זכות יהודי",
+  "short_name": "מרכז התפילה",
+  "description": "מרחב תפילה יהודי, אישי, אינטימי ואנונימי — ובית האחדות העולמי: מנהגים, ברכות, חסד, לימוד ועוד.",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fffaf3",
+  "theme_color": "#0B1F3A",
+  "lang": "he",
+  "dir": "rtl",
+  "categories": ["lifestyle", "social", "education", "religion"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "בקש תפילה",
+      "short_name": "בקש",
+      "description": "פתח את טופס בקשת התפילה",
+      "url": "/index.html#create"
+    },
+    {
+      "name": "התחל להתפלל",
+      "short_name": "התפלל",
+      "description": "פתח את פיד התפילות",
+      "url": "/index.html#feed"
+    },
+    {
+      "name": "כל זכות יהודי",
+      "short_name": "אחדות",
+      "description": "בית האחדות — מנהגים, חסד, לימוד וחיים יהודיים",
+      "url": "/unity.html"
+    },
+    {
+      "name": "שאל רב",
+      "short_name": "שאל",
+      "description": "שאלת רב לפי זרם ועדה",
+      "url": "/ask-rabbi.html"
+    },
+    {
+      "name": "ספר נשמות",
+      "short_name": "לעילוי נשמת",
+      "description": "יארצייט וזיכרון עולמי",
+      "url": "/memorial.html"
+    },
+    {
+      "name": "לימוד יומי",
+      "short_name": "לימוד",
+      "description": "דף יומי, משנה, הלכה, פרשה",
+      "url": "/learning.html"
+    },
+    {
+      "name": "חסד והתנדבות",
+      "short_name": "חסד",
+      "description": "גמחים, בקשות עזרה, התנדבות",
+      "url": "/chesed.html"
+    }
+  ]
+}

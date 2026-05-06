@@ -1,0 +1,73 @@
+/* ============================================================
+   KZ VOCALIZED — Sacred-style Hebrew title with niqqud
+   ============================================================ */
+
+/* Sacred Hebrew typography */
+.kz-vocalized{
+  font-family: "Frank Ruhl Libre", "David Libre", "Times New Roman", Georgia, serif !important;
+  font-weight: 700 !important;
+  letter-spacing: -.005em !important;
+  line-height: 1.3 !important;
+  background: linear-gradient(180deg,
+    #1a3358 0%,
+    #0B1F3A 40%,
+    #6b4f1f 70%,
+    #b8935a 90%,
+    #f1d597 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 1px 0 rgba(255,255,255,.5);
+  display: inline-block;
+  /* Subtle inner shimmer */
+  position: relative;
+}
+.kz-vocalized::after{
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* Niqqud-friendly: ensure no clipping of vowel marks */
+.kz-vocalized{
+  padding-block: 2px;
+}
+
+/* Larger size when used as primary brand */
+.brand .kz-vocalized{
+  font-size: clamp(15px, 1.2vw + 8px, 22px);
+}
+
+/* For hero usage if needed */
+.hero .kz-vocalized,
+.kz-vocalized.kz-large{
+  font-size: clamp(28px, 4vw + 14px, 56px);
+  letter-spacing: -.015em !important;
+}
+
+/* Gentle gold shimmer on the vocalized brand */
+@keyframes kz-vocal-shimmer{
+  0%, 100% { filter: brightness(1)    drop-shadow(0 0 0 rgba(212,176,122,0)); }
+  50%      { filter: brightness(1.08) drop-shadow(0 0 12px rgba(212,176,122,.35)); }
+}
+.kz-vocalized{
+  animation: kz-vocal-shimmer 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .kz-vocalized{ animation: none; }
+}
+
+/* Brand stack — push subtitle to be smaller and warmer */
+.brand-sub{
+  font-family: var(--sans);
+  font-size: 11px !important;
+  letter-spacing: .12em !important;
+  color: var(--gold-deep) !important;
+  text-transform: uppercase;
+  font-weight: 600 !important;
+  margin-top: 2px;
+  display: block;
+}
