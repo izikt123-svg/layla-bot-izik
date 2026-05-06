@@ -1,0 +1,4 @@
+node_modules/
+extracted/
+.env
+.DS_Store
