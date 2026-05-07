@@ -1,0 +1,247 @@
+/* ============================================================
+   KZ RESPONSIVE — Final polish for all devices
+   iPhone (375), iPhone Pro Max (430), iPad (768), iPad Pro (1024),
+   Desktop (1280+), Large desktop (1920+)
+   ============================================================ */
+
+/* ─── Safe area for iPhone notch ─────────────────── */
+@supports (padding: env(safe-area-inset-top)){
+  .topbar{
+    padding-top: max(var(--sp-3, 12px), env(safe-area-inset-top));
+    padding-inline-start: max(var(--sp-5, 24px), env(safe-area-inset-left));
+    padding-inline-end:   max(var(--sp-5, 24px), env(safe-area-inset-right));
+  }
+  .footer{
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+  }
+  .kz-install-banner{
+    bottom: max(16px, env(safe-area-inset-bottom));
+  }
+}
+
+/* ─── iPhone 375-430 ─────────────────────────────── */
+@media (max-width: 480px){
+  /* Brand subtitle hidden on tiny screens */
+  .brand-sub{ display: none; }
+
+  /* Vocalized title — keep visible but smaller */
+  .brand .kz-vocalized{
+    font-size: clamp(13px, 3.4vw, 18px) !important;
+    line-height: 1.2 !important;
+  }
+
+  /* Topbar tightening */
+  .topbar{
+    padding-block: 8px !important;
+    gap: 8px !important;
+  }
+  .star{ width: 32px !important; height: 32px !important; }
+  .star svg{ width: 18px !important; height: 18px !important; }
+
+  /* Hide secondary icons, keep only essentials */
+  .top-actions .kz-cmdk-trigger{ display: none; }
+  .top-actions .kz-tod-badge{ display: none; }
+
+  /* Lang switcher — compact */
+  .kz-lang-current{ padding: 6px 10px; font-size: 12px; }
+
+  /* Hero adjustments */
+  .hero{ min-height: 420px; }
+  .hero-inner{ padding-block: 20px; }
+  .hero h1{
+    font-size: clamp(28px, 8vw, 38px) !important;
+    line-height: 1.1 !important;
+  }
+  .hero-copy{ font-size: 14px; line-height: 1.6; }
+
+  /* Hero dashboard stacks */
+  .hero-dash-metrics{ grid-template-columns: 1fr !important; gap: 10px !important; }
+  .dash-metric{ padding: 14px !important; }
+  .dash-metric-num{ font-size: 24px !important; }
+
+  /* Hero CTAs full width */
+  .hero-dash-ctas{ flex-direction: column; }
+  .dash-cta{ width: 100%; }
+
+  /* Holy slider — taller cap */
+  .kz-holy-card{ height: clamp(360px, 70vw, 460px); }
+  .kz-holy-name{ font-size: clamp(20px, 5.6vw, 28px) !important; }
+  .kz-holy-quote{ font-size: 13px; }
+  .kz-holy-actions{ gap: 6px; }
+  .kz-holy-btn{ padding: 7px 12px; font-size: 12px; }
+
+  /* Sections breathe on phone */
+  .section{ padding-block: 32px !important; }
+  .section-head h2{ font-size: 26px !important; }
+  .section-lead{ font-size: 14px; }
+
+  /* Cards */
+  .cards-grid{ grid-template-columns: 1fr !important; }
+  .prayer-card{ padding: 16px !important; }
+
+  /* Family CTA */
+  .kz-family-cta-feats{ grid-template-columns: 1fr !important; }
+  .kz-family-cta-feats > div{ font-size: 12px; padding: 8px 12px; }
+
+  /* Mega search */
+  .mega-search-input{ font-size: 16px !important; padding: 14px !important; }
+  .mega-search-chips{ flex-wrap: wrap; gap: 6px; }
+  .ms-chip{ padding: 6px 10px; font-size: 12px; }
+
+  /* Footer */
+  .footer-links{ grid-template-columns: 1fr 1fr !important; gap: 8px; font-size: 13px; }
+
+  /* Prayer form */
+  .form-card textarea{ min-height: 100px; }
+  .btn{ font-size: 15px; }
+  .btn.wide{ width: 100%; }
+
+  /* Find-jewish on phone */
+  .fj-side{ height: 50vh !important; }
+  .fj-card{ padding: 12px; }
+  .fj-card-title{ font-size: 14px; }
+  .fj-card-actions{ flex-wrap: wrap; gap: 4px; }
+  .fj-act{ font-size: 11px; padding: 5px 8px; flex: 1 1 calc(50% - 4px); }
+
+  /* Modals */
+  .modal-card, .fr-modal-card{
+    max-height: 92vh;
+    border-radius: 16px;
+    padding: 22px !important;
+  }
+  .modal-card h2, .fr-modal-card h2{ font-size: 20px !important; }
+
+  /* Notifications panel */
+  .notif-panel{
+    width: calc(100vw - 16px) !important;
+    inset-inline-end: 8px !important;
+    top: 60px !important;
+  }
+
+  /* Family Room */
+  .fr-grid{ grid-template-columns: 1fr !important; }
+  .fr-col-side{ flex-direction: column !important; }
+  .fr-card{ padding: 14px !important; border-radius: 16px; }
+  .fr-header{ flex-direction: column; align-items: flex-start; padding: 14px !important; }
+  .fr-candles-grid{ grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)) !important; gap: 10px; }
+
+  /* Tehillim chapters tighter */
+  .fr-teh-chapters{ grid-template-columns: repeat(auto-fill, minmax(34px, 1fr)) !important; gap: 3px; }
+  .fr-teh-chapter{ font-size: 11px; }
+
+  /* Cmd+K not full screen */
+  .kz-cmdk-overlay{ padding-top: 8vh; padding-inline: 12px; }
+
+  /* World mini-map shorter */
+  .kz-world-map{ height: 280px; }
+  .kz-world-stats{ grid-template-columns: 1fr 1fr !important; }
+  .kz-world-stat{ padding: 14px; }
+  .kz-world-stat-num{ font-size: 22px; }
+}
+
+/* ─── iPad portrait (481-768) ────────────────────── */
+@media (min-width: 481px) and (max-width: 768px){
+  .hero-inner{ grid-template-columns: 1fr !important; gap: 24px; }
+  .hero-dash{ width: 100%; }
+  .hero-dash-metrics{ grid-template-columns: 1fr 1fr !important; }
+  .nav{ display: none !important; }
+  .menu-btn{ display: inline-flex !important; }
+
+  .fj-shell{ grid-template-columns: 1fr; grid-template-rows: auto 1fr 40vh; }
+  .fj-side{ height: 40vh !important; }
+
+  .fr-grid{ grid-template-columns: 1fr 1fr !important; }
+  .fr-col-side{ grid-column: 1 / -1; flex-direction: row !important; }
+}
+
+/* ─── iPad landscape / iPad Pro (769-1024) ───────── */
+@media (min-width: 769px) and (max-width: 1024px){
+  .hero-inner{ grid-template-columns: 1.2fr 1fr !important; }
+  .nav{ font-size: 13px !important; gap: 14px !important; }
+  .nav .nav-item.has-sub > a{ font-size: 13px; }
+  .footer-links{ grid-template-columns: repeat(3, 1fr) !important; }
+}
+
+/* ─── Desktop / Large (1280+) ────────────────────── */
+@media (min-width: 1280px){
+  .hero-dash-metrics{ grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ─── Ultra wide (1920+) ─────────────────────────── */
+@media (min-width: 1920px){
+  body{ font-size: 18px; }
+  .hero-inner, .section, .footer{
+    max-width: 1600px;
+    margin-inline: auto;
+  }
+}
+
+/* ─── Touch device improvements ──────────────────── */
+@media (hover: none) and (pointer: coarse){
+  /* Increase tap target sizes */
+  .btn, .chip, .nav-drop a, .fj-act, .fr-mini-btn, .kz-cmdk-item{
+    min-height: 44px;
+  }
+  /* Show all hover-only effects always */
+  .nav-drop a::before{ opacity: 1 !important; transform: translateX(0) !important; }
+  .kz-holy-arrow{ opacity: 1 !important; }
+}
+
+/* ─── High DPI / Retina ─────────────────────────── */
+@media (min-resolution: 2dppx), (-webkit-min-device-pixel-ratio: 2){
+  .kz-flag-img{ image-rendering: -webkit-optimize-contrast; }
+}
+
+/* ─── Landscape phone ────────────────────────────── */
+@media (max-height: 500px) and (orientation: landscape){
+  .hero{ min-height: 400px; }
+  .topbar{ padding-block: 6px !important; }
+  .kz-cmdk-overlay{ padding-top: 4vh; }
+}
+
+/* ─── Foldable / split-screen support ──────────── */
+@media (min-width: 280px) and (max-width: 340px){
+  .brand-main, .brand-sub{ font-size: 11px !important; }
+  .star{ display: none !important; }
+}
+
+/* ─── Print ──────────────────────────────────────── */
+@media print{
+  .topbar, .footer, .modal, .fr-modal, .notif-panel,
+  .kz-embers, .kz-letter-field, .kz-floating-star,
+  .hero-glow, .hero-rays, .marquee, .menu-btn, .icon-btn,
+  .kz-install-banner, .kz-holy-strip, .kz-cmdk-overlay,
+  .kz-cmdk-trigger, .kz-lang-switcher{
+    display: none !important;
+  }
+  body{
+    background: white !important;
+    color: black !important;
+  }
+  .kz-vocalized{
+    background: none !important;
+    -webkit-text-fill-color: black !important;
+    color: black !important;
+  }
+}
+
+/* ─── Smooth iOS rubber-band overscroll ─────────── */
+html, body{
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: none;
+}
+
+/* ─── Form inputs on iPhone — prevent zoom ──────── */
+input, select, textarea{
+  font-size: 16px !important;
+}
+@media (min-width: 481px){
+  input, select, textarea{ font-size: inherit !important; }
+}
+
+/* ─── PWA standalone tweaks ──────────────────────── */
+@media (display-mode: standalone){
+  .topbar{ padding-top: max(20px, env(safe-area-inset-top)) !important; }
+  /* Hide install banner — already installed */
+  .kz-install-banner{ display: none !important; }
+}

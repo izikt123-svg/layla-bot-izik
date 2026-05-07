@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>המפה היהודית בעולם · בתי חב"ד, בתי כנסת ומסעדות כשרות</title>
+<meta name="description" content="המפה היהודית בעולם — בתי חב״ד, בתי כנסת, מקוואות ומסעדות כשרות בכל היבשות. כולל נתונים חיים ועדכניים מכל קצוות תבל." />
+<meta name="theme-color" content="#0B1F3A" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="kz.css" />
+<link rel="stylesheet" href="kz-ext.css" />
+</head>
+<body>
+<div class="page-grain" aria-hidden="true"></div>
+<header class="topbar">
+  <a class='brand-wrap' href='/'>
+    <div class="star"><svg viewBox="0 0 64 64" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><polygon points="32,6 40,22 58,22 46,34 50,52 32,42 14,52 18,34 6,22 24,22"/></svg></div>
+    <div class="brand"><span class="brand-main">מרכז התפילה</span><span class="brand-sub">המפה היהודית בעולם</span></div>
+  </a>
+  <nav class="nav">
+    <a href='/'>בית</a>
+    <a href='/extensions'>מרכז ההרחבות</a>
+    <a href='/find-jewish'>איתור קהילה</a>
+  </nav>
+</header>
+<main class="kz-shell">
+  <nav class="kz-breadcrumb">
+    <a href='/'>בית</a><span class="sep">›</span>
+    <a href='/extensions'>הרחבות</a><span class="sep">›</span>
+    <span>המפה היהודית בעולם</span>
+  </nav>
+  <section class="kz-hero">
+    <span class="kz-hero-tag">נוכחות יהודית · מפה אינטראקטיבית</span>
+    <h1>המפה היהודית <span>בעולם</span></h1>
+    <p class="kz-hero-lead">כל בתי חב״ד, בתי הכנסת, המקוואות והמסעדות הכשרות — מרוכזים במפה אחת. מלמעלה רואים את דופק החיים היהודיים בכל יבשת.</p>
+  </section>
+
+  <section class="kzx-panel">
+    <div class="kzx-row">
+      <label>סנן לפי סוג
+        <select id="htType" class="kzx-select">
+          <option value="">הכול (כל הקטגוריות)</option>
+          <option value="chabad">בית חב"ד</option>
+          <option value="minyan">בית כנסת / מניין</option>
+          <option value="kosher">מסעדה כשרה</option>
+          <option value="mikveh">מקווה</option>
+          <option value="shiur">שיעור / ישיבה</option>
+          <option value="jcc">JCC / קהילה</option>
+        </select>
+      </label>
+      <label>חיפוש עיר / מדינה
+        <input id="htSearch" class="kzx-input" type="search" placeholder="למשל: ניו יורק, פריז, מומבאי…" />
+      </label>
+      <button class="kzx-btn primary" id="htRedraw">צייר מפה מחדש</button>
+    </div>
+    <div class="kzx-heatmap-wrap">
+      <canvas id="htCanvas" class="kzx-heatmap-canvas" width="1400" height="700"></canvas>
+      <div class="kzx-heatmap-legend">
+        <span>דל</span>
+        <span class="kzx-heatmap-legend-grad"></span>
+        <span>רב</span>
+      </div>
+    </div>
+    <div class="kzx-status" id="htStatus"></div>
+  </section>
+
+  <section class="kzx-panel">
+    <h3>איזורים חמים ביותר</h3>
+    <ol class="kzx-list" id="htTop"></ol>
+  </section>
+
+  <section class="kzx-panel">
+    <h3>כל המקומות על המפה</h3>
+    <div class="kzx-status" id="htAllStatus"></div>
+    <ol class="kzx-list" id="htAll"></ol>
+  </section>
+
+  <section class="kzx-panel warm">
+    <h3>הורדת האתר</h3>
+    <p>חבילה לעבודה מקומית — כל קבצי האתר (HTML, CSS, JS, פונקציות Netlify) ארוזים יחד.</p>
+    <a class="kzx-btn primary" href="/downloads/kz-site.zip" download>⬇️ הורד קובץ ZIP</a>
+  </section>
+</main>
+
+<script src="kz-ext.js" defer></script>
+<script>
+const CITY_COORDS = {
+  // --- North America ---
+  'ניו יורק':[40.73,-74],'ברוקלין':[40.67,-73.94],'מנהטן':[40.78,-73.96],'קווינס':[40.73,-73.79],'ברונקס':[40.85,-73.86],
+  'קראון הייטס':[40.67,-73.94],'וויליאמסבורג':[40.71,-73.96],'בורו פארק':[40.63,-73.99],'פלטבוש':[40.63,-73.96],
+  'לייקווד':[40.1,-74.22],'מונסי':[41.11,-74.07],'קיריית יואל':[41.34,-74.17],'ניו סקוור':[41.14,-74.03],
+  'חמש הערים':[40.63,-73.73],'גרייט נק':[40.8,-73.73],'טינק':[40.94,-73.86],'ריברדייל':[40.9,-73.9],
+  'לוס אנג\'לס':[34.05,-118.24],'בוורלי הילס':[34.07,-118.4],'פיקו רוברטסון':[34.05,-118.39],
+  'מיאמי':[25.77,-80.19],'מיאמי ביץ\'':[25.79,-80.13],'אביינצ\'ר':[25.96,-80.14],'הולנדייל':[25.99,-80.14],'בוקה רטון':[26.36,-80.08],'הולייווד פלורידה':[26.01,-80.15],
+  'שיקגו':[41.88,-87.63],'סקוקי':[42.03,-87.73],'בוסטון':[42.36,-71.06],'ברוקליין':[42.33,-71.12],'ניוטון':[42.34,-71.21],
+  'וושינגטון':[38.9,-77.03],'בולטימור':[39.29,-76.61],'פילדלפיה':[39.95,-75.17],'פיטסבורג':[40.44,-79.99],
+  'קליבלנד':[41.5,-81.69],'סינסינטי':[39.1,-84.51],'דטרויט':[42.33,-83.05],'מילווקי':[43.04,-87.91],
+  'אטלנטה':[33.75,-84.39],'דאלאס':[32.78,-96.8],'יוסטון':[29.76,-95.37],'אוסטין':[30.27,-97.74],
+  'דנוור':[39.74,-104.99],'פיניקס':[33.45,-112.07],'לאס וגאס':[36.17,-115.14],'סיאטל':[47.6,-122.33],
+  'סן פרנסיסקו':[37.77,-122.42],'סן דייגו':[32.72,-117.16],'סנט לואיס':[38.63,-90.2],
+  'טורונטו':[43.65,-79.38],'ת׳ורנהיל':[43.82,-79.42],'מונטריאול':[45.5,-73.56],'אוטאווה':[45.42,-75.7],'ונקובר':[49.28,-123.12],'קלגרי':[51.05,-114.07],'וויניפג':[49.9,-97.14],
+  'מקסיקו סיטי':[19.43,-99.13],'קנקון':[21.16,-86.85],'פלאיה דל כרמן':[20.63,-87.08],'גוודלחרה':[20.68,-103.34],
+
+  // --- South & Central America ---
+  'בואנוס איירס':[-34.6,-58.38],'רוסאריו':[-32.94,-60.65],'קורדובה':[-31.42,-64.18],
+  'ריו דה ז\'ניירו':[-22.91,-43.17],'סאו פאולו':[-23.55,-46.63],'פורטו אלגרה':[-30.03,-51.22],'רסיפה':[-8.05,-34.88],'בליו הוריזונטה':[-19.92,-43.94],
+  'סנטיאגו':[-33.45,-70.66],'וינה דל מאר':[-33.02,-71.55],
+  'לימה':[-12.05,-77.04],'בוגוטה':[4.71,-74.07],'קיטו':[-0.18,-78.47],'קוסקו':[-13.52,-71.97],
+  'קראקס':[10.48,-66.9],'מונטווידאו':[-34.9,-56.16],'אסונסיון':[-25.3,-57.58],'לה פאס':[-16.5,-68.15],
+  'פנמה':[8.98,-79.52],'הוואנה':[23.13,-82.38],'סן חוזה':[9.93,-84.08],
+
+  // --- Western Europe ---
+  'לונדון':[51.5,-0.12],'גולדרס גרין':[51.57,-0.19],'סטמפורד היל':[51.56,-0.07],'הנדון':[51.58,-0.23],'אדג\'וור':[51.62,-0.27],
+  'מנצ\'סטר':[53.48,-2.24],'לידס':[53.8,-1.55],'גייטסהד':[54.96,-1.6],'בריסטול':[51.45,-2.58],'גלזגו':[55.86,-4.25],
+  'פריז':[48.86,2.35],'מארה':[48.86,2.36],'סרסל':[49.0,2.33],'סן־דני':[48.93,2.36],'וינסן':[48.85,2.44],
+  'מארסיי':[43.3,5.37],'ליון':[45.76,4.84],'ניס':[43.7,7.27],'שטרסבורג':[48.58,7.75],'טולוז':[43.6,1.44],'מץ':[49.12,6.18],
+  'ברלין':[52.52,13.4],'פרנקפורט':[50.11,8.68],'מינכן':[48.14,11.58],'המבורג':[53.55,9.99],'דיסלדורף':[51.23,6.78],'קלן':[50.94,6.96],
+  'אמסטרדם':[52.37,4.9],'רוטרדם':[51.92,4.48],'אמסטלוון':[52.3,4.86],
+  'בריסל':[50.85,4.35],'אנטוורפן':[51.22,4.4],
+  'וינה':[48.21,16.37],'ציריך':[47.37,8.54],'ז\'נבה':[46.2,6.14],'בזל':[47.56,7.59],'לוגאנו':[46.0,8.95],
+  'רומא':[41.9,12.5],'מילאנו':[45.46,9.19],'טורינו':[45.07,7.69],'ונציה':[45.44,12.33],'פירנצה':[43.77,11.26],'נאפולי':[40.85,14.27],
+  'מדריד':[40.42,-3.7],'ברצלונה':[41.39,2.17],'מלגה':[36.72,-4.42],'מרבלה':[36.51,-4.88],'טולדו':[39.86,-4.03],
+  'ליסבון':[38.72,-9.14],'פורטו':[41.15,-8.61],
+  'דבלין':[53.35,-6.26],'קופנהגן':[55.68,12.57],'מלמה':[55.6,13.0],'סטוקהולם':[59.33,18.07],'גטבורג':[57.71,11.97],'אוסלו':[59.91,10.75],'הלסינקי':[60.17,24.94],
+
+  // --- Central & Eastern Europe ---
+  'פראג':[50.08,14.42],'ברנו':[49.2,16.61],'בודפשט':[47.5,19.04],'ורשה':[52.23,21.01],'קרקוב':[50.06,19.94],'וורוצלב':[51.11,17.04],'לובלין':[51.25,22.57],
+  'בוקרשט':[44.43,26.1],'סופיה':[42.7,23.32],'בלגרד':[44.79,20.45],'זאגרב':[45.81,15.98],'לובליאנה':[46.05,14.5],
+  'אתונה':[37.98,23.72],'תסלוניקי':[40.64,22.94],'רודוס':[36.44,28.22],'קורפו':[39.62,19.92],
+  'איסטנבול':[41.01,28.98],'אנקרה':[39.93,32.86],'איזמיר':[38.42,27.14],
+  'מוסקבה':[55.75,37.62],'סנט פטרבורג':[59.93,30.34],'נוברוסיבירסק':[55.03,82.93],'יקטרינבורג':[56.84,60.6],
+  'קייב':[50.45,30.52],'אודסה':[46.48,30.72],'אומן':[48.75,30.22],'לבוב':[49.84,24.03],'דנפרו':[48.45,35.04],'חרקוב':[50.0,36.23],'ברדיצ\'ב':[49.9,28.59],'מז\'יבוז\'':[49.43,27.41],
+  'מינסק':[53.9,27.56],'וילנה':[54.69,25.28],'ריגה':[56.95,24.11],'טלין':[59.44,24.75],
+  'קישינב':[47.02,28.83],
+
+  // --- Middle East & Africa ---
+  'ירושלים':[31.78,35.22],'תל אביב':[32.08,34.78],'חיפה':[32.79,34.99],'בני ברק':[32.08,34.83],'אשדוד':[31.8,34.65],
+  'באר שבע':[31.25,34.8],'נתניה':[32.33,34.85],'צפת':[32.97,35.5],'טבריה':[32.79,35.53],'רמת גן':[32.07,34.82],
+  'חברון':[31.53,35.09],'מירון':[32.98,35.44],
+  'דובאי':[25.2,55.27],'אבו דאבי':[24.47,54.37],'מנאמה':[26.22,50.58],'דוחה':[25.29,51.53],'רבאט':[34.02,-6.83],
+  'קזבלנקה':[33.57,-7.58],'מרקש':[31.63,-8.0],'פאס':[34.03,-5.0],'אגאדיר':[30.42,-9.6],'ג\'רבה':[33.8,10.85],'תוניס':[36.81,10.18],
+  'קהיר':[30.04,31.24],'אלכסנדריה':[31.2,29.92],
+  'באקו':[40.4,49.86],'טביליסי':[41.72,44.78],'בטומי':[41.65,41.64],'ירוואן':[40.18,44.51],
+  'טשקנט':[41.31,69.24],'סמרקנד':[39.65,66.96],'אלמאטי':[43.26,76.93],'ביז\'קק':[42.87,74.59],
+  'קייפטאון':[-33.92,18.42],'יוהנסבורג':[-26.2,28.05],'דרבן':[-29.87,31.02],'פרטוריה':[-25.75,28.19],
+  'לאגוס':[6.52,3.37],'נאירובי':[-1.29,36.82],'אדיס אבבה':[9.03,38.74],'הררה':[9.31,42.12],'קינשאסה':[-4.44,15.27],
+  'אנטננריבו':[-18.88,47.51],
+
+  // --- Asia ---
+  'מומבאי':[19.07,72.88],'דלהי':[28.61,77.21],'גואה':[15.3,74.12],'מנאלי':[32.24,77.19],'דהרמסלה':[32.22,76.32],
+  'רישיקש':[30.08,78.26],'פושקר':[26.48,74.55],'בנגלור':[12.97,77.59],'קוצ\'ין':[9.93,76.26],
+  'ורנאסי':[25.32,82.97],'כלכותה':[22.57,88.36],'קאסול':[32.01,77.32],'ג\'ייפור':[26.91,75.79],
+  'באנגקוק':[13.75,100.5],'צ\'יאנג מאי':[18.79,98.98],'פוקט':[7.88,98.4],'קו סמוי':[9.5,100.0],
+  'פאי':[19.36,98.43],'קראבי':[8.06,98.92],
+  'קטמנדו':[27.71,85.32],'פוקרה':[28.25,83.99],
+  'סינגפור':[1.35,103.82],'קואלה לומפור':[3.14,101.69],'באלי':[-8.65,115.22],'ג\'קרטה':[-6.21,106.85],
+  'הו צ\'י מין':[10.82,106.63],'האנוי':[21.03,105.85],'מנילה':[14.6,120.98],
+  'טוקיו':[35.68,139.76],'אוסקה':[34.69,135.5],'קיוטו':[35.01,135.77],'קובה':[34.69,135.19],
+  'סיאול':[37.57,126.98],
+  'הונג קונג':[22.3,114.17],'שנגחאי':[31.23,121.47],'בייג\'ינג':[39.9,116.4],'שנזן':[22.54,114.06],'קאיפנג':[34.8,114.31],
+  'טייפה':[25.03,121.56],
+
+  // --- Oceania ---
+  'סידני':[-33.87,151.21],'מלבורן':[-37.81,144.96],'פרת\'':[-31.95,115.86],'ברייזבן':[-27.47,153.03],'גולד קוסט':[-28.02,153.4],'אדלייד':[-34.93,138.6],
+  'אוקלנד':[-36.85,174.76],'וולינגטון':[-41.29,174.78]
+};
+
+const CITY_ALT = { 'ארה"ב':'ניו יורק','צרפת':'פריז','בריטניה':'לונדון','גרמניה':'ברלין','איטליה':'רומא','ספרד':'מדריד','הודו':'מומבאי','ארגנטינה':'בואנוס איירס','ברזיל':'סאו פאולו','אוסטרליה':'סידני','רוסיה':'מוסקבה','אוקראינה':'קייב','יפן':'טוקיו','סין':'שנגחאי','הולנד':'אמסטרדם','צ\'כיה':'פראג','הונגריה':'בודפשט','פולין':'ורשה','ישראל':'ירושלים','קנדה':'טורונטו','מקסיקו':'מקסיקו סיטי','דרא"פ':'יוהנסבורג','מרוקו':'קזבלנקה','תאילנד':'באנגקוק','נפאל':'קטמנדו','פורטוגל':'ליסבון','בלגיה':'בריסל','אוסטריה':'וינה','שווייץ':'ציריך','טורקיה':'איסטנבול','יוון':'אתונה','אזרבייג\'ן':'באקו','גאורגיה':'טביליסי','אובזקיסטן':'טשקנט','קזחסטן':'אלמאטי','קניה':'נאירובי','אתיופיה':'אדיס אבבה','צ\'ילה':'סנטיאגו','פרו':'לימה','קולומביה':'בוגוטה','אורוגוואי':'מונטווידאו','קובה':'הוואנה','פנמה':'פנמה','שוודיה':'סטוקהולם','דנמרק':'קופנהגן','נורווגיה':'אוסלו','פינלנד':'הלסינקי','אירלנד':'דבלין','איחוד האמירויות':'דובאי','קטאר':'דוחה','בחריין':'מנאמה','תוניסיה':'תוניס','מצרים':'קהיר','איראן':'טהרן' };
+
+function coordsFor(p) {
+  if (p.lat != null && p.lon != null) return [p.lat, p.lon];
+  if (CITY_COORDS[p.city]) return CITY_COORDS[p.city];
+  if (CITY_COORDS[p.country]) return CITY_COORDS[p.country];
+  const alt = CITY_ALT[p.country];
+  if (alt && CITY_COORDS[alt]) return CITY_COORDS[alt];
+  return null;
+}
+
+/* Simplified world landmass polygons (very rough silhouettes) — drawn so
+   the map reads as a real world, not as three blank rectangles. */
+const LAND = [
+  // North America mainland
+  [[-168,65],[-140,70],[-95,70],[-75,60],[-60,48],[-66,40],[-78,25],[-100,18],[-116,32],[-125,42],[-135,55],[-155,60]],
+  // Central America & northern South America
+  [[-86,22],[-82,10],[-70,10],[-62,9],[-52,5],[-46,-3],[-38,-7],[-34,-10],[-44,-25],[-58,-35],[-70,-55],[-72,-42],[-76,-20],[-80,-5],[-83,9]],
+  // Western Europe
+  [[-10,60],[5,62],[15,65],[25,62],[35,60],[30,45],[20,38],[10,36],[-3,37],[-10,43],[-8,52]],
+  // Africa
+  [[-18,35],[10,35],[30,32],[42,12],[51,10],[40,-5],[42,-20],[20,-35],[14,-22],[8,-5],[-16,5],[-18,20]],
+  // Middle East / Central Asia
+  [[30,45],[60,50],[80,45],[90,38],[75,28],[55,22],[40,15],[32,25],[30,35]],
+  // East Asia
+  [[70,55],[100,60],[130,60],[145,52],[140,42],[120,30],[110,20],[100,15],[95,20],[80,30],[72,38]],
+  // Southeast Asia islands
+  [[95,8],[110,5],[125,2],[135,-5],[130,-10],[110,-8],[100,0]],
+  // Australia
+  [[115,-12],[135,-12],[150,-18],[153,-28],[148,-38],[132,-33],[118,-34],[113,-22]],
+  // Greenland
+  [[-55,83],[-25,83],[-15,75],[-45,60],[-55,70]],
+  // Eastern Europe / Russia
+  [[20,68],[60,72],[100,75],[140,72],[170,70],[175,60],[130,52],[90,50],[50,55],[30,60]],
+  // Japan
+  [[130,35],[138,42],[145,44],[142,34],[133,32],[130,34]],
+  // British Isles
+  [[-8,58],[-2,59],[2,55],[-2,50],[-6,51],[-8,55]],
+  // Madagascar
+  [[43,-12],[50,-15],[50,-25],[44,-25],[43,-20]]
+];
+
+function drawMap(ctx, W, H) {
+  ctx.fillStyle = '#0B1F3A';
+  ctx.fillRect(0, 0, W, H);
+  // Graticule
+  ctx.strokeStyle = 'rgba(180,200,255,.08)';
+  ctx.lineWidth = 1;
+  for (let lon = -180; lon <= 180; lon += 30) {
+    const x = ((lon + 180) / 360) * W;
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+  }
+  for (let lat = -60; lat <= 80; lat += 30) {
+    const y = ((90 - lat) / 180) * H;
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+  }
+  // Landmasses
+  ctx.fillStyle = 'rgba(110,140,200,.22)';
+  ctx.strokeStyle = 'rgba(200,215,250,.5)';
+  ctx.lineWidth = 1.2;
+  LAND.forEach(poly => {
+    ctx.beginPath();
+    poly.forEach(([lon, lat], i) => {
+      const x = ((lon + 180) / 360) * W;
+      const y = ((90 - lat) / 180) * H;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+  });
+}
+
+function typeColor(type) {
+  return {
+    chabad: 'rgba(255,200,60,',
+    minyan: 'rgba(120,200,255,',
+    kosher: 'rgba(120,255,140,',
+    mikveh: 'rgba(200,140,255,',
+    shiur:  'rgba(255,140,200,',
+    jcc:    'rgba(255,170,120,'
+  }[type] || 'rgba(255,200,60,';
+}
+
+async function renderHeatmap() {
+  const status = document.getElementById('htStatus');
+  status.className = 'kzx-status';
+  status.textContent = 'טוען נתונים…';
+  const items = await KZX.loadCommunities();
+  const type = document.getElementById('htType').value;
+  const search = (document.getElementById('htSearch').value || '').trim().toLowerCase();
+  const filtered = items.filter(i => {
+    if (type && i.type !== type) return false;
+    if (!search) return true;
+    return [i.city, i.country, i.region, i.name].some(v => (v || '').toLowerCase().includes(search));
+  });
+
+  const canvas = document.getElementById('htCanvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  drawMap(ctx, W, H);
+
+  const toXY = (lat, lon) => [((lon + 180) / 360) * W, ((90 - lat) / 180) * H];
+
+  const counts = {};
+  const points = [];
+  filtered.forEach(p => {
+    const key = p.city || p.country;
+    const coords = coordsFor(p);
+    if (!coords) return;
+    counts[key] = (counts[key] || 0) + 1;
+    points.push({ key, coords, name: p.name, type: p.type });
+  });
+
+  ctx.globalCompositeOperation = 'lighter';
+  points.forEach(p => {
+    const [x, y] = toXY(p.coords[0], p.coords[1]);
+    const intensity = Math.min(1, (counts[p.key] || 1) / 10);
+    const radius = 18 + intensity * 28;
+    const base = typeColor(p.type);
+    const g = ctx.createRadialGradient(x, y, 0, x, y, radius);
+    g.addColorStop(0,   base + (0.55 + intensity * 0.35) + ')');
+    g.addColorStop(0.5, base + (0.22 + intensity * 0.20) + ')');
+    g.addColorStop(1,   base + '0)');
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(x, y, radius, 0, Math.PI * 2); ctx.fill();
+  });
+  ctx.globalCompositeOperation = 'source-over';
+
+  // Pin dots on top
+  points.forEach(p => {
+    const [x, y] = toXY(p.coords[0], p.coords[1]);
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); ctx.arc(x, y, 2.2, 0, Math.PI * 2); ctx.fill();
+  });
+
+  const top = Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,15);
+  document.getElementById('htTop').innerHTML = top.map(([city, n], i) => `
+    <li class="kzx-list-item">
+      <div><div class="t">${i+1}. ${KZX.esc(city)}</div><div class="d">${n} מקומות יהודיים</div></div>
+      <div><span class="kzx-chip">${'🔥'.repeat(Math.min(5, Math.ceil(n/3)))}</span></div>
+    </li>`).join('');
+
+  const typeLabel = { chabad:'בית חב"ד', minyan:'בית כנסת', kosher:'כשרות', mikveh:'מקווה', shiur:'שיעור/ישיבה', jcc:'JCC' };
+  document.getElementById('htAll').innerHTML = filtered.slice(0,200).map(i => `
+    <li class="kzx-list-item">
+      <div>
+        <div class="t">${KZX.esc(i.name)}</div>
+        <div class="m">${KZX.esc(i.note || '')}</div>
+        <div class="d">${KZX.esc([typeLabel[i.type]||i.type, i.city, i.region, i.country].filter(Boolean).join(' · '))}</div>
+      </div>
+      <div><span class="kzx-chip">${KZX.esc(typeLabel[i.type] || i.type)}</span></div>
+    </li>`).join('');
+  document.getElementById('htAllStatus').textContent = filtered.length > 200 ? `מציג 200 מתוך ${filtered.length}` : `${filtered.length} מקומות`;
+
+  status.className = 'kzx-status ok';
+  status.textContent = `מוצגות ${filtered.length} נקודות ב־${Object.keys(counts).length} ערים · ${items.length} מקומות יהודיים במאגר`;
+}
+
+document.getElementById('htRedraw').addEventListener('click', renderHeatmap);
+document.getElementById('htType').addEventListener('change', renderHeatmap);
+document.getElementById('htSearch').addEventListener('input', () => {
+  clearTimeout(window.__htT);
+  window.__htT = setTimeout(renderHeatmap, 250);
+});
+document.addEventListener('DOMContentLoaded', renderHeatmap);
+</script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+/* ============================================================
+   KZ NAV ANIMATIONS — Refined, elegant, premium
+   ============================================================ */
+
+/* ─── Stagger entrance on page load ───────────────── */
+.topbar .nav-item{
+  animation: nav-item-enter .6s var(--ease-out-quart, cubic-bezier(.165,.84,.44,1)) backwards;
+}
+.topbar .nav-item:nth-child(1){ animation-delay: .05s; }
+.topbar .nav-item:nth-child(2){ animation-delay: .12s; }
+.topbar .nav-item:nth-child(3){ animation-delay: .19s; }
+.topbar .nav-item:nth-child(4){ animation-delay: .26s; }
+.topbar .nav-item:nth-child(5){ animation-delay: .33s; }
+.topbar .nav-item:nth-child(6){ animation-delay: .40s; }
+.topbar .nav-item:nth-child(7){ animation-delay: .47s; }
+.topbar .nav-item:nth-child(8){ animation-delay: .54s; }
+.topbar .nav-item:nth-child(9){ animation-delay: .61s; }
+.topbar .nav-item:nth-child(10){ animation-delay: .68s; }
+@keyframes nav-item-enter{
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Premium hover sweep on nav links ───────────── */
+.nav-item.has-sub > a{
+  position: relative;
+  padding: 8px 12px !important;
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 1;
+  transition: color .25s ease;
+}
+.nav-item.has-sub > a::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(212,176,122,.18) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform .6s var(--ease-out-expo, cubic-bezier(.19,1,.22,1));
+  z-index: -1;
+  pointer-events: none;
+}
+.nav-item:hover > a::before{
+  transform: translateX(100%);
+}
+
+/* ─── Animated underline indicator ─────────────────── */
+.nav-item.has-sub > a::after{
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), var(--gold-2), var(--gold), transparent);
+  transition: width .4s var(--ease-out-quart, cubic-bezier(.165,.84,.44,1)),
+              left .4s var(--ease-out-quart, cubic-bezier(.165,.84,.44,1));
+  border-radius: 2px;
+}
+.nav-item:hover > a::after{
+  width: 80%;
+  left: 10%;
+}
+
+/* ─── Caret subtle bounce on hover ─────────────────── */
+.nav-caret{
+  transition: transform .35s var(--ease-spring, cubic-bezier(.34,1.56,.64,1)),
+              background .25s, color .25s;
+}
+.nav-item:hover .nav-caret{
+  background: linear-gradient(135deg, var(--gold-soft, #E9D9B7), rgba(212,176,122,.2)) !important;
+  color: var(--gold-deep) !important;
+  transform: translateY(2px);
+}
+
+/* ─── Dropdown — premium spring entry ──────────────── */
+.nav-drop{
+  transform-origin: top center;
+}
+.nav-item:hover .nav-drop,
+.nav-item.is-open .nav-drop{
+  animation: drop-spring-premium .42s var(--ease-spring, cubic-bezier(.34,1.56,.64,1));
+}
+@keyframes drop-spring-premium{
+  0%   { opacity: 0; transform: translateY(-12px) scale(.94) rotate(-1deg); }
+  60%  { opacity: 1; transform: translateY(0)     scale(1.02) rotate(0); }
+  100% { opacity: 1; transform: translateY(0)     scale(1)    rotate(0); }
+}
+
+/* ─── Dropdown items — stagger reveal on hover ──────── */
+.nav-drop a{
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateX(8px);
+  animation: drop-link-in .25s var(--ease-out-quart, cubic-bezier(.165,.84,.44,1)) forwards;
+  margin: 2px 0;
+}
+.nav-drop a:nth-child(1){ animation-delay: .08s; }
+.nav-drop a:nth-child(2){ animation-delay: .12s; }
+.nav-drop a:nth-child(3){ animation-delay: .16s; }
+.nav-drop a:nth-child(4){ animation-delay: .20s; }
+.nav-drop a:nth-child(5){ animation-delay: .24s; }
+.nav-drop a:nth-child(6){ animation-delay: .28s; }
+.nav-drop a:nth-child(7){ animation-delay: .32s; }
+@keyframes drop-link-in{
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Animated gold dot indicator on dropdown items */
+.nav-drop a{
+  padding-inline-start: 22px !important;
+  transition: padding-inline-start .25s var(--ease-out-quart, cubic-bezier(.165,.84,.44,1)),
+              background .2s, color .2s;
+}
+.nav-drop a::before{
+  content: "✦";
+  position: absolute !important;
+  inset-inline-start: 6px !important;
+  top: 50%;
+  transform: translateY(-50%) scale(.6);
+  color: var(--gold);
+  opacity: 0;
+  transition: opacity .25s, transform .25s var(--ease-spring, cubic-bezier(.34,1.56,.64,1));
+  font-size: 11px;
+  pointer-events: none;
+}
+.nav-drop a:hover::before,
+.nav-drop a:focus-visible::before{
+  opacity: 1;
+  transform: translateY(-50%) scale(1) rotate(360deg);
+}
+
+/* ─── Brand wrap — gentle hover lift ────────────────── */
+.brand-wrap{
+  transition: transform .35s var(--ease-spring, cubic-bezier(.34,1.56,.64,1));
+}
+.brand-wrap:hover{
+  transform: translateY(-2px);
+}
+
+/* ─── Top action icons — bounce-in stagger ──────────── */
+.top-actions > *{
+  animation: action-pop-in .5s var(--ease-spring, cubic-bezier(.34,1.56,.64,1)) backwards;
+}
+.top-actions > *:nth-child(1){ animation-delay: .1s; }
+.top-actions > *:nth-child(2){ animation-delay: .15s; }
+.top-actions > *:nth-child(3){ animation-delay: .20s; }
+.top-actions > *:nth-child(4){ animation-delay: .25s; }
+.top-actions > *:nth-child(5){ animation-delay: .30s; }
+.top-actions > *:nth-child(6){ animation-delay: .35s; }
+.top-actions > *:nth-child(7){ animation-delay: .40s; }
+@keyframes action-pop-in{
+  from { opacity: 0; transform: scale(0) rotate(-180deg); }
+  to   { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+/* ─── Mobile menu — slide-from-right ────────────────── */
+.menu-btn{
+  transition: all .25s var(--ease-spring, cubic-bezier(.34,1.56,.64,1));
+}
+.menu-btn:hover{
+  transform: scale(1.1);
+}
+.topbar.is-mobile-open .menu-btn span:nth-child(1){
+  transform: rotate(45deg) translate(6px, 6px);
+}
+.topbar.is-mobile-open .menu-btn span:nth-child(2){
+  opacity: 0;
+}
+.topbar.is-mobile-open .menu-btn span:nth-child(3){
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+.menu-btn span{
+  transition: transform .35s var(--ease-spring, cubic-bezier(.34,1.56,.64,1)),
+              opacity .25s;
+}
+
+/* ─── EXTRA: Premium per-item animations ──────────────── */
+
+/* 1. Each nav-item has a soft glow on idle (subtle) */
+.topbar .nav-item.has-sub > a{
+  background-clip: padding-box;
+  position: relative;
+}
+
+/* 2. Click ripple effect */
+@keyframes nav-ripple{
+  0%   { box-shadow: 0 0 0 0 rgba(212,176,122,.5); }
+  100% { box-shadow: 0 0 0 24px rgba(212,176,122,0); }
+}
+.nav-item.has-sub > a:active{
+  animation: nav-ripple .6s ease-out;
+}
+
+/* 3. Caret rotation EVEN MORE prominent */
+.nav-caret{
+  position: relative;
+}
+.nav-caret::before{
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--gold-soft, #E9D9B7), transparent 70%);
+  opacity: 0;
+  transition: opacity .3s, transform .3s;
+  transform: scale(.5);
+  pointer-events: none;
+  z-index: -1;
+}
+.nav-item:hover .nav-caret::before{
+  opacity: 1;
+  transform: scale(1.4);
+}
+
+/* 4. Each nav-drop link gets gold ✨ on hover with bounce */
+.nav-drop a{
+  transition: padding-inline-start .35s var(--ease-spring, cubic-bezier(.34,1.56,.64,1)),
+              background .25s ease, color .25s ease,
+              transform .25s var(--ease-spring, cubic-bezier(.34,1.56,.64,1));
+}
+.nav-drop a:hover{
+  transform: translateX(-4px);
+  background: linear-gradient(90deg, rgba(212,176,122,.22), rgba(212,176,122,.05));
+}
+
+/* 5. Brand wrap — gentle glow shift on hover */
+.brand-wrap{
+  position: relative;
+}
+.brand-wrap::after{
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, rgba(212,176,122,.18), transparent 60%);
+  opacity: 0;
+  transform: scale(.6);
+  transition: opacity .35s, transform .35s var(--ease-spring, cubic-bezier(.34,1.56,.64,1));
+  pointer-events: none;
+  z-index: -1;
+}
+.brand-wrap:hover::after{
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* 6. Nav-item: when active page, persistent indicator */
+.topbar .nav-item.is-active > a{
+  background: linear-gradient(90deg, rgba(212,176,122,.18), rgba(212,176,122,.06));
+  color: var(--gold-deep, #8A6A3A) !important;
+}
+.topbar .nav-item.is-active > a::after{
+  width: 80% !important;
+  left: 10% !important;
+}
+
+/* 7. Logo star — heart-beat animation, gentle */
+.brand-wrap .star{
+  animation: brand-star-beat 4s ease-in-out infinite;
+}
+@keyframes brand-star-beat{
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  50%      { transform: rotate(-4deg) scale(1.04); }
+}
+
+/* 8. Top action icons — float + breathing glow */
+.top-actions .icon-btn{
+  transition: all .3s var(--ease-spring, cubic-bezier(.34,1.56,.64,1));
+}
+.top-actions .icon-btn:hover{
+  transform: translateY(-3px) scale(1.1);
+  background: linear-gradient(135deg, var(--gold-soft, #E9D9B7), rgba(212,176,122,.3));
+  box-shadow: 0 8px 16px rgba(184,147,90,.25);
+}
+
+/* 9. User button — breathing pulse */
+.user-btn{
+  transition: all .3s var(--ease-spring, cubic-bezier(.34,1.56,.64,1));
+  position: relative;
+}
+.user-btn::before{
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--gold-2, #D4B07A), var(--gold, #B8935A));
+  opacity: 0;
+  transition: opacity .3s;
+  z-index: -1;
+}
+.user-btn:hover{
+  transform: translateY(-2px);
+  color: #fff;
+}
+.user-btn:hover::before{ opacity: 1; }
+
+/* 10. NEW: golden underline that travels left-to-right */
+.nav-item.has-sub > a{
+  background-image: linear-gradient(90deg, var(--gold-2, #D4B07A), var(--gold, #B8935A));
+  background-size: 0% 2px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size .45s var(--ease-out-quart, cubic-bezier(.165,.84,.44,1)) !important;
+}
+.nav-item:hover.has-sub > a:not(.is-memorial-link):not(.is-prominent-link){
+  background-size: 100% 2px;
+}
+
+/* ─── Reduce motion ─────────────────────────────────── */
+@media (prefers-reduced-motion: reduce){
+  .topbar .nav-item,
+  .top-actions > *,
+  .nav-drop a,
+  .brand-wrap .star{
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

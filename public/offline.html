@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>אין חיבור · מרכז התפילה</title>
+  <meta name="theme-color" content="#0B1F3A" />
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700&family=Heebo:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box}
+    body{
+      margin:0; min-height:100vh;
+      display:flex; align-items:center; justify-content:center;
+      background: radial-gradient(120% 120% at 50% 0%, #1a3358 0%, #0B1F3A 60%);
+      color:#fff8e8; font-family:'Heebo', system-ui, sans-serif;
+      padding:24px;
+    }
+    .panel{
+      max-width: 460px; text-align:center;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(241,213,151,.25);
+      border-radius:18px; padding:28px 22px;
+      box-shadow: 0 16px 36px rgba(0,0,0,.32);
+    }
+    h1{ font-family:'Frank Ruhl Libre', serif; font-size:26px; margin:0 0 8px; }
+    p{ font-size:15px; line-height:1.7; margin:6px 0; opacity:.92; }
+    .star{ width:48px; height:48px; margin:0 auto 12px; opacity:.85; }
+    a.btn{
+      display:inline-block; margin-top:16px;
+      padding: 10px 22px; border-radius:999px;
+      background:#c6a054; color:#0B1F3A; font-weight:700;
+      text-decoration:none;
+    }
+  </style>
+</head>
+<body>
+  <div class="panel">
+    <svg class="star" viewBox="0 0 64 64" fill="none" stroke="#f1d597" stroke-width="2.4" stroke-linejoin="round">
+      <polygon points="32,8 40,24 24,24"/>
+      <polygon points="32,46 40,30 24,30"/>
+    </svg>
+    <h1>נראה שאין חיבור לרשת</h1>
+    <p>גם בלי אינטרנט — אפשר תמיד להתפלל בלב.</p>
+    <p style="opacity:.7; font-size:13.5px;">ברגע שהחיבור יחזור, האתר יטען מחדש אוטומטית.</p>
+    <a class="btn" href="/index.html">נסה שוב</a>
+  </div>
+</body>
+</html>

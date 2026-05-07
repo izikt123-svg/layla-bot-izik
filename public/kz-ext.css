@@ -1,0 +1,309 @@
+/* =========================================================
+   Extensions layer — kz-ext.css
+   Purely additive styles for the 40+ new feature pages.
+   Never overrides kz.css or styles.css; uses the same tokens.
+   ========================================================= */
+
+.kzx-hub {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+  margin: 28px 0;
+}
+.kzx-card {
+  border-radius: var(--radius, 14px);
+  border: 1px solid var(--border-strong, #dcd2bc);
+  background: linear-gradient(180deg, #fff 0%, #fdf7ea 100%);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 2px 10px rgba(11, 31, 58, .06);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.kzx-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(11, 31, 58, .14);
+  border-color: #b8935a;
+}
+.kzx-card-ico {
+  font-size: 26px;
+  line-height: 1;
+}
+.kzx-card-title {
+  font-weight: 800;
+  font-size: 17px;
+  color: #0B1F3A;
+  margin: 0;
+}
+.kzx-card-desc {
+  font-size: 14px;
+  color: #4a4236;
+  line-height: 1.55;
+  margin: 0;
+}
+.kzx-card-tag {
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #9a6f1f;
+  background: #fff5dc;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid #e9d9a8;
+  margin-top: 4px;
+}
+.kzx-category-title {
+  margin-top: 32px;
+  font-size: 22px;
+  font-weight: 800;
+  color: #0B1F3A;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.kzx-category-title::before {
+  content: "✦";
+  color: #b8935a;
+}
+
+.kzx-panel {
+  border-radius: 16px;
+  border: 1px solid #dcd2bc;
+  background: #fff;
+  padding: 22px 24px;
+  margin: 18px 0;
+  box-shadow: 0 2px 10px rgba(11, 31, 58, .05);
+}
+.kzx-panel h3 { margin-top: 0; color: #0B1F3A; }
+.kzx-panel.warm {
+  background: linear-gradient(180deg, #fffdf6 0%, #fcf3df 100%);
+}
+
+.kzx-row {
+  display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+}
+.kzx-row > * { flex: 1 1 200px; min-width: 0; }
+
+.kzx-input, .kzx-select, .kzx-textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 10px;
+  border: 1px solid #cfc5ae;
+  background: #fffdf7;
+  font: inherit;
+  color: #2a251d;
+}
+.kzx-input:focus, .kzx-select:focus, .kzx-textarea:focus {
+  outline: 2px solid #b8935a;
+  outline-offset: 1px;
+}
+.kzx-textarea { min-height: 96px; resize: vertical; }
+
+.kzx-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 11px 20px;
+  border-radius: 999px;
+  border: 1px solid #b8935a;
+  background: linear-gradient(180deg, #fff 0%, #f8ecc8 100%);
+  color: #5a3d10;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.kzx-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(184, 147, 90, .32); }
+.kzx-btn.primary { background: linear-gradient(180deg, #d4b07a, #b8935a); color: #1a1208; border-color: #8f6d34; }
+.kzx-btn.danger  { background: linear-gradient(180deg, #ffe1e1, #f6b5b5); color: #6e1313; border-color: #b94545; }
+.kzx-btn.waze    { background: linear-gradient(180deg, #33ccff, #0066ff); color: #fff; border-color: #0066ff; font-weight: 900; }
+.kzx-btn.gmaps   { background: linear-gradient(180deg, #34a853, #188038); color: #fff; border-color: #188038; font-weight: 900; }
+.kzx-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+.kzx-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.kzx-list-item {
+  padding: 14px 16px;
+  border: 1px solid #e4dbc5;
+  border-radius: 12px;
+  background: #fffdf7;
+  display: flex; justify-content: space-between; gap: 12px; align-items: flex-start;
+}
+.kzx-list-item .t { font-weight: 700; color: #0B1F3A; }
+.kzx-list-item .m { color: #5a4f3e; font-size: 14px; line-height: 1.5; }
+.kzx-list-item .d { font-size: 12px; color: #8a7c61; }
+
+.kzx-status { margin-top: 10px; font-size: 14px; color: #5a4f3e; }
+.kzx-status.ok  { color: #1f6e2c; }
+.kzx-status.err { color: #8e1c1c; }
+
+.kzx-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 10px; border-radius: 999px;
+  font-size: 12px; font-weight: 700; letter-spacing: .05em;
+  border: 1px solid #e9d9a8; background: #fff5dc; color: #7b5a12;
+}
+
+.kzx-candle {
+  width: 60px; height: 80px; margin: 0 auto;
+  position: relative;
+}
+.kzx-candle-wick { position: absolute; top: 0; left: 50%; width: 2px; height: 8px; background: #3a2608; transform: translateX(-50%); }
+.kzx-candle-flame {
+  position: absolute; top: -8px; left: 50%; width: 14px; height: 22px;
+  background: radial-gradient(ellipse at 50% 70%, #ffe47a 0%, #f5a24a 55%, #8c2c0b 85%, transparent 100%);
+  border-radius: 50% 50% 20% 20%;
+  transform: translateX(-50%);
+  animation: kzxFlicker 1.8s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px rgba(255, 172, 60, .75));
+}
+.kzx-candle-body {
+  position: absolute; top: 20px; left: 50%; width: 18px; height: 60px;
+  background: linear-gradient(180deg, #fff8dc 0%, #efd98c 100%);
+  transform: translateX(-50%);
+  border-radius: 4px 4px 2px 2px;
+  box-shadow: inset -2px 0 0 rgba(0,0,0,.08);
+}
+@keyframes kzxFlicker {
+  0%, 100% { transform: translateX(-50%) scale(1) rotate(0); }
+  25%      { transform: translateX(-50%) scale(1.05) rotate(-2deg); }
+  50%      { transform: translateX(-50%) scale(.95) rotate(1deg); }
+  75%      { transform: translateX(-50%) scale(1.08) rotate(2deg); }
+}
+
+/* Shabbat mode — very minimal, low-power (activated by JS) */
+html.kzx-shabbat * {
+  animation-play-state: paused !important;
+  transition: none !important;
+}
+html.kzx-shabbat .kz-hero,
+html.kzx-shabbat .kzx-panel {
+  background: #fffaf0 !important;
+}
+html.kzx-shabbat video, html.kzx-shabbat audio { display: none !important; }
+html.kzx-shabbat .kzx-shabbat-hide { display: none !important; }
+
+/* High-contrast option */
+html.kzx-highcontrast { filter: contrast(1.3) saturate(1.1); }
+html.kzx-xxl { font-size: 22px; }
+html.kzx-xxxl { font-size: 26px; }
+
+/* Heatmap pill styles for small canvas */
+.kzx-heatmap-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  background: #0B1F3A;
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 20px 0;
+}
+.kzx-heatmap-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.kzx-heatmap-legend {
+  position: absolute; bottom: 12px; right: 12px;
+  background: rgba(255,255,255,.9);
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  color: #0B1F3A;
+  display: flex; gap: 8px; align-items: center;
+}
+.kzx-heatmap-legend-grad {
+  width: 120px; height: 10px;
+  background: linear-gradient(90deg, rgba(0,0,255,.1), rgba(0,255,0,.6), rgba(255,255,0,.8), rgba(255,80,0,.95));
+  border-radius: 5px;
+}
+
+/* Progress bar for learning paths */
+.kzx-progress {
+  width: 100%; height: 10px; border-radius: 999px;
+  background: #e8dcbd; overflow: hidden;
+}
+.kzx-progress-fill {
+  height: 100%; background: linear-gradient(90deg, #d4b07a, #b8935a);
+  transition: width .5s ease;
+}
+
+/* Mini flag/emoji-based ribbon */
+.kzx-ribbon {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #f7ecd0;
+  border-radius: 0 10px 10px 0;
+  font-weight: 700;
+  color: #5a3d10;
+  border-right: 3px solid #b8935a;
+  margin-bottom: 8px;
+}
+
+/* Game tile for kids */
+.kzx-tile {
+  aspect-ratio: 1;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36px;
+  border-radius: 14px;
+  background: #fff;
+  border: 2px solid #dcd2bc;
+  cursor: pointer;
+  user-select: none;
+  transition: transform .12s ease, background .12s ease;
+}
+.kzx-tile:hover { transform: scale(1.05); }
+.kzx-tile.flipped { background: #f4e4b8; border-color: #b8935a; }
+.kzx-tile.matched { background: #c8e8bf; border-color: #4a8e3a; cursor: default; }
+
+/* Route planner list */
+.kzx-route-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid #e0d5ba;
+  margin-bottom: 8px;
+}
+.kzx-route-item .n {
+  flex: 0 0 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: #b8935a; color: #fff; font-weight: 800;
+}
+
+/* Generic map preview */
+.kzx-mapprev {
+  width: 100%; min-height: 220px; border-radius: 12px;
+  background: linear-gradient(135deg, #0B1F3A 0%, #1a3660 60%, #284a80 100%);
+  position: relative;
+  overflow: hidden;
+}
+.kzx-mapprev::after {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle at 20% 30%, rgba(255,215,130,.35) 0, transparent 3%),
+                    radial-gradient(circle at 70% 45%, rgba(255,215,130,.4) 0, transparent 4%),
+                    radial-gradient(circle at 50% 60%, rgba(255,215,130,.25) 0, transparent 5%);
+}
+
+/* Alert banner */
+.kzx-alert {
+  padding: 14px 18px;
+  border-radius: 12px;
+  margin: 14px 0;
+  font-weight: 700;
+}
+.kzx-alert.red    { background: #ffe6e6; color: #6e1313; border: 1px solid #b94545; }
+.kzx-alert.orange { background: #fff3d8; color: #7b4b0a; border: 1px solid #dda852; }
+.kzx-alert.green  { background: #e6f6e6; color: #1f6e2c; border: 1px solid #6bbf7a; }
+
+/* Tabs */
+.kzx-tabs { display: flex; gap: 4px; border-bottom: 1px solid #e0d5ba; margin-bottom: 16px; flex-wrap: wrap; }
+.kzx-tab {
+  padding: 9px 16px; background: transparent; border: 0; cursor: pointer;
+  font-weight: 700; color: #5a4f3e; border-bottom: 3px solid transparent;
+}
+.kzx-tab.active { color: #0B1F3A; border-bottom-color: #b8935a; }
+
+@media (max-width: 640px) {
+  .kzx-hub { grid-template-columns: 1fr; }
+  .kzx-panel { padding: 16px; }
+}

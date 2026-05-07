@@ -1,0 +1,396 @@
+/* ================================================================
+   KZ GUIDE · site-wide help bot + animated tour (additive only)
+   ================================================================ */
+
+#kzGuideLauncher{
+  position:fixed;
+  inset-inline-end:20px;
+  bottom:22px;
+  z-index:1200;
+  display:inline-flex; align-items:center; gap:10px;
+  padding:12px 18px;
+  border:1px solid rgba(184,147,90,.55);
+  border-radius:999px;
+  background:linear-gradient(135deg,#fff7e7,#f2deb4);
+  color:#4a2f10;
+  font-family:"Heebo","Assistant","Segoe UI",Arial,sans-serif;
+  font-weight:700; font-size:14px;
+  box-shadow:0 14px 34px rgba(11,31,58,.25);
+  cursor:pointer;
+  transition:transform .22s ease, box-shadow .22s ease;
+}
+#kzGuideLauncher:hover{ transform:translateY(-2px); box-shadow:0 20px 46px rgba(11,31,58,.3); }
+#kzGuideLauncher .kz-guide-ring{
+  position:absolute;
+  inset:-6px;
+  border-radius:inherit;
+  border:1.5px solid rgba(184,147,90,.6);
+  animation:kzGuidePulse 2.4s ease-out infinite;
+  pointer-events:none;
+}
+#kzGuideLauncher.is-open .kz-guide-ring{ animation:none; }
+#kzGuideLauncher .kz-guide-ico{
+  display:inline-grid; place-items:center;
+  width:26px; height:26px; border-radius:50%;
+  background:#0B1F3A; color:#f4d996; font-size:15px;
+  box-shadow:0 0 0 2px rgba(11,31,58,.12);
+}
+@keyframes kzGuidePulse{
+  0%{ transform:scale(1); opacity:.55; }
+  80%{ transform:scale(1.45); opacity:0; }
+  100%{ transform:scale(1.45); opacity:0; }
+}
+
+#kzGuideRoot .kz-guide-dock{
+  position:fixed;
+  inset-inline-end:22px;
+  bottom:78px;
+  z-index:1201;
+  display:none;
+  flex-direction:column; gap:10px;
+}
+#kzGuideRoot.dock-open .kz-guide-dock{ display:flex; animation:kzDockIn .24s ease-out; }
+@keyframes kzDockIn{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:translateY(0); } }
+.kz-guide-dock-btn{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:10px 16px;
+  border-radius:14px;
+  border:1px solid #e3d5ad;
+  background:#FBF8F1;
+  color:#0B1F3A;
+  font-weight:700; font-size:13px;
+  box-shadow:0 10px 24px rgba(11,31,58,.15);
+  cursor:pointer;
+  transition:transform .18s ease, background .18s ease;
+}
+.kz-guide-dock-btn:hover{ transform:translateX(-3px); background:#FFF; }
+
+/* ---------- TOUR OVERLAY ---------- */
+.kz-tour{
+  position:fixed; inset:0; z-index:1400;
+  display:flex; align-items:center; justify-content:center;
+  padding:20px;
+}
+.kz-tour[hidden]{ display:none; }
+.kz-tour-back{
+  position:absolute; inset:0;
+  background:radial-gradient(circle at 50% 30%, rgba(11,31,58,.45), rgba(11,31,58,.85));
+  backdrop-filter:blur(6px);
+}
+.kz-tour-card{
+  position:relative;
+  max-width:560px; width:100%;
+  background:#FDFBF4;
+  border:1px solid #E6DCC5;
+  border-radius:28px;
+  padding:28px 26px 22px;
+  box-shadow:0 36px 80px rgba(11,31,58,.28);
+  animation:kzTourIn .35s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes kzTourIn{ from{ transform:translateY(18px) scale(.97); opacity:0; } to{ transform:none; opacity:1; } }
+.kz-tour-x{
+  position:absolute; inset-inline-end:12px; top:10px;
+  background:transparent; border:none; font-size:18px; cursor:pointer;
+  color:#5A6578; padding:6px 8px; border-radius:8px;
+}
+.kz-tour-x:hover{ background:#F1EBDB; }
+.kz-tour-bar{
+  height:3px; background:#EFE8D7; border-radius:2px; overflow:hidden; margin-bottom:18px;
+}
+.kz-tour-bar > span{
+  display:block; height:100%; width:10%;
+  background:linear-gradient(90deg,#D4B07A,#8A6A3A);
+  transition:width .45s ease;
+}
+.kz-tour-stage{ position:relative; min-height:250px; }
+.kz-tour-step{
+  position:absolute; inset:0;
+  opacity:0; transform:translateY(12px);
+  transition:opacity .35s ease, transform .35s ease;
+  pointer-events:none;
+  text-align:center;
+}
+.kz-tour-step.is-active{ opacity:1; transform:none; pointer-events:auto; position:relative; }
+.kz-tour-art{
+  position:relative;
+  width:92px; height:92px; margin:0 auto 14px;
+  display:grid; place-items:center;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, #fff3d3 0%, #e9cf9a 70%);
+  box-shadow:inset 0 0 0 1px rgba(184,147,90,.4), 0 12px 30px rgba(11,31,58,.15);
+}
+.kz-tour-art .kz-tour-ico{
+  font-size:38px; filter:drop-shadow(0 2px 3px rgba(11,31,58,.2));
+  animation:kzTourFloat 2.6s ease-in-out infinite;
+}
+.kz-tour-art .kz-tour-ring{
+  position:absolute; inset:-6px; border-radius:50%;
+  border:1.5px dashed rgba(184,147,90,.6);
+  animation:kzTourSpin 14s linear infinite;
+}
+@keyframes kzTourSpin{ to{ transform:rotate(360deg); } }
+@keyframes kzTourFloat{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-3px); } }
+.kz-tour-kicker{
+  display:inline-block;
+  font-size:11px; letter-spacing:.15em; text-transform:uppercase;
+  color:#8A6A3A; font-weight:700;
+  margin-bottom:6px;
+}
+.kz-tour-title{
+  font-family:"Frank Ruhl Libre", Georgia, serif;
+  font-size:26px; color:#0B1F3A;
+  margin:0 0 10px;
+}
+.kz-tour-body{
+  color:#1A2D4D; font-size:15px; line-height:1.65; margin:0 auto 12px;
+  max-width:460px;
+}
+.kz-tour-bullets{
+  list-style:none; padding:0; margin:4px auto 0;
+  display:flex; flex-wrap:wrap; justify-content:center; gap:6px 8px;
+  max-width:480px;
+}
+.kz-tour-bullets li{
+  display:inline-block;
+  padding:5px 10px; border-radius:999px;
+  background:#F1EBDB; color:#4a2f10;
+  font-size:12px; font-weight:600;
+  border:1px solid #E6DCC5;
+}
+.kz-tour-foot{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:10px; margin-top:18px;
+}
+.kz-tour-btn{
+  padding:10px 18px; border-radius:14px;
+  font-weight:700; font-size:13px;
+  cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease;
+  border:1px solid transparent;
+}
+.kz-tour-btn.primary{
+  background:#0B1F3A; color:#F4D996; border-color:#0B1F3A;
+  box-shadow:0 10px 24px rgba(11,31,58,.25);
+}
+.kz-tour-btn.primary:hover{ transform:translateY(-1px); }
+.kz-tour-btn.ghost{
+  background:transparent; color:#5A6578; border-color:#E6DCC5;
+}
+.kz-tour-btn:disabled{ opacity:.4; cursor:not-allowed; }
+.kz-tour-dots{ display:flex; gap:6px; }
+.kz-tour-dot{
+  width:8px; height:8px; border-radius:50%;
+  background:#E6DCC5; border:none; padding:0; cursor:pointer;
+  transition:transform .15s ease, background .15s ease;
+}
+.kz-tour-dot.active{ background:#8A6A3A; transform:scale(1.35); }
+.kz-tour-dot.done{ background:#B8935A; }
+
+/* ---- Pause + speed controls (additive) ---- */
+.kz-tour-btn.pause{
+  display:inline-flex; align-items:center; gap:6px;
+  background:linear-gradient(135deg,#fff7e7,#f2deb4);
+  color:#4a2f10; border:1px solid rgba(184,147,90,.55);
+  box-shadow:0 6px 14px rgba(11,31,58,.12);
+  padding:9px 14px; border-radius:14px; font-weight:700; font-size:13px;
+}
+.kz-tour-btn.pause:hover{ transform:translateY(-1px); }
+.kz-tour-btn.pause.is-paused{
+  background:linear-gradient(135deg,#0B1F3A,#14284A);
+  color:#F4D996; border-color:#0B1F3A;
+}
+.kz-tour-btn.pause .kz-tour-pause-ico{
+  display:inline-grid; place-items:center;
+  width:18px; height:18px; border-radius:50%;
+  background:rgba(11,31,58,.1); font-size:10px;
+}
+.kz-tour-btn.pause.is-paused .kz-tour-pause-ico{ background:rgba(244,217,150,.18); }
+.kz-tour.is-paused .kz-tour-bar > span{
+  background:linear-gradient(90deg,#b8935a,#6b4a1a);
+  opacity:.55;
+}
+.kz-tour.is-paused .kz-tour-art .kz-tour-ring,
+.kz-tour.is-paused .kz-tour-art .kz-tour-ico{ animation-play-state:paused; }
+.kz-tour-speed{
+  display:flex; align-items:center; justify-content:center;
+  gap:6px; margin-top:12px; flex-wrap:wrap;
+}
+.kz-tour-speed-label{
+  font-size:11px; color:#6a4a20; letter-spacing:.1em;
+  text-transform:uppercase; font-weight:700;
+  margin-inline-end:4px;
+}
+.kz-tour-speed-btn{
+  padding:5px 11px; border-radius:999px;
+  background:#F1EBDB; color:#4a2f10;
+  border:1px solid #E6DCC5; font-size:12px; font-weight:600; cursor:pointer;
+  transition:transform .15s ease, background .15s ease;
+}
+.kz-tour-speed-btn:hover{ background:#E9D9B7; }
+.kz-tour-speed-btn.is-active{
+  background:#0B1F3A; color:#F4D996; border-color:#0B1F3A;
+}
+
+/* ---------- CHAT BOT ---------- */
+.kz-chat{
+  position:fixed;
+  inset-inline-end:20px;
+  bottom:22px;
+  width:min(380px, calc(100vw - 40px));
+  height:min(560px, calc(100vh - 120px));
+  z-index:1350;
+  display:flex; flex-direction:column;
+  background:#FDFBF4;
+  border:1px solid #E6DCC5;
+  border-radius:22px;
+  box-shadow:0 30px 70px rgba(11,31,58,.28);
+  overflow:hidden;
+  animation:kzChatIn .22s ease-out;
+}
+.kz-chat[hidden]{ display:none; }
+@keyframes kzChatIn{ from{ opacity:0; transform:translateY(12px); } to{ opacity:1; transform:none; } }
+.kz-chat-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 14px;
+  background:linear-gradient(135deg,#0B1F3A,#1A2D4D);
+  color:#F4D996;
+}
+.kz-chat-title{ display:flex; align-items:center; gap:10px; font-weight:700; font-size:14px; }
+.kz-chat-dot{
+  width:9px; height:9px; border-radius:50%;
+  background:#7ce0a8; box-shadow:0 0 0 3px rgba(124,224,168,.25);
+  animation:kzChatPing 1.6s ease-in-out infinite;
+}
+@keyframes kzChatPing{ 0%,100%{ opacity:1; } 50%{ opacity:.55; } }
+.kz-chat-x{
+  background:transparent; border:none; color:#F4D996;
+  font-size:16px; cursor:pointer; padding:4px 8px; border-radius:8px;
+}
+.kz-chat-x:hover{ background:rgba(255,255,255,.1); }
+.kz-chat-body{
+  flex:1; overflow-y:auto; padding:14px;
+  display:flex; flex-direction:column; gap:10px;
+  background:#FBF8F1;
+}
+.kz-chat-row{ display:flex; }
+.kz-chat-row.me{ justify-content:flex-start; } /* RTL — user on right in flow */
+.kz-chat-row.bot{ justify-content:flex-end; }
+.kz-chat-msg{
+  max-width:82%;
+  padding:10px 13px;
+  border-radius:14px;
+  font-size:14px; line-height:1.55;
+  box-shadow:0 4px 10px rgba(11,31,58,.06);
+  word-wrap:break-word;
+}
+.kz-chat-row.me .kz-chat-msg{
+  background:#0B1F3A; color:#F4D996;
+  border-bottom-right-radius:4px;
+}
+.kz-chat-row.bot .kz-chat-msg{
+  background:#FFF; color:#0B1F3A;
+  border:1px solid #E6DCC5;
+  border-bottom-left-radius:4px;
+}
+.kz-chat-link{
+  display:inline-block; margin-top:6px;
+  color:#8A6A3A; font-weight:700; text-decoration:underline;
+}
+.kz-chat-form{
+  display:flex; gap:8px; padding:10px;
+  border-top:1px solid #E6DCC5; background:#FDFBF4;
+}
+.kz-chat-wrap{ position:relative; flex:1; }
+#kzChatInput{
+  width:100%;
+  padding:10px 12px;
+  border:1px solid #E6DCC5; border-radius:12px;
+  font:inherit; font-size:14px;
+  background:#FFF; color:#0B1F3A;
+}
+#kzChatInput:focus{ outline:none; border-color:#B8935A; box-shadow:0 0 0 3px rgba(184,147,90,.2); }
+.kz-chat-bubble{
+  position:absolute;
+  inset-inline-end:4px; bottom:calc(100% + 6px);
+  padding:7px 11px;
+  background:linear-gradient(135deg,#ffe8dc,#ffd0be);
+  color:#7a2a1a;
+  border:1px solid rgba(180,70,50,.45);
+  border-radius:12px 12px 12px 4px;
+  font-size:12.5px; font-weight:600;
+  max-width:290px;
+  opacity:0; transform:translateY(4px);
+  transition:opacity .2s ease, transform .2s ease;
+  pointer-events:none;
+  box-shadow:0 8px 18px rgba(11,31,58,.12);
+}
+.kz-chat-bubble.show{ opacity:1; transform:none; }
+.kz-chat-send{
+  padding:0 16px; border-radius:12px;
+  background:#0B1F3A; color:#F4D996;
+  border:1px solid #0B1F3A; font-weight:700; font-size:13px;
+  cursor:pointer;
+}
+.kz-chat-send:hover{ background:#14284A; }
+.kz-chat-chips{
+  display:flex; flex-wrap:wrap; gap:6px;
+  padding:8px 10px 12px;
+  border-top:1px solid #EFE8D7;
+  background:#FDFBF4;
+}
+.kz-chip{
+  padding:5px 10px; border-radius:999px;
+  background:#F1EBDB; color:#4a2f10;
+  border:1px solid #E6DCC5;
+  font-size:12px; cursor:pointer;
+}
+.kz-chip:hover{ background:#E9D9B7; }
+
+/* ---------- MEGA-SEARCH warning bubble (additive) ---------- */
+.kz-search-warn{
+  margin-top:8px;
+  padding:7px 12px;
+  border-radius:10px;
+  background:linear-gradient(135deg,#fff3d3,#ffe8bf);
+  color:#6a4a10;
+  border:1px solid rgba(184,147,90,.5);
+  font-size:13px; font-weight:600;
+  display:none;
+}
+.kz-search-warn.show{ display:inline-block; }
+
+/* ---------- small screens ---------- */
+@media (max-width:520px){
+  #kzGuideLauncher{
+    inset-inline-end:12px; bottom:14px;
+    padding:10px 14px; font-size:13px;
+  }
+  #kzGuideLauncher .kz-guide-text{ display:none; }
+  .kz-chat{
+    inset-inline-end:10px; bottom:14px;
+    width:calc(100vw - 20px);
+    height:min(520px, calc(100vh - 80px));
+  }
+}
+
+/* Body lock while overlay is visible */
+body.kz-guide-open{ overflow:hidden; }
+
+/* Menu tour button (in the header — next to help) */
+.icon-btn.tour-btn{ position:relative; color:var(--gold-deep,#8A6A3A); }
+.icon-btn.tour-btn .tour-btn-pulse{
+  position:absolute; inset:2px;
+  border-radius:50%;
+  border:1.5px solid rgba(184,147,90,.55);
+  animation:kzGuidePulse 2.4s ease-out infinite;
+  pointer-events:none;
+}
+.icon-btn.tour-btn.seen .tour-btn-pulse{ display:none; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion:reduce){
+  #kzGuideLauncher .kz-guide-ring,
+  .kz-tour-art .kz-tour-ico,
+  .kz-tour-art .kz-tour-ring,
+  .kz-chat-dot { animation:none !important; }
+}
