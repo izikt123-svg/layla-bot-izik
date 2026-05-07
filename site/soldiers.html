@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>תפילה לחיילים, שבויים ונעדרים · מרכז התפילה</title>
+  <meta name="description" content="תפילות מיוחדות לחיילי צה\"ל, לשבויים ולנעדרים. כל תפילה מצטרפת לרשת אור עולמית." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="critical.css" />
+  <link rel="stylesheet" href="kz-soldiers.css" />
+  <link rel="stylesheet" href="kz-image.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <a href="/home.html" class="brand-wrap">← הבית</a>
+  <span class="sd-pill">🎗 רשת תפילה</span>
+</header>
+
+<main class="sd-shell">
+  <div class="kz-hero-illust" data-kz-hero="soldiers">
+    <div class="kz-hero-content">
+      <h1>🎗 תפילה לחיילי צה"ל, לשבויים ולנעדרים</h1>
+      <p>"אחינו כל בית ישראל הנתונים בצרה ובשביה — המקום ירחם עליהם."</p>
+    </div>
+  </div>
+
+  <!-- The 3 tabs -->
+  <section class="sd-tabs">
+    <button class="sd-tab is-on" data-t="soldiers">⭐ חיילים בשירות</button>
+    <button class="sd-tab" data-t="captives">🎗 שבויים ונעדרים</button>
+    <button class="sd-tab" data-t="injured">🏥 פצועים</button>
+  </section>
+
+  <!-- The "for me" prayer card (always visible) -->
+  <section class="card sd-prayer-card">
+    <div class="mini-title"><span class="mini-ornament">🕯</span><span>תפילה ייעודית</span></div>
+    <div id="sdPrayerText" class="sd-prayer-text"></div>
+    <button class="sd-pray-go" id="sdPrayGo">🙏 אני התפללתי</button>
+    <div class="sd-prayed-count">השבוע: <b id="sdPrayCount">0</b> תפילות התווספו</div>
+  </section>
+
+  <!-- Form to add a name -->
+  <section class="card sd-form-card">
+    <div class="mini-title"><span class="mini-ornament">✦</span><span>הוסיפי שם לתפילה</span></div>
+    <form class="sd-form" id="sdForm">
+      <input id="sdName" placeholder="שם פרטי בן/בת [שם האם]" maxlength="120" required/>
+      <input id="sdDetails" placeholder="פרטים נוספים (אופציונלי)" maxlength="200"/>
+      <button type="submit">📿 פרסמי לרשת</button>
+    </form>
+  </section>
+
+  <!-- Live wall by category -->
+  <section class="card sd-wall">
+    <div class="mini-title">
+      <span class="mini-ornament">🌟</span>
+      <span>שמות פעילים בקטגוריה זו</span>
+      <span class="sd-wall-count"><b id="sdWallCount">0</b> שמות</span>
+    </div>
+    <div class="sd-grid" id="sdGrid"></div>
+  </section>
+
+  <!-- Tehilim suggestions -->
+  <section class="card sd-tehilim">
+    <div class="mini-title"><span class="mini-ornament">📿</span><span>פרקי תהילים מומלצים לשעת מצוקה</span></div>
+    <div class="sd-tehilim-list">
+      <a class="sd-tehilim-item" href="/daily-tehilim.html">פרק כ — "יענך ה' ביום צרה"</a>
+      <a class="sd-tehilim-item" href="/daily-tehilim.html">פרק קמ"ב — "בהתעטף עלי רוחי"</a>
+      <a class="sd-tehilim-item" href="/daily-tehilim.html">פרק עט — "אלוקים באו גוים בנחלתך"</a>
+      <a class="sd-tehilim-item" href="/daily-tehilim.html">פרק קנ — "הללו אל בקדשו"</a>
+    </div>
+  </section>
+</main>
+
+<script src="data/jewish-illustrations.js" defer></script>
+<script src="kz-image.js" defer></script>
+<script src="kz-soldiers.js" defer></script>
+<script src="kz-ai-chat.js" defer></script>
+<link rel="stylesheet" href="kz-ai-chat.css">
+<script src="kz-honeypot.js" defer></script>
+<script src="kz-nav.js" defer></script>
+<link rel="stylesheet" href="kz-nav.css">
+<link rel="stylesheet" href="kz-polish.css">
+</body>
+</html>

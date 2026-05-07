@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>התקנת האפליקציה · מרכז התפילה</title>
+  <meta name="description" content="התקיני את מרכז התפילה כאפליקציה במכשיר שלך — אייפון, אנדרואיד, או מחשב. גישה מהירה, פוש, ועובד גם אופליין." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/favicon.svg" />
+  <link rel="stylesheet" href="critical.css" />
+  <link rel="stylesheet" href="kz-install.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <a href="/home.html" class="brand-wrap">← הבית</a>
+</header>
+
+<main class="ins-shell">
+  <section class="ins-hero">
+    <div class="ins-icon">📱</div>
+    <h1>התקיני כאפליקציה</h1>
+    <p>המסך הראשי שלך. בלחיצה אחת. עובד גם בלי אינטרנט.</p>
+  </section>
+
+  <!-- QR + actions -->
+  <section class="card ins-qr-card">
+    <div class="ins-qr-grid">
+      <div class="ins-qr-side">
+        <div class="ins-qr-canvas" id="insQrCanvas"></div>
+        <div class="ins-qr-url" id="insQrUrl">my-hom.net</div>
+        <button class="ins-copy" id="insCopyBtn">📋 העתיקי קישור</button>
+      </div>
+      <div class="ins-actions-side">
+        <h2>3 דרכים להתקין</h2>
+        <button class="ins-install-btn" id="insInstallBtn" hidden>
+          <span>⬇</span><span>התקיני עכשיו</span>
+        </button>
+        <p class="ins-install-state" id="insInstallState">בודקת אם המכשיר שלך תומך…</p>
+        <div class="ins-actions-row">
+          <a class="ins-share-btn" id="insShareBtn" href="#">↗ שיתוף</a>
+          <a class="ins-share-btn" href="https://wa.me/?text=הצטרפי לאפליקציית מרכז התפילה — https://my-hom.net" target="_blank" rel="noopener">💬 וואטסאפ</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Per-platform instructions -->
+  <section class="card ins-platform">
+    <div class="mini-title"><span class="mini-ornament">📱</span><span>אייפון / אייפד (Safari)</span></div>
+    <ol>
+      <li>פתחי את <b id="insUrlA">my-hom.net</b> ב-Safari</li>
+      <li>לחצי על כפתור השיתוף ⬆️ (למטה במרכז)</li>
+      <li>גללי ובחרי <b>"הוסף למסך הבית"</b></li>
+      <li>לחצי <b>"הוסף"</b></li>
+      <li>האייקון של מרכז התפילה יופיע במסך הבית 🎉</li>
+    </ol>
+  </section>
+
+  <section class="card ins-platform">
+    <div class="mini-title"><span class="mini-ornament">🤖</span><span>אנדרואיד (Chrome)</span></div>
+    <ol>
+      <li>פתחי את <b id="insUrlB">my-hom.net</b> ב-Chrome</li>
+      <li>תופיע אוטומטית הצעה <b>"התקן את האפליקציה"</b> — לחצי "התקן"</li>
+      <li>אם לא הופיע — לחצי על תפריט ⋮ → <b>"התקן אפליקציה"</b></li>
+      <li>האייקון יופיע במסך הבית והאפליקציה תיפתח ללא דפדפן</li>
+    </ol>
+  </section>
+
+  <section class="card ins-platform">
+    <div class="mini-title"><span class="mini-ornament">💻</span><span>מחשב (Chrome / Edge)</span></div>
+    <ol>
+      <li>פתחי את <b id="insUrlC">my-hom.net</b></li>
+      <li>בשורת הכתובת, ליד הכוכב — תופיע אייקון של ⊕ או "התקן"</li>
+      <li>לחצי "התקן" → האפליקציה תופיע ב-Dock/Start</li>
+    </ol>
+  </section>
+
+  <!-- What you get -->
+  <section class="card ins-features">
+    <div class="mini-title"><span class="mini-ornament">✦</span><span>מה תקבלי?</span></div>
+    <div class="ins-features-grid">
+      <div><b>📱</b><span>אייקון במסך הבית</span></div>
+      <div><b>🔔</b><span>פוש לכניסת השבת</span></div>
+      <div><b>🌙</b><span>עובד גם בלי אינטרנט</span></div>
+      <div><b>🚀</b><span>טעינה מיידית</span></div>
+      <div><b>🤖</b><span>מירב AI איתך</span></div>
+      <div><b>🌍</b><span>נגיש מכל מקום בעולם</span></div>
+    </div>
+  </section>
+
+  <p class="ins-footer">
+    <a href="/status.html">🩺 בדיקת מערכת</a> · <a href="/home.html">🏠 חזרה לאתר</a>
+  </p>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js" defer></script>
+<script src="kz-install.js" defer></script>
+</body>
+</html>

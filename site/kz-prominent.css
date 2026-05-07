@@ -1,0 +1,412 @@
+/* ============================================================
+   KZ PROMINENT — Top-tier nav items, Mirav intro, Phone QR
+   ============================================================ */
+
+/* ─────────────────────────────────────────────────────────────
+   1. PROMINENT NAV ITEMS — golden + glow
+   ───────────────────────────────────────────────────────────── */
+
+.nav .nav-item.is-prominent > a{
+  background: linear-gradient(135deg, var(--gold-2, #D4B07A), var(--gold, #B8935A)) !important;
+  color: #fff !important;
+  padding: 10px 18px !important;
+  border-radius: 100px !important;
+  box-shadow: 0 6px 18px rgba(184,147,90,.3), inset 0 1px 0 rgba(255,255,255,.2);
+  font-weight: 700 !important;
+  letter-spacing: .02em;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  animation: prominent-pulse 3s ease-in-out infinite;
+}
+@keyframes prominent-pulse{
+  0%, 100% { box-shadow: 0 6px 18px rgba(184,147,90,.3), inset 0 1px 0 rgba(255,255,255,.2), 0 0 0 0 rgba(241,213,151,.6); }
+  50%      { box-shadow: 0 6px 18px rgba(184,147,90,.4), inset 0 1px 0 rgba(255,255,255,.3), 0 0 0 8px rgba(241,213,151,0); }
+}
+.nav .nav-item.is-prominent > a::before,
+.nav .nav-item.is-prominent > a::after{ display: none !important; }
+.nav .nav-item.is-prominent:hover > a{
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 12px 28px rgba(184,147,90,.5), inset 0 1px 0 rgba(255,255,255,.3) !important;
+}
+
+/* Memorial — special dark style */
+.nav .nav-item.is-memorial > a{
+  background: linear-gradient(135deg, #2d1810, #5e2c0c) !important;
+  color: #f1d597 !important;
+  border: 1px solid rgba(241,213,151,.4);
+  padding: 10px 18px !important;
+  border-radius: 100px !important;
+  font-weight: 700 !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+}
+.nav .nav-item.is-memorial > a::before{
+  content: "🕯";
+  font-size: 14px;
+  display: inline-block;
+  filter: drop-shadow(0 0 8px rgba(255,180,80,.6));
+  animation: memorial-flame 1.6s ease-in-out infinite;
+}
+@keyframes memorial-flame{
+  0%, 100% { transform: scale(1) translateY(0); }
+  50%      { transform: scale(1.1) translateY(-1px); }
+}
+
+@media (max-width: 980px){
+  .nav .nav-item.is-prominent > a,
+  .nav .nav-item.is-memorial > a{
+    padding: 12px 18px !important;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   2. MIRAV INTRO BAR — top of page, gentle, dismissible
+   ───────────────────────────────────────────────────────────── */
+.kz-mirav-bar{
+  position: relative;
+  background: linear-gradient(135deg, rgba(11,31,58,.96), rgba(26,45,77,.92));
+  color: #fff;
+  padding: 12px clamp(16px, 2vw + 8px, 32px);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-bottom: 1px solid rgba(212,176,122,.25);
+  overflow: hidden;
+}
+.kz-mirav-bar::before{
+  content: "";
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(241,213,151,.18), transparent);
+  animation: mirav-shimmer 6s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes mirav-shimmer{
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(200%); }
+}
+.kz-mirav-avatar{
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold-2, #D4B07A), var(--gold, #B8935A));
+  color: #0a1124;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 18px;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px rgba(241,213,151,.4), 0 4px 12px rgba(0,0,0,.3);
+  position: relative;
+  z-index: 1;
+}
+.kz-mirav-avatar::after{
+  content: "";
+  position: absolute;
+  bottom: 0;
+  inset-inline-end: 0;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: #4ade80;
+  border: 2px solid #0B1F3A;
+  box-shadow: 0 0 8px #4ade80;
+  animation: mirav-online-pulse 2s infinite;
+}
+@keyframes mirav-online-pulse{
+  0%, 100% { box-shadow: 0 0 8px #4ade80; }
+  50%      { box-shadow: 0 0 16px #4ade80; }
+}
+.kz-mirav-text{
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.4;
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+.kz-mirav-text strong{
+  color: #f1d597;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 15px;
+  display: block;
+  margin-bottom: 2px;
+}
+.kz-mirav-text small{
+  color: rgba(255,255,255,.75);
+  font-size: 12px;
+}
+.kz-mirav-cta{
+  background: linear-gradient(135deg, var(--gold-2, #D4B07A), var(--gold, #B8935A));
+  color: #0a1124;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 100px;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all .25s var(--ease-spring, cubic-bezier(.34,1.56,.64,1));
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+}
+.kz-mirav-cta:hover{
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 18px rgba(184,147,90,.5);
+}
+.kz-mirav-bar-close{
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  color: rgba(255,255,255,.6);
+  cursor: pointer;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .25s;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+.kz-mirav-bar-close:hover{
+  background: rgba(255,255,255,.15);
+  transform: rotate(90deg);
+}
+
+@media (max-width: 600px){
+  .kz-mirav-bar{ padding: 10px 14px; gap: 10px; }
+  .kz-mirav-avatar{ width: 36px; height: 36px; font-size: 16px; }
+  .kz-mirav-text{ font-size: 13px; }
+  .kz-mirav-text small{ display: none; }
+  .kz-mirav-cta{ padding: 7px 14px; font-size: 12px; }
+}
+
+/* Welcome modal — first time / on demand */
+.kz-mirav-modal{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.kz-mirav-modal.is-open{ display: flex; }
+.kz-mirav-modal-back{
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(11,31,58,.6), rgba(11,31,58,.92));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: modal-back-in .3s ease-out;
+}
+.kz-mirav-modal-card{
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  width: 100%;
+  background: linear-gradient(180deg, #1a2342, #0a1124);
+  border: 1px solid rgba(212,176,122,.4);
+  border-radius: 24px;
+  padding: clamp(24px, 4vw + 12px, 40px);
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 60px 140px rgba(0,0,0,.5);
+  animation: modal-spring .5s var(--ease-spring, cubic-bezier(.34,1.56,.64,1));
+}
+.kz-mirav-modal-card .kz-mirav-avatar{
+  margin: 0 auto 18px;
+  width: 80px;
+  height: 80px;
+  font-size: 36px;
+}
+.kz-mirav-modal-card h2{
+  font-family: var(--serif);
+  font-size: 28px !important;
+  color: #f1d597 !important;
+  margin: 0 0 8px !important;
+}
+.kz-mirav-modal-card .kz-mirav-tagline{
+  color: rgba(255,255,255,.75);
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+.kz-mirav-modal-card p{
+  color: rgba(255,255,255,.85);
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+.kz-mirav-modal-card .kz-mirav-cta{
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px;
+  font-size: 15px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   3. PHONE / QR FLOATER
+   ───────────────────────────────────────────────────────────── */
+.kz-phone-fab{
+  position: fixed;
+  bottom: 22px;
+  inset-inline-start: 22px;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4a90e2, #1a73e8);
+  border: 2px solid rgba(255,255,255,.4);
+  color: #fff;
+  cursor: pointer;
+  z-index: 88;
+  box-shadow: 0 8px 20px rgba(74,144,226,.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .35s var(--ease-spring, cubic-bezier(.34,1.56,.64,1));
+}
+.kz-phone-fab:hover{
+  transform: translateY(-3px) scale(1.08);
+  box-shadow: 0 14px 28px rgba(74,144,226,.55);
+}
+.kz-phone-fab svg{ width: 24px; height: 24px; }
+
+@media (max-width: 640px){
+  .kz-phone-fab{
+    bottom: 14px;
+    inset-inline-start: 14px;
+    width: 48px;
+    height: 48px;
+  }
+  .kz-phone-fab svg{ width: 20px; height: 20px; }
+}
+
+/* Phone QR modal */
+.kz-phone-modal{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.kz-phone-modal.is-open{ display: flex; }
+.kz-phone-modal-back{
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(11,31,58,.5), rgba(11,31,58,.85));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.kz-phone-modal-card{
+  position: relative;
+  z-index: 1;
+  max-width: 380px;
+  width: 100%;
+  background: linear-gradient(180deg, var(--cream, #FDFBF4), var(--bg-2, #FBF8F1));
+  border: 1px solid var(--border-strong, #D6C7A3);
+  border-radius: 20px;
+  padding: 28px;
+  text-align: center;
+  box-shadow: 0 40px 100px rgba(11,31,58,.3);
+  animation: modal-spring .4s var(--ease-spring, cubic-bezier(.34,1.56,.64,1));
+}
+.kz-phone-modal-card h2{
+  font-family: var(--serif);
+  font-size: 22px !important;
+  color: var(--ink, #0B1F3A) !important;
+  margin: 0 0 6px !important;
+}
+.kz-phone-modal-card p{
+  color: var(--muted, #5A6578);
+  font-size: 14px;
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+.kz-phone-qr{
+  display: block;
+  margin: 18px auto;
+  border: 4px solid #fff;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(11,31,58,.15);
+  width: 220px;
+  height: 220px;
+}
+.kz-phone-url{
+  background: var(--white, #fff);
+  border: 1px solid var(--border-strong, #D6C7A3);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0;
+}
+.kz-phone-url-text{
+  flex: 1;
+  font-family: ui-monospace, 'SF Mono', monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink, #0B1F3A);
+  overflow-x: auto;
+  text-align: start;
+  white-space: nowrap;
+}
+.kz-phone-url-copy{
+  background: linear-gradient(135deg, var(--gold-2, #D4B07A), var(--gold, #B8935A));
+  color: #fff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform .2s;
+}
+.kz-phone-url-copy:hover{ transform: translateY(-1px); }
+.kz-phone-modal-close{
+  position: absolute;
+  top: 12px;
+  inset-inline-end: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--white, #fff);
+  border: 1px solid var(--border, #E6DCC5);
+  color: var(--ink-2, #1A2D4D);
+  cursor: pointer;
+  font-size: 14px;
+  transition: transform .25s;
+}
+.kz-phone-modal-close:hover{ transform: rotate(90deg); }
+.kz-phone-instructions{
+  text-align: start;
+  background: rgba(212,176,122,.1);
+  border: 1px solid rgba(212,176,122,.25);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 12px;
+  color: var(--ink-2, #1A2D4D);
+  line-height: 1.6;
+}
+.kz-phone-instructions ol{
+  margin: 6px 0 0;
+  padding-inline-start: 20px;
+}
+.kz-phone-instructions li{ margin: 4px 0; }

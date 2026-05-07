@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>מצב מטייל · מרכז התפילה</title>
+  <meta name="description" content="כל מה שיהודי צריך בדרכים — מנייני תפילה קרובים, בית חב\"ד, מסעדות כשרות פתוחות עכשיו, אירוח לשבת, ומדריך חירום יהודי." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="critical.css" />
+  <link rel="stylesheet" href="kz-traveler.css" />
+  <link rel="stylesheet" href="kz-near-me.css" />
+  <link rel="stylesheet" href="kz-traveler-modules.css" />
+  <link rel="stylesheet" href="kz-tzaddik-tour.css" />
+  <link rel="stylesheet" href="kz-calendar.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+</head>
+<body>
+
+<header class="topbar">
+  <a href="/" class="brand-wrap">← מרכז התפילה</a>
+  <span class="trv-mode-pill" id="trvMode">🌍 מטייל/ת</span>
+</header>
+
+<main class="trv-shell">
+  <section class="trv-hero">
+    <h1>מצב מטייל/ת</h1>
+    <p>כל מה שיהודי צריך בדרכים — מסביבך, עכשיו.</p>
+    <button class="trv-loc-btn" id="trvLocBtn">📍 הפעל מיקום</button>
+    <div class="trv-loc-info" id="trvLocInfo" hidden></div>
+  </section>
+
+  <!-- Emergency: always visible at top -->
+  <section class="card trv-emergency" data-kz-emergency>
+    <div class="trv-em-icn">🆘</div>
+    <div class="trv-em-text">
+      <b>עזרה יהודית מיידית</b>
+      <small>חב"ד הקרוב · Hatzalah · MDA · שגרירות</small>
+    </div>
+    <button class="trv-em-btn" id="trvEmBtn">פתח</button>
+  </section>
+
+  <!-- NearMe radar -->
+  <section class="card" data-kz-near-me></section>
+
+  <!-- Today's calendar (Shabbat times etc.) -->
+  <section data-kz-calendar></section>
+
+  <!-- Shabbat alert toggle -->
+  <section class="card trv-row">
+    <span class="trv-row-icn">🕯</span>
+    <div class="trv-row-text">
+      <b>התראה לפני שבת</b>
+      <small>נשלח לך push 18 דקות לפני השקיעה במיקום שלך</small>
+    </div>
+    <label class="trv-switch">
+      <input type="checkbox" id="trvShabbatToggle"/>
+      <span></span>
+    </label>
+  </section>
+
+  <!-- Hospitality -->
+  <section class="card" data-kz-hospitality></section>
+
+  <!-- Multi-currency tzedakah -->
+  <section class="card" data-kz-tzedakah-fx></section>
+
+  <!-- Menu translator -->
+  <section class="card" data-kz-menu></section>
+
+  <!-- City community -->
+  <section class="card" data-kz-community></section>
+</main>
+
+<script>
+  window.KZ_SUPABASE_URL  = window.KZ_SUPABASE_URL  || '';
+  window.KZ_SUPABASE_ANON = window.KZ_SUPABASE_ANON || '';
+</script>
+<script src="data/jewish-places.js" defer></script>
+<script src="data/embassies-verified.js" defer></script>
+<script src="kz-near-me.js" defer></script>
+<script src="kz-emergency.js" defer></script>
+<script src="kz-shabbat-alert.js" defer></script>
+<script src="kz-hospitality.js" defer></script>
+<script src="kz-tzedakah-fx.js" defer></script>
+<script src="kz-menu-translator.js" defer></script>
+<script src="kz-city-community.js" defer></script>
+<script src="kz-calendar.js" defer></script>
+<script src="kz-traveler.js" defer></script>
+<script src="kz-ai-chat.js" defer></script>
+<link rel="stylesheet" href="kz-ai-chat.css">
+<script src="kz-honeypot.js" defer></script>
+<script src="kz-nav.js" defer></script>
+<link rel="stylesheet" href="kz-nav.css">
+<link rel="stylesheet" href="kz-polish.css">
+</body>
+</html>

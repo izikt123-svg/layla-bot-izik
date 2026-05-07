@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>לוח אבלים · ציוני זיכרון · מרכז התפילה</title>
+  <meta name="description" content="לוח 12 חודשים מלא: שבעה, שלושים, יארצייט שנתי. לוויית כל ציון בשקט וברגישות." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="critical.css" />
+  <link rel="stylesheet" href="kz-mourners.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <a href="/" class="brand-wrap">← מרכז התפילה</a>
+</header>
+
+<main class="mr-shell">
+  <section class="mr-hero">
+    <div class="mr-icon">🕯</div>
+    <h1>לוח אבלים</h1>
+    <p>הזיני שם וטקס הפטירה — נכין לך לוח 12 חודשים מלא: שבעה, שלושים, יארצייט שנתי, וכל הציונים שביניהם.<br>נשלח לך תזכורת בכל ציון אם תרצי.</p>
+  </section>
+
+  <section class="card mr-form-card" id="mrFormCard">
+    <form class="mr-form" id="mrForm">
+      <label>שם הנפטר/ת:
+        <input id="mrName" placeholder="שם פרטי בן/בת [שם האם]" required maxlength="100"/>
+      </label>
+      <label>תאריך הפטירה (לועזי):
+        <input id="mrDate" type="date" required/>
+      </label>
+      <div class="mr-form-row">
+        <label>קרבה:
+          <select id="mrRelation">
+            <option>אבא</option>
+            <option>אמא</option>
+            <option>בעל</option>
+            <option>אישה</option>
+            <option>בן</option>
+            <option>בת</option>
+            <option>אח</option>
+            <option>אחות</option>
+            <option>סבא</option>
+            <option>סבתא</option>
+            <option>אחר</option>
+          </select>
+        </label>
+        <label>מנהג:
+          <select id="mrCustom">
+            <option value="ashkenazi">אשכנז</option>
+            <option value="sefardi">ספרד</option>
+            <option value="chabad">חב"ד</option>
+          </select>
+        </label>
+      </div>
+      <label class="mr-toggle">
+        <input type="checkbox" id="mrPushOpt"/>
+        <span>קבלי תזכורת push בכל ציון (מותר רק אם אישרת push בעבר)</span>
+      </label>
+      <button type="submit" class="mr-go">צרי לי את הלוח</button>
+    </form>
+  </section>
+
+  <section class="card mr-result" id="mrResult" hidden>
+    <div class="mini-title">
+      <span class="mini-ornament">🕯</span>
+      <span>הלוח של <b id="mrResultName">—</b></span>
+      <button class="mr-print" onclick="window.print()">🖨 הדפסה</button>
+    </div>
+    <p class="mr-hebrew-date" id="mrHebDate"></p>
+    <ol class="mr-milestones" id="mrMilestones"></ol>
+    <div class="mr-actions-row">
+      <button id="mrReset" class="mr-secondary">↺ זן/י נפטר/ת אחר/ת</button>
+    </div>
+  </section>
+
+  <section class="card mr-resources">
+    <div class="mini-title"><span class="mini-ornament">✦</span><span>משאבים שיעזרו לך בתקופה הזו</span></div>
+    <div class="mr-res-grid">
+      <a class="mr-res" href="/memorial.html">🕯 קיר הנרות העולמי</a>
+      <a class="mr-res" href="/daily-tehilim.html">📿 תהילים יומי</a>
+      <a class="mr-res" href="/pray-along.html">🤝 תפילה משותפת</a>
+      <a class="mr-res" href="/moment.html">✦ 60 שניות עם הקב"ה</a>
+    </div>
+  </section>
+</main>
+
+<script src="kz-mourners.js" defer></script>
+<script src="kz-ai-chat.js" defer></script>
+<link rel="stylesheet" href="kz-ai-chat.css">
+<script src="kz-honeypot.js" defer></script>
+<script src="kz-nav.js" defer></script>
+<link rel="stylesheet" href="kz-nav.css">
+<link rel="stylesheet" href="kz-polish.css">
+</body>
+</html>

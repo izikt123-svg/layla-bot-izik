@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>הדלקת נרות שבת · קיר נרות חי · מרכז התפילה</title>
+  <meta name="description" content="הדלקת נרות שבת וירטואליים — שעה מדויקת לכל עיר, נר חי שדולק עד צאת השבת, ותפילה אישית מכל אישה ברחבי העולם." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="critical.css" />
+  <link rel="stylesheet" href="kz-shabbat-candles.css" />
+  <link rel="stylesheet" href="kz-image.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <a href="/" class="brand-wrap">← מרכז התפילה</a>
+  <span class="sc-pill" id="scStatus">—</span>
+</header>
+
+<main class="sc-shell">
+  <div class="kz-hero-illust" data-kz-illustration="candles"></div>
+
+  <!-- Hero -->
+  <section class="sc-hero">
+    <div class="sc-hero-flame" aria-hidden="true">🕯</div>
+    <h1>הדלקת נרות שבת</h1>
+    <p>בחרי עיר, כתבי תפילה, ולחצי "הדליקי". הנר שלך יידלק על הקיר העולמי עד צאת השבת.</p>
+  </section>
+
+  <!-- City + times -->
+  <section class="card sc-city">
+    <div class="mini-title">
+      <span class="mini-ornament">📍</span>
+      <span>זמני שבת בעיר שלך</span>
+      <button class="sc-locate" id="scLocate" title="זיהוי אוטומטי">🛰</button>
+    </div>
+    <div class="sc-city-row">
+      <select id="scCity" aria-label="בחירת עיר">
+        <option value="281184">ירושלים</option>
+        <option value="293397">תל אביב</option>
+        <option value="294801">חיפה</option>
+        <option value="295530">באר שבע</option>
+        <option value="293100">צפת</option>
+        <option value="295277">אילת</option>
+        <option value="5128581">ניו יורק</option>
+        <option value="5368361">לוס אנג׳לס</option>
+        <option value="4164138">מיאמי</option>
+        <option value="6167865">טורונטו</option>
+        <option value="2643743">לונדון</option>
+        <option value="2988507">פריז</option>
+        <option value="2950159">ברלין</option>
+        <option value="3169070">רומא</option>
+        <option value="3117735">מדריד</option>
+        <option value="2759794">אמסטרדם</option>
+        <option value="3435910">בואנוס איירס</option>
+        <option value="3448439">סאו פאולו</option>
+        <option value="2158177">מלבורן</option>
+        <option value="2147714">סידני</option>
+        <option value="993800">יוהנסבורג</option>
+        <option value="3369157">קייפ טאון</option>
+        <option value="1850147">טוקיו</option>
+        <option value="1880252">סינגפור</option>
+        <option value="1609350">בנגקוק</option>
+      </select>
+      <span class="sc-tz" id="scTz"></span>
+    </div>
+    <div class="sc-times" id="scTimes" aria-live="polite">
+      <div class="sc-time-row sc-time-skel">
+        <span>הדלקת נרות</span><span>טוען…</span>
+      </div>
+      <div class="sc-time-row sc-time-skel">
+        <span>צאת השבת</span><span>טוען…</span>
+      </div>
+      <div class="sc-time-row sc-time-skel">
+        <span>פרשת השבוע</span><span>טוען…</span>
+      </div>
+    </div>
+    <div class="sc-countdown" id="scCountdown" hidden></div>
+  </section>
+
+  <!-- Light a candle -->
+  <section class="card sc-form-card" id="scFormCard">
+    <div class="mini-title">
+      <span class="mini-ornament">🕯</span>
+      <span>הדליקי נר וירטואלי</span>
+    </div>
+    <form class="sc-form" id="scForm">
+      <label>שם המדליקה (יוצג על הקיר):
+        <input id="scName" placeholder="למשל: שרה, ירושלים" maxlength="60" required/>
+      </label>
+      <label>תפילה אישית (אופציונלי):
+        <textarea id="scPrayer" rows="3" placeholder="לרפואת… / לזרע של קיימא… / להצלחה… / לשלום עם ישראל…" maxlength="280"></textarea>
+      </label>
+
+      <!-- Audio recording -->
+      <div class="sc-extra">
+        <button type="button" id="scRecBtn" class="sc-extra-btn">🎙 הקלטת ברכה (עד 30 שנ׳)</button>
+        <div class="sc-rec-status" id="scRecStatus" hidden></div>
+        <audio id="scRecPreview" controls hidden></audio>
+      </div>
+
+      <!-- Photo of candle -->
+      <div class="sc-extra">
+        <label class="sc-extra-btn" for="scPhotoFile">📷 צירוף תמונת הנר</label>
+        <input type="file" id="scPhotoFile" accept="image/*" capture="environment" hidden/>
+        <img id="scPhotoPreview" class="sc-photo-preview" alt="" hidden/>
+      </div>
+
+      <label class="sc-anon">
+        <input type="checkbox" id="scAnon"/>
+        <span>הסתירי את שמי (יוצג "אנונימית · עיר")</span>
+      </label>
+      <button type="submit" class="sc-light-btn" id="scLightBtn">
+        <span class="sc-flame-icn">🕯</span>
+        <span>הדליקי נר</span>
+      </button>
+      <small class="sc-hint">הנר שלך יידלק על הקיר העולמי עד <b id="scUntil">צאת השבת</b>.</small>
+    </form>
+    <div class="sc-success" id="scSuccess" hidden>
+      <div class="sc-success-flame">🕯</div>
+      <b>הנר שלך דולק.</b>
+      <p>תפילתך מצטרפת לאלפי נשים שמדליקות נרות עכשיו ברחבי העולם. שבת שלום ומבורך 💛</p>
+      <button class="sc-light-again" id="scLightAgain">הדליקי עוד נר</button>
+    </div>
+  </section>
+
+  <!-- "Light for me" — request a candle -->
+  <section class="card sc-requests">
+    <div class="mini-title">
+      <span class="mini-ornament">🤝</span>
+      <span>בקשי שמישהי תדליק עלייך</span>
+    </div>
+    <p class="sc-req-intro">לא יכולה להדליק השבת? כתבי שם ובקשה — אישה אחרת תדליק נר במקומך.</p>
+    <form class="sc-req-form" id="scReqForm">
+      <input id="scReqName" placeholder="לרפואת… / לזכר… / השם שלך" maxlength="80" required/>
+      <textarea id="scReqPrayer" rows="2" placeholder="התפילה (אופציונלי)" maxlength="280"></textarea>
+      <button type="submit">פרסמי בקשה</button>
+    </form>
+    <div class="sc-req-list" id="scReqList"></div>
+  </section>
+
+  <!-- Top prayers (most loved) -->
+  <section class="card sc-top">
+    <div class="mini-title">
+      <span class="mini-ornament">⭐</span>
+      <span>תפילות שזכו להכי הרבה לבבות</span>
+      <a class="sc-cinema-link" href="/candles-cinema.html">📺 מסך מלא</a>
+    </div>
+    <div class="sc-top-grid" id="scTop"></div>
+  </section>
+
+  <!-- Global wall -->
+  <section class="card sc-wall">
+    <div class="mini-title">
+      <span class="mini-ornament">✦</span>
+      <span>קיר הנרות החי</span>
+      <span class="sc-wall-count"><b id="scWallCount">0</b> נרות דולקים</span>
+    </div>
+    <div class="sc-wall-grid" id="scWall" aria-live="polite"></div>
+  </section>
+</main>
+
+<script src="data/jewish-illustrations.js" defer></script>
+<script src="kz-image.js" defer></script>
+<script src="kz-shabbat-candles.js" defer></script>
+<script src="kz-ai-chat.js" defer></script>
+<link rel="stylesheet" href="kz-ai-chat.css">
+<script src="kz-honeypot.js" defer></script>
+<script src="kz-nav.js" defer></script>
+<link rel="stylesheet" href="kz-nav.css">
+<link rel="stylesheet" href="kz-polish.css">
+</body>
+</html>

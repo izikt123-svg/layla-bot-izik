@@ -1,0 +1,152 @@
+.kz-compose-modal{
+  position: fixed; inset: 0;
+  z-index: 99999;
+  display: grid; place-items: center;
+  pointer-events: none;
+}
+.kz-compose-modal.is-open{ pointer-events: auto; }
+
+.kz-compose-back{
+  position: absolute; inset: 0;
+  background: rgba(11,31,58,.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  transition: opacity .3s;
+}
+.kz-compose-modal.is-open .kz-compose-back{ opacity: 1; }
+
+.kz-compose-card{
+  position: relative;
+  width: min(560px, 92vw);
+  max-height: 92vh;
+  overflow: auto;
+  background: linear-gradient(160deg, #14315b, #0B1F3A);
+  border: 1px solid rgba(212,176,122,.4);
+  border-radius: 22px;
+  padding: 28px 24px 18px;
+  color: #f6e6c2;
+  box-shadow: 0 24px 80px rgba(11,31,58,.6);
+  transform: translateY(28px) scale(.95);
+  opacity: 0;
+  transition: opacity .35s, transform .35s cubic-bezier(.2,.9,.3,1.2);
+}
+.kz-compose-modal.is-open .kz-compose-card{ transform: none; opacity: 1; }
+
+.kz-compose-x{
+  position: absolute; top: 12px; inset-inline-end: 12px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(212,176,122,.3);
+  color: #d4b07a;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.kz-compose-head{ text-align: center; margin-bottom: 18px; }
+.kz-compose-emoji{
+  font-size: 28px;
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  display: grid; place-items: center;
+  margin: 0 auto 10px;
+  color: #0B1F3A;
+}
+.kz-compose-head h3{ margin: 0 0 4px; font-size: 20px; }
+.kz-compose-head p{ margin: 0; font-size: 13px; opacity: .75; }
+
+.kz-compose-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.kz-compose-grid label{
+  display: grid;
+  gap: 4px;
+  font-size: 12px;
+  color: #d4b07a;
+}
+.kz-compose-grid label.kz-compose-wide{ grid-column: 1 / -1; }
+.kz-compose-grid select,
+.kz-compose-grid input,
+.kz-compose-grid textarea{
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(212,176,122,.3);
+  color: #f6e6c2;
+  font-family: inherit;
+  font-size: 14px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  outline: none;
+  resize: vertical;
+}
+.kz-compose-grid select option{ background: #0B1F3A; color: #f6e6c2; }
+.kz-compose-grid select:focus,
+.kz-compose-grid input:focus,
+.kz-compose-grid textarea:focus{ border-color: #d4b07a; }
+
+.kz-compose-actions{
+  display: flex; gap: 8px; justify-content: flex-end; margin-top: 14px;
+}
+.kz-compose-btn-primary{
+  padding: 12px 22px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+  font-weight: 700;
+  cursor: pointer;
+}
+.kz-compose-btn-secondary{
+  padding: 12px 22px;
+  border: 1px solid rgba(212,176,122,.4);
+  border-radius: 12px;
+  background: transparent;
+  color: #d4b07a;
+  font-weight: 600;
+  cursor: pointer;
+}
+.kz-compose-btn-primary:hover{ filter: brightness(1.05); }
+.kz-compose-btn-secondary:hover{ background: rgba(212,176,122,.1); }
+
+.kz-compose-result{
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(212,176,122,.2);
+  position: relative;
+}
+.kz-compose-spinner{
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 3px solid rgba(212,176,122,.25);
+  border-top-color: #f1d597;
+  margin: 8px auto;
+  animation: kzCompSpin 1s linear infinite;
+}
+@keyframes kzCompSpin{ to{ transform: rotate(360deg); } }
+
+.kz-compose-text{
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: 16px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  color: #f6e6c2;
+}
+.kz-compose-suggest{
+  display: flex; gap: 6px; flex-wrap: wrap;
+  margin-top: 12px;
+}
+.kz-compose-sug{
+  padding: 6px 12px;
+  background: rgba(212,176,122,.12);
+  border: 1px solid rgba(212,176,122,.3);
+  border-radius: 999px;
+  color: #d4b07a;
+  font-size: 12px;
+  cursor: pointer;
+}
+.kz-compose-sug:hover{ background: rgba(212,176,122,.22); }

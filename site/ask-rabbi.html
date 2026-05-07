@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>שאל רב · מרכז שאלות רב־זרמי | מרכז התפילה</title>
+  <meta name="description" content="שאלה אנונימית מנותבת לרב מהעדה/הזרם שבחרת. התשובה הופכת לידע ציבורי לטובת הבאים אחריך." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta property="og:title" content="שאל רב · מרכז התפילה" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="kz.css" />
+</head>
+<body>
+  <div class="page-grain" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand-wrap" href="/index.html">
+      <div class="star" aria-hidden="true">
+        <svg viewBox="0 0 64 64" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round">
+          <polygon points="32,6 40,22 58,22 46,34 50,52 32,42 14,52 18,34 6,22 24,22" />
+        </svg>
+      </div>
+      <div class="brand">
+        <span class="brand-main">מרכז התפילה</span>
+        <span class="brand-sub">שאל רב</span>
+      </div>
+    </a>
+    <nav class="nav">
+      <a href="/index.html">בית</a>
+      <a href="unity.html">כל זכות יהודי</a>
+      <a href="life-events.html">אירועי חיים</a>
+      <a href="customs.html">מנהגים</a>
+    </nav>
+    <div class="top-actions">
+      <a href="/index.html#create" class="user-btn" style="text-decoration:none">
+        <span class="user-avatar">✦</span>
+        <span class="user-label">בקש תפילה</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="kz-shell">
+    <nav class="kz-breadcrumb">
+      <a href="/index.html">בית</a>
+      <span class="sep">›</span>
+      <a href="unity.html">כל זכות יהודי</a>
+      <span class="sep">›</span>
+      <span>שאל רב</span>
+    </nav>
+
+    <section class="kz-hero">
+      <span class="kz-hero-tag">אנונימי · רב־זרמי · ללא דיעה קדומה</span>
+      <h1>שאל <span>רב</span></h1>
+      <p class="kz-hero-lead">
+        שאלה אחת — מנותבת לרב מהעדה/הזרם שאתה בוחר. בלי שיפוט, בלי הרצאות, בלי "אתה חייב".
+        התשובה חוזרת אליך אישית, ואם תסכים — נהיית חלק ממאגר הידע הציבורי של כולם.
+      </p>
+      <div class="kz-hero-verse">
+        "וְשָׁאַלְתָּ אֶת זְקֵנְךָ וְיַגִּדְךָ"
+        <small>דברים ל"ב, ז'</small>
+      </div>
+    </section>
+
+    <section class="kz-block">
+      <span class="kz-tag">לשלוח שאלה</span>
+      <h2>בבקשה — בפשטות, כמו שאתה שואל חבר</h2>
+
+      <form class="kz-form" id="askForm" style="max-width:760px"
+            onsubmit="event.preventDefault(); kzSubmitForm(this, '/.netlify/functions/kz-ask', loadQuestions);">
+        <div class="kz-form-row">
+          <div>
+            <label for="askStream">הזרם/עדה שאתה רוצה שהרב יהיה ממנו</label>
+            <select id="askStream" name="stream" required>
+              <option value="any">לא משנה — כל רב מוסמך</option>
+              <option value="sefardi">ספרדי / עדות המזרח</option>
+              <option value="ashkenazi">אשכנזי ליטאי</option>
+              <option value="chabad">חב"ד</option>
+              <option value="hasidic">חסידי (ברסלב/גור/בלז)</option>
+              <option value="teimani">תימני</option>
+              <option value="ethiopian">אתיופי (ביתא ישראל)</option>
+              <option value="religious-zionist">דתי־לאומי</option>
+              <option value="modern-orthodox">אורתודוכסי מודרני</option>
+              <option value="conservative">קונסרבטיבי</option>
+              <option value="reform">רפורמי</option>
+            </select>
+          </div>
+          <div>
+            <label for="askTopic">תחום</label>
+            <select id="askTopic" name="topic" required>
+              <option value="shabbat">שבת</option>
+              <option value="kashrut">כשרות</option>
+              <option value="prayer">תפילה</option>
+              <option value="family">משפחה וזוגיות</option>
+              <option value="mourning">אבלות ויארצייט</option>
+              <option value="charity">צדקה וחסד</option>
+              <option value="medical">רפואה ובריאות</option>
+              <option value="work">עבודה ופרנסה</option>
+              <option value="halacha">הלכה כללית</option>
+              <option value="other">אחר</option>
+            </select>
+          </div>
+        </div>
+
+        <label for="askQ">השאלה שלך</label>
+        <textarea id="askQ" name="question" required minlength="10" maxlength="1500" placeholder="כתוב בלשונך. לא צריך להתנצל. לא צריך להכיר אותנו. רק תשאל."></textarea>
+        <div class="kz-form-help">עד 1500 תווים · אפשר לשמור בעילום שם מלא.</div>
+
+        <div class="kz-form-row">
+          <div>
+            <label for="askEmail">אימייל לקבלת תשובה (לא חובה)</label>
+            <input id="askEmail" name="email" type="email" placeholder="you@example.com" />
+          </div>
+          <div>
+            <label for="askPublish">לפרסם תשובה ציבורית?</label>
+            <select id="askPublish" name="publish">
+              <option value="yes">כן — אשמח שתעזור לאחרים</option>
+              <option value="no">לא — רק לי</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="kz-cta" type="submit">שליחה לרב</button>
+        <div class="kz-form-status"></div>
+      </form>
+    </section>
+
+    <section class="kz-block" id="archive">
+      <span class="kz-tag">שאלות שכבר נשאלו</span>
+      <h2>מאגר הידע הציבורי</h2>
+      <p class="kz-lead">שאלות ותשובות שמבקשים ומשיבים הסכימו לפרסם — לטובת כל מי שחשב על אותה שאלה אבל לא העז לשאול.</p>
+
+      <div class="kz-pills" data-kz-pill-group data-kz-target="#askArchive">
+        <button class="kz-pill active" data-kz-pill="all">הכול</button>
+        <button class="kz-pill" data-kz-pill="shabbat">שבת</button>
+        <button class="kz-pill" data-kz-pill="kashrut">כשרות</button>
+        <button class="kz-pill" data-kz-pill="mourning">אבלות</button>
+        <button class="kz-pill" data-kz-pill="family">משפחה</button>
+        <button class="kz-pill" data-kz-pill="prayer">תפילה</button>
+      </div>
+
+      <div class="kz-feed" id="askArchive">
+
+        <div class="kz-feed-item" data-kz-cat="shabbat">
+          <h4>מותר להדליק את האור בשבת אם התינוק קם ובוכה?</h4>
+          <div class="kz-feed-meta">זרם: אשכנזי · תחום: שבת · נענה על ידי רב מוסמך</div>
+          <p><strong>תשובה:</strong> אם התינוק בסכנה אמיתית (נופל, לא נושם, פציעה) — כל פיקוח נפש דוחה שבת והדלקת אור מותרת ואף חובה. אם רק בוכה — עדיף לקרב אליו במנורה הדלוקה מחדר אחר, או להיעזר ב"גוי של שבת" / שכן. במקרה של "שמא יקרה דבר" מסופק — עדיף להחמיר ולהחשיב חיי התינוק קודם.</p>
+        </div>
+
+        <div class="kz-feed-item" data-kz-cat="mourning">
+          <h4>אמא שלי נפטרה לפני חודש. אני חייב ללבוש בגד קרוע שנה?</h4>
+          <div class="kz-feed-meta">זרם: ספרדי · תחום: אבלות · נענה על ידי רב מוסמך</div>
+          <p><strong>תשובה:</strong> לא. הבגד שעליו הייתה הקריעה צריך להישאר קרוע, אבל אין חובה ללבוש אותו כל הזמן. נהוג ללבוש אותו בבית, בשבעה, ולזרוק לאחר השבעה. לאחר שלושים — אפשר לתפור זמנית; בהורים תופרים רק בתום שנה (ובאורח שניכר שהיה קרוע).</p>
+        </div>
+
+        <div class="kz-feed-item" data-kz-cat="kashrut">
+          <h4>האם גבינה צהובה רגילה מהסופר כשרה לחלב יהודי?</h4>
+          <div class="kz-feed-meta">זרם: חב"ד · תחום: כשרות · נענה על ידי רב מוסמך</div>
+          <p><strong>תשובה:</strong> לרוב לא — גבינות תעשייתיות רגילות נחשבות "חלב עכו"ם" להחמירים. בתמר חב"ד והמיני־חומרות הספרדים — יש הקפדה על חלב ישראל. בסופרים כשרים יש סימון מיוחד "חלב ישראל" / "חלב נכרי" — לבחור על פי מנהג הבית.</p>
+        </div>
+
+        <div class="kz-feed-item" data-kz-cat="family">
+          <h4>אשתי בהריון, כדאי שנקבע שם עברי עוד לפני הלידה?</h4>
+          <div class="kz-feed-meta">זרם: דתי־לאומי · תחום: משפחה · נענה על ידי רב מוסמך</div>
+          <p><strong>תשובה:</strong> אין איסור הלכתי — יש מנהג של "עין הרע" שלא לקבוע סופית לפני. פרקטית: דברו על רשימה קצרה ביניכם, ושיתוף ההורים — אחרי הלידה. השם נקבע רשמית בברית (לבן) או בזבד הבת / עליית האב לתורה (לבת). עד אז — ייצוג פנימי בלבד.</p>
+        </div>
+
+        <div class="kz-feed-item" data-kz-cat="prayer">
+          <h4>אני טס הרבה לעבודה — צריך להתפלל כל תפילת הדרך מחדש?</h4>
+          <div class="kz-feed-meta">זרם: כל רב · תחום: תפילה · נענה על ידי רב מוסמך</div>
+          <p><strong>תשובה:</strong> תפילת הדרך נאמרת פעם ביום על כל נסיעה ארוכה (3+ ק"מ לעיקר הדין). טיסה פנימית ויומית נחשבת אחת. אם יש עוד יום מפעולה חריגה — נאמרת שוב. על כל הטיסה — פעם אחת ספיקא. מוסכם: לפחות פעם בטיסה, אחרי המראה.</p>
+        </div>
+
+        <div class="kz-feed-item" data-kz-cat="shabbat">
+          <h4>מותר ליהודי מסורתי לצאת לעבודה בשבת אם אין ברירה כלכלית?</h4>
+          <div class="kz-feed-meta">זרם: קונסרבטיבי · תחום: שבת · נענה על ידי רב מוסמך</div>
+          <p><strong>תשובה:</strong> "אין ברירה" הוא מצב רוחני־חיי, לא טכני. מומלץ לנהל שיחה עם רב שמכיר את המצב הספציפי: יש הבדל בין "מפרנס יחיד שייפגע קיומית" לבין "אני רוצה להרוויח יותר". במצבי פיקוח נפש כלכלי אמיתי — יש פתרונות הלכתיים מדורגים. מוטב לשאול אישית מאשר להכריע לבד.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="kz-block">
+      <span class="kz-tag">איך זה עובד</span>
+      <h2>השרשרת מהשאלה ועד התשובה</h2>
+      <div class="kz-timeline">
+        <div class="kz-timeline-item">
+          <h4>1 · אתה שולח שאלה</h4>
+          <p>בוחר עדה/זרם ותחום. אפשר בעילום שם. עד 1500 תווים.</p>
+        </div>
+        <div class="kz-timeline-item">
+          <h4>2 · מודרציה · בתוך שעות</h4>
+          <p>צוות בודק שהשאלה הגיונית ולא כוללת מידע מזהה. אין עריכת התוכן.</p>
+        </div>
+        <div class="kz-timeline-item">
+          <h4>3 · ניתוב לרב המתאים</h4>
+          <p>רב מהזרם שבחרת מקבל את השאלה במערכת פרטית — בלי לדעת מי אתה.</p>
+        </div>
+        <div class="kz-timeline-item">
+          <h4>4 · תשובה חוזרת אליך</h4>
+          <p>באימייל (אם מסרת) או בלוח ציבורי בעמוד הזה. לרוב תוך 48–72 שעות.</p>
+        </div>
+        <div class="kz-timeline-item">
+          <h4>5 · אישור לפרסום</h4>
+          <p>רק אחרי שאתה מאשר — השאלה והתשובה עולות למאגר הציבורי.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <div class="star" aria-hidden="true">✡</div>
+        <div>
+          <div class="brand-main">מרכז התפילה</div>
+          <div class="brand-sub">כל תפילה שנשלחת – מגיעה</div>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="/index.html">דף הבית</a>
+        <a href="unity.html">כל זכות יהודי</a>
+        <a href="customs.html">מנהגים</a>
+        <a href="life-events.html">אירועי חיים</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© מרכז התפילה · כל הזכויות שמורות</div>
+      <div>נוצר בשקט, באמונה.</div>
+    </div>
+  </footer>
+
+  <a class="kz-back" href="unity.html">← לכל זכות יהודי</a>
+  <script src="kz.js"></script>
+  <script>
+    function loadQuestions() {
+      // Append submitted public questions to the archive
+      fetch('/.netlify/functions/kz-ask').then(r => r.json()).then(function (body) {
+        var items = Array.isArray(body.items) ? body.items : [];
+        if (!items.length) return;
+        var host = document.getElementById('askArchive');
+        items.forEach(function (it) {
+          if (it.publish !== 'yes') return;
+          var div = document.createElement('div');
+          div.className = 'kz-feed-item';
+          div.setAttribute('data-kz-cat', it.topic || 'other');
+          div.innerHTML = '<h4>' + kzEsc(it.question.slice(0, 160)) + '</h4>' +
+            '<div class="kz-feed-meta">זרם: ' + kzEsc(it.stream) + ' · תחום: ' + kzEsc(it.topic) + ' · ' + (it.answer ? 'עם תשובה' : 'ממתין למענה') + '</div>' +
+            (it.answer ? '<p><strong>תשובה:</strong> ' + kzEsc(it.answer) + '</p>' : '');
+          host.insertBefore(div, host.firstChild);
+        });
+      }).catch(function () {});
+    }
+    loadQuestions();
+  </script>
+</body>
+</html>

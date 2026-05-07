@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>הספר שלנו · ארכיון משפחתי · מרכז התפילה</title>
+  <meta name="description" content="הזיני את המשפחה שלך — חיים ונפטרים — וקבלי לוח שנה משפחתי מלא: ימי הולדת, יארצייטים, ציונים." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="critical.css" />
+  <link rel="stylesheet" href="kz-family.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <a href="/home.html" class="brand-wrap">← הבית</a>
+  <span class="fa-pill">📖 רק במכשיר שלך</span>
+</header>
+
+<main class="fa-shell">
+  <section class="fa-hero">
+    <div class="fa-icon">📖</div>
+    <h1>הספר שלנו</h1>
+    <p>ארכיון משפחתי אישי — חיים ונפטרים. לוח שנה משפחתי שאף אחד לא רואה חוץ ממך.</p>
+  </section>
+
+  <section class="card fa-form-card">
+    <div class="mini-title"><span class="mini-ornament">✦</span><span>הוסיפי בן/ת משפחה</span></div>
+    <form class="fa-form" id="faForm">
+      <input id="faName" placeholder="שם פרטי" required maxlength="60"/>
+      <input id="faRelation" placeholder="קרבה (אבא / אמא / סבתא / בן…)" maxlength="40"/>
+      <div class="fa-form-row">
+        <select id="faKind">
+          <option value="alive">חי/ה — מתעדכן יום הולדת</option>
+          <option value="passed">נפטר/ה — מתעדכן יארצייט</option>
+        </select>
+        <input id="faDate" type="date" required/>
+      </div>
+      <input id="faNotes" placeholder="הערות (אופציונלי)" maxlength="200"/>
+      <button type="submit">שמרי</button>
+    </form>
+  </section>
+
+  <section class="card fa-upcoming">
+    <div class="mini-title"><span class="mini-ornament">📅</span><span>הציונים הקרובים</span></div>
+    <div class="fa-upcoming-list" id="faUpcoming"></div>
+  </section>
+
+  <section class="card fa-section">
+    <div class="mini-title"><span class="mini-ornament">👨‍👩‍👧‍👦</span><span>המשפחה שלי</span></div>
+    <div class="fa-list" id="faList"></div>
+  </section>
+</main>
+
+<script src="kz-family.js" defer></script>
+<script src="kz-ai-chat.js" defer></script>
+<link rel="stylesheet" href="kz-ai-chat.css">
+<script src="kz-honeypot.js" defer></script>
+<script src="kz-nav.js" defer></script>
+<link rel="stylesheet" href="kz-nav.css">
+<link rel="stylesheet" href="kz-polish.css">
+</body>
+</html>

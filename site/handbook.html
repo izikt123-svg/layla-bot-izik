@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>חוברת הדרכה · מרכז התפילה (PDF)</title>
+  <meta name="description" content="חוברת הדרכה מלאה לכל מה שיש במרכז התפילה — הורדה כ־PDF בלחיצה על 'הורד כ־PDF'." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#0B1F3A;
+      --ink-2:#1A2D4D;
+      --gold:#8A6A3A;
+      --gold-2:#B8935A;
+      --paper:#FDFBF4;
+      --ivory:#FBF8F1;
+      --line:#E6DCC5;
+    }
+    *{ box-sizing:border-box; }
+    html,body{
+      margin:0; padding:0;
+      background:#E7DFC6;
+      color:var(--ink);
+      font-family:"Heebo","Assistant","Segoe UI",Arial,sans-serif;
+    }
+    body{ padding:40px 20px; }
+    .toolbar{
+      position:sticky; top:10px; z-index:10;
+      display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
+      margin-bottom:26px;
+    }
+    .tbtn{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 16px; border-radius:999px;
+      background:linear-gradient(135deg,#F4D996,#D4B07A);
+      color:#0B1F3A; border:1px solid rgba(11,31,58,.15);
+      font-weight:800; font-size:13px;
+      text-decoration:none; cursor:pointer;
+      box-shadow:0 10px 22px rgba(11,31,58,.2);
+      transition:transform .2s ease;
+    }
+    .tbtn:hover{ transform:translateY(-2px); }
+    .tbtn.secondary{
+      background:#FDFBF4; color:var(--ink); border-color:var(--line);
+      box-shadow:0 6px 12px rgba(11,31,58,.1);
+    }
+    .tbtn svg{ flex:0 0 auto; }
+
+    .page{
+      max-width:820px;
+      margin:0 auto 24px;
+      background:var(--paper);
+      border:1px solid var(--line);
+      border-radius:14px;
+      box-shadow:0 24px 50px rgba(11,31,58,.14);
+      padding:48px 56px;
+      page-break-after: always;
+    }
+    .page:last-child{ page-break-after:auto; }
+
+    .cover{
+      text-align:center;
+      background:linear-gradient(160deg,#FDFBF4 0%, #F4E3BF 100%);
+      border-color:#D4B07A;
+      padding:70px 56px 60px;
+    }
+    .cover .star{
+      width:70px; height:70px; margin:0 auto 18px;
+      border-radius:50%;
+      background:radial-gradient(circle at 30% 30%,#fff7e0,#c79952);
+      display:grid; place-items:center;
+      color:#0B1F3A;
+      box-shadow:inset 0 0 0 2px rgba(11,31,58,.12), 0 10px 28px rgba(184,147,90,.25);
+    }
+    .cover h1{
+      font-family:"Frank Ruhl Libre",Georgia,serif;
+      font-size:44px; line-height:1.1; margin:0 0 8px;
+      color:#0B1F3A;
+    }
+    .cover .kicker{
+      font-size:12px; letter-spacing:.28em; text-transform:uppercase;
+      color:var(--gold); font-weight:800; margin-bottom:14px;
+    }
+    .cover p.lead{
+      font-size:17px; line-height:1.7; color:#2A3A58;
+      max-width:560px; margin:18px auto;
+    }
+    .cover .meta{
+      margin-top:28px;
+      display:inline-flex; gap:10px; flex-wrap:wrap; justify-content:center;
+      font-size:12.5px; color:#4a2f10;
+    }
+    .cover .meta span{
+      padding:6px 12px; border-radius:999px;
+      background:rgba(11,31,58,.06);
+      border:1px solid rgba(11,31,58,.08);
+    }
+    h2.section{
+      font-family:"Frank Ruhl Libre",Georgia,serif;
+      font-size:28px; line-height:1.2;
+      color:var(--ink);
+      margin:0 0 6px;
+    }
+    .section-eyebrow{
+      font-size:11px; letter-spacing:.22em; text-transform:uppercase;
+      color:var(--gold); font-weight:800;
+      margin-bottom:8px;
+    }
+    .section-lead{
+      font-size:14.5px; color:#1A2D4D;
+      line-height:1.75;
+      margin:0 0 16px;
+    }
+    .card{
+      background:var(--ivory);
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:14px 16px;
+      margin:10px 0;
+    }
+    .card h3{
+      font-family:"Frank Ruhl Libre",Georgia,serif;
+      font-size:18px; margin:0 0 4px; color:var(--ink);
+    }
+    .card .where{
+      font-size:11.5px; color:var(--gold); font-weight:700;
+      letter-spacing:.08em; text-transform:uppercase;
+      margin-bottom:6px;
+    }
+    .card p{ font-size:13.5px; line-height:1.65; margin:0; color:#1A2D4D; }
+    ul.clean{
+      list-style:none; padding:0; margin:8px 0 0;
+      display:grid; grid-template-columns:repeat(2, 1fr); gap:6px 16px;
+    }
+    ul.clean li{
+      font-size:13px;
+      padding-inline-start:16px; position:relative;
+    }
+    ul.clean li::before{
+      content:'✦'; color:var(--gold);
+      position:absolute; inset-inline-start:0; top:0;
+    }
+
+    .toc{ columns:2; column-gap:28px; font-size:13.5px; color:#1A2D4D; }
+    .toc ol{ padding:0; margin:0 0 0 18px; }
+    .toc li{ margin:4px 0; }
+
+    .tips{
+      display:grid; grid-template-columns:1fr 1fr; gap:12px;
+    }
+    .tip{
+      padding:12px 14px; border-radius:10px;
+      background:linear-gradient(135deg,#FFF7E0,#F4E3BF);
+      border:1px solid #E1C98B;
+      font-size:13px; line-height:1.6;
+    }
+    .tip strong{ color:var(--ink); display:block; margin-bottom:2px; }
+
+    .foot{
+      text-align:center;
+      padding-top:26px; margin-top:26px;
+      border-top:1px dashed var(--line);
+      color:#4a2f10; font-size:12.5px;
+    }
+
+    @media (max-width:600px){
+      .page{ padding:30px 22px; }
+      .cover{ padding:46px 22px; }
+      .cover h1{ font-size:32px; }
+      ul.clean{ grid-template-columns:1fr; }
+      .tips{ grid-template-columns:1fr; }
+      .toc{ columns:1; }
+    }
+
+    /* ===== PRINT / PDF ===== */
+    @page{
+      size: A4;
+      margin: 18mm 16mm;
+    }
+    @media print{
+      body{ background:#FFFFFF; padding:0; }
+      .toolbar{ display:none !important; }
+      .page{
+        box-shadow:none; border:none; margin:0;
+        padding:0 0 10mm; max-width:100%;
+        page-break-after:always;
+      }
+      .card, .tip{ break-inside:avoid; }
+      a{ color:#0B1F3A; text-decoration:none; }
+      .cover{ background:#FDFBF4 !important; border:none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="toolbar" aria-hidden="false">
+    <button type="button" class="tbtn" onclick="window.print()">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      הורד / הדפס כ־PDF
+    </button>
+    <a class="tbtn secondary" href="/">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
+      חזרה למרכז התפילה
+    </a>
+  </div>
+
+  <!-- COVER -->
+  <section class="page cover" aria-labelledby="coverTitle">
+    <div class="star" aria-hidden="true">
+      <svg viewBox="0 0 64 64" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round">
+        <polygon points="32,6 40,22 58,22 46,34 50,52 32,42 14,52 18,34 6,22 24,22" />
+      </svg>
+    </div>
+    <div class="kicker">מרכז התפילה · חוברת הדרכה</div>
+    <h1 id="coverTitle">כל מה שיש באתר · מדריך מלא</h1>
+    <p class="lead">חוברת זו היא סיור מילולי בכל מה שנמצא במרכז התפילה: כל תפריט, כל קטגוריה, כל דף וכל תכונה. הוא נועד להדפסה או שמירה כקובץ PDF, כך שתוכלו לקחת אותו איתכם, לשתף עם חבר, או ללמוד את המערכת בקצב שלכם.</p>
+    <div class="meta">
+      <span>גרסה 1</span>
+      <span>עברית · מלא</span>
+      <span>מוכן להדפסה A4</span>
+      <span>ידידותי לקוראי מסך</span>
+    </div>
+  </section>
+
+  <!-- TOC -->
+  <section class="page" aria-labelledby="tocTitle">
+    <div class="section-eyebrow">תוכן העניינים</div>
+    <h2 class="section" id="tocTitle">מה תמצאו בחוברת</h2>
+    <p class="section-lead">הדפים מסודרים בסדר שמתאים גם למי שנכנס בפעם הראשונה וגם למי שרוצה להתעמק בתכונה מסוימת.</p>
+    <div class="toc">
+      <ol>
+        <li>מה זה מרכז התפילה</li>
+        <li>עמוד הבית · לוח חי, פסוק יומי, לוח שנה</li>
+        <li>בקש תפילה · טופס אנונימי וקטגוריות</li>
+        <li>הפיד החי · לראות ולהתפלל עם אחרים</li>
+        <li>האזור האישי · מרחב פרטי</li>
+        <li>מאגר תפילות · נוסחים לפי תחום</li>
+        <li>לימוד יומי · פרשה, הלכה, חסידות, מוסר</li>
+        <li>מנהגים ועדות · ספרדי, אשכנזי, תימני, חסידי</li>
+        <li>עברית יהודית 101 · מילון</li>
+      </ol>
+      <ol start="10">
+        <li>מה אומרים כש… · מצבי חיים</li>
+        <li>שאל רב · מסלול רבני</li>
+        <li>סיפורי לב · תקומה, אמונה, מצוקה</li>
+        <li>ספר נשמות · נרות וזיכרון</li>
+        <li>אירועי חיים · לידה, חופה, ברית</li>
+        <li>כל זכות יהודי · רשת אחדות</li>
+        <li>איתור קהילה · מפה וקהילות</li>
+        <li>חסד והתנדבות · איך לתת</li>
+        <li>עלייה ונסיעה · בדרכים</li>
+        <li>פינת ילדים · סיפורים ופעילויות</li>
+        <li>כלים עליונים · חיפוש, שפה, התראות, התחברות</li>
+        <li>המלווה החכם · AI</li>
+        <li>סיור מונפש עם כפתור השהיה</li>
+        <li>חווית מרכז התפילה · showcase</li>
+        <li>פרטיות, נגישות ותנאי שימוש</li>
+        <li>סיכום · מסע קצר דרך האתר</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 1 · WHAT IS IT -->
+  <section class="page">
+    <div class="section-eyebrow">פרק 1</div>
+    <h2 class="section">מה זה מרכז התפילה</h2>
+    <p class="section-lead">מרחב יהודי אישי, אינטימי ואנונימי — במקום אחד. מרכז התפילה הוא לא רק כלי; הוא בית משותף להתחברות רוחנית של כל עם ישראל בארץ ובעולם.</p>
+    <div class="card">
+      <div class="where">ערכים מנחים</div>
+      <h3>כבוד, אנונימיות, רגישות</h3>
+      <p>אין צורך בשם, בטלפון, או בתעודת זהות. בקשה שנשלחת היא בקשה שבאה מהלב — וזו הצורה שבה היא נשמרת במערכת.</p>
+    </div>
+    <div class="card">
+      <div class="where">קהל היעד</div>
+      <h3>כל מי שתפילה נוגעת בו</h3>
+      <p>מתחילים, מחפשי דרך, חוזרים בשאלה או בתשובה, אנשי קהילה, רבנים, משפחות יקיריהם זקוקים לתפילה — כולם מוזמנים.</p>
+    </div>
+  </section>
+
+  <!-- 2 · HOME -->
+  <section class="page">
+    <div class="section-eyebrow">פרק 2 · מקום: עמוד הבית (#hero)</div>
+    <h2 class="section">עמוד הבית · נקודת המוצא</h2>
+    <p class="section-lead">הלב של המרכז. שלושה רכיבים מרכזיים שמעדכנים את עצמם אוטומטית — בלי שתצטרכו לעשות דבר.</p>
+    <div class="card"><div class="where">#hero</div><h3>לוח תפילה חי</h3><p>סרגל סטטיסטיקה של בקשות פעילות, אנשים שמתפללים כרגע, וסיפורי תודה אחרונים.</p></div>
+    <div class="card"><div class="where">#hero</div><h3>הפסוק של היום</h3><p>פסוק יומי שמתחלף אוטומטית, עם תרגום ומחשבה קצרה.</p></div>
+    <div class="card"><div class="where">#calendar</div><h3>לוח שנה יהודי</h3><p>זמני הדלקת נרות, פרשת השבוע, חגים וצומות קרובים — מותאם לפי מיקום.</p></div>
+    <div class="card"><div class="where">#stories</div><h3>סיפורי אמונה</h3><p>עדויות אישיות קצרות שמחזקות — שיתוף אנונימי פתוח לכולם.</p></div>
+  </section>
+
+  <!-- 3 · ASK -->
+  <section class="page">
+    <div class="section-eyebrow">פרק 3 · מקום: בקש תפילה (#create)</div>
+    <h2 class="section">לבקש תפילה · בפשטות ובביטחון</h2>
+    <p class="section-lead">הטופס המרכזי של האתר. שלוש דקות מהקלדה ועד שהבקשה חיה בפיד.</p>
+    <div class="card"><h3>שבע קטגוריות</h3>
+      <ul class="clean">
+        <li>רפואה</li><li>פרנסה</li><li>זוגיות</li><li>שלום בית</li>
+        <li>ילדים ופוריות</li><li>הצלחה</li><li>הודיה</li><li>כללי</li>
+      </ul>
+    </div>
+    <div class="tips">
+      <div class="tip"><strong>הקלטה במקום הקלדה</strong>כפתור המיקרופון פותח הקלטה קולית של עד 60 שניות. ההקלטה נשארת אצלכם, והטקסט נשלח כבקשה.</div>
+      <div class="tip"><strong>אנונימי לחלוטין</strong>אין שדה שם, אין טלפון, ואין כתובת. שם אנונימי יפה נוצר אוטומטית לבקשה.</div>
+      <div class="tip"><strong>איך לכתוב טוב</strong>משפט ראשון קצר, רגש אמיתי, ובקשה ספציפית. לדוגמה: "בבקשה רפואה שלמה לא׳ בן ח׳".</div>
+      <div class="tip"><strong>בקשה מעודכנת</strong>תודה וחיזוק נשלחים בהמשך דרך "הבקשות שלי" באזור האישי.</div>
+    </div>
+  </section>
+
+  <!-- 4 · FEED -->
+  <section class="page">
+    <div class="section-eyebrow">פרק 4 · מקום: הפיד (#feed)</div>
+    <h2 class="section">הפיד החי · להיות חלק מהרשת</h2>
+    <p class="section-lead">זו הגישה הקלה ביותר להתחיל להתפלל עם אחרים — בלי להיחשף, בלי להירשם.</p>
+    <div class="card"><h3>סינון חכם</h3><p>אפשר לסנן לפי תחום: רפואה, פרנסה, זוגיות, שלום בית, הודיה. אפשר גם לבחור "מותאם לך" והפיד יציג מה שקרוב למה שחשוב לכם.</p></div>
+    <div class="card"><h3>"אני מתפלל על זה"</h3><p>לחיצה על כפתור הקטנה שיוצר חיבור רוחני הדדי. גם מבקש/ת הבקשה וגם אתם רואים זאת באזור האישי.</p></div>
+  </section>
+
+  <!-- 5 · PERSONAL -->
+  <section class="page">
+    <div class="section-eyebrow">פרק 5 · מקום: האזור האישי (#me)</div>
+    <h2 class="section">האזור האישי · מרחב פרטי</h2>
+    <p class="section-lead">שלושת המחיצות החשובות שלכם — ובקרה מלאה על מי שיתף פעולה עם הבקשה.</p>
+    <div class="card"><h3>הבקשות שלי</h3><p>רשימת הבקשות שאתם פתחתם, עם אפשרות לסמן "נפתר" או להוסיף עדכון תודה.</p></div>
+    <div class="card"><h3>אני מתפלל על</h3><p>כל הבקשות שאתם סימנתם, עם תזכורת עדינה פעם ביום/שבוע לפי הבחירה שלכם.</p></div>
+    <div class="card"><h3>חיבורים רוחניים</h3><p>מספר האנשים שהתפללו עבורכם ומספר האנשים שאתם התפללתם עבורם — ללא פרטים מזהים.</p></div>
+  </section>
+
+  <!-- 6 · LIBRARY -->
+  <section class="page">
+    <div class="section-eyebrow">פרק 6 · מקום: מאגר תפילות (#library)</div>
+    <h2 class="section">מאגר תפילות · נוסחים לפי תחום</h2>
+    <p class="section-lead">אוסף מסודר של נוסחים מוכרים, בעריכה נקייה ונוחה למסך ולהדפסה.</p>
+    <div class="card"><h3>תהילים מסודרים</h3><p>ספר תהילים עם חלוקה יומית וחלוקה חודשית.</p></div>
+    <div class="card"><h3>מי שברך</h3><p>נוסחי מי שברך לחולים, ליולדות, לחתן וכלה, לחיילים ועוד.</p></div>
+    <div class="card"><h3>תפילות אישיות</h3><p>תפילות קצרות לתחילת יום, לצרה, לתודה, לשינה.</p></div>
+  </section>
+
+  <!-- 7-9 · LEARN/CUSTOMS/DICT -->
+  <section class="page">
+    <div class="section-eyebrow">פרקים 7-9 · learning.html · customs.html · dictionary.html</div>
+    <h2 class="section">ללמוד · להבין · לדבר בשפה</h2>
+    <p class="section-lead">שלושה כלים שמחזיקים את הלמידה הרציפה של כל אחד שרוצה להתקדם.</p>
+    <div class="card"><h3>לימוד יומי · learning.html</h3><p>פרשת שבוע, הלכה, חסידות ומוסר — סדר יומי שמתאים לכל אחד.</p></div>
+    <div class="card"><h3>מנהגים ועדות · customs.html</h3><p>מה ההבדלים המעשיים בין אשכנזי, ספרדי, תימני וחסידי — איך מברכים, איך מתפללים, איך חוגגים.</p></div>
+    <div class="card"><h3>עברית יהודית 101 · dictionary.html</h3><p>מילון מונחים: "רפואה שלמה", "לעילוי נשמה", "לחיים", "בעזרת השם" ועוד.</p></div>
+  </section>
+
+  <!-- 10-11 · WHAT TO SAY / ASK RABBI -->
+  <section class="page">
+    <div class="section-eyebrow">פרקים 10-11 · what-to-say.html · ask-rabbi.html</div>
+    <h2 class="section">מה אומרים כש… · שאל רב</h2>
+    <p class="section-lead">כלים לרגעי חיים מיוחדים — גם כשלא יודעים מה לומר, יש איפה לשאול ומה להגיד.</p>
+    <div class="card"><h3>מה אומרים כש…</h3><p>מצבי חיים: לידה, חולה, נסיעה, שמחה, אבל — ומה נהוג לומר או לברך.</p></div>
+    <div class="card"><h3>שאל רב</h3><p>שאלה הלכתית/רגישה שעוברת למסלול רבני מוסמך. מקבלים מענה אישי ומכובד.</p></div>
+  </section>
+
+  <!-- 12-14 · STORIES / MEMORIAL / LIFE -->
+  <section class="page">
+    <div class="section-eyebrow">פרקים 12-14 · #stories · memorial.html · life-events.html</div>
+    <h2 class="section">סיפורי לב · ספר נשמות · אירועי חיים</h2>
+    <p class="section-lead">שלוש דרכים לחיות את הזמן, את הזיכרון ואת השמחה.</p>
+    <div class="card"><h3>סיפורי לב</h3><p>תקומה, אמונה, מצוקה — סיפורים שמחזקים ברגעים הקשים. כולם אנונימיים אם רוצים.</p></div>
+    <div class="card"><h3>ספר נשמות · memorial.html</h3><p>עמוד זיכרון לאהובים עם נר וירטואלי, תאריך עברי, ותזכורת אוטומטית ביום השנה.</p></div>
+    <div class="card"><h3>אירועי חיים · life-events.html</h3><p>לידה, ברית, בת־מצווה, חתונה — הדרך שלכם לשתף שמחה, לבקש ברכה, ולקבל חיבוק רשת.</p></div>
+  </section>
+
+  <!-- 15-19 · ZCHUT YEHUDI -->
+  <section class="page">
+    <div class="section-eyebrow">פרקים 15-19 · רשת "כל זכות יהודי"</div>
+    <h2 class="section">הרשת המאחדת · unity.html ושותפים</h2>
+    <p class="section-lead">חלק חדש ומרחיב: חיבור של יהודים ברחבי העולם סביב זכויות, חסד, קהילה ועלייה.</p>
+    <div class="card"><h3>רשת הזכויות · unity.html</h3><p>זכויות שיהודי צובר על עצמו או בשביל אחרים — ברוח קהילתית חיובית.</p></div>
+    <div class="card"><h3>איתור קהילה · find-jewish.html</h3><p>מפה וחיפוש של קהילות, מניינים, בתי כנסת ומרכזים יהודיים סביבכם.</p></div>
+    <div class="card"><h3>חסד והתנדבות · chesed.html</h3><p>גמילות חסדים, לוחות התנדבות, ומה ממש חסר כרגע. גם מקומי וגם מרוחק.</p></div>
+    <div class="card"><h3>עלייה ונסיעה · aliyah-traveler.html</h3><p>טיפים לעולה ולנוסע יהודי — כשרות, תפילה בדרכים, אנשי קשר בשטח.</p></div>
+    <div class="card"><h3>פינת ילדים · kids.html</h3><p>סיפורים, פעילויות ואומנויות לילדים — עברית, פרשת השבוע, ערכים יהודיים.</p></div>
+  </section>
+
+  <!-- 20 · TOP TOOLS -->
+  <section class="page">
+    <div class="section-eyebrow">פרק 20 · בראש כל עמוד</div>
+    <h2 class="section">כלים עליונים · חיפוש, שפה, התראות, התחברות</h2>
+    <p class="section-lead">ארבעה פעולות שמוטמעות בראש כל דף — אפשר להגיע אליהן מכל מקום באתר.</p>
+    <div class="card"><h3>חיפוש חכם · #megaSearch</h3><p>סורק את כל האתר — תפילות, מנהגים, ערים, צדיקים, פרשה, סיפור. גם עם הגנה מפני טקסט לא מובן.</p></div>
+    <div class="card"><h3>שפה · עב/EN</h3><p>מתג דגלים שמחליף את ממשק האתר בין עברית לאנגלית, כולל RTL/LTR.</p></div>
+    <div class="card"><h3>התראות</h3><p>פעמון שמראה חיבורים חדשים, תגובות ומאורעות.</p></div>
+    <div class="card"><h3>התחברות · Google</h3><p>רישום רגיל, או "המשך עם Google" דרך Netlify Identity — מהיר ובטוח.</p></div>
+  </section>
+
+  <!-- 21-22 · AI + TOUR -->
+  <section class="page">
+    <div class="section-eyebrow">פרקים 21-22 · מלווה AI + סיור מונפש</div>
+    <h2 class="section">המלווה החכם · הסיור החדש</h2>
+    <p class="section-lead">שתי דרכים חדשות לגלות את האתר — אחת שואלת, השנייה מראה. שתיהן נמצאות בצד ימין של המסך.</p>
+    <div class="card"><h3>מלווה מרכז התפילה · AI</h3><p>כפתור זהוב־כחול דק בצד ימין, באמצע המסך. לוחצים, נפתחת שיחה חכמה: שואלים בכל ניסוח, גם שאלות מורכבות, והוא עונה בעברית נקייה עם הפנייה מדויקת למקום הנכון באתר.</p></div>
+    <div class="card"><h3>סיור מונפש עם השהיה</h3><p>הכפתור "מדריך האתר" בתחתית ימין. כשהסיור פועל — ניתן לעצור בכל שלב בעזרת כפתור "השהה", או לבחור בקצב מהארבעה: רגוע, רגיל, מהיר, ידני (בלי התקדמות אוטומטית). חצי מקש ←/→ וגם רווח לשליטה.</p></div>
+  </section>
+
+  <!-- 23 · SHOWCASE -->
+  <section class="page">
+    <div class="section-eyebrow">פרק 23 · showcase</div>
+    <h2 class="section">חווית מרכז התפילה · "שהעולם יראה"</h2>
+    <p class="section-lead">כפתור נוסף, זהב מלא, בצד ימין. פותח מסך מלא ראוותני עם כרטיסייה לכל חלק באתר — תיאור קצר, תגיות, ולחיצה שקופצת ישר למקום.</p>
+    <div class="tips">
+      <div class="tip"><strong>מתי להשתמש?</strong>כשרוצים להראות את כל העושר של המרכז במבט אחד — מושלם לשיתוף.</div>
+      <div class="tip"><strong>כפתור Escape</strong>סוגר את החוויה בכל רגע.</div>
+      <div class="tip"><strong>כל כרטיס חי</strong>הוא קישור פעיל — לחיצה קופצת לאותו חלק באתר.</div>
+      <div class="tip"><strong>לא דורס את המסך</strong>מוצג כשכבה עליונה; שום דבר לא נמחק מאחור.</div>
+    </div>
+  </section>
+
+  <!-- 24 · LEGAL -->
+  <section class="page">
+    <div class="section-eyebrow">פרק 24 · privacy.html · terms.html · accessibility.html</div>
+    <h2 class="section">פרטיות · תנאי שימוש · נגישות</h2>
+    <p class="section-lead">מרכז התפילה מחויב לשקיפות מלאה. שלושה מסמכים קצרים וברורים שכדאי להכיר.</p>
+    <div class="card"><h3>מדיניות פרטיות · privacy.html</h3><p>איזה מידע נשמר, למה, ולכמה זמן. ברירת המחדל היא אנונימיות מלאה לכל בקשה.</p></div>
+    <div class="card"><h3>תנאי שימוש · terms.html</h3><p>הסכמת השימוש, זכויות היוצרים על הנוסחים, והאחריות של מפרסם בקשה.</p></div>
+    <div class="card"><h3>נגישות · accessibility.html</h3><p>התאמות WCAG: ניווט מקלדת, ניגודיות גבוהה, תמיכה בקוראי מסך, מצבי תנועה מופחתת.</p></div>
+  </section>
+
+  <!-- 25 · JOURNEY -->
+  <section class="page">
+    <div class="section-eyebrow">פרק 25 · סיכום</div>
+    <h2 class="section">מסע קצר בדקה וחצי</h2>
+    <p class="section-lead">הצעה למסלול ראשון למי שעדיין לא יודע מאיפה להתחיל.</p>
+    <div class="card"><h3>1. תסתכלו על לוח התפילה החי</h3><p>בעמוד הבית, השלט הראשון. זה נותן את גודל הרשת — כמה אנשים חיים איתכם ברגע הזה.</p></div>
+    <div class="card"><h3>2. תקראו פסוק אחד ותחפשו בו נקודה</h3><p>"הפסוק של היום". תקראו, ותנסו להבין מה הוא לוחש לכם היום.</p></div>
+    <div class="card"><h3>3. תבקשו תפילה ראשונה (אנונימית)</h3><p>גללו ל־#create. תהיו אמיתיים. זה עובד. לא צריך לכתוב טקסט מושלם.</p></div>
+    <div class="card"><h3>4. תיכנסו לפיד, תבחרו בקשה, ותתפללו עליה</h3><p>אפילו לחיצה אחת על "אני מתפלל על זה" היא חיבור רוחני.</p></div>
+    <div class="card"><h3>5. תחזרו אלינו כדי להודות</h3><p>האזור האישי → הבקשות שלי → "סמן כנפתר ותודה". זה הסגירה שמחבקת את כל הרשת.</p></div>
+
+    <div class="foot">© מרכז התפילה העולמי · מרחב יהודי אישי, אינטימי ואנונימי · לכל שאלה, יש בחוברת הזו תשובה.</div>
+  </section>
+
+  <script>
+    // Small QoL: if opened with ?print=1 — auto-trigger print dialog
+    if (new URLSearchParams(location.search).get('print') === '1') {
+      setTimeout(() => window.print(), 450);
+    }
+  </script>
+  <script src="kz.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>60 שניות עם הקב"ה · מרכז התפילה</title>
+  <meta name="description" content="60 שניות יומיות לאיפוס הנשמה — נשימה, פסוק, ברכה. בתחנה אחת בכל יום." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="stylesheet" href="critical.css" />
+  <link rel="stylesheet" href="kz-moment.css" />
+</head>
+<body class="mo-body">
+
+<header class="mo-bar">
+  <a href="/" class="mo-back">←</a>
+  <span class="mo-streak" id="moStreak">🔥 <b>0</b> ימים ברצף</span>
+</header>
+
+<main class="mo-stage" id="moStage">
+  <!-- Phase 1: Welcome -->
+  <section class="mo-phase mo-welcome is-on" data-phase="welcome">
+    <div class="mo-emoji">✦</div>
+    <h1>60 שניות עם הקב"ה</h1>
+    <p>תחנה יומית קצרה — נשימה, פסוק, ברכה אישית.<br>הזדמנות אחת ביום להתחבר.</p>
+    <button class="mo-go" id="moStart">התחילי עכשיו</button>
+    <div class="mo-skip"><button id="moTomorrow">חזרי לי מחר</button></div>
+  </section>
+
+  <!-- Phase 2: Breathing -->
+  <section class="mo-phase mo-breath" data-phase="breath">
+    <div class="mo-breath-orb"><span></span></div>
+    <div class="mo-breath-text" id="moBreathText">שאפי…</div>
+    <div class="mo-progress"><i id="moBreathBar"></i></div>
+  </section>
+
+  <!-- Phase 3: Verse -->
+  <section class="mo-phase mo-verse" data-phase="verse">
+    <div class="mo-verse-icon">📜</div>
+    <h2 id="moVerseRef">—</h2>
+    <p class="mo-verse-text" id="moVerseText">…</p>
+    <div class="mo-progress"><i id="moVerseBar"></i></div>
+  </section>
+
+  <!-- Phase 4: Personal blessing -->
+  <section class="mo-phase mo-bless" data-phase="bless">
+    <div class="mo-bless-flame">🕯</div>
+    <h2>ברכה אישית</h2>
+    <p class="mo-bless-text" id="moBlessText">…</p>
+    <button class="mo-go" id="moAmen">אמן ✦</button>
+  </section>
+
+  <!-- Phase 5: Done -->
+  <section class="mo-phase mo-done" data-phase="done">
+    <div class="mo-done-icon">🌟</div>
+    <h2>חזרת לעצמך</h2>
+    <p>פגישתך היומית עם הקב"ה הסתיימה. זוכרת אותה לאורך היום.</p>
+    <div class="mo-streak-grow" id="moStreakGrow">🔥 ימים ברצף: <b>—</b></div>
+    <div class="mo-actions">
+      <a href="/shabbat-candles.html" class="mo-link">🕯 הדליקי נר</a>
+      <a href="/daily-tehilim.html" class="mo-link">📿 תהילים יומי</a>
+      <a href="/" class="mo-link">🏠 חזרה לאתר</a>
+    </div>
+  </section>
+</main>
+
+<script src="kz-moment.js" defer></script>
+<script src="kz-ai-chat.js" defer></script>
+<link rel="stylesheet" href="kz-ai-chat.css">
+<script src="kz-honeypot.js" defer></script>
+<script src="kz-nav.js" defer></script>
+<link rel="stylesheet" href="kz-nav.css">
+<link rel="stylesheet" href="kz-polish.css">
+</body>
+</html>

@@ -1,0 +1,129 @@
+.pa-shell{
+  max-width: min(820px, 92vw);
+  margin: 24px auto;
+  padding: 0 16px;
+}
+.pa-hero{
+  text-align: center;
+  padding: 32px 0;
+}
+.pa-hero h1{
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: clamp(28px, 5vw, 44px);
+  margin: 0 0 8px;
+  background: linear-gradient(135deg, #f1d597, #d4b07a);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.pa-hero p{ opacity: .8; max-width: 56ch; margin: 0 auto; }
+
+.pa-form{ display: grid; gap: 10px; padding: 22px; }
+.pa-form label{ font-size: 12px; color: #d4b07a; }
+.pa-form input{
+  padding: 12px 14px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(212,176,122,.3);
+  color: #f6e6c2;
+  border-radius: 12px;
+  outline: none;
+  font-size: 15px;
+}
+.pa-form input:focus{ border-color: #d4b07a; }
+
+.pa-actions{ display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.pa-primary, .pa-secondary{
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 14px;
+  border: 1px solid transparent;
+}
+.pa-primary{
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+  border: none;
+}
+.pa-primary:hover{ filter: brightness(1.05); }
+.pa-secondary{
+  background: rgba(255,255,255,.05);
+  border-color: rgba(212,176,122,.35);
+  color: #d4b07a;
+}
+.pa-secondary:hover{ background: rgba(212,176,122,.15); }
+.pa-secondary.is-on{ background: linear-gradient(135deg,#ff5b5b,#b91c1c); color:#fff; border-color: transparent; }
+
+.pa-hint{ opacity: .55; font-size: 12px; }
+
+.pa-room{ padding: 22px; }
+.pa-pill{
+  margin-inline-start: auto;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px;
+  background: linear-gradient(135deg, #ff5b5b, #b91c1c);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+}
+.pa-pill i{
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #fff;
+  animation: kzLiveDot 1.2s ease-in-out infinite;
+}
+
+.pa-presence{
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin: 16px 0;
+  padding: 14px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(212,176,122,.2);
+  border-radius: 14px;
+  min-height: 80px;
+}
+.pa-presence:empty::before{
+  content: 'ממתין למצטרפים…';
+  opacity: .55;
+  font-size: 13px;
+  align-self: center;
+  margin: auto;
+}
+.pa-person{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(212,176,122,.1);
+  border: 1px solid rgba(212,176,122,.3);
+  border-radius: 999px;
+  font-size: 13px;
+}
+.pa-person.is-speaking{
+  background: linear-gradient(135deg, rgba(241,213,151,.25), rgba(212,176,122,.18));
+  border-color: #f1d597;
+  box-shadow: 0 0 0 0 rgba(241,213,151,.5);
+  animation: paSpeakPulse 1.2s ease-out infinite;
+}
+@keyframes paSpeakPulse{
+  0%,100%{ box-shadow: 0 0 0 0 rgba(241,213,151,.5); }
+  50%   { box-shadow: 0 0 0 10px rgba(241,213,151,0); }
+}
+.pa-person-avatar{
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+  display: grid; place-items: center;
+  font-size: 11px; font-weight: 800;
+}
+
+.pa-controls{ display: flex; gap: 8px; flex-wrap: wrap; }
+.pa-status{
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: rgba(212,176,122,.15);
+  border: 1px solid rgba(212,176,122,.3);
+  border-radius: 10px;
+  font-size: 13px;
+  text-align: center;
+}

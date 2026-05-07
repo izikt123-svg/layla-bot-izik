@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>מצב חזן · מרכז התפילה</title>
+  <meta name="description" content="מצב חזן — תפילה בטקסט גדול, עם ניווט מהיר וגלילה אוטומטית. מתאים להעביר תפילה ציבורית בבית כנסת או בבית." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="stylesheet" href="critical.css" />
+  <link rel="stylesheet" href="cantor.css" />
+</head>
+<body class="cantor-body">
+
+<header class="cantor-bar">
+  <a href="/" class="cantor-back" aria-label="חזרה לאתר">←</a>
+  <div class="cantor-title">
+    <span class="cantor-flame">🕯</span>
+    <select id="cantorPrayer" class="cantor-select" aria-label="בחירת תפילה">
+      <option value="shema">קריאת שמע</option>
+      <option value="amida">תפילת עמידה (מקוצר)</option>
+      <option value="kaddish">קדיש יתום</option>
+      <option value="havdala">הבדלה</option>
+      <option value="hatikva">התקווה</option>
+      <option value="bracha">ברכת כהנים</option>
+      <option value="psalms23">תהלים כ"ג</option>
+      <option value="psalms121">תהלים קכ"א</option>
+    </select>
+  </div>
+  <div class="cantor-controls">
+    <button id="cantorPlay"   class="cantor-btn" aria-label="גלילה אוטומטית">▶</button>
+    <button id="cantorMinus"  class="cantor-btn" aria-label="הקטן טקסט">−</button>
+    <button id="cantorPlus"   class="cantor-btn" aria-label="הגדל טקסט">+</button>
+    <button id="cantorTheme"  class="cantor-btn" aria-label="ניגוד גבוה">◐</button>
+    <button id="cantorFs"     class="cantor-btn" aria-label="מסך מלא">⛶</button>
+  </div>
+</header>
+
+<main class="cantor-stage">
+  <article class="cantor-text" id="cantorText" aria-live="polite"></article>
+</main>
+
+<footer class="cantor-foot">
+  <div class="cantor-progress" id="cantorProgress"><i></i></div>
+  <div class="cantor-help">
+    <kbd>Space</kbd> ניגון/עצירה ·
+    <kbd>↑/↓</kbd> מהירות ·
+    <kbd>+/−</kbd> גודל ·
+    <kbd>F</kbd> מסך מלא ·
+    <kbd>H</kbd> ניגוד גבוה
+  </div>
+</footer>
+
+<script src="cantor.js"></script>
+<script src="kz-ai-chat.js" defer></script>
+<link rel="stylesheet" href="kz-ai-chat.css">
+<script src="kz-honeypot.js" defer></script>
+<script src="kz-nav.js" defer></script>
+<link rel="stylesheet" href="kz-nav.css">
+<link rel="stylesheet" href="kz-polish.css">
+</body>
+</html>

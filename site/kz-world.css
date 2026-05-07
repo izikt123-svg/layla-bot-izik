@@ -1,0 +1,293 @@
+/* ============================================================
+   KZ WORLD — global Jewish atlas page
+   ============================================================ */
+.kz-world-shell{
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 16px;
+}
+.kz-world-pill{
+  margin-inline-start: auto;
+  padding: 4px 12px;
+  background: rgba(212,176,122,.15);
+  border: 1px solid rgba(212,176,122,.35);
+  border-radius: 999px;
+  font-size: 12px;
+  color: #d4b07a;
+}
+
+.kz-world-hero{
+  text-align: center;
+  padding: 24px 12px 18px;
+}
+.kz-world-hero h1{
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: clamp(28px, 4vw, 44px);
+  margin: 0 0 6px;
+  background: linear-gradient(135deg, #f1d597, #d4b07a);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.kz-world-hero p{ opacity: .8; margin: 0 0 14px; }
+.kz-world-search input{
+  width: min(560px, 92vw);
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(212,176,122,.35);
+  color: #f6e6c2;
+  font-size: 15px;
+  outline: none;
+}
+.kz-world-search input:focus{ border-color: #f1d597; }
+
+.kz-world-grid{
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 16px;
+  margin-top: 14px;
+}
+@media (max-width: 980px){
+  .kz-world-grid{ grid-template-columns: 1fr; }
+  .kz-world-map-wrap{ height: 360px; }
+}
+
+/* Continents row */
+.kz-world-continents{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.kz-world-continent{
+  padding: 12px 6px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(212,176,122,.25);
+  border-radius: 12px;
+  color: #d4b07a;
+  cursor: pointer;
+  font-size: 12px;
+  text-align: center;
+  font-weight: 600;
+  transition: background .15s, transform .1s;
+}
+.kz-world-continent:hover{ background: rgba(212,176,122,.12); }
+.kz-world-continent.is-on{
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+  border-color: transparent;
+  transform: scale(1.02);
+}
+.kz-world-continent .ce{ display: block; font-size: 22px; margin-bottom: 2px; }
+.kz-world-continent .cc{ display: block; opacity: .75; font-size: 10px; }
+
+/* Filter chips */
+.kz-world-filters{
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 12px;
+}
+.kz-fil{
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(212,176,122,.25);
+  color: #d4b07a;
+  font-size: 12px;
+  cursor: pointer;
+}
+.kz-fil:hover{ background: rgba(212,176,122,.12); }
+.kz-fil.is-on{
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+  border-color: transparent;
+  font-weight: 700;
+}
+.kz-fil-verified{
+  margin-inline-start: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(74,222,128,.1);
+  border: 1px solid rgba(74,222,128,.35);
+  color: #4ade80;
+  font-size: 12px;
+  cursor: pointer;
+  font-weight: 700;
+  user-select: none;
+}
+.kz-fil-verified input{
+  accent-color: #4ade80;
+  width: 14px; height: 14px;
+}
+
+/* Country accordions */
+.kz-world-countries{
+  display: grid;
+  gap: 6px;
+  max-height: 56vh;
+  overflow-y: auto;
+  padding-inline-end: 4px;
+  margin-bottom: 14px;
+}
+.kz-world-countries::-webkit-scrollbar{ width: 6px; }
+.kz-world-countries::-webkit-scrollbar-thumb{ background: rgba(212,176,122,.3); border-radius: 4px; }
+
+.kz-country{
+  padding: 10px 14px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(212,176,122,.18);
+  border-radius: 12px;
+  color: #f6e6c2;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  transition: background .15s, transform .1s;
+}
+.kz-country:hover{ background: rgba(212,176,122,.1); }
+.kz-country.is-on{
+  background: linear-gradient(135deg, rgba(212,176,122,.25), rgba(241,213,151,.18));
+  border-color: rgba(241,213,151,.5);
+}
+.kz-country .flag{ font-size: 20px; }
+.kz-country .count{
+  background: rgba(212,176,122,.2);
+  color: #f1d597;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* Place list */
+.kz-world-places{
+  display: grid;
+  gap: 6px;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-inline-end: 4px;
+}
+.kz-world-places::-webkit-scrollbar{ width: 6px; }
+.kz-world-places::-webkit-scrollbar-thumb{ background: rgba(212,176,122,.3); border-radius: 4px; }
+
+.kz-place{
+  padding: 12px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(212,176,122,.18);
+  border-radius: 12px;
+  color: #f6e6c2;
+}
+.kz-place-head{
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 8px;
+  align-items: start;
+  font-size: 13px;
+}
+.kz-place-icn{ font-size: 18px; }
+.kz-place-head b{ display: block; font-weight: 700; line-height: 1.3; }
+.kz-place-head small{ display: block; opacity: .65; font-size: 11px; margin-top: 2px; }
+.kz-place-actions{
+  display: flex; gap: 6px; flex-wrap: wrap;
+  margin-top: 8px;
+}
+.kz-place-actions a, .kz-place-actions button{
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background: rgba(212,176,122,.12);
+  color: #d4b07a;
+}
+.kz-place-actions a:hover, .kz-place-actions button:hover{ background: rgba(212,176,122,.22); }
+.kz-place-actions .is-primary{
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+  border-color: transparent;
+}
+.kz-place-actions .is-phone{
+  background: linear-gradient(135deg, rgba(74,222,128,.2), rgba(22,163,74,.18));
+  color: #4ade80;
+  border-color: rgba(74,222,128,.4);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Verified / Draft badges */
+.kz-badge{
+  display: inline-block;
+  margin-inline-start: 6px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  vertical-align: middle;
+}
+.kz-badge-ok{
+  background: rgba(74,222,128,.18);
+  color: #4ade80;
+  border: 1px solid rgba(74,222,128,.4);
+}
+.kz-badge-draft{
+  background: rgba(212,176,122,.15);
+  color: #d4b07a;
+  border: 1px solid rgba(212,176,122,.3);
+}
+.kz-place-type{
+  display: inline-block;
+  margin-top: 4px;
+  padding: 2px 8px;
+  background: rgba(255,255,255,.05);
+  border-radius: 6px;
+  color: #d4b07a;
+  font-size: 10px;
+  letter-spacing: .04em;
+}
+
+.kz-world-empty{
+  text-align: center;
+  padding: 30px 12px;
+  opacity: .55;
+  font-size: 13px;
+}
+
+/* Map */
+.kz-world-map-wrap{
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(212,176,122,.25);
+  background: #0B1F3A;
+  height: 80vh;
+  min-height: 480px;
+}
+.kz-world-map{ width: 100%; height: 100%; }
+.kz-world-map .leaflet-container{ background: #14315b; }
+.kz-world-map .leaflet-popup-content-wrapper{
+  background: #0B1F3A;
+  color: #f6e6c2;
+  border: 1px solid rgba(212,176,122,.4);
+}
+.kz-world-map .leaflet-popup-tip{ background: #0B1F3A; border-color: rgba(212,176,122,.4); }
+.kz-popup b{ display: block; margin-bottom: 4px; color: #f1d597; }
+.kz-popup small{ display: block; opacity: .7; margin-bottom: 8px; font-size: 11px; }
+.kz-popup .row{ display: flex; gap: 6px; }
+.kz-popup .row a{
+  padding: 4px 10px;
+  background: rgba(212,176,122,.18);
+  border-radius: 999px;
+  color: #d4b07a;
+  text-decoration: none;
+  font-size: 11px;
+}
+.kz-popup .row a.is-primary{
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+  font-weight: 700;
+}

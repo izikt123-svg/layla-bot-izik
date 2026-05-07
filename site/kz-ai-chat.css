@@ -1,0 +1,318 @@
+/* ============================================================
+   KZ AI CHAT — Smart assistant for Jewish life
+   Floating button + chat panel
+   ============================================================ */
+
+/* Floating launcher button */
+.kz-aic-fab{
+  position: fixed;
+  bottom: 22px;
+  inset-inline-end: 22px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--ink, #0B1F3A), var(--ink-2, #1A2D4D));
+  border: 2px solid var(--gold, #B8935A);
+  color: var(--gold-2, #f1d597);
+  cursor: pointer;
+  z-index: 90;
+  box-shadow: 0 12px 28px rgba(11,31,58,.3), 0 0 0 0 rgba(212,176,122,.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .35s var(--ease-spring, cubic-bezier(.34,1.56,.64,1)), box-shadow .35s;
+  animation: kz-aic-pulse 3s ease-in-out infinite;
+}
+@keyframes kz-aic-pulse{
+  0%, 100% { box-shadow: 0 12px 28px rgba(11,31,58,.3), 0 0 0 0 rgba(212,176,122,.4); }
+  50%      { box-shadow: 0 12px 28px rgba(11,31,58,.3), 0 0 0 16px rgba(212,176,122,0); }
+}
+.kz-aic-fab:hover{
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 18px 36px rgba(11,31,58,.4);
+}
+.kz-aic-fab svg{ width: 28px; height: 28px; }
+.kz-aic-fab .kz-aic-badge{
+  position: absolute;
+  top: -2px;
+  inset-inline-end: -2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--ink);
+}
+.kz-aic-fab.is-open{ transform: rotate(180deg); }
+
+/* Chat panel */
+.kz-aic-panel{
+  position: fixed;
+  bottom: 95px;
+  inset-inline-end: 22px;
+  width: min(400px, calc(100vw - 28px));
+  height: min(620px, calc(100vh - 140px));
+  background: linear-gradient(180deg, var(--cream, #FDFBF4), var(--bg-2, #FBF8F1));
+  border: 1px solid var(--border-strong, #D6C7A3);
+  border-radius: 20px;
+  box-shadow: 0 24px 60px rgba(11,31,58,.3), 0 8px 20px rgba(11,31,58,.1);
+  z-index: 89;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  transform-origin: bottom right;
+}
+[dir="rtl"] .kz-aic-panel{ transform-origin: bottom left; }
+.kz-aic-panel.is-open{
+  display: flex;
+  animation: kz-aic-pop .4s var(--ease-spring, cubic-bezier(.34,1.56,.64,1));
+}
+@keyframes kz-aic-pop{
+  0%   { opacity: 0; transform: translateY(20px) scale(.92); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Chat header */
+.kz-aic-head{
+  padding: 14px 18px;
+  background: linear-gradient(135deg, var(--ink, #0B1F3A), var(--ink-2, #1A2D4D));
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(212,176,122,.3);
+}
+.kz-aic-avatar{
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold-2), var(--gold));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px rgba(212,176,122,.3);
+}
+.kz-aic-head-info{ flex: 1; min-width: 0; }
+.kz-aic-name{
+  font-family: var(--serif, serif);
+  font-weight: 700;
+  font-size: 15px;
+  color: #f1d597;
+  margin-bottom: 1px;
+}
+.kz-aic-status{
+  font-size: 11px;
+  color: rgba(255,255,255,.6);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.kz-aic-status::before{
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 6px #4ade80;
+  animation: ping-soft 2s infinite;
+}
+.kz-aic-close{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.2);
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .25s;
+}
+.kz-aic-close:hover{ transform: rotate(90deg); background: rgba(255,255,255,.2); }
+
+/* Messages area */
+.kz-aic-msgs{
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 100%, rgba(212,176,122,.08), transparent 60%),
+    var(--bg-2, #FBF8F1);
+}
+
+.kz-aic-msg{
+  max-width: 85%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  animation: kz-aic-msg-in .3s var(--ease-out-quart, cubic-bezier(.165,.84,.44,1));
+}
+@keyframes kz-aic-msg-in{
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.kz-aic-msg.bot{
+  align-self: flex-start;
+  background: var(--white, #fff);
+  border: 1px solid var(--border, #E6DCC5);
+  border-start-start-radius: 4px;
+  color: var(--ink, #0B1F3A);
+}
+.kz-aic-msg.user{
+  align-self: flex-end;
+  background: linear-gradient(135deg, var(--ink, #0B1F3A), var(--ink-2, #1A2D4D));
+  color: #fff;
+  border-start-end-radius: 4px;
+}
+.kz-aic-msg-bot-avatar{
+  font-size: 16px;
+  margin-inline-end: 4px;
+}
+
+/* Quick reply chips */
+.kz-aic-quick{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 16px 0;
+}
+.kz-aic-chip{
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 7px 12px;
+  background: var(--white, #fff);
+  border: 1px solid var(--border-strong, #D6C7A3);
+  border-radius: 100px;
+  font-family: var(--sans, sans-serif);
+  font-size: 12px;
+  color: var(--ink-2, #1A2D4D);
+  cursor: pointer;
+  transition: all .25s var(--ease-spring, cubic-bezier(.34,1.56,.64,1));
+}
+.kz-aic-chip:hover{
+  background: linear-gradient(135deg, var(--gold-soft, #E9D9B7), rgba(212,176,122,.2));
+  border-color: var(--gold, #B8935A);
+  transform: translateY(-2px);
+  color: var(--gold-deep, #8A6A3A);
+}
+
+/* Input bar */
+.kz-aic-input-bar{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  background: var(--white, #fff);
+  border-top: 1px solid var(--border, #E6DCC5);
+}
+.kz-aic-input{
+  flex: 1;
+  padding: 10px 14px;
+  background: var(--bg-2, #FBF8F1);
+  border: 1.5px solid var(--border-strong, #D6C7A3);
+  border-radius: 100px;
+  font-family: var(--sans, sans-serif);
+  font-size: 14px;
+  color: var(--ink, #0B1F3A);
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+.kz-aic-input:focus{
+  border-color: var(--gold, #B8935A);
+  box-shadow: 0 0 0 3px rgba(212,176,122,.2);
+}
+.kz-aic-send{
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold-2, #D4B07A), var(--gold, #B8935A));
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .25s, box-shadow .25s;
+  flex-shrink: 0;
+}
+.kz-aic-send:hover{
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 14px rgba(184,147,90,.4);
+}
+.kz-aic-send:active{ transform: translateY(0) scale(.98); }
+
+/* Typing indicator */
+.kz-aic-typing{
+  align-self: flex-start;
+  display: flex;
+  gap: 4px;
+  padding: 12px 16px;
+  background: var(--white, #fff);
+  border: 1px solid var(--border, #E6DCC5);
+  border-radius: 14px;
+  border-start-start-radius: 4px;
+}
+.kz-aic-typing span{
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold, #B8935A);
+  animation: kz-aic-typing-dot 1.4s ease-in-out infinite;
+}
+.kz-aic-typing span:nth-child(2){ animation-delay: .2s; }
+.kz-aic-typing span:nth-child(3){ animation-delay: .4s; }
+@keyframes kz-aic-typing-dot{
+  0%, 60%, 100% { transform: translateY(0); opacity: .4; }
+  30%           { transform: translateY(-6px); opacity: 1; }
+}
+
+/* Mobile */
+@media (max-width: 640px){
+  .kz-aic-fab{
+    bottom: 14px;
+    inset-inline-end: 14px;
+    width: 54px;
+    height: 54px;
+  }
+  .kz-aic-panel{
+    bottom: 78px;
+    inset-inline-end: 8px;
+    inset-inline-start: 8px;
+    width: auto;
+    height: 75vh;
+  }
+}
+
+/* Dark mode adjustments */
+html[data-theme="dark"] .kz-aic-msg.bot{
+  background: rgba(22,30,58,.9);
+  border-color: rgba(212,176,122,.2);
+  color: var(--ink, #f8e8b8);
+}
+html[data-theme="dark"] .kz-aic-input{
+  background: rgba(22,30,58,.6);
+  color: var(--ink, #f8e8b8);
+}
+html[data-theme="dark"] .kz-aic-chip{
+  background: rgba(22,30,58,.6);
+  color: var(--ink-2, #e9d5a0);
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce){
+  .kz-aic-fab{ animation: none; }
+}

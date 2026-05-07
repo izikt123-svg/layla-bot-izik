@@ -1,0 +1,142 @@
+.mr-shell{ max-width: min(820px, 96vw); margin: 0 auto 40px; padding: 0 12px; display: grid; gap: 14px; }
+
+.mr-hero{ text-align: center; padding: 24px 12px 6px; }
+.mr-icon{ font-size: 48px; filter: drop-shadow(0 0 20px rgba(255,200,100,.4)); }
+.mr-hero h1{
+  font-family: 'Frank Ruhl Libre', serif; font-size: clamp(28px, 5vw, 40px); margin: 6px 0;
+  background: linear-gradient(135deg, #f1d597, #d4b07a);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.mr-hero p{ opacity: .8; max-width: 60ch; margin: 0 auto; line-height: 1.7; }
+
+.mr-form-card{ padding: 18px; }
+.mr-form{ display: grid; gap: 12px; }
+.mr-form label{
+  display: grid; gap: 4px; font-size: 12px; color: #d4b07a;
+}
+.mr-form-row{ display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.mr-form input, .mr-form select{
+  padding: 12px 14px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(212,176,122,.3);
+  color: #f6e6c2; border-radius: 10px;
+  font-size: 14px; outline: none;
+}
+.mr-form input:focus, .mr-form select:focus{ border-color: #f1d597; }
+.mr-form select option{ background: #0B1F3A; color: #f6e6c2; }
+.mr-toggle{
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 8px;
+  align-items: center;
+  font-size: 13px !important;
+  color: #f6e6c2 !important;
+  cursor: pointer;
+}
+.mr-toggle input{ width: 16px; height: 16px; accent-color: #d4b07a; }
+
+.mr-go{
+  padding: 14px;
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A; font-weight: 800; font-size: 15px;
+  border: none; border-radius: 12px; cursor: pointer;
+}
+
+.mr-result{ padding: 18px; }
+.mr-result .mini-title{ display: flex; align-items: center; gap: 8px; font-weight: 700; }
+.mr-result b{ color: #f1d597; }
+.mr-print{
+  margin-inline-start: auto;
+  padding: 6px 14px;
+  background: rgba(212,176,122,.15);
+  border: 1px solid rgba(212,176,122,.4);
+  color: #d4b07a;
+  border-radius: 999px; font-size: 12px; cursor: pointer; font-weight: 600;
+}
+.mr-hebrew-date{
+  margin: 12px 0 14px;
+  text-align: center;
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: 18px;
+  color: #f1d597;
+  opacity: .9;
+}
+
+.mr-milestones{
+  margin: 0; padding: 0; list-style: none;
+  display: grid; gap: 8px;
+}
+.mr-milestone{
+  display: grid;
+  grid-template-columns: 50px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 14px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(212,176,122,.18);
+  border-radius: 12px;
+}
+.mr-milestone.is-past{ opacity: .55; }
+.mr-milestone.is-today{
+  background: linear-gradient(135deg, rgba(241,213,151,.2), rgba(212,176,122,.08));
+  border-color: rgba(241,213,151,.5);
+  box-shadow: 0 0 0 0 rgba(241,213,151,.5);
+  animation: mrTodayPulse 1.6s ease-out infinite;
+}
+@keyframes mrTodayPulse{
+  0%,100%{ box-shadow: 0 0 0 0 rgba(241,213,151,.4); }
+  50%   { box-shadow: 0 0 0 12px rgba(241,213,151,0); }
+}
+.mr-day-num{
+  width: 50px; height: 50px;
+  background: rgba(212,176,122,.12);
+  border-radius: 12px;
+  display: grid; place-items: center;
+  font-size: 11px;
+  text-align: center;
+  color: #d4b07a;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.mr-milestone.is-today .mr-day-num{
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+}
+.mr-day-num small{ display: block; font-size: 9px; opacity: .8; }
+.mr-milestone-name{ font-weight: 700; color: #f1d597; }
+.mr-milestone-meta{ font-size: 11px; opacity: .7; margin-top: 2px; }
+.mr-milestone-info{ font-size: 12px; opacity: .85; margin-top: 4px; line-height: 1.5; }
+
+.mr-actions-row{ margin-top: 14px; display: flex; gap: 8px; justify-content: flex-end; }
+.mr-secondary{
+  padding: 8px 16px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(212,176,122,.4);
+  color: #d4b07a;
+  border-radius: 999px; cursor: pointer; font-weight: 600; font-size: 13px;
+}
+
+.mr-resources{ padding: 14px; }
+.mr-res-grid{
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 8px; margin-top: 10px;
+}
+.mr-res{
+  padding: 12px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(212,176,122,.25);
+  border-radius: 12px;
+  color: #f6e6c2;
+  text-decoration: none;
+  text-align: center;
+  font-size: 13px;
+  transition: background .15s;
+}
+.mr-res:hover{ background: rgba(212,176,122,.12); }
+
+@media print{
+  body{ background: #fff !important; color: #000 !important; }
+  .topbar, .mr-form-card, .mr-resources, .mr-print, .mr-actions-row, .mr-hero{ display: none !important; }
+  .mr-milestone{ background: none !important; border: 1px solid #999 !important; color: #000 !important; break-inside: avoid; }
+  .mr-day-num, .mr-milestone-name{ color: #000 !important; }
+}

@@ -1,0 +1,162 @@
+.mn-body{
+  margin: 0;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255,200,120,.20), transparent 55%),
+    radial-gradient(circle at 30% 80%, rgba(241,213,151,.15), transparent 55%),
+    linear-gradient(180deg, #2a1a0a 0%, #0B1F3A 60%);
+  color: #f6e6c2;
+  font-family: 'Frank Ruhl Libre','Heebo',serif;
+  min-height: 100vh;
+}
+
+.mn-bar{ display: flex; align-items: center; gap: 14px; padding: 14px 18px; }
+.mn-back{
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,200,120,.4);
+  color: #ffcc7a;
+  text-decoration: none; font-size: 18px;
+}
+.mn-streak{
+  margin-inline-start: auto;
+  padding: 4px 14px;
+  background: linear-gradient(135deg, rgba(255,180,80,.2), rgba(255,220,140,.1));
+  border: 1px solid rgba(255,200,120,.5);
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 13px;
+  color: #ffd07a;
+}
+
+.mn-shell{
+  max-width: 720px; margin: 0 auto;
+  padding: 0 16px 40px;
+}
+
+.mn-hero{ text-align: center; padding: 16px 12px 18px; }
+.mn-sun{
+  font-size: 64px;
+  filter: drop-shadow(0 0 36px rgba(255,200,100,.6));
+  animation: mnSunRise 3s ease-in-out infinite;
+}
+@keyframes mnSunRise{
+  0%,100%{ transform: translateY(0); filter: drop-shadow(0 0 32px rgba(255,200,100,.5)); }
+  50%   { transform: translateY(-4px); filter: drop-shadow(0 0 48px rgba(255,210,120,.8)); }
+}
+.mn-hero h1{
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: clamp(32px, 5vw, 48px);
+  margin: 8px 0 4px;
+  background: linear-gradient(135deg, #ffd07a, #ffb04e);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.mn-hero p{ opacity: .8; max-width: 36ch; margin: 0 auto; }
+
+.mn-step{
+  padding: 24px 22px;
+  background: linear-gradient(160deg, rgba(20,49,91,.92), rgba(11,31,58,.96));
+  border: 1px solid rgba(255,200,120,.3);
+  border-radius: 22px;
+  text-align: center;
+  display: none;
+  animation: mnIn .55s ease-out;
+}
+.mn-step.is-on{ display: block; }
+@keyframes mnIn{ from{ opacity:0; transform:translateY(20px); } to{ opacity:1; transform:none; } }
+
+.mn-step-icon{ font-size: 44px; filter: drop-shadow(0 0 22px rgba(255,200,100,.45)); margin-bottom: 6px; }
+.mn-step h2{
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: clamp(24px, 4vw, 32px);
+  margin: 6px 0 16px;
+  color: #ffd07a;
+}
+.mn-text{
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: 22px;
+  line-height: 1.9;
+  margin: 0 auto 20px;
+  max-width: 30ch;
+}
+.mn-text-small{ font-size: 17px; line-height: 1.8; max-width: 36ch; }
+.mn-text b{ color: #ffd07a; }
+
+.mn-go{
+  padding: 14px 36px;
+  background: linear-gradient(135deg, #ffb04e, #ffd07a);
+  color: #2a1a0a;
+  font-weight: 800;
+  font-size: 15px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(255,180,80,.3);
+  transition: transform .15s, box-shadow .25s;
+}
+.mn-go:hover{ transform: translateY(-2px); box-shadow: 0 18px 40px rgba(255,180,80,.45); }
+
+.mn-intents{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px;
+  margin: 14px 0;
+}
+.mn-intent{
+  padding: 12px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,200,120,.3);
+  border-radius: 12px;
+  color: #f6e6c2;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background .15s, transform .1s;
+}
+.mn-intent:hover{ background: rgba(255,200,120,.15); }
+.mn-intent.is-on{
+  background: linear-gradient(135deg, #ffb04e, #ffd07a);
+  color: #2a1a0a;
+  border-color: transparent;
+  font-weight: 700;
+}
+.mn-custom{
+  width: 100%;
+  padding: 12px 14px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,200,120,.3);
+  color: #f6e6c2;
+  border-radius: 12px;
+  margin: 8px 0 14px;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  text-align: center;
+}
+.mn-custom:focus{ border-color: #ffd07a; }
+
+.mn-done-card{ background: linear-gradient(160deg, rgba(255,200,120,.14), rgba(11,31,58,.92)); }
+.mn-intent-summary{
+  margin: 14px 0;
+  padding: 12px 18px;
+  background: linear-gradient(135deg, rgba(255,200,120,.18), rgba(255,180,80,.08));
+  border: 1px solid rgba(255,200,120,.5);
+  border-radius: 14px;
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: 18px;
+  color: #ffd07a;
+  font-weight: 600;
+}
+
+.mn-actions{ margin-top: 22px; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.mn-link{
+  padding: 10px 16px;
+  background: rgba(255,200,120,.1);
+  border: 1px solid rgba(255,200,120,.3);
+  color: #ffd07a;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+}
+.mn-link:hover{ background: rgba(255,200,120,.2); }

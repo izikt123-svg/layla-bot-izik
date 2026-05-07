@@ -1,0 +1,45 @@
+.kz-i18n-offer{
+  position: fixed;
+  top: 16px;
+  inset-inline-end: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(15,33,66,.94);
+  border: 1px solid rgba(212,176,122,.4);
+  border-radius: 999px;
+  color: #f6e6c2;
+  font-size: 13px;
+  font-weight: 500;
+  z-index: 99997;
+  box-shadow: 0 12px 36px rgba(11,31,58,.45);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transform: translateY(-12px);
+  opacity: 0;
+  transition: opacity .35s, transform .35s cubic-bezier(.2,.9,.3,1.2);
+}
+.kz-i18n-offer.is-in{ opacity: 1; transform: none; }
+
+.kz-i18n-flag{ font-size: 16px; }
+.kz-i18n-yes{
+  padding: 6px 12px;
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+  border: none;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+}
+.kz-i18n-no{
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(212,176,122,.3);
+  color: #d4b07a;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+}

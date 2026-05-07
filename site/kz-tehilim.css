@@ -1,0 +1,168 @@
+.th-shell{ max-width: min(820px, 96vw); margin: 0 auto 40px; padding: 0 12px; display: grid; gap: 14px; }
+.th-pill{
+  margin-inline-start: auto;
+  padding: 4px 14px;
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A; font-weight: 700; border-radius: 999px; font-size: 13px;
+}
+.th-pill b{ font-size: 16px; }
+
+.th-hero{ text-align: center; padding: 24px 12px 8px; }
+.th-icon{ font-size: 44px; }
+.th-hero h1{
+  font-family: 'Frank Ruhl Libre', serif; font-size: clamp(28px, 5vw, 44px); margin: 6px 0;
+  background: linear-gradient(135deg, #f1d597, #d4b07a);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.th-hero p{ opacity: .8; }
+
+.th-day-strip{
+  display: flex; gap: 4px; flex-wrap: wrap;
+  justify-content: center; margin-top: 14px;
+}
+.th-day-cell{
+  width: 28px; height: 28px;
+  display: grid; place-items: center;
+  border-radius: 8px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(212,176,122,.2);
+  color: #d4b07a;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all .15s;
+}
+.th-day-cell:hover{ background: rgba(212,176,122,.15); }
+.th-day-cell.is-today{
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+  border-color: transparent;
+  font-weight: 700;
+}
+.th-day-cell.is-read{
+  background: rgba(74,222,128,.12);
+  color: #4ade80;
+  border-color: rgba(74,222,128,.4);
+}
+
+.th-controls{ padding: 14px; }
+.th-control-row{
+  display: grid;
+  grid-template-columns: 50px 1fr 50px;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.th-prev, .th-next{
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  background: rgba(212,176,122,.15);
+  border: 1px solid rgba(212,176,122,.4);
+  color: #d4b07a;
+  font-size: 24px;
+  cursor: pointer;
+}
+.th-prev:hover, .th-next:hover{ background: rgba(212,176,122,.25); }
+.th-current{ text-align: center; }
+.th-current small{ display: block; font-size: 11px; opacity: .6; }
+.th-current b{
+  display: block;
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: 22px;
+  color: #f1d597;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+.th-actions{
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.th-action, .th-action-primary{
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid rgba(212,176,122,.3);
+  background: rgba(255,255,255,.04);
+  color: #d4b07a;
+  min-width: 130px;
+}
+.th-action-primary{
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+  border-color: transparent;
+}
+.th-action-primary:hover{ filter: brightness(1.05); }
+.th-action:hover{ background: rgba(212,176,122,.12); }
+.th-action-primary.is-done{
+  background: linear-gradient(135deg, #4ade80, #16a34a);
+  color: #fff;
+}
+
+.th-text{
+  padding: 24px;
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: 18px;
+  line-height: 1.9;
+  color: #f6e6c2;
+}
+.th-text h3{
+  font-size: 24px; color: #f1d597;
+  margin: 0 0 14px;
+  border-bottom: 1px solid rgba(212,176,122,.25);
+  padding-bottom: 10px;
+}
+.th-text .verse{
+  display: flex;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.th-text .verse-num{
+  flex-shrink: 0;
+  color: #d4b07a;
+  font-size: 14px;
+  font-weight: 700;
+  min-width: 24px;
+  padding-top: 4px;
+}
+.th-text .verse-text{ flex: 1; }
+.th-loading{ text-align: center; padding: 30px; opacity: .6; }
+.th-error{
+  text-align: center;
+  padding: 20px;
+  background: rgba(255,91,91,.1);
+  border: 1px solid rgba(255,91,91,.3);
+  border-radius: 10px;
+  color: #ff8b8b;
+}
+
+.th-stats{ padding: 14px; }
+.th-stat-grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+}
+.th-stat-grid > div{
+  padding: 12px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(212,176,122,.2);
+  border-radius: 12px;
+  text-align: center;
+}
+.th-stat-grid b{
+  display: block;
+  font-size: 26px;
+  color: #f1d597;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.th-stat-grid span{
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  opacity: .65;
+}

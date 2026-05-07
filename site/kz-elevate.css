@@ -1,0 +1,636 @@
+/* ============================================================
+   KZ ELEVATE — World-class polish layer for מרכז התפילה
+   Loaded AFTER all other stylesheets to override safely.
+   Strategy: progressive enhancement, no destructive changes.
+   ============================================================ */
+
+/* ─────────────────────────────────────────────────────────────
+   1. FLUID DESIGN TOKENS — responsive without media queries
+   ───────────────────────────────────────────────────────────── */
+:root{
+  /* Fluid type scale: min — preferred (vw) — max */
+  --fz-xs:    clamp(11px, 0.72vw + 8px, 13px);
+  --fz-sm:    clamp(13px, 0.85vw + 10px, 15px);
+  --fz-base:  clamp(15px, 1vw + 11px, 17px);
+  --fz-md:    clamp(17px, 1.2vw + 12px, 20px);
+  --fz-lg:    clamp(20px, 1.6vw + 14px, 26px);
+  --fz-xl:    clamp(26px, 2.4vw + 16px, 36px);
+  --fz-2xl:   clamp(32px, 3.4vw + 18px, 48px);
+  --fz-3xl:   clamp(40px, 5.2vw + 20px, 72px);
+  --fz-hero:  clamp(40px, 6.4vw + 18px, 88px);
+
+  /* Fluid spacing scale */
+  --sp-1:  clamp(4px,  0.25vw + 3px,  6px);
+  --sp-2:  clamp(8px,  0.5vw + 6px,  12px);
+  --sp-3:  clamp(12px, 0.8vw + 8px,  18px);
+  --sp-4:  clamp(16px, 1.2vw + 10px, 24px);
+  --sp-5:  clamp(20px, 1.8vw + 12px, 36px);
+  --sp-6:  clamp(28px, 2.6vw + 14px, 56px);
+  --sp-7:  clamp(40px, 4vw + 16px,   88px);
+
+  /* Container max-width with breathing room */
+  --container-max: min(1480px, 92vw);
+
+  /* Easing */
+  --ease-out-quart: cubic-bezier(.165, .84, .44, 1);
+  --ease-out-expo:  cubic-bezier(.19, 1, .22, 1);
+  --ease-spring:    cubic-bezier(.34, 1.56, .64, 1);
+  --ease-in-out:    cubic-bezier(.65, 0, .35, 1);
+
+  /* Elevated shadows */
+  --shadow-glow-gold: 0 8px 32px rgba(212,176,122,.25), 0 2px 8px rgba(184,147,90,.12);
+  --shadow-card-hover: 0 24px 60px rgba(11,31,58,.16), 0 8px 24px rgba(11,31,58,.08);
+  --shadow-modal: 0 60px 140px rgba(11,31,58,.32), 0 24px 60px rgba(11,31,58,.18);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   2. FLUID HEADINGS — replace fixed sizes
+   ───────────────────────────────────────────────────────────── */
+h1{ font-size: var(--fz-3xl) !important; line-height:1.05 !important; letter-spacing:-.015em !important; }
+h2{ font-size: var(--fz-2xl) !important; line-height:1.15 !important; }
+h3{ font-size: var(--fz-lg)  !important; line-height:1.25 !important; }
+
+/* ─────────────────────────────────────────────────────────────
+   3. TOPBAR — elevated glass + scroll condense
+   ───────────────────────────────────────────────────────────── */
+.topbar{
+  padding: var(--sp-3) var(--sp-5) !important;
+  background: linear-gradient(180deg, rgba(253,251,244,.85), rgba(253,251,244,.72)) !important;
+  backdrop-filter: blur(24px) saturate(1.4) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.4) !important;
+  transition: padding .45s var(--ease-out-quart),
+              background .45s var(--ease-out-quart),
+              box-shadow .45s var(--ease-out-quart);
+  will-change: padding, background;
+}
+.topbar.is-condensed{
+  padding: 8px var(--sp-5) !important;
+  background: linear-gradient(180deg, rgba(253,251,244,.96), rgba(253,251,244,.88)) !important;
+  box-shadow: 0 8px 32px rgba(11,31,58,.08);
+}
+.topbar.is-condensed .star{
+  width: 36px !important; height: 36px !important;
+  transition: width .35s var(--ease-out-quart), height .35s var(--ease-out-quart);
+}
+.topbar.is-condensed .brand-sub{ opacity:.5; transition: opacity .3s; }
+
+.star{ transition: transform .4s var(--ease-spring), box-shadow .3s; }
+.brand-wrap:hover .star{
+  transform: rotate(-8deg) scale(1.06);
+  box-shadow: inset 0 1px 0 #fff, 0 12px 28px rgba(184,147,90,.32);
+}
+
+/* Nav link refinement: smoother underline */
+.nav a::after{
+  height: 2px !important;
+  background: linear-gradient(90deg, transparent, var(--gold-2), var(--gold), var(--gold-2), transparent) !important;
+  transition: transform .5s var(--ease-out-expo) !important;
+}
+
+/* Mega-menu (nav-drop) refinement */
+.nav-drop{
+  border-radius: 18px !important;
+  backdrop-filter: blur(20px) saturate(1.3);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+  background: rgba(253,251,244,.96) !important;
+  border: 1px solid rgba(212,176,122,.28) !important;
+  box-shadow: 0 24px 60px rgba(11,31,58,.16), 0 8px 20px rgba(11,31,58,.06) !important;
+  transform-origin: top center;
+  animation: drop-spring .4s var(--ease-spring);
+}
+@keyframes drop-spring{
+  0%   { opacity:0; transform: translateY(-8px) scale(.96); }
+  100% { opacity:1; transform: translateY(0) scale(1); }
+}
+.nav-drop a{
+  position: relative;
+  transition: padding-inline-start .25s var(--ease-out-quart), color .2s, background .2s;
+}
+.nav-drop a:hover{
+  padding-inline-start: 18px;
+  background: linear-gradient(90deg, rgba(212,176,122,.12), transparent);
+  color: var(--gold-deep);
+}
+.nav-drop a::before{
+  content: "✦";
+  position: absolute;
+  inset-inline-start: 4px;
+  opacity: 0;
+  color: var(--gold);
+  transition: opacity .25s, transform .25s;
+  transform: translateX(6px);
+  font-size: 10px;
+}
+.nav-drop a:hover::before{ opacity:1; transform: translateX(0); }
+
+/* ─────────────────────────────────────────────────────────────
+   4. HERO — alive, breathing, particles
+   ───────────────────────────────────────────────────────────── */
+.hero{
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: clamp(560px, 85vh, 920px);
+}
+
+/* Living glow — slow ambient pulse */
+.hero-backdrop{
+  position: absolute !important;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+.hero-glow{
+  position: absolute;
+  inset: -10%;
+  background:
+    radial-gradient(ellipse 60% 50% at 30% 30%, rgba(212,176,122,.32), transparent 60%),
+    radial-gradient(ellipse 50% 60% at 75% 65%, rgba(255,228,170,.28), transparent 60%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(11,31,58,.04), transparent 70%);
+  filter: blur(40px);
+  animation: hero-breathe 14s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+@keyframes hero-breathe{
+  0%, 100% { transform: scale(1) translate(0,0); opacity: .9; }
+  50%      { transform: scale(1.08) translate(2%, -2%); opacity: 1; }
+}
+
+/* Parallax glow follows mouse (set via JS) */
+.hero[data-mouse]::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    420px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(255,228,170,.18),
+    transparent 60%
+  );
+  pointer-events: none;
+  z-index: -1;
+  transition: background .15s linear;
+}
+
+/* Ember particles container */
+.kz-embers{
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.kz-ember{
+  position: absolute;
+  bottom: -10px;
+  width: var(--s, 4px);
+  height: var(--s, 4px);
+  background: radial-gradient(circle, #ffd98a, #c6a054 60%, transparent 80%);
+  border-radius: 50%;
+  opacity: 0;
+  animation: ember-rise var(--dur, 8s) linear var(--delay, 0s) infinite;
+  filter: blur(.4px);
+  will-change: transform, opacity;
+}
+@keyframes ember-rise{
+  0%   { transform: translate(0, 0)  scale(.6); opacity: 0; }
+  10%  {                                          opacity: var(--peak, .9); }
+  60%  { transform: translate(var(--dx, 30px), -60vh) scale(1); }
+  100% { transform: translate(calc(var(--dx, 30px) * 1.6), -100vh) scale(.4); opacity: 0; }
+}
+
+/* Eyebrow sparkle */
+.eyebrow{ animation: eyebrow-glow 3.6s ease-in-out infinite; }
+@keyframes eyebrow-glow{
+  0%, 100% { box-shadow: 0 0 0 rgba(212,176,122,0); }
+  50%      { box-shadow: 0 0 18px rgba(212,176,122,.35); }
+}
+.eyebrow-dot{ animation: dot-pulse 2.4s ease-in-out infinite; }
+@keyframes dot-pulse{
+  0%, 100% { transform: scale(1);   opacity: 1; }
+  50%      { transform: scale(1.6); opacity: .6; }
+}
+
+/* Hero h1 — gradient gold inner span */
+.hero h1 span{
+  background: linear-gradient(120deg, var(--gold-deep) 0%, var(--gold) 35%, var(--gold-2) 65%, var(--gold-deep) 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gold-shift 8s ease-in-out infinite;
+}
+@keyframes gold-shift{
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+/* Hero CTAs micro-interaction */
+.dash-cta{ transition: transform .35s var(--ease-spring), box-shadow .35s; will-change: transform; }
+.dash-cta:hover{ transform: translateY(-3px); box-shadow: var(--shadow-card-hover); }
+.dash-cta-arrow{ transition: transform .35s var(--ease-out-quart); display:inline-block; }
+.dash-cta:hover .dash-cta-arrow{ transform: translateX(-6px); }
+
+/* ─────────────────────────────────────────────────────────────
+   5. DASHBOARD — alive metrics
+   ───────────────────────────────────────────────────────────── */
+.hero-dash{
+  position: relative;
+  border-radius: clamp(20px, 2vw + 14px, 32px) !important;
+  transition: transform .6s var(--ease-out-quart);
+}
+.hero-dash::after{
+  content: "";
+  position: absolute; inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(212,176,122,.5), transparent 30%, transparent 70%, rgba(212,176,122,.5));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  opacity: .8;
+}
+
+.dash-metric{
+  position: relative;
+  transition: transform .35s var(--ease-spring), box-shadow .35s;
+}
+.dash-metric:hover{ transform: translateY(-2px); }
+.dash-metric-num{
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(180deg, var(--ink), var(--ink-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Bar fill animation on enter */
+.dash-metric-bar{ overflow:hidden; }
+.dash-metric-bar > span{
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--gold-2), var(--gold));
+  border-radius: inherit;
+  animation: bar-fill 1.4s var(--ease-out-expo) .3s forwards;
+}
+@keyframes bar-fill{
+  to { width: var(--w, 60%); }
+}
+
+/* "live" trend dot */
+.dash-metric-trend.live .ping{
+  width: 8px; height: 8px; border-radius:50%; display:inline-block;
+  background: #ef4444;
+  position: relative;
+  margin-inline-end: 6px;
+  vertical-align: middle;
+}
+.dash-metric-trend.live .ping::after{
+  content: "";
+  position: absolute; inset: -4px; border-radius: 50%;
+  background: #ef4444; opacity: .4;
+  animation: ping 1.6s cubic-bezier(0,0,.2,1) infinite;
+}
+@keyframes ping{
+  0%   { transform: scale(.8); opacity: .6; }
+  80%  { transform: scale(2.2); opacity: 0; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Ticker subtle scroll */
+.ticker-list li{
+  animation: ticker-in .5s var(--ease-out-quart) backwards;
+}
+.ticker-list li:nth-child(1){ animation-delay: .05s; }
+.ticker-list li:nth-child(2){ animation-delay: .15s; }
+.ticker-list li:nth-child(3){ animation-delay: .25s; }
+.ticker-list li:nth-child(4){ animation-delay: .35s; }
+@keyframes ticker-in{
+  from { opacity: 0; transform: translateX(8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   6. CARDS — depth on hover
+   ───────────────────────────────────────────────────────────── */
+.card{
+  transition:
+    transform .45s var(--ease-out-quart),
+    box-shadow .45s var(--ease-out-quart),
+    border-color .3s;
+  will-change: transform;
+}
+.cards-grid > .card:hover,
+.feed-card:hover,
+.story:hover{
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   7. CHIPS / TAGS — refined
+   ───────────────────────────────────────────────────────────── */
+.chip, .ms-chip, .feed-tab{
+  transition: transform .25s var(--ease-spring), background .25s, color .25s, border-color .25s !important;
+}
+.chip:hover, .ms-chip:hover, .feed-tab:hover{ transform: translateY(-2px); }
+.chip:active, .ms-chip:active{ transform: translateY(0) scale(.97); }
+
+/* ─────────────────────────────────────────────────────────────
+   8. BUTTONS — primary glow
+   ───────────────────────────────────────────────────────────── */
+.btn-primary{
+  position: relative;
+  overflow: hidden;
+  transition: transform .35s var(--ease-spring), box-shadow .35s !important;
+}
+.btn-primary::before{
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,.35) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform .8s var(--ease-out-expo);
+  pointer-events: none;
+}
+.btn-primary:hover{ transform: translateY(-2px); box-shadow: var(--shadow-glow-gold) !important; }
+.btn-primary:hover::before{ transform: translateX(100%); }
+.btn-primary:active{ transform: translateY(0) scale(.98); }
+
+/* ─────────────────────────────────────────────────────────────
+   9. MODALS — illustrated, spring physics
+   ───────────────────────────────────────────────────────────── */
+.modal{
+  display: none;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+}
+.modal:not([hidden]){ display: flex !important; }
+.modal-back{
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(11,31,58,.55), rgba(11,31,58,.78));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: modal-back-in .35s var(--ease-out-quart);
+}
+@keyframes modal-back-in{
+  from { opacity: 0; backdrop-filter: blur(0); -webkit-backdrop-filter: blur(0); }
+  to   { opacity: 1; }
+}
+.modal-card{
+  position: relative;
+  z-index: 1;
+  max-width: min(560px, 94vw);
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--cream, #FDFBF4);
+  border-radius: clamp(20px, 2vw + 14px, 28px);
+  padding: clamp(24px, 3vw + 14px, 40px);
+  box-shadow: var(--shadow-modal);
+  border: 1px solid var(--border-strong);
+  animation: modal-spring .5s var(--ease-spring);
+  /* Decorative inner ornament */
+  background-image:
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(212,176,122,.18), transparent 60%),
+    linear-gradient(180deg, var(--cream), var(--bg-2));
+}
+@keyframes modal-spring{
+  0%   { opacity: 0; transform: translateY(20px) scale(.94); }
+  100% { opacity: 1; transform: translateY(0)     scale(1);   }
+}
+.modal-card::before{
+  content: "";
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold-2), var(--gold));
+  box-shadow: 0 8px 24px rgba(184,147,90,.4), inset 0 -2px 6px rgba(0,0,0,.1);
+  pointer-events: none;
+}
+.modal-card::after{
+  content: "✦";
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--cream);
+  font-size: 22px;
+  font-weight: 700;
+  pointer-events: none;
+  z-index: 1;
+}
+.modal-close{
+  position: absolute;
+  top: 14px;
+  inset-inline-end: 14px;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--white);
+  cursor: pointer;
+  font-size: 16px;
+  transition: transform .25s var(--ease-spring), background .2s, color .2s;
+}
+.modal-close:hover{ transform: rotate(90deg); background: var(--gold-soft); color: var(--gold-deep); }
+
+/* ─────────────────────────────────────────────────────────────
+   10. NOTIFICATION PANEL — slide-in
+   ───────────────────────────────────────────────────────────── */
+.notif-panel{
+  position: fixed !important;
+  top: 70px;
+  inset-inline-end: 16px;
+  width: min(380px, 92vw);
+  max-height: 70vh;
+  overflow-y: auto;
+  z-index: 90;
+  background: rgba(253,251,244,.96);
+  backdrop-filter: blur(20px) saturate(1.3);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+  border: 1px solid var(--border-strong);
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: var(--shadow-modal);
+  animation: notif-in .4s var(--ease-spring);
+}
+@keyframes notif-in{
+  from { opacity: 0; transform: translateY(-12px) scale(.96); }
+  to   { opacity: 1; transform: translateY(0)     scale(1);   }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   11. SCROLL-TRIGGERED REVEAL — opt-in, with safety fallback
+   ───────────────────────────────────────────────────────────── */
+[data-kz-reveal]{
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .9s var(--ease-out-expo), transform .9s var(--ease-out-expo);
+  /* Safety net: if JS observer fails for any reason, become visible after 1s */
+  animation: kz-reveal-fallback 1s ease-out 1s forwards;
+}
+@keyframes kz-reveal-fallback{
+  to { opacity: 1; transform: translateY(0); }
+}
+[data-kz-reveal].is-revealed{
+  opacity: 1;
+  transform: translateY(0);
+  animation: none;
+}
+[data-kz-reveal][data-delay="1"].is-revealed{ transition-delay: .08s; }
+[data-kz-reveal][data-delay="2"].is-revealed{ transition-delay: .16s; }
+[data-kz-reveal][data-delay="3"].is-revealed{ transition-delay: .24s; }
+[data-kz-reveal][data-delay="4"].is-revealed{ transition-delay: .32s; }
+
+/* ─────────────────────────────────────────────────────────────
+   12. RESPONSIVE — proper breakpoints + container queries
+   ───────────────────────────────────────────────────────────── */
+
+/* Container-level: hero stacks earlier on narrow viewports */
+@media (max-width: 1100px){
+  .hero-inner{ grid-template-columns: 1fr !important; gap: var(--sp-5) !important; }
+  .hero-dash{ width: 100%; }
+}
+
+/* Mobile-first nav fixes */
+@media (max-width: 980px){
+  .nav{ display: none !important; }
+  .menu-btn{ display: inline-flex !important; }
+  .topbar.is-mobile-open .nav{
+    display: flex !important;
+    position: fixed;
+    inset: 64px 0 0 0;
+    flex-direction: column;
+    background: rgba(253,251,244,.98);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    padding: var(--sp-5);
+    overflow-y: auto;
+    z-index: 60;
+    animation: mobile-nav-in .35s var(--ease-out-quart);
+  }
+  @keyframes mobile-nav-in{
+    from { opacity: 0; transform: translateX(20px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  .topbar.is-mobile-open .nav-item{
+    width: 100%;
+    border-bottom: 1px solid var(--border);
+    padding: var(--sp-3) 0;
+  }
+  .topbar.is-mobile-open .nav-drop{
+    position: static !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    border: none !important;
+    padding-inline-start: var(--sp-4);
+  }
+}
+
+@media (max-width: 720px){
+  .hero{ min-height: 480px; padding-block: var(--sp-5) !important; }
+  .hero-dash-metrics{ grid-template-columns: 1fr !important; }
+  .top-actions .lang-switch{ display: none; }
+  .marquee{ font-size: 12px; }
+  .topbar{ padding: 10px var(--sp-3) !important; }
+  .modal-card{ padding: var(--sp-5); }
+  .footer-links{ grid-template-columns: 1fr 1fr !important; }
+}
+
+@media (max-width: 480px){
+  .brand-sub{ display: none; }
+  .topbar .icon-btn:not(.help-btn){ display: none; }
+  .hero-dash-ticker .t-time{ display: none; }
+}
+
+/* Large desktops */
+@media (min-width: 1600px){
+  main, .hero-inner, .section{ max-width: var(--container-max); margin-inline: auto; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   13. REDUCED MOTION — respect users
+   ───────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  .kz-embers{ display: none; }
+  .hero-glow{ animation: none; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   14. FOCUS — accessible + beautiful
+   ───────────────────────────────────────────────────────────── */
+:focus-visible{
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.btn:focus-visible, .chip:focus-visible{ box-shadow: 0 0 0 3px rgba(212,176,122,.35); }
+
+/* ─────────────────────────────────────────────────────────────
+   15. SCROLLBAR — branded
+   ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar{ width: 12px; height: 12px; }
+::-webkit-scrollbar-track{ background: var(--bg-2); }
+::-webkit-scrollbar-thumb{
+  background: linear-gradient(180deg, var(--gold-2), var(--gold));
+  border-radius: 8px;
+  border: 2px solid var(--bg-2);
+}
+::-webkit-scrollbar-thumb:hover{ background: linear-gradient(180deg, var(--gold), var(--gold-deep)); }
+
+/* ─────────────────────────────────────────────────────────────
+   16. ZMANIM CARD — live pulse
+   ───────────────────────────────────────────────────────────── */
+.zmanim-live-dot{
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #2F7A4A;
+  display: inline-block;
+  margin-inline-start: 6px;
+  position: relative;
+  vertical-align: middle;
+}
+.zmanim-live-dot::after{
+  content: ""; position: absolute; inset: -4px;
+  border-radius: 50%; background: #2F7A4A; opacity: .4;
+  animation: ping 2s cubic-bezier(0,0,.2,1) infinite;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   17. SEARCH BAR — hover lift
+   ───────────────────────────────────────────────────────────── */
+.mega-search-form{
+  transition: transform .3s var(--ease-out-quart), box-shadow .3s !important;
+}
+.mega-search-form:focus-within{
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(212,176,122,.2), 0 4px 12px rgba(11,31,58,.08);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   18. GUIDE LAUNCHER (tour btn) — invitation pulse
+   ───────────────────────────────────────────────────────────── */
+.tour-btn-pulse, .help-pulse{
+  animation: invite-pulse 2.4s ease-in-out infinite;
+}
+@keyframes invite-pulse{
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212,176,122,.45); }
+  50%      { box-shadow: 0 0 0 8px rgba(212,176,122,0);  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   19. PRINT
+   ───────────────────────────────────────────────────────────── */
+@media print{
+  .topbar, .footer, .modal, .notif-panel, .kz-embers,
+  .hero-glow, .marquee, .menu-btn, .icon-btn{ display: none !important; }
+  body{ background: white !important; color: black !important; }
+}

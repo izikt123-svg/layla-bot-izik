@@ -1,0 +1,587 @@
+/* ================================================================
+   KZ-AI · Assistant widget (ADDITIVE)
+   On-site AI chat launcher fixed to the right side of the page.
+   Positioned so it never collides with the existing "kz-guide"
+   launcher (which sits at the bottom-right).
+   ================================================================ */
+
+#kzAiLauncher{
+  position:fixed;
+  inset-inline-end:22px;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:1250;
+  display:inline-flex; align-items:center; gap:10px;
+  padding:12px 14px 12px 18px;
+  border:1.2px solid rgba(244,217,150,.65);
+  border-radius:999px 24px 24px 999px;
+  background:linear-gradient(135deg,#0B1F3A 0%, #1A2D4D 55%, #3a2a10 100%);
+  color:#F4D996;
+  font-family:"Heebo","Assistant","Segoe UI",Arial,sans-serif;
+  font-weight:700; font-size:13.5px;
+  box-shadow:
+    0 18px 44px rgba(11,31,58,.38),
+    0 0 0 4px rgba(244,217,150,.07);
+  cursor:pointer;
+  writing-mode: vertical-rl;
+  direction: rtl;
+  text-orientation: mixed;
+  min-height:140px;
+  transition:transform .22s cubic-bezier(.2,.8,.2,1), box-shadow .22s ease;
+}
+html[dir="rtl"] #kzAiLauncher{ writing-mode: vertical-rl; }
+#kzAiLauncher:hover{ transform:translateY(calc(-50% - 3px)); box-shadow:0 24px 56px rgba(11,31,58,.45); }
+#kzAiLauncher .kz-ai-launcher-aura{
+  position:absolute; inset:-6px;
+  border-radius:inherit;
+  background:linear-gradient(135deg, rgba(244,217,150,.18), rgba(244,217,150,0) 60%);
+  filter:blur(6px);
+  pointer-events:none;
+  animation:kzAiAura 3.2s ease-in-out infinite;
+}
+@keyframes kzAiAura{
+  0%,100%{ opacity:.55; }
+  50%{ opacity:.95; }
+}
+#kzAiLauncher .kz-ai-launcher-badge{
+  writing-mode: horizontal-tb;
+  display:inline-grid; place-items:center;
+  padding:2px 8px; border-radius:999px;
+  background:linear-gradient(135deg,#F4D996,#D4B07A);
+  color:#0B1F3A; font-weight:900; font-size:11px;
+  letter-spacing:.08em;
+  box-shadow:inset 0 0 0 1px rgba(11,31,58,.15);
+}
+#kzAiLauncher .kz-ai-launcher-ico{
+  writing-mode: horizontal-tb;
+  display:inline-grid; place-items:center;
+  width:28px; height:28px; border-radius:50%;
+  background:rgba(244,217,150,.14);
+  color:#F4D996;
+  box-shadow:inset 0 0 0 1px rgba(244,217,150,.25);
+}
+#kzAiLauncher .kz-ai-launcher-txt{
+  writing-mode: vertical-rl;
+  white-space:nowrap;
+  letter-spacing:.05em;
+}
+
+/* ---------- PANEL ---------- */
+#kzAiPanel{
+  position:fixed;
+  inset-inline-end:18px;
+  top:50%;
+  transform:translate(30px,-50%) scale(.97);
+  width:min(380px, calc(100vw - 36px));
+  height:min(580px, calc(100vh - 90px));
+  z-index:1400;
+  display:flex; flex-direction:column;
+  border-radius:22px; overflow:hidden;
+  background:linear-gradient(180deg,#FDFBF4 0%, #F6EFDF 100%);
+  border:1px solid rgba(184,147,90,.4);
+  box-shadow:0 40px 90px rgba(11,31,58,.35), 0 0 0 4px rgba(244,217,150,.08);
+  opacity:0; pointer-events:none;
+  transition:opacity .2s ease, transform .25s cubic-bezier(.2,.8,.2,1);
+}
+#kzAiPanel[hidden]{ display:none; }
+#kzAiPanel.is-open{
+  opacity:1; pointer-events:auto;
+  transform:translate(0,-50%) scale(1);
+}
+
+/* Header */
+.kz-ai-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 14px;
+  background:linear-gradient(135deg,#0B1F3A 0%, #1A2D4D 75%, #3a2a10 120%);
+  color:#F4D996;
+  border-bottom:1px solid rgba(244,217,150,.15);
+}
+.kz-ai-title-wrap{ display:flex; align-items:center; gap:12px; min-width:0; }
+.kz-ai-avatar{
+  width:34px; height:34px; border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, #F4D996 0%, #8A6A3A 100%);
+  color:#0B1F3A;
+  display:grid; place-items:center;
+  box-shadow:0 0 0 2px rgba(244,217,150,.2), 0 4px 10px rgba(0,0,0,.2);
+}
+.kz-ai-title-text{ display:flex; flex-direction:column; min-width:0; }
+.kz-ai-title{ font-weight:800; font-size:14px; line-height:1.2; }
+.kz-ai-sub{
+  font-size:11.5px; opacity:.8; margin-top:2px; font-weight:500;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.kz-ai-head-actions{ display:flex; gap:4px; }
+.kz-ai-minor{
+  width:30px; height:30px; border-radius:10px;
+  background:rgba(244,217,150,.1); color:#F4D996;
+  border:1px solid rgba(244,217,150,.15);
+  display:grid; place-items:center; cursor:pointer;
+  transition:background .15s ease;
+}
+.kz-ai-minor:hover{ background:rgba(244,217,150,.2); }
+
+/* Body */
+.kz-ai-body{
+  flex:1; min-height:0; overflow-y:auto;
+  padding:14px 12px 8px;
+  display:flex; flex-direction:column; gap:10px;
+  background:transparent;
+  scroll-behavior:smooth;
+}
+.kz-ai-row{ display:flex; }
+.kz-ai-row.user{ justify-content:flex-start; }
+.kz-ai-row.assistant{ justify-content:flex-end; }
+.kz-ai-bubble{
+  display:flex; gap:8px; align-items:flex-start;
+  max-width:88%;
+  padding:10px 13px;
+  border-radius:16px;
+  font-size:14px; line-height:1.65;
+  box-shadow:0 4px 12px rgba(11,31,58,.08);
+  word-break:break-word;
+  animation:kzAiBubbleIn .22s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes kzAiBubbleIn{
+  from{ opacity:0; transform:translateY(4px); }
+  to{ opacity:1; transform:none; }
+}
+.kz-ai-row.user .kz-ai-bubble{
+  background:#0B1F3A; color:#F4D996;
+  border-bottom-right-radius:6px;
+}
+.kz-ai-row.assistant .kz-ai-bubble{
+  background:#FFFFFF; color:#0B1F3A;
+  border:1px solid rgba(184,147,90,.25);
+  border-bottom-left-radius:6px;
+}
+.kz-ai-bubble-ico{
+  flex:0 0 auto;
+  width:22px; height:22px; border-radius:50%;
+  display:grid; place-items:center;
+  font-size:12px;
+  background:rgba(244,217,150,.18);
+  color:#8A6A3A;
+}
+.kz-ai-row.user .kz-ai-bubble-ico{
+  background:rgba(244,217,150,.2);
+  color:#F4D996;
+}
+.kz-ai-bubble-txt{ flex:1; min-width:0; }
+.kz-ai-link{
+  color:#8A6A3A; font-weight:700; text-decoration:underline;
+}
+.kz-ai-row.user .kz-ai-link{ color:#F4D996; }
+
+/* Streaming indicator */
+.kz-ai-row.assistant.is-streaming .kz-ai-bubble-txt::after{
+  content:'';
+  display:inline-block; width:6px; height:14px;
+  margin-inline-start:4px; vertical-align:-2px;
+  background:#8A6A3A;
+  animation:kzAiCaret 0.9s ease-in-out infinite;
+  border-radius:1px;
+}
+@keyframes kzAiCaret{
+  0%,100%{ opacity:.2; transform:scaleY(.6); }
+  50%{ opacity:1; transform:scaleY(1); }
+}
+
+/* Chips */
+.kz-ai-chips{
+  display:flex; gap:6px; flex-wrap:wrap;
+  padding:6px 12px 10px;
+  border-top:1px dashed rgba(184,147,90,.25);
+  max-height:82px; overflow-y:auto;
+}
+.kz-ai-chip{
+  padding:5px 11px; border-radius:999px;
+  border:1px solid rgba(184,147,90,.4);
+  background:#FBF8F1; color:#4a2f10;
+  font-size:12px; font-weight:600; cursor:pointer;
+  transition:background .15s ease, transform .15s ease;
+}
+.kz-ai-chip:hover{ background:#F1EBDB; transform:translateY(-1px); }
+
+/* Form */
+.kz-ai-form{
+  display:flex; gap:8px; padding:10px;
+  border-top:1px solid rgba(184,147,90,.3);
+  background:rgba(255,255,255,.6);
+  backdrop-filter:blur(4px);
+}
+.kz-ai-input-wrap{ position:relative; flex:1; }
+#kzAiInput{
+  width:100%; min-height:38px; max-height:140px;
+  padding:9px 12px;
+  border:1px solid rgba(184,147,90,.4); border-radius:12px;
+  font:inherit; font-size:14px;
+  resize:none;
+  background:#FFFFFF; color:#0B1F3A;
+  line-height:1.5;
+}
+#kzAiInput:focus{
+  outline:none;
+  border-color:#8A6A3A;
+  box-shadow:0 0 0 3px rgba(184,147,90,.2);
+}
+.kz-ai-warn{
+  position:absolute;
+  inset-inline-start:6px; bottom:calc(100% + 6px);
+  padding:6px 10px;
+  background:linear-gradient(135deg,#ffe8dc,#ffd0be);
+  color:#7a2a1a;
+  border:1px solid rgba(180,70,50,.45);
+  border-radius:12px 12px 12px 4px;
+  font-size:12.5px; font-weight:600;
+  max-width:300px;
+  opacity:0; transform:translateY(4px);
+  transition:opacity .2s ease, transform .2s ease;
+  pointer-events:none;
+  box-shadow:0 8px 18px rgba(11,31,58,.12);
+}
+.kz-ai-warn.show{ opacity:1; transform:none; }
+.kz-ai-send{
+  flex:0 0 auto;
+  width:44px; height:44px; border-radius:12px;
+  background:linear-gradient(135deg,#0B1F3A,#1A2D4D);
+  color:#F4D996; border:1px solid #0B1F3A;
+  display:grid; place-items:center; cursor:pointer;
+  box-shadow:0 6px 14px rgba(11,31,58,.22);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.kz-ai-send:hover{ transform:translateY(-1px); box-shadow:0 10px 22px rgba(11,31,58,.3); }
+.kz-ai-send.is-busy{
+  opacity:.7; pointer-events:none;
+  background:linear-gradient(135deg,#3a2a10,#1A2D4D);
+  animation:kzAiBusy 1.2s ease-in-out infinite;
+}
+@keyframes kzAiBusy{
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(-3px); }
+}
+
+/* Footer */
+.kz-ai-foot{
+  padding:6px 12px 10px;
+  font-size:10.5px; color:#5a4a20;
+  text-align:center;
+  opacity:.75;
+  border-top:1px solid rgba(184,147,90,.15);
+}
+
+/* ---------- Showcase + handbook launcher buttons ---------- */
+.kz-ai-extra{
+  position:fixed;
+  inset-inline-end:22px;
+  top:calc(50% + 110px);
+  z-index:1250;
+  display:flex; flex-direction:column; gap:8px;
+  align-items:flex-end;
+}
+.kz-ai-extra-btn{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:9px 14px; border-radius:999px;
+  background:#FBF8F1; color:#4a2f10;
+  border:1px solid rgba(184,147,90,.4);
+  font-family:"Heebo","Assistant","Segoe UI",Arial,sans-serif;
+  font-weight:700; font-size:12.5px;
+  cursor:pointer;
+  box-shadow:0 8px 18px rgba(11,31,58,.15);
+  transition:transform .18s ease, background .18s ease;
+}
+.kz-ai-extra-btn:hover{ transform:translateX(-3px); background:#FFF; }
+.kz-ai-extra-btn.kz-showcase{
+  background:linear-gradient(135deg,#F4D996,#D4B07A);
+  color:#0B1F3A;
+  border-color:transparent;
+  box-shadow:0 14px 28px rgba(184,147,90,.35);
+}
+.kz-ai-extra-btn svg{ flex:0 0 auto; }
+
+/* ---------- SHOWCASE overlay ---------- */
+#kzShowcase{
+  position:fixed; inset:0; z-index:1500;
+  display:flex; align-items:stretch; justify-content:center;
+  background:radial-gradient(ellipse at 50% 20%, rgba(32,22,8,.85), rgba(6,10,22,.97));
+}
+#kzShowcase[hidden]{ display:none; }
+.kz-show-bg{
+  position:absolute; inset:0;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(244,217,150,.08) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(184,147,90,.12) 0%, transparent 50%);
+  animation:kzShowBg 18s ease-in-out infinite alternate;
+  pointer-events:none;
+}
+@keyframes kzShowBg{
+  from{ transform:scale(1); }
+  to{ transform:scale(1.08); }
+}
+.kz-show-stars{
+  position:absolute; inset:0;
+  background-image:
+    radial-gradient(1.2px 1.2px at 10% 20%, rgba(244,217,150,.6) 50%, transparent 52%),
+    radial-gradient(1px 1px at 30% 80%, rgba(244,217,150,.45) 50%, transparent 52%),
+    radial-gradient(1.5px 1.5px at 60% 40%, rgba(244,217,150,.55) 50%, transparent 52%),
+    radial-gradient(1px 1px at 85% 15%, rgba(244,217,150,.5) 50%, transparent 52%),
+    radial-gradient(1.2px 1.2px at 75% 85%, rgba(244,217,150,.5) 50%, transparent 52%),
+    radial-gradient(1px 1px at 45% 55%, rgba(244,217,150,.4) 50%, transparent 52%);
+  animation:kzShowStars 8s ease-in-out infinite alternate;
+  pointer-events:none;
+}
+@keyframes kzShowStars{
+  from{ opacity:.55; }
+  to{ opacity:1; }
+}
+.kz-show-x{
+  position:absolute;
+  inset-inline-end:18px; top:14px;
+  z-index:4;
+  width:40px; height:40px; border-radius:50%;
+  display:grid; place-items:center;
+  background:rgba(11,31,58,.5);
+  color:#F4D996; cursor:pointer;
+  border:1px solid rgba(244,217,150,.3);
+  backdrop-filter:blur(6px);
+}
+.kz-show-x:hover{ background:rgba(11,31,58,.7); }
+.kz-show-stage{
+  position:relative; z-index:2;
+  flex:1; max-width:1100px;
+  display:grid; grid-template-rows:auto 1fr auto;
+  padding:60px 22px 24px;
+  color:#F4D996;
+  overflow-y:auto;
+}
+.kz-show-eyebrow{
+  font-size:11.5px; letter-spacing:.26em; text-transform:uppercase;
+  color:#D4B07A; font-weight:700;
+  margin-bottom:6px;
+}
+.kz-show-title{
+  font-family:"Frank Ruhl Libre", Georgia, serif;
+  font-size:clamp(28px, 4vw, 44px);
+  line-height:1.15;
+  margin:0 0 6px;
+  color:#FFF;
+}
+.kz-show-sub{
+  font-size:clamp(14px, 1.6vw, 17px);
+  color:rgba(244,217,150,.8);
+  margin:0 0 18px;
+  max-width:720px;
+}
+.kz-show-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(230px, 1fr));
+  gap:14px;
+  padding-bottom:12px;
+}
+.kz-show-card{
+  position:relative;
+  padding:18px 16px;
+  border-radius:18px;
+  background:linear-gradient(160deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  border:1px solid rgba(244,217,150,.15);
+  backdrop-filter:blur(5px);
+  color:#F4D996;
+  text-decoration:none;
+  display:flex; flex-direction:column;
+  transition:transform .25s cubic-bezier(.2,.8,.2,1), background .25s ease, border-color .25s ease;
+}
+.kz-show-card:hover{
+  transform:translateY(-4px);
+  background:linear-gradient(160deg, rgba(244,217,150,.12), rgba(244,217,150,.04));
+  border-color:rgba(244,217,150,.45);
+}
+.kz-show-card .kz-show-ico{
+  width:42px; height:42px; border-radius:14px;
+  display:grid; place-items:center;
+  background:radial-gradient(circle at 30% 30%, #F4D996 0%, #8A6A3A 100%);
+  color:#0B1F3A;
+  font-size:20px;
+  margin-bottom:10px;
+  box-shadow:0 6px 14px rgba(0,0,0,.3);
+}
+.kz-show-card h3{
+  font-family:"Frank Ruhl Libre", Georgia, serif;
+  font-size:18px; margin:0 0 4px;
+  color:#FFF;
+}
+.kz-show-card p{
+  font-size:13px; line-height:1.5;
+  color:rgba(244,217,150,.78);
+  margin:0 0 8px;
+}
+.kz-show-card .kz-show-tags{
+  display:flex; flex-wrap:wrap; gap:4px;
+  margin-top:auto;
+}
+.kz-show-card .kz-show-tags span{
+  padding:3px 8px; border-radius:999px;
+  background:rgba(244,217,150,.14); color:#F4D996;
+  font-size:11px; font-weight:600;
+}
+.kz-show-foot{
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;
+  gap:10px; padding-top:14px;
+  border-top:1px dashed rgba(244,217,150,.2);
+  font-size:12.5px; color:rgba(244,217,150,.75);
+}
+.kz-show-foot a{ color:#FFE7AA; font-weight:700; text-decoration:underline; }
+.kz-show-stage::-webkit-scrollbar{ width:6px; }
+.kz-show-stage::-webkit-scrollbar-thumb{ background:rgba(244,217,150,.25); border-radius:4px; }
+
+/* Body lock */
+body.kz-ai-open{ /* allow background interaction */ }
+body.kz-show-open{ overflow:hidden; }
+
+/* ---------- Small screens ---------- */
+@media (max-width:720px){
+  #kzAiLauncher{
+    top:auto; bottom:86px;
+    transform:none;
+    inset-inline-end:12px;
+    writing-mode:horizontal-tb;
+    min-height:auto;
+    padding:10px 14px;
+    border-radius:999px;
+  }
+  #kzAiLauncher .kz-ai-launcher-txt{
+    writing-mode:horizontal-tb;
+  }
+  #kzAiLauncher:hover{ transform:translateY(-2px); }
+  #kzAiPanel{
+    top:auto; bottom:14px;
+    inset-inline-end:10px;
+    transform:translateY(30px) scale(.97);
+    width:calc(100vw - 20px);
+    height:min(540px, calc(100vh - 80px));
+  }
+  #kzAiPanel.is-open{ transform:translateY(0) scale(1); }
+  .kz-ai-extra{
+    top:auto; bottom:154px;
+    inset-inline-end:12px;
+  }
+}
+
+/* Reduced-motion */
+@media (prefers-reduced-motion:reduce){
+  #kzAiLauncher .kz-ai-launcher-aura,
+  .kz-ai-send.is-busy,
+  .kz-ai-row.assistant.is-streaming .kz-ai-bubble-txt::after,
+  .kz-show-bg, .kz-show-stars { animation:none !important; }
+}
+
+/* ================================================================
+   KZ-DOCK · additive layout overrides
+   Consolidates the floating launchers (AI, showcase, handbook, site
+   guide, PWA install) into a single tidy vertical dock on the inline-
+   end edge. Moves everything out of the vertical center so it no
+   longer overlaps the share rail (top:50%) on the opposite side in
+   narrow viewports, and so the four "bottom" buttons read as one
+   coherent group instead of feeling scattered.
+   ================================================================ */
+#kzAiLauncher{
+  top:auto !important;
+  bottom:258px !important;
+  transform:none !important;
+  writing-mode:horizontal-tb !important;
+  min-height:auto !important;
+  padding:11px 16px !important;
+  border-radius:999px !important;
+  inset-inline-end:22px !important;
+}
+#kzAiLauncher:hover{ transform:translateY(-2px) !important; box-shadow:0 22px 50px rgba(11,31,58,.42); }
+#kzAiLauncher .kz-ai-launcher-txt{ writing-mode:horizontal-tb !important; font-size:13px; }
+#kzAiLauncher::after{
+  content:""; position:absolute; inset-inline-start:-6px; top:50%;
+  width:6px; height:6px; border-radius:50%;
+  background:#22c88a; box-shadow:0 0 0 3px rgba(34,200,138,.25);
+  animation:kzAiLive 2.2s ease-in-out infinite;
+  transform:translateY(-50%);
+}
+@keyframes kzAiLive{
+  0%,100%{ opacity:.6; transform:translateY(-50%) scale(1); }
+  50%{ opacity:1; transform:translateY(-50%) scale(1.25); }
+}
+
+/* Stack the showcase + handbook directly above the AI launcher. */
+.kz-ai-extra{
+  top:auto !important;
+  bottom:316px !important;
+  inset-inline-end:22px !important;
+  flex-direction:column !important;
+  gap:8px !important;
+  align-items:stretch !important;
+}
+.kz-ai-extra .kz-ai-extra-btn{ justify-content:flex-start; }
+
+/* Give the whole stack a subtle anchoring panel so the buttons stop
+   feeling orphaned. Purely decorative; does not capture clicks. */
+.kz-dock-panel{
+  position:fixed;
+  inset-inline-end:10px;
+  bottom:12px;
+  width:210px;
+  z-index:1199;
+  padding:14px 10px 12px;
+  border-radius:22px;
+  background:linear-gradient(180deg, rgba(253,251,244,.85) 0%, rgba(246,239,223,.85) 100%);
+  border:1px solid rgba(184,147,90,.28);
+  box-shadow:0 18px 44px rgba(11,31,58,.14);
+  backdrop-filter:blur(8px);
+  pointer-events:none;
+}
+.kz-dock-panel::before{
+  content:"כלי עזר";
+  display:block;
+  font-family:"Heebo","Assistant","Segoe UI",Arial,sans-serif;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.22em;
+  color:#8a6b2a;
+  text-align:center;
+  padding-bottom:6px;
+  border-bottom:1px dashed rgba(184,147,90,.3);
+}
+.kz-dock-panel-inner{ height:calc(100% - 22px); }
+
+@media (max-width:720px){
+  #kzAiLauncher{
+    bottom:220px !important;
+    inset-inline-end:12px !important;
+  }
+  .kz-ai-extra{
+    bottom:270px !important;
+    inset-inline-end:12px !important;
+  }
+  .kz-dock-panel{ display:none; }
+}
+
+/* Keep the kz-guide launcher sitting at the bottom of this column — it
+   is already at bottom:22px; nudge it so it visually nests inside the
+   same dock panel. */
+#kzGuideLauncher{
+  inset-inline-end:22px !important;
+  bottom:22px !important;
+}
+@media (max-width:720px){
+  #kzGuideLauncher{
+    inset-inline-end:12px !important;
+    bottom:14px !important;
+  }
+}
+
+/* Keep the PWA install chip in the same column, above the guide. */
+.pwa-install-chip{
+  inset-inline-end:22px !important;
+  bottom:70px !important;
+}
+@media (max-width:720px){
+  .pwa-install-chip{
+    inset-inline-end:12px !important;
+    bottom:62px !important;
+  }
+}

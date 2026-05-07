@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>שמחות · שיתוף ברכות · מרכז התפילה</title>
+  <meta name="description" content="חתונה? ברית? בת מצווה? תני לעולם יהודי שלם להצטרף בברכה." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="critical.css" />
+  <link rel="stylesheet" href="kz-simchas.css" />
+  <link rel="stylesheet" href="kz-image.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <a href="/" class="brand-wrap">← מרכז התפילה</a>
+  <span class="sm-pill"><b id="smCount">0</b> שמחות חיות</span>
+</header>
+
+<main class="sm-shell">
+  <div class="kz-hero-illust" data-kz-hero="wedding" id="smHero">
+    <div class="kz-hero-content">
+      <h1>🎉 שמחות ישראל</h1>
+      <p>אירוע שמח? שתפי איתנו — הקהל היהודי כולו יצטרף בברכה.</p>
+    </div>
+  </div>
+
+  <section class="card sm-form-card">
+    <div class="mini-title"><span class="mini-ornament">✨</span><span>שתפי שמחה</span></div>
+    <form class="sm-form" id="smForm">
+      <div class="sm-types">
+        <button type="button" class="sm-type is-on" data-t="חתונה">💍 חתונה</button>
+        <button type="button" class="sm-type" data-t="ברית">👶 ברית</button>
+        <button type="button" class="sm-type" data-t="בר/בת מצווה">🕯 בר/בת מצווה</button>
+        <button type="button" class="sm-type" data-t="הולדת">🍼 הולדת</button>
+        <button type="button" class="sm-type" data-t="פדיון">💰 פדיון</button>
+        <button type="button" class="sm-type" data-t="חנוכת בית">🏠 חנוכת בית</button>
+        <button type="button" class="sm-type" data-t="הצלחה">🎓 הצלחה</button>
+        <button type="button" class="sm-type" data-t="יום הולדת">🎂 יום הולדת</button>
+      </div>
+      <input id="smName"   placeholder="שם החוגג/ים" maxlength="120" required/>
+      <input id="smCity"   placeholder="עיר" maxlength="80"/>
+      <input id="smDate"   type="date"/>
+      <textarea id="smMsg" rows="3" placeholder="ברכה / סיפור קצר (אופציונלי)" maxlength="400"></textarea>
+      <button type="submit" class="sm-go">שתפי שמחה</button>
+    </form>
+    <div class="sm-success" id="smSuccess" hidden>
+      <div class="sm-suc-icn">🎉</div>
+      <b>השמחה שלך פורסמה!</b>
+      <p>הקהל יוסיף ברכות. מזל טוב!</p>
+      <button id="smAgain">שתפי עוד</button>
+    </div>
+  </section>
+
+  <section class="card sm-wall">
+    <div class="mini-title"><span class="mini-ornament">🎶</span><span>קיר השמחות</span></div>
+    <div class="sm-grid" id="smGrid"></div>
+  </section>
+</main>
+
+<script src="data/jewish-illustrations.js" defer></script>
+<script src="kz-image.js" defer></script>
+<script src="kz-simchas.js" defer></script>
+<script src="kz-ai-chat.js" defer></script>
+<link rel="stylesheet" href="kz-ai-chat.css">
+<script src="kz-honeypot.js" defer></script>
+<script src="kz-nav.js" defer></script>
+<link rel="stylesheet" href="kz-nav.css">
+<link rel="stylesheet" href="kz-polish.css">
+</body>
+</html>

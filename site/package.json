@@ -1,0 +1,10 @@
+{
+  "name": "merkaz-hatfila",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.1",
+    "@netlify/blobs": "^9.0.0",
+    "@netlify/identity": "^1.0.0"
+  }
+}

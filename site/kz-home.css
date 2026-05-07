@@ -1,0 +1,163 @@
+.hm-shell{ max-width: min(1100px, 96vw); margin: 0 auto 40px; padding: 0 12px; display: grid; gap: 20px; }
+.hm-profile{
+  margin-inline-start: auto;
+  padding: 6px 14px;
+  background: rgba(212,176,122,.15);
+  border: 1px solid rgba(212,176,122,.4);
+  color: #d4b07a;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.hm-profile:hover{ background: rgba(212,176,122,.25); }
+
+.hm-hero{ text-align: center; padding: 24px 12px 8px; }
+.hm-greet{
+  display: inline-block;
+  padding: 4px 14px;
+  background: rgba(212,176,122,.15);
+  border: 1px solid rgba(212,176,122,.4);
+  color: #d4b07a;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.hm-hero h1{
+  font-family: 'Frank Ruhl Libre', serif; font-size: clamp(32px, 5vw, 48px); margin: 4px 0;
+  background: linear-gradient(135deg, #f1d597, #d4b07a);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.hm-hero p{ opacity: .8; max-width: 56ch; margin: 0 auto; }
+
+.hm-streaks{
+  display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+  margin-top: 14px;
+}
+.hm-streak{
+  padding: 4px 12px;
+  background: linear-gradient(135deg, rgba(255,140,40,.12), rgba(255,200,100,.08));
+  border: 1px solid rgba(255,200,100,.4);
+  border-radius: 999px;
+  font-size: 12px;
+  color: #f1d597;
+  font-weight: 700;
+}
+.hm-streak b{ font-size: 14px; }
+
+.hm-daily{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  padding: 18px;
+  border-radius: 22px;
+  background: linear-gradient(160deg, rgba(241,213,151,.12), rgba(212,176,122,.04));
+  border: 1px solid rgba(241,213,151,.3);
+}
+.hm-daily-title{
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: 22px;
+  color: #f1d597;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 12px;
+}
+.hm-daily-actions{
+  display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+}
+.hm-daily-btn{
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+  border-radius: 14px;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 12px 28px rgba(241,213,151,.25);
+  transition: transform .15s, box-shadow .25s;
+}
+.hm-daily-btn:hover{ transform: translateY(-2px); box-shadow: 0 16px 36px rgba(241,213,151,.4); }
+.hm-daily-btn-secondary{
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(212,176,122,.4);
+  color: #d4b07a;
+  box-shadow: none;
+}
+.hm-daily-btn-secondary:hover{ background: rgba(212,176,122,.15); }
+
+.hm-section-title{
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: clamp(18px, 2vw, 22px);
+  margin: 0 0 12px;
+  color: #d4b07a;
+  font-weight: 700;
+}
+
+.hm-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+}
+.hm-grid-actions{ grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+
+.hm-tile{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 22px 14px;
+  border-radius: 18px;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  border: 1px solid rgba(212,176,122,.3);
+  transition: transform .2s, box-shadow .25s;
+  min-height: 130px;
+  font-weight: 700;
+}
+.hm-tile:hover{
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 18px 40px rgba(0,0,0,.4);
+}
+.hm-tile-icn{ font-size: 36px; margin-bottom: 4px; filter: drop-shadow(0 0 12px rgba(255,255,255,.3)); }
+.hm-tile-name{ font-size: 14px; }
+
+.hm-tile-pray{ background: linear-gradient(160deg, #166534, #16a34a); }
+.hm-tile-candle{ background: linear-gradient(160deg, #b45309, #fbbf24); }
+.hm-tile-give{ background: linear-gradient(160deg, #831843, #db2777); }
+.hm-tile-soldiers{ background: linear-gradient(160deg, #1e3a8a, #3b82f6); }
+
+.hm-card{
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 14px;
+  background: linear-gradient(160deg, rgba(15,33,66,.96), rgba(20,49,91,.92));
+  border: 1px solid rgba(212,176,122,.25);
+  border-radius: 14px;
+  text-decoration: none;
+  color: #f6e6c2;
+  transition: background .2s, transform .15s;
+}
+.hm-card:hover{
+  background: linear-gradient(160deg, rgba(15,33,66,.96), rgba(212,176,122,.12));
+  transform: translateX(-2px);
+}
+[dir="rtl"] .hm-card:hover{ transform: translateX(2px); }
+.hm-card-icn{
+  width: 50px; height: 50px;
+  background: rgba(212,176,122,.18);
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+}
+.hm-card b{ display: block; font-weight: 700; color: #f1d597; }
+.hm-card small{ display: block; opacity: .7; font-size: 11px; margin-top: 2px; }

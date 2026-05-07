@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>גלריית איורים יהודיים · מרכז התפילה</title>
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="critical.css" />
+  <link rel="stylesheet" href="kz-image.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <a href="/home.html" class="brand-wrap">← הבית</a>
+</header>
+
+<main class="kz-gallery-shell">
+  <div class="kz-hero-illust" data-kz-illustration="jerusalem">
+    <div class="kz-hero-content">
+      <h1>גלריית איורים יהודיים</h1>
+      <p>אוסף של 15 איורים מקוריים — נוצרים מיד, עובדים גם אופליין.</p>
+    </div>
+  </div>
+
+  <div class="kz-gallery-grid" id="galGrid"></div>
+</main>
+
+<script src="data/jewish-illustrations.js" defer></script>
+<script src="kz-image.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const grid = document.getElementById('galGrid');
+    if (!window.KZ_ILLUSTRATIONS) return;
+    grid.innerHTML = window.KZ_ILLUSTRATIONS.list.map(it => `
+      <article class="kz-gallery-card">
+        <div class="kz-gallery-img" style="background-image:url('${window.KZ_ILLUSTRATIONS[it.key]({w:400,h:280})}')"></div>
+        <div class="kz-gallery-meta">
+          <div class="kz-gallery-name">${it.he}</div>
+          ${it.tags.map(t => `<span class="kz-gallery-tag">${t}</span>`).join(' ')}
+        </div>
+      </article>`).join('');
+  });
+</script>
+<script src="kz-ai-chat.js" defer></script>
+<link rel="stylesheet" href="kz-ai-chat.css">
+<script src="kz-honeypot.js" defer></script>
+<script src="kz-nav.js" defer></script>
+<link rel="stylesheet" href="kz-nav.css">
+<link rel="stylesheet" href="kz-polish.css">
+</body>
+</html>
