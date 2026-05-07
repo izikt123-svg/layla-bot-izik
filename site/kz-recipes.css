@@ -1,0 +1,122 @@
+.rc-shell{ max-width: min(960px, 96vw); margin: 0 auto 40px; padding: 0 12px; }
+.rc-pill{
+  margin-inline-start: auto;
+  padding: 4px 12px;
+  background: rgba(212,176,122,.15);
+  border: 1px solid rgba(212,176,122,.4);
+  border-radius: 999px;
+  font-size: 12px;
+  color: #d4b07a;
+}
+.rc-hero{ text-align: center; padding: 28px 12px 18px; }
+.rc-icn{ font-size: 36px; }
+.rc-hero h1{
+  font-family: 'Frank Ruhl Libre', serif; font-size: clamp(28px, 5vw, 44px); margin: 6px 0;
+  background: linear-gradient(135deg, #f1d597, #d4b07a);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.rc-hero p{ opacity: .8; max-width: 56ch; margin: 0 auto; }
+
+.rc-edot{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.rc-edah{
+  padding: 14px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(212,176,122,.3);
+  border-radius: 14px;
+  color: #d4b07a;
+  cursor: pointer;
+  text-align: center;
+  font-weight: 600;
+  transition: background .15s, transform .1s;
+}
+.rc-edah:hover{ background: rgba(212,176,122,.12); }
+.rc-edah.is-on{
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+  border-color: transparent;
+  transform: scale(1.02);
+}
+.rc-edah .rc-edah-emoji{ display: block; font-size: 28px; margin-bottom: 4px; }
+.rc-edah .rc-edah-region{ display: block; font-size: 10px; opacity: .65; margin-top: 2px; font-weight: 400; }
+
+.rc-recipes{
+  display: grid; gap: 14px;
+}
+.rc-recipes:empty::after{
+  content: '☝ בחרי עדה כדי לראות מתכונים';
+  display: block; text-align: center; padding: 40px 12px; opacity: .6;
+}
+
+.rc-card{
+  padding: 18px;
+  background: linear-gradient(160deg, rgba(15,33,66,.96), rgba(20,49,91,.92));
+  border: 1px solid rgba(212,176,122,.35);
+  border-radius: 16px;
+  color: #f6e6c2;
+}
+.rc-card-head{
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 10px;
+}
+.rc-card-name{
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: 22px; font-weight: 700; flex: 1;
+  color: #f1d597;
+}
+.rc-card-meta{
+  display: flex; gap: 6px; font-size: 11px;
+}
+.rc-meta-pill{
+  padding: 3px 10px;
+  background: rgba(212,176,122,.15);
+  border-radius: 999px;
+  color: #d4b07a;
+}
+
+.rc-card-cols{
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 16px;
+}
+@media (max-width: 720px){ .rc-card-cols{ grid-template-columns: 1fr; } }
+.rc-card-section h4{
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: #d4b07a;
+  letter-spacing: .04em;
+}
+.rc-card-section ul, .rc-card-section ol{
+  margin: 0;
+  padding-inline-start: 18px;
+  display: grid; gap: 4px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.rc-card-section li{
+  position: relative;
+}
+
+.rc-print-btn{
+  margin-top: 12px;
+  padding: 8px 16px;
+  background: rgba(212,176,122,.15);
+  border: 1px solid rgba(212,176,122,.4);
+  color: #d4b07a;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+.rc-print-btn:hover{ background: rgba(212,176,122,.25); }
+
+@media print{
+  body{ background: #fff !important; color: #000 !important; }
+  .topbar, .rc-edot, .rc-pill, .rc-print-btn, .rc-hero{ display: none !important; }
+  .rc-card{ background: none !important; border: 1px solid #999 !important; color: #000 !important; break-inside: avoid; page-break-inside: avoid; }
+  .rc-card-name, .rc-meta-pill, .rc-card-section h4{ color: #000 !important; }
+}

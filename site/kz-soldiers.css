@@ -1,0 +1,164 @@
+.sd-shell{ max-width: min(960px, 96vw); margin: 0 auto 40px; padding: 0 12px; display: grid; gap: 14px; }
+.sd-pill{
+  margin-inline-start: auto;
+  padding: 4px 14px;
+  background: linear-gradient(135deg, rgba(30,58,138,.6), rgba(59,130,246,.4));
+  border: 1px solid rgba(96,165,250,.5);
+  color: #93c5fd;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.sd-hero{ text-align: center; padding: 24px 12px 14px; }
+.sd-icon{ font-size: 56px; filter: drop-shadow(0 0 20px rgba(96,165,250,.4)); }
+.sd-hero h1{
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: clamp(24px, 4vw, 36px);
+  margin: 8px 0;
+  background: linear-gradient(135deg, #93c5fd, #f1d597);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.sd-hero p{
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: 17px;
+  font-style: italic;
+  opacity: .85;
+  max-width: 56ch;
+  margin: 0 auto;
+}
+
+.sd-tabs{ display: flex; gap: 6px; flex-wrap: wrap; }
+.sd-tab{
+  flex: 1;
+  min-width: 140px;
+  padding: 12px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(212,176,122,.3);
+  border-radius: 12px;
+  color: #d4b07a;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 13px;
+}
+.sd-tab:hover{ background: rgba(212,176,122,.12); }
+.sd-tab.is-on{
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 8px 24px rgba(59,130,246,.3);
+}
+
+.sd-prayer-card{ padding: 20px; }
+.sd-prayer-text{
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: 18px;
+  line-height: 2;
+  margin: 14px 0;
+  padding: 18px;
+  background: rgba(0,0,0,.25);
+  border-radius: 14px;
+  border: 1px solid rgba(212,176,122,.2);
+}
+.sd-prayer-text b{ color: #f1d597; }
+.sd-pray-go{
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  color: #fff;
+  font-weight: 800;
+  font-size: 16px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  margin: 8px 0;
+  box-shadow: 0 12px 28px rgba(59,130,246,.3);
+}
+.sd-pray-go:hover{ filter: brightness(1.1); }
+.sd-pray-go.is-done{ background: linear-gradient(135deg, #4ade80, #16a34a); }
+.sd-prayed-count{ text-align: center; font-size: 12px; opacity: .65; margin-top: 6px; }
+.sd-prayed-count b{ color: #93c5fd; }
+
+.sd-form-card{ padding: 14px; }
+.sd-form{ display: grid; gap: 8px; }
+.sd-form input{
+  padding: 12px 14px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(212,176,122,.3);
+  color: #f6e6c2;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+}
+.sd-form button{
+  padding: 12px;
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.sd-wall{ padding: 14px; }
+.sd-wall .mini-title{ display: flex; align-items: center; gap: 8px; font-weight: 700; margin-bottom: 12px; }
+.sd-wall-count{
+  margin-inline-start: auto;
+  padding: 2px 10px;
+  background: rgba(212,176,122,.18);
+  color: #d4b07a;
+  border-radius: 999px;
+  font-size: 11px;
+}
+.sd-wall-count b{ color: #f1d597; }
+
+.sd-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 8px;
+}
+.sd-grid:empty::after{
+  content: 'אין שמות עדיין. הוסיפי שם — הקהל יתפלל.';
+  display: block; grid-column: 1/-1;
+  text-align: center; padding: 20px; opacity: .55; font-size: 13px;
+}
+.sd-card{
+  padding: 12px;
+  background: linear-gradient(160deg, rgba(15,33,66,.95), rgba(20,49,91,.85));
+  border: 1px solid rgba(96,165,250,.3);
+  border-radius: 12px;
+}
+.sd-card-name{
+  font-family: 'Frank Ruhl Libre', serif;
+  font-weight: 700;
+  color: #f1d597;
+  font-size: 15px;
+}
+.sd-card-details{ font-size: 11px; opacity: .7; margin: 4px 0 8px; }
+.sd-card-prayed{
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(74,222,128,.15);
+  border: 1px solid rgba(74,222,128,.4);
+  color: #4ade80;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.sd-card-prayed.is-done{ background: linear-gradient(135deg, #4ade80, #16a34a); color: #fff; }
+
+.sd-tehilim{ padding: 14px; }
+.sd-tehilim-list{ display: grid; gap: 6px; }
+.sd-tehilim-item{
+  padding: 10px 14px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(212,176,122,.2);
+  border-radius: 10px;
+  color: #f6e6c2;
+  text-decoration: none;
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: 14px;
+}
+.sd-tehilim-item:hover{ background: rgba(212,176,122,.12); }

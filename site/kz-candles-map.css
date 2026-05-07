@@ -1,0 +1,45 @@
+.cm-shell{ position: relative; height: calc(100vh - 64px); }
+.cm-map{ width: 100%; height: 100%; }
+.cm-pill{
+  margin-inline-start: auto;
+  padding: 4px 14px;
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A; font-weight: 700; border-radius: 999px; font-size: 13px;
+}
+.cm-pill b{ font-size: 16px; }
+.cm-legend{
+  position: absolute; bottom: 20px; inset-inline-start: 20px;
+  background: rgba(11,31,58,.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(212,176,122,.4);
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex; gap: 14px;
+  font-size: 12px;
+  color: #d4b07a;
+  z-index: 1000;
+}
+.cm-legend i{ display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-inline-end: 4px; vertical-align: middle; }
+
+.cm-popup b{ display: block; color: #f1d597; margin-bottom: 4px; }
+.cm-popup small{ display: block; opacity: .7; margin-bottom: 6px; font-size: 11px; }
+.cm-popup .pr{ font-family: 'Frank Ruhl Libre', serif; font-size: 12px; line-height: 1.5; }
+
+/* Pulsing candle marker */
+.cm-marker{
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: #f1d597;
+  box-shadow: 0 0 0 0 rgba(241,213,151,.7);
+  animation: cmPulse 2s ease-out infinite;
+}
+.cm-marker.is-top{
+  background: #ff8b8b;
+  box-shadow: 0 0 0 0 rgba(255,139,139,.7);
+}
+@keyframes cmPulse{
+  0%   { box-shadow: 0 0 0 0    rgba(241,213,151,.7); }
+  70%  { box-shadow: 0 0 0 22px rgba(241,213,151,0);  }
+  100% { box-shadow: 0 0 0 0    rgba(241,213,151,0);  }
+}

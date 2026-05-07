@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>לימוד יומי · מרכז התפילה</title>
+  <meta name="description" content="פרשת השבוע · דף יומי · הלכה יומית · מצוות היום — חמש דקות של תורה כל יום." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="critical.css" />
+  <link rel="stylesheet" href="kz-learning.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <a href="/" class="brand-wrap">← מרכז התפילה</a>
+  <span class="dl-pill">📚 לימוד יומי</span>
+</header>
+
+<main class="dl-shell">
+  <section class="dl-hero">
+    <div class="dl-icon">📚</div>
+    <h1>חמש דקות תורה ביום</h1>
+    <p>פרשת השבוע · דף יומי · הלכה יומית · מצוות היום. מה שתבחרי, השם איתך.</p>
+    <div class="dl-streak" id="dlStreak">🔥 <b>0</b> ימים ברצף</div>
+  </section>
+
+  <section class="dl-grid">
+    <a class="dl-tile dl-parsha" data-tab="parsha">
+      <div class="dl-tile-icon">📜</div>
+      <div class="dl-tile-name">פרשת השבוע</div>
+      <div class="dl-tile-sub" id="dlParshaName">—</div>
+    </a>
+    <a class="dl-tile dl-daf" data-tab="daf">
+      <div class="dl-tile-icon">📖</div>
+      <div class="dl-tile-name">דף יומי</div>
+      <div class="dl-tile-sub" id="dlDafName">—</div>
+    </a>
+    <a class="dl-tile dl-halacha" data-tab="halacha">
+      <div class="dl-tile-icon">⚖</div>
+      <div class="dl-tile-name">הלכה יומית</div>
+      <div class="dl-tile-sub" id="dlHalachaName">—</div>
+    </a>
+    <a class="dl-tile dl-mitzva" data-tab="mitzva">
+      <div class="dl-tile-icon">✦</div>
+      <div class="dl-tile-name">מצוות היום</div>
+      <div class="dl-tile-sub" id="dlMitzvaName">—</div>
+    </a>
+  </section>
+
+  <section class="card dl-content" id="dlContent" hidden></section>
+</main>
+
+<script src="data/halachot-mitzvot.js" defer></script>
+<script src="kz-learning.js" defer></script>
+<script src="kz-ai-chat.js" defer></script>
+<link rel="stylesheet" href="kz-ai-chat.css">
+<script src="kz-honeypot.js" defer></script>
+<script src="kz-nav.js" defer></script>
+<link rel="stylesheet" href="kz-nav.css">
+<link rel="stylesheet" href="kz-polish.css">
+</body>
+</html>

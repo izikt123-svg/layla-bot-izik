@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>בתי חב״ד בעולם</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #172033;
+      --muted: #667085;
+      --border: #e5e7eb;
+      --primary: #0f766e;
+      --primary-dark: #115e59;
+      --gold: #b7791f;
+      --shadow: 0 10px 25px rgba(16, 24, 40, .08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, "Noto Sans Hebrew", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .chabad-wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 16px 42px;
+    }
+    .hero {
+      background: linear-gradient(135deg, #0f766e, #134e4a);
+      color: white;
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+    }
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(26px, 4vw, 42px);
+    }
+    .hero p {
+      margin: 0;
+      opacity: .92;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    .toolbar {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 14px;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 10px;
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+    }
+    input, select {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 13px 14px;
+      font-size: 15px;
+      outline: none;
+      background: #fff;
+    }
+    input:focus, select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(15, 118, 110, .12);
+    }
+    .quick {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0 18px;
+    }
+    .quick button {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 999px;
+      padding: 9px 13px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .quick button:hover { border-color: var(--primary); color: var(--primary-dark); }
+    .meta {
+      color: var(--muted);
+      margin: 10px 4px 16px;
+      font-size: 14px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      min-height: 260px;
+    }
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 19px;
+    }
+    .location {
+      color: var(--primary-dark);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .address {
+      color: var(--muted);
+      line-height: 1.55;
+      margin-bottom: 10px;
+      min-height: 42px;
+    }
+    .badge {
+      display: inline-flex;
+      width: fit-content;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 12px;
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+      margin-bottom: 14px;
+    }
+    .badge.partial {
+      background: #fffbeb;
+      color: #92400e;
+      border-color: #fde68a;
+    }
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: auto;
+    }
+    .btn {
+      text-decoration: none;
+      text-align: center;
+      border-radius: 13px;
+      padding: 10px 9px;
+      font-size: 14px;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: #fff;
+    }
+    .btn.primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+    .btn:hover { filter: brightness(.97); }
+    .empty {
+      background: #fff;
+      border: 1px dashed var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      text-align: center;
+      color: var(--muted);
+    }
+    .note {
+      margin-top: 22px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 14px 16px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+    @media (max-width: 900px) {
+      .toolbar { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 560px) {
+      .grid { grid-template-columns: 1fr; }
+      .hero { border-radius: 18px; padding: 20px; }
+      .actions { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="chabad-wrap">
+    <section class="hero">
+      <h1>בתי חב״ד בעולם</h1>
+      <p>חיפוש מהיר לפי מדינה, עיר או שם מרכז. כולל כפתורי Waze, Google Maps, טלפון ואתר כאשר קיימים.</p>
+    </section>
+
+    <section class="toolbar">
+      <input id="searchInput" type="search" placeholder="חפש עיר / מדינה / שם בית חב״ד..." />
+      <select id="countryFilter">
+        <option value="">כל המדינות</option>
+      </select>
+      <select id="verifiedFilter">
+        <option value="">כל הסטטוסים</option>
+        <option value="מאומת">מאומת</option>
+        <option value="מאומת חלקי">מאומת חלקי</option>
+        <option value="דורש השלמה">דורש השלמה</option>
+      </select>
+    </section>
+
+    <div class="quick">
+      <button type="button" data-quick="Thailand">תאילנד</button>
+      <button type="button" data-quick="Greece">יוון</button>
+      <button type="button" data-quick="Dubai">דובאי</button>
+      <button type="button" data-quick="USA">ארה״ב</button>
+      <button type="button" data-quick="Italy">איטליה</button>
+      <button type="button" data-quick="Spain">ספרד</button>
+      <button type="button" data-quick="">נקה חיפוש</button>
+    </div>
+
+    <div class="meta" id="resultMeta"></div>
+    <section class="grid" id="cardsGrid"></section>
+
+    <div class="note">
+      הערה חשובה: רשומות שמסומנות “דורש השלמה” צריכות אימות כתובת/טלפון לפני פרסום כמאגר רשמי מלא.
+      הכפתורים משתמשים בכתובת/שם המרכז לפתיחת ניווט ב־Waze וב־Google Maps.
+    </div>
+  </main>
+
+  <script>
+    const centers = [
+  {
+    "name": "Chabad of Bangkok",
+    "city": "Bangkok",
+    "country": "Thailand",
+    "address": "18 Phra Athit Rd Bangkok",
+    "phone": "6626292770",
+    "website": "https://www.jewishthailand.com",
+    "verified": "מאומת"
+  },
+  {
+    "name": "Chabad Phuket",
+    "city": "Phuket",
+    "country": "Thailand",
+    "address": "Patong Beach Phuket",
+    "phone": "",
+    "website": "https://www.jewishthailand.com",
+    "verified": "דורש השלמה"
+  },
+  {
+    "name": "Chabad Koh Samui",
+    "city": "Koh Samui",
+    "country": "Thailand",
+    "address": "Chaweng Beach Rd Koh Samui",
+    "phone": "",
+    "website": "https://www.jewishthailand.com",
+    "verified": "דורש השלמה"
+  },
+  {
+    "name": "Chabad Koh Phangan",
+    "city": "Koh Phangan",
+    "country": "Thailand",
+    "address": "Haad Rin Beach Koh Phangan",
+    "phone": "",
+    "website": "https://www.jewishthailand.com",
+    "verified": "דורש השלמה"
+  },
+  {
+    "name": "Chabad Chiang Mai",
+    "city": "Chiang Mai",
+    "country": "Thailand",
+    "address": "Nimmanhaemin Rd Chiang Mai",
+    "phone": "",
+    "website": "https://www.jewishthailand.com",
+    "verified": "דורש השלמה"
+  },
+  {
+    "name": "Chabad Dubai",
+    "city": "Dubai",
+    "country": "UAE",
+    "address": "Dubai Marina Area",
+    "phone": "",
+    "website": "https://www.chabad.ae",
+    "verified": "דורש השלמה"
+  },
+  {
+    "name": "Chabad Abu Dhabi",
+    "city": "Abu Dhabi",
+    "country": "UAE",
+    "address": "Abu Dhabi Center",
+    "phone": "",
+    "website": "https://www.chabad.ae",
+    "verified": "דורש השלמה"
+  },
+  {
+    "name": "Chabad Athens",
+    "city": "Athens",
+    "country": "Greece",
+    "address": "10 Mouson St Athens",
+    "phone": "",
+    "website": "https://www.chabad.gr",
+    "verified": "מאומת חלקי"
+  },
+  {
+    "name": "Chabad Mykonos",
+    "city": "Mykonos",
+    "country": "Greece",
+    "address": "Mykonos Town",
+    "phone": "",
+    "website": "https://www.chabad.gr",
+    "verified": "דורש השלמה"
+  },
+  {
+    "name": "Chabad Santorini",
+    "city": "Santorini",
+    "country": "Greece",
+    "address": "Fira Santorini",
+    "phone": "",
+    "website": "https://www.chabad.gr",
+    "verified": "דורש השלמה"
+  },
+  {
+    "name": "Chabad Barcelona",
+    "city": "Barcelona",
+    "country": "Spain",
+    "address": "Carrer de l'Avenir 24 Barcelona",
+    "phone": "",
+    "website": "https://www.chabadbarcelona.org",
+    "verified": "מאומת חלקי"
+  },
+  {
+    "name": "Chabad Madrid",
+    "city": "Madrid",
+    "country": "Spain",
+    "address": "Calle Balmes 3 Madrid",
+    "phone": "",
+    "website": "https://www.chabadmadrid.com",
+    "verified": "מאומת חלקי"
+  },
+  {
+    "name": "Chabad Ibiza",
+    "city": "Ibiza",
+    "country": "Spain",
+    "address": "Ibiza Center",
+    "phone": "",
+    "website": "https://www.chabadibiza.com",
+    "verified": "דורש השלמה"
+  },
+  {
+    "name": "Chabad Rome",
+    "city": "Rome",
+    "country": "Italy",
+    "address": "Via del Portico d'Ottavia Rome",
+    "phone": "",
+    "website": "https://www.chabadrome.com",
+    "verified": "דורש השלמה"
+  },
+  {
+    "name": "Chabad Milan",
+    "city": "Milan",
+    "country": "Italy",
+    "address": "Via Luigi Soderini Milan",
+    "phone": "",
+    "website": "https://www.chabadmilan.com",
+    "verified": "דורש השלמה"
+  },
+  {
+    "name": "Chabad Venice",
+    "city": "Venice",
+    "country": "Italy",
+    "address": "Venice Center",
+    "phone": "",
+    "website": "https://www.chabadvenice.com",
+    "verified": "דורש השלמה"
+  },
+  {
+    "name": "Chabad Paris",
+    "city": "Paris",
+    "country": "France",
+    "address": "8 Rue Lamartine Paris",
+    "phone": "",
+    "website": "https://www.chabad.fr",
+    "verified": "מאומת חלקי"
+  },
+  {
+    "name": "Chabad Nice",
+    "city": "Nice",
+    "country": "France",
+    "address": "Place Massena Nice",
+    "phone": "",
+    "website": "https://www.chabadnice.com",
+    "verified": "דורש השלמה"
+  },
+  {
+    "name": "Chabad London",
+    "city": "London",
+    "country": "UK",
+    "address": "107-115 Stamford Hill London",
+    "phone": "442088000022",
+    "website": "https://www.chabad.org.uk",
+    "verified": "מאומת חלקי"
+  },
+  {
+    "name": "Chabad Berlin",
+    "city": "Berlin",
+    "country": "Germany",
+    "address": "Münstersche Str 6 Berlin",
+    "phone": "",
+    "website": "https://www.chabadberlin.com",
+    "verified": "מאומת חלקי"
+  },
+  {
+    "name": "Chabad Amsterdam",
+    "city": "Amsterdam",
+    "country": "Netherlands",
+    "address": "Amsterdam Center",
+    "phone": "",
+    "website": "https://www.chabadamsterdamcenter.com",
+    "verified": "דורש השלמה"
+  },
+  {
+    "name": "Chabad Prague",
+    "city": "Prague",
+    "country": "Czech Republic",
+    "address": "Maiselova 18 Prague",
+    "phone": "",
+    "website": "https://www.chabadprague.cz",
+    "verified": "מאומת חלקי"
+  },
+  {
+    "name": "Chabad Budapest",
+    "city": "Budapest",
+    "country": "Hungary",
+    "address": "Karoly krt Budapest",
+    "phone": "",
+    "website": "https://www.chabad.hu",
+    "verified": "דורש השלמה"
+  },
+  {
+    "name": "Chabad New York / 770",
+    "city": "Brooklyn",
+    "country": "USA",
+    "address": "770 Eastern Parkway Brooklyn NY",
+    "phone": "7187744000",
+    "website": "https://www.chabad.org",
+    "verified": "מאומת"
+  },
+  {
+    "name": "Chabad Miami",
+    "city": "Miami",
+    "country": "USA",
+    "address": "Miami Beach Area",
+    "phone": "",
+    "website": "https://www.chabadmiami.com",
+    "verified": "דורש השלמה"
+  },
+  {
+    "name": "Chabad Los Angeles",
+    "city": "Los Angeles",
+    "country": "USA",
+    "address": "Los Angeles CA",
+    "phone": "",
+    "website": "https://www.chabadla.org",
+    "verified": "דורש השלמה"
+  },
+  {
+    "name": "Chabad Las Vegas",
+    "city": "Las Vegas",
+    "country": "USA",
+    "address": "Las Vegas Blvd",
+    "phone": "",
+    "website": "https://www.chabadlv.com",
+    "verified": "דורש השלמה"
+  },
+  {
+    "name": "Chabad Cancun",
+    "city": "Cancun",
+    "country": "Mexico",
+    "address": "Hotel Zone Cancun",
+    "phone": "",
+    "website": "https://www.chabadcancun.com",
+    "verified": "דורש השלמה"
+  },
+  {
+    "name": "Chabad Kathmandu",
+    "city": "Kathmandu",
+    "country": "Nepal",
+    "address": "Thamel Kathmandu",
+    "phone": "",
+    "website": "https://www.chabadnepal.com",
+    "verified": "דורש השלמה"
+  },
+  {
+    "name": "Chabad Singapore",
+    "city": "Singapore",
+    "country": "Singapore",
+    "address": "Singapore Center",
+    "phone": "",
+    "website": "https://www.chabad.org.sg",
+    "verified": "דורש השלמה"
+  },
+  {
+    "name": "Chabad Tokyo",
+    "city": "Tokyo",
+    "country": "Japan",
+    "address": "Tokyo Center",
+    "phone": "",
+    "website": "https://www.chabad.jp",
+    "verified": "דורש השלמה"
+  },
+  {
+    "name": "Chabad Tel Aviv",
+    "city": "Tel Aviv",
+    "country": "Israel",
+    "address": "Tel Aviv Israel",
+    "phone": "",
+    "website": "https://www.chabad.org.il",
+    "verified": "דורש השלמה"
+  },
+  {
+    "name": "Chabad Jerusalem",
+    "city": "Jerusalem",
+    "country": "Israel",
+    "address": "52 King George Street Jerusalem",
+    "phone": "97228001717",
+    "website": "https://www.jerusalemchabad.org",
+    "verified": "מאומת חלקי"
+  },
+  {
+    "name": "Chabad Eilat",
+    "city": "Eilat",
+    "country": "Israel",
+    "address": "Eilat Center",
+    "phone": "",
+    "website": "https://www.chabad.org.il",
+    "verified": "דורש השלמה"
+  },
+  /* === KZX additive batch · 110 more centers (deduped vs above) === */
+  { "name": "Chabad of Pattaya", "city": "Pattaya", "country": "Thailand", "address": "Soi Yensabai, Pattaya", "phone": "", "website": "https://www.jewishthailand.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Krabi", "city": "Krabi", "country": "Thailand", "address": "Ao Nang, Krabi", "phone": "", "website": "https://www.jewishthailand.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Hong Kong", "city": "Hong Kong", "country": "Hong Kong", "address": "Hoover Court, 7-9 MacDonnell Rd, Mid-Levels", "phone": "85225239770", "website": "https://www.chabadhongkong.org", "verified": "מאומת" },
+  { "name": "Chabad of Macau", "city": "Macau", "country": "China", "address": "Macau Peninsula", "phone": "", "website": "https://www.chabadhongkong.org", "verified": "דורש השלמה" },
+  { "name": "Chabad of Shanghai", "city": "Shanghai", "country": "China", "address": "Shang Mira Garden, Hongqiao", "phone": "", "website": "https://www.chabadshanghai.com", "verified": "מאומת חלקי" },
+  { "name": "Chabad of Beijing", "city": "Beijing", "country": "China", "address": "Capital Mansion, Chaoyang", "phone": "", "website": "https://www.chabadbeijing.com", "verified": "מאומת חלקי" },
+  { "name": "Chabad of Guangzhou", "city": "Guangzhou", "country": "China", "address": "Tianhe District, Guangzhou", "phone": "", "website": "https://www.chabadguangzhou.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Shenzhen", "city": "Shenzhen", "country": "China", "address": "Futian District, Shenzhen", "phone": "", "website": "https://www.chabad-shenzhen.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Taipei", "city": "Taipei", "country": "Taiwan", "address": "Da'an District, Taipei", "phone": "", "website": "https://www.chabadtaiwan.org", "verified": "מאומת חלקי" },
+  { "name": "Chabad of Seoul", "city": "Seoul", "country": "South Korea", "address": "Itaewon, Seoul", "phone": "", "website": "https://www.chabadkorea.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Manila", "city": "Manila", "country": "Philippines", "address": "Makati, Manila", "phone": "", "website": "https://www.chabadphilippines.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Kuala Lumpur", "city": "Kuala Lumpur", "country": "Malaysia", "address": "Bukit Bintang, KL", "phone": "", "website": "", "verified": "דורש השלמה" },
+  { "name": "Chabad of Bali", "city": "Bali", "country": "Indonesia", "address": "Seminyak, Bali", "phone": "", "website": "", "verified": "דורש השלמה" },
+  { "name": "Chabad of Saigon", "city": "Ho Chi Minh City", "country": "Vietnam", "address": "District 1, Ho Chi Minh City", "phone": "", "website": "https://www.chabadvietnam.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Hanoi", "city": "Hanoi", "country": "Vietnam", "address": "Old Quarter, Hanoi", "phone": "", "website": "https://www.chabadvietnam.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Phnom Penh", "city": "Phnom Penh", "country": "Cambodia", "address": "Phnom Penh Center", "phone": "", "website": "", "verified": "דורש השלמה" },
+  { "name": "Chabad of Goa", "city": "Goa", "country": "India", "address": "Anjuna, North Goa", "phone": "", "website": "https://www.chabadgoa.com", "verified": "מאומת חלקי" },
+  { "name": "Chabad of New Delhi", "city": "New Delhi", "country": "India", "address": "Paharganj, New Delhi", "phone": "", "website": "https://www.chabaddelhi.com", "verified": "מאומת חלקי" },
+  { "name": "Chabad of Mumbai", "city": "Mumbai", "country": "India", "address": "Hormusji St, Colaba, Mumbai", "phone": "", "website": "https://www.chabadmumbai.org", "verified": "מאומת" },
+  { "name": "Chabad of Pushkar", "city": "Pushkar", "country": "India", "address": "Pushkar, Rajasthan", "phone": "", "website": "https://www.chabadindia.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Manali", "city": "Manali", "country": "India", "address": "Old Manali", "phone": "", "website": "https://www.chabadindia.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Dharamshala", "city": "Dharamshala", "country": "India", "address": "McLeod Ganj, Dharamshala", "phone": "", "website": "https://www.chabadindia.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Pokhara", "city": "Pokhara", "country": "Nepal", "address": "Lakeside, Pokhara", "phone": "", "website": "https://www.chabadnepal.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Cusco", "city": "Cusco", "country": "Peru", "address": "Avenida del Sol, Cusco", "phone": "", "website": "https://www.jewishperu.com", "verified": "מאומת חלקי" },
+  { "name": "Chabad of Lima", "city": "Lima", "country": "Peru", "address": "Miraflores, Lima", "phone": "", "website": "https://www.jewishperu.com", "verified": "מאומת חלקי" },
+  { "name": "Chabad of La Paz", "city": "La Paz", "country": "Bolivia", "address": "Sopocachi, La Paz", "phone": "", "website": "", "verified": "דורש השלמה" },
+  { "name": "Chabad of Buenos Aires", "city": "Buenos Aires", "country": "Argentina", "address": "Aguero 1164, Buenos Aires", "phone": "", "website": "https://www.jabad.org.ar", "verified": "מאומת" },
+  { "name": "Chabad of Bariloche", "city": "Bariloche", "country": "Argentina", "address": "Bariloche", "phone": "", "website": "https://www.jabad.org.ar", "verified": "דורש השלמה" },
+  { "name": "Chabad of Mendoza", "city": "Mendoza", "country": "Argentina", "address": "Mendoza", "phone": "", "website": "https://www.jabad.org.ar", "verified": "דורש השלמה" },
+  { "name": "Chabad of Santiago", "city": "Santiago", "country": "Chile", "address": "Las Condes, Santiago", "phone": "", "website": "https://www.chabadchile.com", "verified": "מאומת חלקי" },
+  { "name": "Chabad of Sao Paulo", "city": "Sao Paulo", "country": "Brazil", "address": "Higienopolis, Sao Paulo", "phone": "", "website": "https://www.chabad.org.br", "verified": "מאומת" },
+  { "name": "Chabad of Rio de Janeiro", "city": "Rio de Janeiro", "country": "Brazil", "address": "Copacabana, Rio", "phone": "", "website": "https://www.chabadrio.com", "verified": "מאומת חלקי" },
+  { "name": "Chabad of Bogota", "city": "Bogota", "country": "Colombia", "address": "Chapinero, Bogota", "phone": "", "website": "https://www.jabadcolombia.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Caracas", "city": "Caracas", "country": "Venezuela", "address": "Altamira, Caracas", "phone": "", "website": "", "verified": "דורש השלמה" },
+  { "name": "Chabad of Panama City", "city": "Panama City", "country": "Panama", "address": "Punta Pacifica, Panama City", "phone": "", "website": "https://www.jabadpanama.com", "verified": "מאומת חלקי" },
+  { "name": "Chabad of San Jose", "city": "San Jose", "country": "Costa Rica", "address": "Escazu, San Jose", "phone": "", "website": "", "verified": "דורש השלמה" },
+  { "name": "Chabad of Mexico City", "city": "Mexico City", "country": "Mexico", "address": "Polanco, Mexico City", "phone": "", "website": "https://www.jabad.org.mx", "verified": "מאומת" },
+  { "name": "Chabad of Playa del Carmen", "city": "Playa del Carmen", "country": "Mexico", "address": "Quinta Avenida, Playa del Carmen", "phone": "", "website": "https://www.chabadcancun.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Tulum", "city": "Tulum", "country": "Mexico", "address": "Tulum Beach Road", "phone": "", "website": "https://www.chabadcancun.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Toronto", "city": "Toronto", "country": "Canada", "address": "Bathurst St, Toronto", "phone": "", "website": "https://www.chabadtoronto.com", "verified": "מאומת" },
+  { "name": "Chabad of Vancouver", "city": "Vancouver", "country": "Canada", "address": "Oak St, Vancouver", "phone": "", "website": "https://www.lubavitchbc.com", "verified": "מאומת חלקי" },
+  { "name": "Chabad of Montreal", "city": "Montreal", "country": "Canada", "address": "Hampstead, Montreal", "phone": "", "website": "https://www.chabad.org/centers/canada", "verified": "מאומת חלקי" },
+  { "name": "Chabad of Calgary", "city": "Calgary", "country": "Canada", "address": "Calgary, Alberta", "phone": "", "website": "https://www.chabadcalgary.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Ottawa", "city": "Ottawa", "country": "Canada", "address": "Carling Ave, Ottawa", "phone": "", "website": "https://www.chabadottawa.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Crown Heights", "city": "Brooklyn", "country": "USA", "address": "Eastern Parkway, Crown Heights NY", "phone": "", "website": "https://www.chabad.org", "verified": "מאומת חלקי" },
+  { "name": "Chabad of the Five Towns", "city": "Cedarhurst", "country": "USA", "address": "Cedarhurst NY", "phone": "", "website": "https://www.chabad5towns.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Manhattan", "city": "Manhattan", "country": "USA", "address": "Upper East Side, Manhattan NY", "phone": "", "website": "https://www.chabad.org", "verified": "מאומת חלקי" },
+  { "name": "Chabad of Queens", "city": "Queens", "country": "USA", "address": "Queens NY", "phone": "", "website": "https://www.chabadqueens.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of the Bronx", "city": "Bronx", "country": "USA", "address": "Bronx NY", "phone": "", "website": "", "verified": "דורש השלמה" },
+  { "name": "Chabad of Boston", "city": "Boston", "country": "USA", "address": "Brookline, Boston MA", "phone": "", "website": "https://www.chabadboston.com", "verified": "מאומת חלקי" },
+  { "name": "Chabad of Cambridge", "city": "Cambridge", "country": "USA", "address": "Harvard Yard area, Cambridge MA", "phone": "", "website": "https://www.chabadharvard.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Philadelphia", "city": "Philadelphia", "country": "USA", "address": "Center City, Philadelphia PA", "phone": "", "website": "https://www.chabadcenter.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Baltimore", "city": "Baltimore", "country": "USA", "address": "Park Heights, Baltimore MD", "phone": "", "website": "https://www.chabadbaltimore.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Washington DC", "city": "Washington", "country": "USA", "address": "Georgetown, Washington DC", "phone": "", "website": "https://www.chabaddc.com", "verified": "מאומת חלקי" },
+  { "name": "Chabad of Atlanta", "city": "Atlanta", "country": "USA", "address": "Toco Hills, Atlanta GA", "phone": "", "website": "https://www.chabadatlanta.com", "verified": "מאומת חלקי" },
+  { "name": "Chabad of Chicago", "city": "Chicago", "country": "USA", "address": "Lincoln Park, Chicago IL", "phone": "", "website": "https://www.chabadchicago.com", "verified": "מאומת חלקי" },
+  { "name": "Chabad of Skokie", "city": "Skokie", "country": "USA", "address": "Skokie IL", "phone": "", "website": "https://www.chabadskokie.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Detroit", "city": "West Bloomfield", "country": "USA", "address": "West Bloomfield MI", "phone": "", "website": "https://www.chabaddetroit.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Houston", "city": "Houston", "country": "USA", "address": "Bellaire, Houston TX", "phone": "", "website": "https://www.chabadhouston.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Dallas", "city": "Dallas", "country": "USA", "address": "Preston Hollow, Dallas TX", "phone": "", "website": "https://www.chabaddallas.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Austin", "city": "Austin", "country": "USA", "address": "Austin TX", "phone": "", "website": "https://www.chabadaustin.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Phoenix", "city": "Phoenix", "country": "USA", "address": "Phoenix AZ", "phone": "", "website": "https://www.chabadaz.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Denver", "city": "Denver", "country": "USA", "address": "Denver CO", "phone": "", "website": "https://www.chabadcolorado.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Aspen", "city": "Aspen", "country": "USA", "address": "Aspen CO", "phone": "", "website": "https://www.jewishaspen.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Seattle", "city": "Seattle", "country": "USA", "address": "Mercer Island, Seattle WA", "phone": "", "website": "https://www.chabadnw.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Portland", "city": "Portland", "country": "USA", "address": "Portland OR", "phone": "", "website": "https://www.chabadoregon.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of San Francisco", "city": "San Francisco", "country": "USA", "address": "Pacific Heights, SF", "phone": "", "website": "https://www.chabadsf.org", "verified": "מאומת חלקי" },
+  { "name": "Chabad of Berkeley", "city": "Berkeley", "country": "USA", "address": "Berkeley CA", "phone": "", "website": "https://www.chabadberkeley.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of San Diego", "city": "San Diego", "country": "USA", "address": "La Jolla, San Diego CA", "phone": "", "website": "https://www.chabadsd.org", "verified": "דורש השלמה" },
+  { "name": "Chabad of Honolulu", "city": "Honolulu", "country": "USA", "address": "Honolulu HI", "phone": "", "website": "https://www.jewishhawaii.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Anchorage", "city": "Anchorage", "country": "USA", "address": "Anchorage AK", "phone": "", "website": "https://www.jewishalaska.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of New Orleans", "city": "New Orleans", "country": "USA", "address": "New Orleans LA", "phone": "", "website": "https://www.chabadneworleans.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Charleston", "city": "Charleston", "country": "USA", "address": "Charleston SC", "phone": "", "website": "https://www.chabadsc.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Orlando", "city": "Orlando", "country": "USA", "address": "Orlando FL", "phone": "", "website": "https://www.chabadorlando.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Tampa", "city": "Tampa", "country": "USA", "address": "Tampa FL", "phone": "", "website": "https://www.chabadtampa.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Boca Raton", "city": "Boca Raton", "country": "USA", "address": "Boca Raton FL", "phone": "", "website": "https://www.chabadboca.com", "verified": "מאומת חלקי" },
+  { "name": "Chabad of Aventura", "city": "Aventura", "country": "USA", "address": "Aventura FL", "phone": "", "website": "https://www.chabadaventura.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Manchester", "city": "Manchester", "country": "UK", "address": "Bowdon, Manchester", "phone": "", "website": "https://www.chabadmanchester.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Edinburgh", "city": "Edinburgh", "country": "UK", "address": "Edinburgh", "phone": "", "website": "https://www.chabad.scot", "verified": "דורש השלמה" },
+  { "name": "Chabad of Glasgow", "city": "Glasgow", "country": "UK", "address": "Giffnock, Glasgow", "phone": "", "website": "https://www.chabad.scot", "verified": "דורש השלמה" },
+  { "name": "Chabad of Cambridge UK", "city": "Cambridge", "country": "UK", "address": "Thompson's Lane, Cambridge", "phone": "", "website": "https://www.cuchabad.org", "verified": "דורש השלמה" },
+  { "name": "Chabad of Oxford", "city": "Oxford", "country": "UK", "address": "Cowley Road, Oxford", "phone": "", "website": "https://www.oxfordchabad.org", "verified": "דורש השלמה" },
+  { "name": "Chabad of Marseille", "city": "Marseille", "country": "France", "address": "Le Prado, Marseille", "phone": "", "website": "https://www.chabad.fr", "verified": "דורש השלמה" },
+  { "name": "Chabad of Lyon", "city": "Lyon", "country": "France", "address": "Lyon", "phone": "", "website": "https://www.chabad.fr", "verified": "דורש השלמה" },
+  { "name": "Chabad of Toulouse", "city": "Toulouse", "country": "France", "address": "Toulouse", "phone": "", "website": "https://www.chabad.fr", "verified": "דורש השלמה" },
+  { "name": "Chabad of Strasbourg", "city": "Strasbourg", "country": "France", "address": "Strasbourg", "phone": "", "website": "https://www.chabad.fr", "verified": "דורש השלמה" },
+  { "name": "Chabad of Cannes", "city": "Cannes", "country": "France", "address": "La Croisette, Cannes", "phone": "", "website": "https://www.chabad.fr", "verified": "דורש השלמה" },
+  { "name": "Chabad of Munich", "city": "Munich", "country": "Germany", "address": "Munich", "phone": "", "website": "https://www.chabad-munchen.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Frankfurt", "city": "Frankfurt", "country": "Germany", "address": "Frankfurt am Main", "phone": "", "website": "https://www.chabadfrankfurt.de", "verified": "דורש השלמה" },
+  { "name": "Chabad of Hamburg", "city": "Hamburg", "country": "Germany", "address": "Hamburg", "phone": "", "website": "https://www.chabad-hamburg.de", "verified": "דורש השלמה" },
+  { "name": "Chabad of Vienna", "city": "Vienna", "country": "Austria", "address": "Hollandstraße, Vienna", "phone": "", "website": "https://www.chabadwien.at", "verified": "מאומת חלקי" },
+  { "name": "Chabad of Zurich", "city": "Zurich", "country": "Switzerland", "address": "Zurich", "phone": "", "website": "https://www.chabad.ch", "verified": "דורש השלמה" },
+  { "name": "Chabad of Geneva", "city": "Geneva", "country": "Switzerland", "address": "Geneva", "phone": "", "website": "https://www.chabad.ch", "verified": "דורש השלמה" },
+  { "name": "Chabad of Brussels", "city": "Brussels", "country": "Belgium", "address": "Brussels", "phone": "", "website": "https://www.chabadbelgium.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Antwerp", "city": "Antwerp", "country": "Belgium", "address": "Antwerp Diamond Quarter", "phone": "", "website": "https://www.chabadbelgium.com", "verified": "מאומת חלקי" },
+  { "name": "Chabad of Copenhagen", "city": "Copenhagen", "country": "Denmark", "address": "Copenhagen", "phone": "", "website": "https://www.chabad.dk", "verified": "דורש השלמה" },
+  { "name": "Chabad of Stockholm", "city": "Stockholm", "country": "Sweden", "address": "Stockholm", "phone": "", "website": "https://www.chabadstockholm.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Oslo", "city": "Oslo", "country": "Norway", "address": "Oslo", "phone": "", "website": "https://www.chabadnorway.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Helsinki", "city": "Helsinki", "country": "Finland", "address": "Helsinki", "phone": "", "website": "https://www.chabadfinland.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Reykjavik", "city": "Reykjavik", "country": "Iceland", "address": "Reykjavik", "phone": "", "website": "https://www.chabadiceland.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Warsaw", "city": "Warsaw", "country": "Poland", "address": "Warsaw", "phone": "", "website": "https://www.chabad.org.pl", "verified": "מאומת חלקי" },
+  { "name": "Chabad of Krakow", "city": "Krakow", "country": "Poland", "address": "Kazimierz, Krakow", "phone": "", "website": "https://www.chabadkrakow.com", "verified": "מאומת חלקי" },
+  { "name": "Chabad of Bucharest", "city": "Bucharest", "country": "Romania", "address": "Bucharest", "phone": "", "website": "https://www.chabad.org.ro", "verified": "דורש השלמה" },
+  { "name": "Chabad of Sofia", "city": "Sofia", "country": "Bulgaria", "address": "Sofia", "phone": "", "website": "https://www.chabadbulgaria.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Belgrade", "city": "Belgrade", "country": "Serbia", "address": "Belgrade", "phone": "", "website": "https://www.chabadserbia.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Zagreb", "city": "Zagreb", "country": "Croatia", "address": "Zagreb", "phone": "", "website": "", "verified": "דורש השלמה" },
+  { "name": "Chabad of Lisbon", "city": "Lisbon", "country": "Portugal", "address": "Lisbon", "phone": "", "website": "https://www.chabadlisbon.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Saint Petersburg", "city": "Saint Petersburg", "country": "Russia", "address": "Lermontovsky Pr, St Petersburg", "phone": "", "website": "https://www.chabad.spb.ru", "verified": "מאומת חלקי" },
+  { "name": "Chabad of Kyiv", "city": "Kyiv", "country": "Ukraine", "address": "Kyiv", "phone": "", "website": "https://www.jewishkiev.com", "verified": "מאומת חלקי" },
+  { "name": "Chabad of Odessa", "city": "Odessa", "country": "Ukraine", "address": "Odessa", "phone": "", "website": "https://www.chabadodessa.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Tbilisi", "city": "Tbilisi", "country": "Georgia", "address": "Tbilisi", "phone": "", "website": "https://www.chabadgeorgia.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Baku", "city": "Baku", "country": "Azerbaijan", "address": "Baku", "phone": "", "website": "", "verified": "דורש השלמה" },
+  { "name": "Chabad of Almaty", "city": "Almaty", "country": "Kazakhstan", "address": "Almaty", "phone": "", "website": "https://www.chabad.kz", "verified": "דורש השלמה" },
+  { "name": "Chabad of Tashkent", "city": "Tashkent", "country": "Uzbekistan", "address": "Tashkent", "phone": "", "website": "https://www.chabad.uz", "verified": "דורש השלמה" },
+  { "name": "Chabad of Istanbul", "city": "Istanbul", "country": "Turkey", "address": "Istanbul", "phone": "", "website": "https://www.chabadturkey.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Casablanca", "city": "Casablanca", "country": "Morocco", "address": "Casablanca", "phone": "", "website": "https://www.chabadmorocco.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Marrakesh", "city": "Marrakesh", "country": "Morocco", "address": "Marrakesh", "phone": "", "website": "https://www.chabadmorocco.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Cape Town", "city": "Cape Town", "country": "South Africa", "address": "Sea Point, Cape Town", "phone": "", "website": "https://www.chabadct.co.za", "verified": "מאומת חלקי" },
+  { "name": "Chabad of Johannesburg", "city": "Johannesburg", "country": "South Africa", "address": "Glenhazel, Johannesburg", "phone": "", "website": "https://www.chabad.org.za", "verified": "מאומת חלקי" },
+  { "name": "Chabad of Nairobi", "city": "Nairobi", "country": "Kenya", "address": "Nairobi", "phone": "", "website": "", "verified": "דורש השלמה" },
+  { "name": "Chabad of Sydney", "city": "Sydney", "country": "Australia", "address": "Bondi, Sydney", "phone": "", "website": "https://www.chabadsydney.com", "verified": "מאומת" },
+  { "name": "Chabad of Melbourne", "city": "Melbourne", "country": "Australia", "address": "Caulfield, Melbourne", "phone": "", "website": "https://www.chabadmelbourne.com", "verified": "מאומת חלקי" },
+  { "name": "Chabad of Perth", "city": "Perth", "country": "Australia", "address": "Yokine, Perth", "phone": "", "website": "https://www.chabadwa.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Brisbane", "city": "Brisbane", "country": "Australia", "address": "Brisbane", "phone": "", "website": "https://www.chabadbrisbane.com", "verified": "דורש השלמה" },
+  { "name": "Chabad of Auckland", "city": "Auckland", "country": "New Zealand", "address": "Auckland", "phone": "", "website": "https://www.chabad.org.nz", "verified": "דורש השלמה" },
+  { "name": "Chabad of Tzfat", "city": "Tzfat", "country": "Israel", "address": "Old City, Tzfat", "phone": "", "website": "https://www.chabad.org.il", "verified": "דורש השלמה" },
+  { "name": "Chabad of Tiberias", "city": "Tiberias", "country": "Israel", "address": "Tiberias", "phone": "", "website": "https://www.chabad.org.il", "verified": "דורש השלמה" },
+  { "name": "Chabad of Haifa", "city": "Haifa", "country": "Israel", "address": "Haifa", "phone": "", "website": "https://www.chabad.org.il", "verified": "דורש השלמה" },
+  { "name": "Chabad of Beer Sheva", "city": "Beer Sheva", "country": "Israel", "address": "Beer Sheva", "phone": "", "website": "https://www.chabad.org.il", "verified": "דורש השלמה" }
+];
+
+    const searchInput = document.getElementById('searchInput');
+    const countryFilter = document.getElementById('countryFilter');
+    const verifiedFilter = document.getElementById('verifiedFilter');
+    const cardsGrid = document.getElementById('cardsGrid');
+    const resultMeta = document.getElementById('resultMeta');
+
+    function encodeQuery(value) {
+      return encodeURIComponent(value || '');
+    }
+
+    function safe(value) {
+      return String(value || '').replace(/[&<>"']/g, (m) => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+      }[m]));
+    }
+
+    function initCountries() {
+      // Dedup centers (in-place, by normalized name+city) — safety net.
+      const seen = new Set();
+      for (let i = centers.length - 1; i >= 0; i--) {
+        const key = (String(centers[i].name || '') + '|' + String(centers[i].city || '')).toLowerCase().replace(/\s+/g, ' ').trim();
+        if (seen.has(key)) centers.splice(i, 1);
+        else seen.add(key);
+      }
+      const countries = [...new Set(centers.map(c => c.country).filter(Boolean))].sort();
+      countries.forEach(country => {
+        const opt = document.createElement('option');
+        opt.value = country;
+        opt.textContent = country;
+        countryFilter.appendChild(opt);
+      });
+    }
+
+    function cardTemplate(item) {
+      const query = item.address || `${item.name} ${item.city} ${item.country}`;
+      const waze = `https://waze.com/ul?q=${encodeQuery(query)}&navigate=yes`;
+      const gmaps = `https://www.google.com/maps/search/?api=1&query=${encodeQuery(query)}`;
+      const badgeClass = item.verified === 'מאומת' ? 'badge' : 'badge partial';
+      const phone = item.phone ? `<a class="btn" href="tel:${safe(item.phone)}">📞 התקשר</a>` : '';
+      const site = item.website ? `<a class="btn" href="${safe(item.website)}" target="_blank" rel="noopener">🌐 אתר</a>` : '';
+
+      return `
+        <article class="card">
+          <h3>${safe(item.name)}</h3>
+          <div class="location">${safe(item.city)} · ${safe(item.country)}</div>
+          <div class="address">${safe(item.address || 'כתובת דורשת השלמה')}</div>
+          <span class="${badgeClass}">${safe(item.verified || 'דורש השלמה')}</span>
+          <div class="actions">
+            <a class="btn primary" href="${waze}" target="_blank" rel="noopener">🚗 Waze</a>
+            <a class="btn" href="${gmaps}" target="_blank" rel="noopener">📍 Google Maps</a>
+            ${phone}
+            ${site}
+          </div>
+        </article>
+      `;
+    }
+
+    function render() {
+      const q = searchInput.value.trim().toLowerCase();
+      const country = countryFilter.value;
+      const verified = verifiedFilter.value;
+
+      const filtered = centers.filter(item => {
+        const text = `${item.name} ${item.city} ${item.country} ${item.address}`.toLowerCase();
+        const matchQ = !q || text.includes(q);
+        const matchCountry = !country || item.country === country;
+        const matchVerified = !verified || item.verified === verified;
+        return matchQ && matchCountry && matchVerified;
+      });
+
+      resultMeta.textContent = `מציג ${filtered.length} מתוך ${centers.length} רשומות`;
+      cardsGrid.innerHTML = filtered.length
+        ? filtered.map(cardTemplate).join('')
+        : `<div class="empty">לא נמצאו תוצאות. נסה לחפש מדינה או עיר אחרת.</div>`;
+    }
+
+    document.querySelectorAll('[data-quick]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        searchInput.value = btn.dataset.quick || '';
+        countryFilter.value = '';
+        verifiedFilter.value = '';
+        render();
+      });
+    });
+
+    searchInput.addEventListener('input', render);
+    countryFilter.addEventListener('change', render);
+    verifiedFilter.addEventListener('change', render);
+
+    initCountries();
+    render();
+  </script>
+  <script src="kz.js" defer></script>
+</body>
+</html>

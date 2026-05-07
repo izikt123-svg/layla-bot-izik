@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>בדיקת מערכת · מרכז התפילה</title>
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="critical.css" />
+  <link rel="stylesheet" href="kz-status.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <a href="/home.html" class="brand-wrap">← הבית</a>
+  <span id="stOverall" class="st-overall">בודקת…</span>
+</header>
+
+<main class="st-shell">
+  <section class="st-hero">
+    <div class="st-icon">🩺</div>
+    <h1>בדיקת מערכת</h1>
+    <p>בודקת ש-22 הרכיבים של האתר עובדים תקין במכשיר ובשרת.</p>
+  </section>
+
+  <section class="card st-section">
+    <div class="mini-title"><span class="mini-ornament">📱</span><span>המכשיר שלך</span></div>
+    <div class="st-list" id="stClient"></div>
+  </section>
+
+  <section class="card st-section">
+    <div class="mini-title"><span class="mini-ornament">⚙</span><span>שירותים בשרת</span></div>
+    <div class="st-list" id="stServer"></div>
+    <button class="st-recheck" id="stRecheck">↻ בדקי שוב</button>
+  </section>
+
+  <section class="card st-section">
+    <div class="mini-title"><span class="mini-ornament">🤖</span><span>מירב AI</span></div>
+    <div class="st-list" id="stMeirav"></div>
+    <button class="st-test-meirav" id="stTestMeirav">💬 שלחי הודעת בדיקה למירב</button>
+  </section>
+
+  <section class="card st-section">
+    <div class="mini-title"><span class="mini-ornament">📊</span><span>הסטטיסטיקה האישית שלך</span></div>
+    <div class="st-stats" id="stStats"></div>
+  </section>
+</main>
+
+<script src="kz-status.js" defer></script>
+<script src="kz-ai-chat.js" defer></script>
+<link rel="stylesheet" href="kz-ai-chat.css">
+<script src="kz-honeypot.js" defer></script>
+<script src="kz-nav.js" defer></script>
+<link rel="stylesheet" href="kz-nav.css">
+<link rel="stylesheet" href="kz-polish.css">
+</body>
+</html>

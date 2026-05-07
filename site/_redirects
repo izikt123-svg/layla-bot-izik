@@ -1,0 +1,32 @@
+# Friendly URL aliases for legal pages
+/privacy        /privacy.html        301
+/terms          /terms.html          301
+/accessibility  /accessibility.html  301
+
+# Friendly aliases for "Kol Zchut Yehudi" hub and its spokes
+/unity          /unity.html          301
+/kol-zchut      /unity.html          301
+/life           /life-events.html    301
+/life-events    /life-events.html    301
+/customs        /customs.html        301
+/edot           /customs.html        301
+/blessings      /what-to-say.html    301
+/what-to-say    /what-to-say.html    301
+/find           /find-jewish.html    301
+/community      /find-jewish.html    301
+/kids           /kids.html           301
+/memorial       /memorial.html       301
+/yahrzeit       /memorial.html       301
+/ask            /ask-rabbi.html      301
+/ask-rabbi      /ask-rabbi.html      301
+/learn          /learning.html       301
+/learning       /learning.html       301
+/aliyah         /aliyah-traveler.html 301
+/traveler       /aliyah-traveler.html 301
+/chesed         /chesed.html         301
+/volunteer      /chesed.html         301
+/dictionary     /dictionary.html     301
+/101            /dictionary.html     301
+
+# Force HTTPS — Netlify already does this by default but explicit is safer.
+http://:host/*   https://:host/:splat   301!

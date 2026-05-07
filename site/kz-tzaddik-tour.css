@@ -1,0 +1,68 @@
+.kz-tour-card{
+  position: fixed;
+  bottom: 20px;
+  inset-inline: 16px;
+  margin-inline: auto;
+  max-width: 420px;
+  padding: 18px 20px 16px;
+  background: linear-gradient(160deg, #14315b, #0B1F3A);
+  border: 1px solid rgba(241,213,151,.5);
+  border-radius: 22px;
+  color: #f6e6c2;
+  z-index: 99998;
+  box-shadow: 0 22px 60px rgba(11,31,58,.6);
+  transform: translateY(40px);
+  opacity: 0;
+  transition: opacity .4s, transform .4s cubic-bezier(.2,.9,.3,1.2);
+}
+.kz-tour-card.is-in{ opacity: 1; transform: none; }
+
+.kz-tour-x{
+  position: absolute;
+  top: 10px; inset-inline-end: 10px;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(212,176,122,.3);
+  color: #d4b07a;
+  cursor: pointer;
+  font-size: 16px;
+}
+.kz-tour-icn{ font-size: 32px; text-align: center; margin-bottom: 4px; }
+.kz-tour-card h3{
+  text-align: center;
+  margin: 0 0 8px;
+  font-family: 'Frank Ruhl Libre', serif;
+  background: linear-gradient(135deg, #f1d597, #d4b07a);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.kz-tour-card p{
+  margin: 0 0 14px;
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: center;
+  font-family: 'Frank Ruhl Libre', serif;
+}
+.kz-tour-actions{
+  display: flex; gap: 8px;
+}
+.kz-tour-play, .kz-tour-pray{
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 13px;
+}
+.kz-tour-play{
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+  border: none;
+}
+.kz-tour-pray{
+  background: rgba(212,176,122,.15);
+  color: #d4b07a;
+  border: 1px solid rgba(212,176,122,.4);
+}

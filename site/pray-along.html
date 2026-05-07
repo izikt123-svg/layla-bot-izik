@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>תפילה משותפת · מרכז התפילה</title>
+  <meta name="description" content="חדר תפילה משותף — מתפללים יחד, גם כשאתם רחוקים. נוכחות חיה, סנכרון פרק, ושיחה קולית אופציונלית." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="critical.css" />
+  <link rel="stylesheet" href="kz-pray-along.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+</head>
+<body>
+
+<header class="topbar">
+  <a href="/" class="brand-wrap">← חזרה למרכז התפילה</a>
+</header>
+
+<main class="pa-shell">
+  <section class="pa-hero">
+    <h1>תפילה משותפת</h1>
+    <p>פתח/י חדר תפילה — או הצטרף/י לחדר קיים. מתפללים יחד, רואים את הנוכחות, ויכולים לדבר בקול.</p>
+  </section>
+
+  <section class="card pa-form" id="paJoin">
+    <div class="mini-title"><span class="mini-ornament">🔮</span><span>הצטרפות / פתיחת חדר</span></div>
+    <label>קוד חדר (שם משותף — למשל "לרפואת ישראל"):</label>
+    <input id="paRoomInput" placeholder="קוד חדר…" />
+    <label>שם תצוגה:</label>
+    <input id="paName" placeholder="איך לקרוא לך?" />
+    <div class="pa-actions">
+      <button id="paJoinBtn" class="pa-primary">הצטרף</button>
+      <button id="paMicBtn" class="pa-secondary">🎙 הפעל מיקרופון</button>
+    </div>
+    <small class="pa-hint">החדר חי כל עוד מישהו בתוכו. שתף את הקוד עם המשפחה כדי שיצטרפו.</small>
+  </section>
+
+  <section class="card pa-room" id="paRoomSection" hidden>
+    <div class="mini-title">
+      <span class="mini-ornament">🕯</span>
+      <span>חדר: <b id="paRoomName">—</b></span>
+      <span class="pa-pill"><i></i><span data-pa-count>0</span> מתפללים</span>
+    </div>
+
+    <div class="pa-presence" id="paPresence" aria-live="polite"></div>
+
+    <div class="pa-controls">
+      <button class="pa-secondary" id="paMute">🔇 השתק מיקרופון</button>
+      <button class="pa-secondary" id="paLeave">יציאה מהחדר</button>
+    </div>
+
+    <div class="pa-status" id="paStatus" hidden></div>
+  </section>
+</main>
+
+<script src="kz-pray-along.js" defer></script>
+<script src="kz-ai-chat.js" defer></script>
+<link rel="stylesheet" href="kz-ai-chat.css">
+<script src="kz-honeypot.js" defer></script>
+<script src="kz-nav.js" defer></script>
+<link rel="stylesheet" href="kz-nav.css">
+<link rel="stylesheet" href="kz-polish.css">
+</body>
+</html>

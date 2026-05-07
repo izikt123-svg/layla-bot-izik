@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>קיר בקשות התפילה · מרכז התפילה</title>
+  <meta name="description" content="קיר בקשות תפילה ציבורי — בקשי, התפללי, חזק/י את האחר. כל הזמן, מכל מקום." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="critical.css" />
+  <link rel="stylesheet" href="kz-prayer-wall.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <a href="/" class="brand-wrap">← מרכז התפילה</a>
+  <span class="pw-pill"><b id="pwTotalPrayers">0</b> תפילות היום</span>
+</header>
+
+<main class="pw-shell">
+  <section class="pw-hero">
+    <div class="pw-icon">🙏</div>
+    <h1>קיר בקשות התפילה</h1>
+    <p>תפילתך מצטרפת לאלפים שמתפללים זה על זה. זה לא רק אישי — זה רשת אור.</p>
+  </section>
+
+  <section class="card pw-form-card">
+    <div class="mini-title"><span class="mini-ornament">✦</span><span>בקשי תפילה</span></div>
+    <form class="pw-form" id="pwForm">
+      <div class="pw-cats">
+        <button type="button" class="pw-cat is-on" data-c="רפואה">🕯 רפואה</button>
+        <button type="button" class="pw-cat" data-c="פרנסה">💰 פרנסה</button>
+        <button type="button" class="pw-cat" data-c="זיווג">💍 זיווג</button>
+        <button type="button" class="pw-cat" data-c="ילדים">👶 ילדים</button>
+        <button type="button" class="pw-cat" data-c="שלום בית">🏡 שלום בית</button>
+        <button type="button" class="pw-cat" data-c="הצלחה">✨ הצלחה</button>
+        <button type="button" class="pw-cat" data-c="הודיה">🙏 הודיה</button>
+        <button type="button" class="pw-cat" data-c="כללי">✦ כללי</button>
+      </div>
+      <input id="pwForName" placeholder="לרפואת… / לשם… (השם שלך או של מי שמבקשים עליו)" required maxlength="120"/>
+      <textarea id="pwText" rows="3" placeholder="פירוט הבקשה (אופציונלי)" maxlength="400"></textarea>
+      <label class="pw-anon">
+        <input type="checkbox" id="pwAnon"/>
+        <span>פרסמי אנונימית</span>
+      </label>
+      <button type="submit" class="pw-go">פרסמי בקשה</button>
+    </form>
+  </section>
+
+  <section class="card pw-wall">
+    <div class="mini-title">
+      <span class="mini-ornament">🙏</span>
+      <span>בקשות תפילה פעילות</span>
+      <select id="pwFilter" class="pw-filter">
+        <option value="all">הכל</option>
+        <option value="רפואה">רפואה</option>
+        <option value="פרנסה">פרנסה</option>
+        <option value="זיווג">זיווג</option>
+        <option value="ילדים">ילדים</option>
+        <option value="שלום בית">שלום בית</option>
+        <option value="הצלחה">הצלחה</option>
+        <option value="הודיה">הודיה</option>
+      </select>
+    </div>
+    <div class="pw-grid" id="pwGrid"></div>
+  </section>
+</main>
+
+<script src="kz-prayer-wall.js" defer></script>
+<script src="kz-ai-chat.js" defer></script>
+<link rel="stylesheet" href="kz-ai-chat.css">
+<script src="kz-honeypot.js" defer></script>
+<script src="kz-nav.js" defer></script>
+<link rel="stylesheet" href="kz-nav.css">
+<link rel="stylesheet" href="kz-polish.css">
+</body>
+</html>

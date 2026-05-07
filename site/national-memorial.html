@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>הַזִּכָּרוֹן הַלְּאֻמִּי · מלחמות ישראל וקרבנות הטרור | הבית היהודי שלך בעולם</title>
+  <meta name="description" content="קיר הזיכרון הלאומי — נרות זיכרון לקרבנות השואה, מלחמות ישראל, נפגעי הטרור, וקרבנות 7 באוקטובר. הדלק נר, ספר סיפור, הנצח שם." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta property="og:title" content="הזיכרון הלאומי · הבית היהודי שלך בעולם" />
+  <meta property="og:description" content="נרות זיכרון לכל החללים והקרבנות · השואה · 1948 · 1967 · 1973 · לבנון · 7.10 · טרור" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="kz.css" />
+  <link rel="stylesheet" href="kz-elevate.css" />
+  <link rel="stylesheet" href="kz-alive.css" />
+  <link rel="stylesheet" href="kz-i18n.css" />
+  <link rel="stylesheet" href="kz-vocalized.css" />
+  <link rel="stylesheet" href="kz-supreme.css" />
+  <link rel="stylesheet" href="kz-nav-anim.css" />
+  <link rel="stylesheet" href="kz-ai-chat.css" />
+  <link rel="stylesheet" href="kz-prominent.css" />
+  <link rel="stylesheet" href="kz-google-auth.css" />
+  <link rel="stylesheet" href="kz-responsive.css" />
+  <link rel="stylesheet" href="national-memorial.css" />
+</head>
+<body class="nm-body">
+  <div class="page-grain" aria-hidden="true"></div>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <a class="brand-wrap" href="/index.html">
+      <div class="star" aria-hidden="true">
+        <svg viewBox="0 0 64 64" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round">
+          <polygon points="32,6 40,22 58,22 46,34 50,52 32,42 14,52 18,34 6,22 24,22" />
+        </svg>
+      </div>
+      <div class="brand">
+        <span class="brand-main kz-vocalized">הַבַּיִת הַיְּהוּדִי שֶׁלְּךָ בָּעוֹלָם</span>
+        <span class="brand-sub">הזיכרון הלאומי</span>
+      </div>
+    </a>
+    <nav class="nav" aria-label="ניווט ראשי">
+      <a href="/index.html">בית</a>
+      <a href="/family-room.html">חדר המשפחה</a>
+      <a href="/find-jewish.html">מפת היהדות</a>
+      <a href="memorial.html">ספר נשמות</a>
+      <a href="ask-rabbi.html">שאל רב</a>
+    </nav>
+    <div class="top-actions">
+      <a href="/index.html#create" class="user-btn" style="text-decoration:none">
+        <span class="user-avatar">✦</span>
+        <span class="user-label">בקש תפילה</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="nm-main">
+
+    <!-- Sacred header -->
+    <section class="nm-hero">
+      <div class="nm-hero-glow" aria-hidden="true"></div>
+      <div class="nm-hero-flame" aria-hidden="true"><span></span></div>
+      <span class="nm-tag">לְזֵכֶר נִצְחִי · קיר הזיכרון הלאומי</span>
+      <h1 class="nm-title">
+        <span class="kz-vocalized">הַזִּכָּרוֹן הַלְּאֻמִּי</span>
+      </h1>
+      <p class="nm-lead">
+        כאן זוכרים את כל הנשמות שלא חזרו — קדושי השואה, חללי מלחמות ישראל, קרבנות הטרור,
+        ונופלי השביעי באוקטובר. הדלק נר. ספר סיפור. הנצח שם. כי הם תמיד איתנו.
+      </p>
+      <div class="nm-hero-stats">
+        <div><strong id="nmTotalCandles">0</strong><span>נרות זיכרון</span></div>
+        <div><strong id="nmTotalStories">0</strong><span>סיפורים</span></div>
+        <div><strong id="nmTotalNames">0</strong><span>שמות הונצחו</span></div>
+      </div>
+    </section>
+
+    <!-- War tabs navigation -->
+    <nav class="nm-tabs" aria-label="בחר מלחמה">
+      <button class="nm-tab is-active" data-war="all">הכל</button>
+      <button class="nm-tab" data-war="shoah">השואה</button>
+      <button class="nm-tab" data-war="1948">תש"ח</button>
+      <button class="nm-tab" data-war="1967">ששת הימים</button>
+      <button class="nm-tab" data-war="1973">יום כיפור</button>
+      <button class="nm-tab" data-war="lebanon">לבנון</button>
+      <button class="nm-tab" data-war="oct7">7 באוקטובר</button>
+      <button class="nm-tab" data-war="terror">קרבנות טרור</button>
+    </nav>
+
+    <!-- Wars list -->
+    <div class="nm-wars" id="nmWars"></div>
+
+  </main>
+
+  <!-- Modals -->
+  <div class="nm-modal" id="nmCandleModal" hidden>
+    <div class="nm-modal-back" data-close></div>
+    <div class="nm-modal-card">
+      <button class="nm-modal-close" data-close>✕</button>
+      <span class="nm-tag-mini">נר זיכרון</span>
+      <h2 id="nmCandleTitle">הדלק נר</h2>
+      <label>שם הנפטר/ת</label>
+      <input id="nmCandName" type="text" placeholder="לדוגמה: רס"ל יואב בן רחל ז"ל"/>
+      <label>קרבה / רקע (אופציונלי)</label>
+      <input id="nmCandRelation" type="text" placeholder="אבא · אח · חבר · קרוב משפחה"/>
+      <label>הקדשה (אופציונלי)</label>
+      <input id="nmCandNote" type="text" placeholder="לעילוי נשמה · יזכור · אהבה נצחית"/>
+      <button class="nm-btn-primary" id="nmCandConfirm">🕯 הדלק נר</button>
+    </div>
+  </div>
+
+  <div class="nm-modal" id="nmStoryModal" hidden>
+    <div class="nm-modal-back" data-close></div>
+    <div class="nm-modal-card nm-modal-wide">
+      <button class="nm-modal-close" data-close>✕</button>
+      <span class="nm-tag-mini">סיפור הנצחה</span>
+      <h2 id="nmStoryTitle">ספר את הסיפור</h2>
+      <p>שתף זיכרון, סיפור משפחתי, מילים אישיות. לא חייב להיות ארוך — כל מילה זיכרון.</p>
+      <label>שם של מי שמדובר עליו</label>
+      <input id="nmStoryName" type="text" placeholder="לדוגמה: סבא יוסף ע"ה"/>
+      <label>שמך</label>
+      <input id="nmStoryBy" type="text" placeholder="שמך / קרבה"/>
+      <label>הסיפור</label>
+      <textarea id="nmStoryText" rows="6" placeholder="ספר עליו, על מה שעשה, על מה שזכור לך..."></textarea>
+      <button class="nm-btn-primary" id="nmStoryConfirm">📖 הוסף לזיכרון</button>
+    </div>
+  </div>
+
+  <footer class="footer" style="margin-top:80px;">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <div class="star" aria-hidden="true">✡</div>
+        <div>
+          <div class="brand-main">הבית היהודי שלך בעולם</div>
+          <div class="brand-sub">לזכר נצחי · יהי זכרם ברוך</div>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="/index.html">בית</a>
+        <a href="/family-room.html">חדר משפחה</a>
+        <a href="/find-jewish.html">מפת יהדות</a>
+        <a href="memorial.html">ספר נשמות</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© הבית היהודי שלך בעולם · יזכור</div>
+      <div>"כִּי לְעוֹלָם חַסְדּוֹ"</div>
+    </div>
+  </footer>
+
+  <script src="kz-elevate.js" defer></script>
+  <script src="kz-alive.js" defer></script>
+  <script src="kz-i18n.js" defer></script>
+  <script src="kz-supreme.js" defer></script>
+  <script src="kz-ai-chat.js" defer></script>
+  <script src="kz-prominent.js" defer></script>
+  <script src="kz-google-auth.js" defer></script>
+  <script src="national-memorial.js" defer></script>
+
+  <!-- מירב — Pill prominent (replaces old bot) -->
+  <button id="kzMiravInlineFab" type="button" aria-label="פתח שיחה עם מירב"
+          style="position:fixed;bottom:22px;inset-inline-end:22px;display:inline-flex;align-items:center;gap:10px;padding:10px 18px 10px 12px;border-radius:100px;background:linear-gradient(135deg,#0B1F3A,#1A2D4D);border:2px solid #B8935A;color:#f1d597;cursor:pointer;z-index:9000;box-shadow:0 14px 30px rgba(11,31,58,.4);font-family:'Frank Ruhl Libre',serif;font-weight:700;animation:kzMiravBeacon 2.6s ease-in-out infinite;"
+          onclick="event.preventDefault();if(window.KZ_AI_CHAT)window.KZ_AI_CHAT.toggle();else if(window.kzMiravToggle)window.kzMiravToggle();">
+    <span style="display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#D4B07A,#B8935A);color:#0B1F3A;font-weight:900;font-size:20px;box-shadow:0 0 0 2px rgba(241,213,151,.5);position:relative;flex-shrink:0;pointer-events:none;">מ<span style="position:absolute;bottom:0;inset-inline-end:0;width:11px;height:11px;border-radius:50%;background:#4ade80;border:2px solid #0B1F3A;"></span></span>
+    <span style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.2;pointer-events:none;"><span style="font-size:14px;color:#f1d597;">מירב</span><span style="font-size:10px;color:rgba(255,255,255,.65);font-family:Heebo,sans-serif;">חברה · איתך תמיד</span></span>
+  </button>
+  <style>@keyframes kzMiravBeacon{0%,100%{box-shadow:0 14px 30px rgba(11,31,58,.4),0 0 0 0 rgba(241,213,151,.5)}50%{box-shadow:0 14px 30px rgba(11,31,58,.4),0 0 0 12px rgba(241,213,151,0)}}@media(max-width:600px){#kzMiravInlineFab>span:last-of-type span:last-child{display:none!important}}</style>
+</body>
+</html>

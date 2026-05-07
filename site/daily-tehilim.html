@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>תהילים יומי · מרכז התפילה</title>
+  <meta name="description" content="פרק תהילים יומי — לפי החלוקה החודשית. עם הקראה קולית וספירת קוראים בעולם." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="critical.css" />
+  <link rel="stylesheet" href="kz-tehilim.css" />
+  <link rel="stylesheet" href="kz-image.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <a href="/" class="brand-wrap">← מרכז התפילה</a>
+  <span class="th-pill"><b id="thReaders">0</b> קוראים היום</span>
+</header>
+
+<main class="th-shell">
+  <div class="kz-hero-illust" data-kz-hero="shofar">
+    <div class="kz-hero-content">
+      <h1>📿 תהילים יומי</h1>
+      <p>חלוקת ספר תהלים לפי 30 ימים — היום: <b id="thDate">—</b></p>
+    </div>
+  </div>
+  <section class="th-hero">
+    <div class="th-day-strip" id="thDayStrip" aria-label="תאריך עברי"></div>
+  </section>
+
+  <section class="card th-controls">
+    <div class="th-control-row">
+      <button class="th-prev" id="thPrev" aria-label="הקודם">‹</button>
+      <div class="th-current">
+        <small>פרקים להיום</small>
+        <b id="thChapters">—</b>
+      </div>
+      <button class="th-next" id="thNext" aria-label="הבא">›</button>
+    </div>
+    <div class="th-actions">
+      <button id="thRead" class="th-action-primary">📖 קראתי</button>
+      <button id="thListen" class="th-action">🎙 הקראה (בקרוב)</button>
+      <a id="thShare" href="#" class="th-action">↗ שיתוף</a>
+    </div>
+  </section>
+
+  <article class="card th-text" id="thText">
+    <div class="th-loading">📖 טוען טקסט…</div>
+  </article>
+
+  <section class="card th-stats" id="thStats">
+    <div class="mini-title"><span class="mini-ornament">✦</span><span>סטטיסטיקה</span></div>
+    <div class="th-stat-grid">
+      <div><b id="thMyStreak">0</b><span>ימים ברצף שלך</span></div>
+      <div><b id="thTodayCount">0</b><span>קוראים היום</span></div>
+      <div><b id="thAllTime">0</b><span>פרקים שנקראו השבוע</span></div>
+    </div>
+  </section>
+</main>
+
+<script src="data/jewish-illustrations.js" defer></script>
+<script src="kz-image.js" defer></script>
+<script src="kz-tehilim.js" defer></script>
+<script src="kz-ai-chat.js" defer></script>
+<link rel="stylesheet" href="kz-ai-chat.css">
+<script src="kz-honeypot.js" defer></script>
+<script src="kz-nav.js" defer></script>
+<link rel="stylesheet" href="kz-nav.css">
+<link rel="stylesheet" href="kz-polish.css">
+</body>
+</html>

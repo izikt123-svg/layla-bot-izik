@@ -1,0 +1,845 @@
+/* ============================================================
+   KZ ALIVE — Living, breathing, time-aware experience layer
+   Loads after kz-elevate.css. Maximum "alive" feeling.
+   ============================================================ */
+
+/* ─────────────────────────────────────────────────────────────
+   1. TIME-OF-DAY ADAPTIVE PALETTE
+   Set on <html data-tod="dawn|morning|noon|afternoon|evening|night">
+   ───────────────────────────────────────────────────────────── */
+html[data-tod="dawn"]      { --tod-tint: rgba(255,182,143,.10); --tod-accent: #ff9d76; --tod-name: "שחר"; }
+html[data-tod="morning"]   { --tod-tint: rgba(255,228,170,.12); --tod-accent: #f1d597; --tod-name: "בוקר"; }
+html[data-tod="noon"]      { --tod-tint: rgba(255,250,235,.14); --tod-accent: #ffd66e; --tod-name: "צהריים"; }
+html[data-tod="afternoon"] { --tod-tint: rgba(255,210,140,.12); --tod-accent: #e8b366; --tod-name: "אחה״צ"; }
+html[data-tod="evening"]   { --tod-tint: rgba(255,150,120,.14); --tod-accent: #d4926e; --tod-name: "ערב"; }
+html[data-tod="night"]     { --tod-tint: rgba(120,140,200,.14); --tod-accent: #8da4d4; --tod-name: "לילה"; }
+
+body{
+  background:
+    radial-gradient(1200px 600px at 85% -10%, var(--tod-tint, rgba(212,176,122,.18)), transparent 60%),
+    radial-gradient(900px 500px at -5% 10%, rgba(255,245,218,.6), transparent 55%),
+    linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 45%, var(--bg-2) 100%) !important;
+  transition: background 4s ease;
+}
+
+/* Time-of-day badge in topbar */
+.kz-tod-badge{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: linear-gradient(135deg, var(--tod-accent, var(--gold-2)), var(--gold-deep));
+  color: #fff;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  box-shadow: 0 4px 10px rgba(184,147,90,.25);
+  margin-inline-end: 8px;
+  animation: tod-glow 4s ease-in-out infinite;
+}
+@keyframes tod-glow{
+  0%,100% { box-shadow: 0 4px 10px rgba(184,147,90,.2); }
+  50%     { box-shadow: 0 4px 18px var(--tod-accent, rgba(184,147,90,.4)); }
+}
+.kz-tod-icon{
+  width: 14px; height: 14px;
+  display: inline-block;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff, var(--tod-accent, #f1d597));
+}
+
+/* ─────────────────────────────────────────────────────────────
+   2. FLOATING HEBREW LETTERS (gold dust)
+   ───────────────────────────────────────────────────────────── */
+.kz-letter-field{
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+.kz-letter{
+  position: absolute;
+  bottom: -40px;
+  font-family: var(--serif);
+  font-size: var(--ls, 22px);
+  color: var(--gold-2, #D4B07A);
+  opacity: 0;
+  text-shadow: 0 0 16px rgba(212,176,122,.5);
+  animation: letter-float var(--ld, 18s) linear var(--lDelay, 0s) infinite;
+  font-weight: 700;
+  user-select: none;
+  filter: blur(.4px);
+  will-change: transform, opacity;
+}
+@keyframes letter-float{
+  0%   { transform: translate(0, 0)         rotate(0deg); opacity: 0; }
+  10%  {                                                 opacity: var(--lOpacity, .35); }
+  50%  { transform: translate(var(--ldx, 30px), -50vh)  rotate(8deg); }
+  90%  {                                                 opacity: var(--lOpacity, .35); }
+  100% { transform: translate(calc(var(--ldx, 30px) * 1.4), -110vh) rotate(-6deg); opacity: 0; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   3. ANIMATED CANDLE FLAME (CSS only)
+   Apply by adding .kz-flame-alive
+   ───────────────────────────────────────────────────────────── */
+.small-candle, .cta-mini-candle, .candle{
+  position: relative;
+  width: 18px;
+  height: 28px;
+  display: inline-block;
+}
+.small-flame, .cta-mini-flame{
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 18px;
+  background: radial-gradient(ellipse at center bottom, #ffe5a8 0%, #ffb84d 40%, #ff7a18 70%, transparent 100%);
+  border-radius: 50% 50% 35% 35% / 60% 60% 35% 35%;
+  box-shadow: 0 0 16px rgba(255,180,80,.7), 0 0 32px rgba(255,140,60,.4);
+  animation: flame-flicker 1.6s ease-in-out infinite, flame-sway 3.4s ease-in-out infinite;
+  transform-origin: 50% 100%;
+  filter: blur(.3px);
+}
+.small-flame::after, .cta-mini-flame::after{
+  content: "";
+  position: absolute;
+  top: 30%; left: 50%;
+  transform: translateX(-50%);
+  width: 4px; height: 8px;
+  background: radial-gradient(ellipse, #fffaf0 0%, #ffd66e 70%, transparent 100%);
+  border-radius: 50%;
+  filter: blur(.5px);
+}
+@keyframes flame-flicker{
+  0%, 100% { transform: translateX(-50%) scaleY(1)    scaleX(1); }
+  20%      { transform: translateX(-50%) scaleY(1.08) scaleX(.94); }
+  40%      { transform: translateX(-50%) scaleY(.95)  scaleX(1.05); }
+  60%      { transform: translateX(-50%) scaleY(1.04) scaleX(.97); }
+  80%      { transform: translateX(-50%) scaleY(.98)  scaleX(1.02); }
+}
+@keyframes flame-sway{
+  0%, 100% { transform: translateX(-50%) rotate(-2deg); }
+  50%      { transform: translateX(-50%) rotate(3deg);  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   4. HOMEPAGE WORLD MAP TEASER
+   ───────────────────────────────────────────────────────────── */
+.kz-world-section{
+  position: relative;
+  margin: clamp(40px, 5vw + 20px, 80px) auto;
+  max-width: var(--container-max, min(1480px, 92vw));
+  padding: 0 clamp(20px, 2vw + 10px, 40px);
+}
+.kz-world-head{
+  text-align: center;
+  margin-bottom: var(--sp-5, 28px);
+}
+.kz-world-eyebrow{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(212,176,122,.12);
+  color: var(--gold-deep);
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  border: 1px solid rgba(212,176,122,.3);
+  margin-bottom: 14px;
+}
+.kz-world-eyebrow::before{
+  content: ""; width: 6px; height: 6px; border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 8px #4ade80;
+  animation: ping-soft 2s infinite;
+}
+.kz-world-h2{
+  font-family: var(--serif);
+  font-size: var(--fz-2xl, 40px);
+  margin: 0 0 10px;
+  line-height: 1.1;
+}
+.kz-world-h2 span{
+  background: linear-gradient(120deg, var(--gold-deep), var(--gold), var(--gold-2), var(--gold-deep));
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gold-shift 8s ease-in-out infinite;
+}
+.kz-world-lead{
+  font-size: var(--fz-md, 18px);
+  color: var(--muted);
+  max-width: 720px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.kz-world-grid{
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: clamp(16px, 2vw + 6px, 28px);
+  align-items: stretch;
+  margin-top: 28px;
+}
+@media (max-width: 1000px){
+  .kz-world-grid{ grid-template-columns: 1fr; }
+}
+
+.kz-world-map{
+  position: relative;
+  border-radius: clamp(20px, 2vw + 12px, 28px);
+  overflow: hidden;
+  height: clamp(320px, 50vw, 480px);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-lg, 0 36px 80px rgba(11,31,58,.14));
+  background: #0d1f3a;
+}
+#kzWorldMiniMap{ width:100%; height:100%; }
+
+.kz-world-map-overlay{
+  position: absolute;
+  bottom: 14px;
+  inset-inline-start: 14px;
+  z-index: 500;
+  background: linear-gradient(135deg, rgba(11,31,58,.92), rgba(26,45,77,.85));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #fff;
+  padding: 14px 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(212,176,122,.25);
+  font-size: 13px;
+  max-width: 280px;
+}
+.kz-world-map-overlay strong{ color: #f1d597; font-size: 16px; }
+.kz-world-map-overlay-cta{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 8px 14px;
+  background: linear-gradient(135deg, var(--gold-2), var(--gold));
+  color: #fff;
+  border-radius: 100px;
+  font-weight: 600;
+  font-size: 13px;
+  text-decoration: none;
+  transition: transform .25s, box-shadow .25s;
+}
+.kz-world-map-overlay-cta:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(184,147,90,.4);
+  color: #fff;
+}
+
+.kz-world-stats{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.kz-world-stat{
+  position: relative;
+  padding: 18px;
+  background: var(--cream);
+  border: 1px solid var(--border-strong);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform .35s var(--ease-spring), box-shadow .3s;
+}
+.kz-world-stat:hover{
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card-hover);
+}
+.kz-world-stat-icon{
+  font-size: 24px;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+.kz-world-stat-num{
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 4px;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(180deg, var(--ink), var(--ink-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.kz-world-stat-label{
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.3;
+}
+.kz-world-stat::after{
+  content: "";
+  position: absolute;
+  inset-inline-end: -20px;
+  bottom: -20px;
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: var(--cat-color, var(--gold-soft));
+  opacity: .12;
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   5. CMD+K SEARCH OVERLAY
+   ───────────────────────────────────────────────────────────── */
+.kz-cmdk-overlay{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 12vh;
+  background: radial-gradient(ellipse at 50% 30%, rgba(11,31,58,.55), rgba(11,31,58,.85));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: cmdk-fade-in .25s var(--ease-out-quart);
+}
+.kz-cmdk-overlay.is-open{ display: flex; }
+@keyframes cmdk-fade-in{
+  from { opacity: 0; backdrop-filter: blur(0); }
+  to   { opacity: 1; }
+}
+
+.kz-cmdk-panel{
+  width: min(640px, 92vw);
+  max-height: 70vh;
+  background: var(--cream);
+  border-radius: 18px;
+  box-shadow: 0 60px 120px rgba(11,31,58,.4);
+  border: 1px solid var(--border-strong);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: cmdk-spring .4s var(--ease-spring);
+}
+@keyframes cmdk-spring{
+  from { opacity: 0; transform: translateY(-12px) scale(.96); }
+  to   { opacity: 1; transform: translateY(0)     scale(1);   }
+}
+
+.kz-cmdk-input-wrap{
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+}
+.kz-cmdk-input{
+  flex: 1;
+  border: none;
+  outline: none;
+  font-family: var(--sans);
+  font-size: 17px;
+  background: transparent;
+  color: var(--ink);
+}
+.kz-cmdk-shortcut{
+  font-family: var(--sans);
+  font-size: 11px;
+  background: var(--bg-3);
+  color: var(--muted);
+  padding: 2px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border-strong);
+}
+.kz-cmdk-results{
+  flex: 1;
+  overflow-y: auto;
+  padding: 6px;
+}
+.kz-cmdk-group{
+  font-size: 11px;
+  letter-spacing: .08em;
+  color: var(--muted);
+  text-transform: uppercase;
+  padding: 12px 14px 4px;
+  font-weight: 600;
+}
+.kz-cmdk-item{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background .15s, transform .15s;
+  text-decoration: none;
+  color: inherit;
+}
+.kz-cmdk-item:hover,
+.kz-cmdk-item.kz-active{
+  background: linear-gradient(90deg, rgba(212,176,122,.18), rgba(212,176,122,.04));
+  transform: translateX(-3px);
+}
+.kz-cmdk-item-icon{
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cat-color, var(--gold-soft));
+  color: var(--ink);
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.kz-cmdk-item-body{ flex: 1; min-width: 0; }
+.kz-cmdk-item-title{
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+  margin-bottom: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.kz-cmdk-item-sub{
+  font-size: 12px;
+  color: var(--muted);
+}
+.kz-cmdk-item-arrow{
+  color: var(--muted);
+  flex-shrink: 0;
+  font-size: 12px;
+}
+.kz-cmdk-empty{
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--muted);
+}
+.kz-cmdk-empty-ico{ font-size: 32px; opacity: .4; margin-bottom: 10px; }
+.kz-cmdk-footer{
+  padding: 10px 14px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-2);
+  font-size: 11px;
+  color: var(--muted);
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.kz-cmdk-key{
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.kz-cmdk-key kbd{
+  background: var(--white);
+  border: 1px solid var(--border-strong);
+  border-radius: 5px;
+  padding: 1px 6px;
+  font-family: ui-monospace, 'SF Mono', monospace;
+  font-size: 10px;
+  color: var(--ink);
+}
+
+.kz-cmdk-trigger{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--white);
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--muted);
+  cursor: pointer;
+  min-width: 220px;
+  transition: border-color .25s, box-shadow .25s;
+}
+.kz-cmdk-trigger:hover{
+  border-color: var(--gold);
+  box-shadow: 0 4px 12px rgba(184,147,90,.15);
+}
+.kz-cmdk-trigger svg{ color: var(--muted); flex-shrink: 0; }
+.kz-cmdk-trigger-text{ flex: 1; text-align: start; }
+
+/* ─────────────────────────────────────────────────────────────
+   6. CONFETTI / LIGHT BURST
+   ───────────────────────────────────────────────────────────── */
+.kz-burst{
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  overflow: hidden;
+}
+.kz-burst-particle{
+  position: absolute;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff8e0, #f1d597 60%, transparent);
+  box-shadow: 0 0 12px #f1d597, 0 0 24px rgba(241,213,151,.5);
+  animation: burst-fly var(--bd, 1.4s) cubic-bezier(.22,.61,.36,1) forwards;
+}
+@keyframes burst-fly{
+  0%   { opacity: 0; transform: translate(0, 0) scale(.6); }
+  10%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--bdx, 100px), var(--bdy, -200px)) scale(.2); }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   7. COMPASS — alive arrow
+   ───────────────────────────────────────────────────────────── */
+.compass{ transition: transform .8s var(--ease-out-quart); }
+.compass .arrow{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 45%;
+  background: linear-gradient(to top, transparent, var(--gold-2), var(--gold-deep));
+  transform-origin: 50% 100%;
+  transform: translate(-50%, -100%) rotate(var(--cAngle, 0deg));
+  border-radius: 4px 4px 0 0;
+  transition: transform .6s var(--ease-out-quart);
+  box-shadow: 0 0 8px rgba(184,147,90,.4);
+}
+.compass .arrow::after{
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 10px solid var(--gold-deep);
+}
+.compass-info{
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: var(--gold-deep);
+  background: rgba(212,176,122,.15);
+  padding: 2px 8px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   8. PWA INSTALL BANNER
+   ───────────────────────────────────────────────────────────── */
+.kz-install-banner{
+  position: fixed;
+  bottom: 16px;
+  inset-inline: 16px;
+  z-index: 8000;
+  background: linear-gradient(135deg, rgba(11,31,58,.96), rgba(26,45,77,.94));
+  color: #fff;
+  padding: 14px 18px;
+  border-radius: 16px;
+  display: none;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 16px 40px rgba(11,31,58,.4);
+  border: 1px solid rgba(212,176,122,.3);
+  animation: install-rise .5s var(--ease-spring);
+  max-width: 480px;
+  margin-inline: auto;
+}
+.kz-install-banner.is-visible{ display: flex; }
+@keyframes install-rise{
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.kz-install-icon{
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--gold-2), var(--gold));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.kz-install-text{ flex: 1; line-height: 1.3; }
+.kz-install-text strong{ display:block; font-family: var(--serif); margin-bottom: 2px; }
+.kz-install-text small{ display:block; font-size: 12px; color: rgba(255,255,255,.7); }
+.kz-install-actions{ display: flex; gap: 6px; flex-shrink: 0; }
+.kz-install-btn{
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: transform .2s;
+}
+.kz-install-btn:hover{ transform: translateY(-1px); }
+.kz-install-btn.primary{
+  background: linear-gradient(135deg, var(--gold-2), var(--gold));
+  color: #fff;
+}
+.kz-install-btn.ghost{
+  background: transparent;
+  color: rgba(255,255,255,.6);
+  border: 1px solid rgba(255,255,255,.2);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   9. MAGEN DAVID — floating 3D in hero
+   ───────────────────────────────────────────────────────────── */
+.kz-floating-star{
+  position: absolute;
+  top: 8%;
+  inset-inline-end: 6%;
+  width: clamp(80px, 8vw, 140px);
+  height: clamp(80px, 8vw, 140px);
+  z-index: 1;
+  pointer-events: none;
+  filter: drop-shadow(0 12px 24px rgba(184,147,90,.4));
+  animation: star-spin 22s linear infinite;
+  transform-style: preserve-3d;
+  opacity: .55;
+}
+.kz-floating-star svg{
+  width: 100%; height: 100%;
+  transform: rotateY(var(--starY, 0deg)) rotateX(var(--starX, 0deg));
+  transition: transform .25s ease-out;
+}
+@keyframes star-spin{
+  from { transform: rotate(0deg);   }
+  to   { transform: rotate(360deg); }
+}
+@media (max-width: 720px){ .kz-floating-star{ display: none; } }
+
+/* ─────────────────────────────────────────────────────────────
+   10. FAMILY ROOM CTA SECTION
+   ───────────────────────────────────────────────────────────── */
+.kz-family-cta{
+  position: relative;
+  margin: clamp(40px, 5vw + 20px, 80px) auto;
+  max-width: var(--container-max, min(1480px, 92vw));
+  padding: clamp(20px, 2vw + 10px, 40px);
+  background:
+    radial-gradient(ellipse 60% 80% at 0% 50%, rgba(212,176,122,.18), transparent 60%),
+    radial-gradient(ellipse 50% 60% at 100% 0%, rgba(255,228,170,.16), transparent 60%),
+    linear-gradient(135deg, var(--cream), var(--bg-2));
+  border: 1px solid var(--border-strong);
+  border-radius: clamp(20px, 2vw + 14px, 32px);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg, 0 36px 80px rgba(11,31,58,.14));
+}
+.kz-family-cta::before{
+  content: "";
+  position: absolute;
+  inset-inline-end: -120px;
+  bottom: -120px;
+  width: 360px; height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212,176,122,.18), transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
+}
+.kz-family-cta-inner{
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: clamp(24px, 3vw + 10px, 50px);
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 900px){
+  .kz-family-cta-inner{ grid-template-columns: 1fr; }
+}
+
+.kz-family-cta-lead{
+  font-size: var(--fz-md, 18px);
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 540px;
+  margin: 14px 0 0;
+}
+.kz-family-cta-feats{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 18px;
+}
+@media (max-width: 600px){ .kz-family-cta-feats{ grid-template-columns: 1fr; } }
+.kz-family-cta-feats > div{
+  padding: 10px 14px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 13px;
+  color: var(--ink-2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.kz-family-cta-feats span{ font-size: 18px; }
+
+/* Decorative art panel */
+.kz-family-cta-art{
+  position: relative;
+  height: clamp(260px, 28vw, 380px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.kz-family-cta-flame{
+  position: relative;
+  width: 100px;
+  height: 140px;
+  z-index: 2;
+}
+.kz-family-cta-flame::before{
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 80px;
+  background: linear-gradient(180deg, #fdf6e3, #d4a574);
+  border-radius: 4px 4px 6px 6px;
+  box-shadow: inset -4px 0 8px rgba(0,0,0,.1);
+}
+.kz-family-flame-inner{
+  position: absolute;
+  bottom: 75px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 38px;
+  background: radial-gradient(ellipse at center bottom, #fffaeb 0%, #ffd66e 30%, #ff7a18 70%, transparent 100%);
+  border-radius: 50% 50% 35% 35%;
+  box-shadow: 0 0 32px rgba(255,180,80,.7), 0 0 64px rgba(255,140,60,.5);
+  animation: flame-flicker 1.6s ease-in-out infinite, flame-sway 3.4s ease-in-out infinite;
+  transform-origin: 50% 100%;
+}
+.kz-family-cta-orbit{
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  animation: orbit-spin 28s linear infinite;
+}
+.kz-family-cta-orbit span{
+  position: absolute;
+  width: 44px; height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--white), var(--cream));
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  font-size: 20px;
+  box-shadow: 0 8px 18px rgba(184,147,90,.2);
+  transform: rotate(var(--a, 0deg)) translateY(-130px) rotate(calc(var(--a, 0deg) * -1));
+  animation: orbit-bob 3s ease-in-out infinite;
+}
+@keyframes orbit-spin{
+  from { transform: rotate(0deg);   }
+  to   { transform: rotate(360deg); }
+}
+@keyframes orbit-bob{
+  0%, 100% { box-shadow: 0 8px 18px rgba(184,147,90,.2); }
+  50%      { box-shadow: 0 12px 28px rgba(184,147,90,.4); }
+}
+@media (prefers-reduced-motion: reduce){
+  .kz-family-cta-orbit, .kz-family-cta-orbit span{ animation: none; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   11. WHATSAPP SHARE BUTTON
+   ───────────────────────────────────────────────────────────── */
+.btn-whatsapp{
+  display: inline-flex !important;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px !important;
+  background: linear-gradient(135deg, #25D366, #128C7E) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-family: var(--sans) !important;
+  font-weight: 600;
+  font-size: 12px !important;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform .25s var(--ease-spring), box-shadow .25s !important;
+  box-shadow: 0 3px 8px rgba(18,140,126,.25);
+}
+.btn-whatsapp:hover{
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 18px rgba(37,211,102,.45) !important;
+  color: #fff !important;
+}
+.btn-whatsapp:active{ transform: translateY(0) !important; }
+.btn-whatsapp svg{ flex-shrink: 0; }
+
+/* ─────────────────────────────────────────────────────────────
+   12. HERO POLISH — extra cinematic touches
+   ───────────────────────────────────────────────────────────── */
+.hero h1 {
+  text-shadow: 0 2px 0 rgba(255,255,255,.4);
+}
+.hero-rays{
+  position: absolute;
+  inset: -20%;
+  background:
+    conic-gradient(from 90deg at 50% 60%, transparent 0deg, rgba(255,228,170,.08) 30deg, transparent 60deg, rgba(255,228,170,.06) 90deg, transparent 120deg, rgba(255,228,170,.08) 150deg, transparent 180deg, rgba(255,228,170,.06) 210deg, transparent 240deg, rgba(255,228,170,.08) 270deg, transparent 300deg, rgba(255,228,170,.06) 330deg, transparent 360deg);
+  filter: blur(40px);
+  opacity: .6;
+  animation: hero-rays-spin 60s linear infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+@keyframes hero-rays-spin{
+  to { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce){
+  .hero-rays{ animation: none; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   13. SECTION CONNECTOR — visual flow between sections
+   ───────────────────────────────────────────────────────────── */
+.kz-section-divider{
+  position: relative;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.kz-section-divider::before,
+.kz-section-divider::after{
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+}
+.kz-section-divider-orn{
+  margin: 0 16px;
+  color: var(--gold);
+  font-size: 18px;
+  animation: orn-pulse 3s ease-in-out infinite;
+}
+@keyframes orn-pulse{
+  0%, 100% { transform: rotate(0deg)  scale(1);   opacity: .6; }
+  50%      { transform: rotate(15deg) scale(1.2); opacity: 1; }
+}

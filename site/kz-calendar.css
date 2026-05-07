@@ -1,0 +1,100 @@
+.kz-cal-card{
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 18px;
+  background: linear-gradient(160deg, rgba(15,33,66,.96), rgba(20,49,91,.92));
+  border: 1px solid rgba(212,176,122,.35);
+  box-shadow: 0 14px 40px rgba(11,31,58,.4);
+  color: #f6e6c2;
+}
+.kz-cal-card .mini-title{
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 700; margin-bottom: 14px;
+}
+.kz-cal-city{
+  margin-inline-start: auto;
+  background: rgba(212,176,122,.12);
+  border: 1px solid rgba(212,176,122,.3);
+  color: #d4b07a;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.kz-cal-city:hover{ background: rgba(212,176,122,.22); }
+
+.kz-cal-today{ text-align: center; margin-bottom: 14px; }
+.kz-cal-heb{
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: 26px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #f1d597, #d4b07a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.kz-cal-greg{ font-size: 13px; opacity: .7; margin-top: 2px; }
+
+.kz-cal-rows{ display: grid; gap: 6px; }
+.kz-cal-row{
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(212,176,122,.18);
+  border-radius: 10px;
+  font-size: 13px;
+}
+.kz-cal-icn{ font-size: 16px; text-align: center; }
+.kz-cal-label{ opacity: .7; }
+.kz-cal-row b{ color: #f1d597; font-weight: 700; }
+
+/* Picker overlay */
+.kz-cal-picker{
+  position: fixed; inset: 0;
+  background: rgba(11,31,58,.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 99998;
+  display: grid; place-items: center;
+  padding: 20px;
+}
+.kz-cal-picker-card{
+  background: linear-gradient(160deg, #14315b, #0B1F3A);
+  border: 1px solid rgba(212,176,122,.4);
+  border-radius: 20px;
+  padding: 22px;
+  width: min(420px, 100%);
+  color: #f6e6c2;
+}
+.kz-cal-picker-card h4{ margin: 0 0 14px; text-align: center; }
+.kz-cal-picker-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.kz-cal-picker-grid button{
+  padding: 10px 12px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(212,176,122,.25);
+  border-radius: 10px;
+  color: #f6e6c2;
+  font-size: 13px;
+  cursor: pointer;
+}
+.kz-cal-picker-grid button:hover{
+  background: rgba(212,176,122,.18);
+}
+.kz-cal-picker-close{
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}

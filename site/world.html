@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>הבית היהודי בעולם · מפה חיה · מרכז התפילה</title>
+  <meta name="description" content="היכנסו לכל יבשת — בחרו מדינה — וראו בתי חב\"ד וקהילות יהודיות עם כתובת, טלפון, וניווט Waze. מפה חיה גלובלית של היהדות." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="critical.css" />
+  <link rel="stylesheet" href="kz-world.css" />
+  <link rel="stylesheet" href="kz-image.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+</head>
+<body>
+
+<header class="topbar">
+  <a href="/" class="brand-wrap">← מרכז התפילה</a>
+  <span class="kz-world-pill" id="kzWorldStat">—</span>
+</header>
+
+<main class="kz-world-shell">
+  <div class="kz-hero-illust" data-kz-illustration="synagogue"></div>
+
+  <section class="kz-world-hero">
+    <h1>הבית היהודי בעולם</h1>
+    <p>בחר/י יבשת → מדינה → קהילה. כתובת, טלפון, ניווט בלחיצה.</p>
+    <div class="kz-world-search">
+      <input id="kzWorldSearch" type="search" placeholder="🔎 חפש עיר / מדינה / שם בית חב״ד…" />
+    </div>
+  </section>
+
+  <div class="kz-world-grid">
+    <aside class="kz-world-side">
+      <div class="kz-world-continents" id="kzContinents"></div>
+
+      <div class="kz-world-filters" id="kzFilters">
+        <button class="kz-fil is-on" data-cat="all">🌍 הכל</button>
+        <button class="kz-fil" data-cat="chabad">🕎 חב״ד</button>
+        <button class="kz-fil" data-cat="synagogue">✡ ביכ״נ</button>
+        <button class="kz-fil" data-cat="kosher">🍽 כשר</button>
+        <button class="kz-fil" data-cat="mikveh">💧 מקוואות</button>
+        <button class="kz-fil" data-cat="tomb">🕯 קברים</button>
+        <button class="kz-fil" data-cat="jcc">🏛 קהילות</button>
+        <button class="kz-fil" data-cat="embassy">🇮🇱 שגרירויות</button>
+        <label class="kz-fil-verified">
+          <input type="checkbox" id="kzVerifiedOnly"/> ✓ רק מאומת
+        </label>
+      </div>
+
+      <div class="kz-world-countries" id="kzCountries"></div>
+      <div class="kz-world-places" id="kzPlaces"></div>
+    </aside>
+
+    <section class="kz-world-map-wrap">
+      <div class="kz-world-map" id="kzMap"></div>
+    </section>
+  </div>
+</main>
+
+<script src="data/jewish-illustrations.js" defer></script>
+<script src="kz-image.js" defer></script>
+<script src="data/jewish-places.js" defer></script>
+<script src="data/world-index.js" defer></script>
+<script src="data/chabad-verified.js" defer></script>
+<script src="data/jcc-verified.js" defer></script>
+<script src="data/embassies-verified.js" defer></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
+<script src="kz-world-browser.js" defer></script>
+<script src="kz-ai-chat.js" defer></script>
+<link rel="stylesheet" href="kz-ai-chat.css">
+<script src="kz-honeypot.js" defer></script>
+<script src="kz-nav.js" defer></script>
+<link rel="stylesheet" href="kz-nav.css">
+<link rel="stylesheet" href="kz-polish.css">
+</body>
+</html>

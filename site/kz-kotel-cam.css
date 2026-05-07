@@ -1,0 +1,83 @@
+.kz-kotel-card{
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 18px;
+  background: linear-gradient(160deg, rgba(15,33,66,.96), rgba(20,49,91,.92));
+  border: 1px solid rgba(212,176,122,.35);
+  box-shadow: 0 12px 32px rgba(11,31,58,.35);
+  color: #f6e6c2;
+  position: relative;
+  overflow: hidden;
+}
+
+.kz-kotel-card .mini-title{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.kz-kotel-live{
+  margin-inline-start: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #ff5b5b, #b91c1c);
+  color: #fff;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+.kz-kotel-live::before{
+  content:'';
+  width:6px;height:6px;border-radius:50%;
+  background:#fff;
+  animation: kzLiveDot 1.2s ease-in-out infinite;
+}
+@keyframes kzLiveDot{
+  0%,100%{ opacity:1; transform:scale(1); }
+  50%    { opacity:.45; transform:scale(.7); }
+}
+
+.kz-kotel-shell{
+  position: relative;
+  padding-top: 56.25%; /* 16:9 */
+  border-radius: 14px;
+  overflow: hidden;
+  background: #000;
+}
+.kz-kotel-frame{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+.kz-kotel-empty{
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #d4b07a;
+  font-size: 13px;
+  opacity: .8;
+}
+
+.kz-kotel-foot{
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+.kz-kotel-share{
+  font-size: 12px;
+  color: #d4b07a;
+  text-decoration: none;
+  padding: 6px 12px;
+  border: 1px solid rgba(212,176,122,.35);
+  border-radius: 999px;
+}
+.kz-kotel-share:hover{ background: rgba(212,176,122,.12); }

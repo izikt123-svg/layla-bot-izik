@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>מפת נרות שבת חיה · מרכז התפילה</title>
+  <meta name="description" content="מפה חיה של נרות שבת שדולקים ברגע זה ברחבי העולם." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="critical.css" />
+  <link rel="stylesheet" href="kz-candles-map.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+</head>
+<body>
+<header class="topbar">
+  <a href="/shabbat-candles.html" class="brand-wrap">← קיר נרות שבת</a>
+  <span class="cm-pill"><b id="cmCount">0</b> נרות דולקים</span>
+</header>
+<main class="cm-shell">
+  <div class="cm-map" id="cmMap"></div>
+  <div class="cm-legend">
+    <span><i style="background:#f1d597"></i> נר שבת חי</span>
+    <span><i style="background:#ff8b8b"></i> תפילה אהובה (Top)</span>
+  </div>
+</main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
+<script src="kz-candles-map.js" defer></script>
+<script src="kz-nav.js" defer></script>
+<link rel="stylesheet" href="kz-nav.css">
+<link rel="stylesheet" href="kz-polish.css">
+</body>
+</html>

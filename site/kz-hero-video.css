@@ -1,0 +1,99 @@
+/* ============================================================
+   KZ HERO VIDEO — Cinematic 360° banner
+   Replaces kz-hero-slider styling.
+   ============================================================ */
+
+.kz-hero-video{
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  z-index: 1;
+  background: #0B1F3A;
+  overflow: hidden;
+}
+
+.kz-hv-shell{
+  position: relative;
+  width: 100%;
+  height: clamp(380px, 56vh, 620px);
+  overflow: hidden;
+}
+
+@media (max-width: 720px){
+  .kz-hv-shell{ height: clamp(260px, 44vh, 420px); }
+}
+
+@media (display-mode: standalone){
+  .kz-hero-video{ padding-top: env(safe-area-inset-top); }
+}
+
+.kz-hv-frame,
+.kz-hv-video{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  object-fit: cover;
+}
+
+/* Soft gold/blue vignette so the topbar/text on top of the video stays readable */
+.kz-hv-vignette{
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at top, rgba(11,31,58,0) 0%, rgba(11,31,58,.35) 60%, rgba(11,31,58,.6) 100%),
+    linear-gradient(180deg, rgba(11,31,58,.25) 0%, rgba(11,31,58,0) 30%, rgba(11,31,58,0) 70%, rgba(11,31,58,.55) 100%);
+  z-index: 2;
+}
+
+.kz-hv-caption{
+  position: absolute;
+  bottom: clamp(14px, 2.5vh, 28px);
+  inset-inline-start: clamp(16px, 3vw, 36px);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: rgba(11,31,58,.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(212,176,122,.35);
+  border-radius: 999px;
+  color: #f6e6c2;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 3;
+  pointer-events: none;
+  max-width: calc(100% - 32px);
+}
+
+.kz-hv-pill{
+  display: inline-block;
+  padding: 2px 8px;
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+  font-weight: 700;
+  border-radius: 999px;
+  font-size: 12px;
+  letter-spacing: .04em;
+}
+
+.kz-hv-title{ font-weight: 600; }
+.kz-hv-hint{ opacity: .75; font-size: 12px; }
+
+@media (max-width: 540px){
+  .kz-hv-hint{ display: none; }
+  .kz-hv-caption{ font-size: 13px; gap: 8px; padding: 6px 10px; }
+}
+
+/* Empty / fallback gradient (no video configured) */
+.kz-hv-empty .kz-hv-shell{
+  background:
+    radial-gradient(circle at 30% 20%, rgba(241,213,151,.18), transparent 55%),
+    radial-gradient(circle at 80% 80%, rgba(212,176,122,.15), transparent 55%),
+    linear-gradient(180deg, #0B1F3A, #14315b);
+}

@@ -1,0 +1,117 @@
+.sm-shell{ max-width: min(960px, 96vw); margin: 0 auto 40px; padding: 0 12px; display: grid; gap: 14px; }
+.sm-pill{
+  margin-inline-start: auto;
+  padding: 4px 14px;
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A; font-weight: 700; border-radius: 999px; font-size: 13px;
+}
+.sm-pill b{ font-size: 16px; }
+
+.sm-hero{ text-align: center; padding: 28px 12px 8px; }
+.sm-hero-icon{ font-size: 40px; filter: drop-shadow(0 0 16px rgba(241,213,151,.5)); }
+.sm-hero h1{
+  font-family: 'Frank Ruhl Libre', serif; font-size: clamp(28px, 5vw, 44px); margin: 6px 0;
+  background: linear-gradient(135deg, #f1d597, #d4b07a);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.sm-hero p{ opacity: .8; max-width: 56ch; margin: 0 auto; }
+
+.sm-form-card{ padding: 14px; }
+.sm-form-card .mini-title{ display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-weight: 700; }
+.sm-form{ display: grid; gap: 10px; }
+.sm-types{
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.sm-type{
+  padding: 8px 14px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(212,176,122,.3);
+  border-radius: 999px;
+  color: #d4b07a;
+  font-size: 13px; font-weight: 600;
+  cursor: pointer;
+}
+.sm-type:hover{ background: rgba(212,176,122,.12); }
+.sm-type.is-on{
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+  border-color: transparent;
+}
+.sm-form input, .sm-form textarea{
+  padding: 12px 14px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(212,176,122,.3);
+  color: #f6e6c2; border-radius: 10px;
+  font-family: inherit; font-size: 14px; outline: none;
+}
+.sm-go{
+  padding: 14px;
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A; font-weight: 800; font-size: 15px;
+  border: none; border-radius: 12px; cursor: pointer;
+}
+
+.sm-success{ text-align: center; padding: 24px; }
+.sm-suc-icn{ font-size: 48px; }
+.sm-success b{ display: block; margin: 8px 0 4px; color: #f1d597; font-size: 18px; }
+.sm-success p{ opacity: .8; margin: 0 0 14px; }
+.sm-success button{
+  padding: 10px 18px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(212,176,122,.4);
+  color: #d4b07a; border-radius: 999px; cursor: pointer;
+}
+
+.sm-wall{ padding: 14px; }
+.sm-wall .mini-title{ display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-weight: 700; }
+.sm-grid{
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px;
+}
+.sm-grid:empty::after{
+  content: 'אין שמחות פתוחות כרגע. היי הראשונה לחגוג איתנו 🎉';
+  display: block; grid-column: 1/-1; text-align: center;
+  padding: 30px 12px; opacity: .55; font-size: 13px;
+}
+.sm-card{
+  padding: 14px;
+  background: linear-gradient(160deg, rgba(241,213,151,.1), rgba(212,176,122,.05));
+  border: 1px solid rgba(241,213,151,.3);
+  border-radius: 14px;
+  text-align: center;
+}
+.sm-card-icn{ font-size: 32px; margin-bottom: 4px; }
+.sm-card-type{
+  display: inline-block;
+  padding: 2px 10px;
+  background: rgba(212,176,122,.18);
+  color: #d4b07a;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.sm-card-name{ font-weight: 700; color: #f1d597; font-size: 16px; }
+.sm-card-meta{ font-size: 11px; opacity: .7; margin: 4px 0 8px; }
+.sm-card-msg{
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: 13px; line-height: 1.5;
+  padding: 10px;
+  background: rgba(11,31,58,.45);
+  border: 1px solid rgba(212,176,122,.2);
+  border-radius: 10px;
+}
+.sm-card-bless{
+  margin-top: 10px;
+  padding: 8px 14px;
+  background: linear-gradient(135deg, rgba(74,222,128,.18), rgba(22,163,74,.1));
+  border: 1px solid rgba(74,222,128,.4);
+  color: #4ade80;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.sm-card-bless:hover{ background: rgba(74,222,128,.28); }

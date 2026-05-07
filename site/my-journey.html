@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>המסע שלי · מרכז התפילה</title>
+  <meta name="description" content="הדשבורד האישי שלך — סטריקים, תפילות, נרות שהדלקת, יארצייטים, וכל המסע הרוחני." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="critical.css" />
+  <link rel="stylesheet" href="kz-journey.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <a href="/home.html" class="brand-wrap">← הבית</a>
+  <button class="jr-name-btn" id="jrNameBtn">✏️ עריכת שם</button>
+</header>
+
+<main class="jr-shell">
+  <section class="jr-hero">
+    <div class="jr-icon">👤</div>
+    <h1 id="jrTitle">המסע שלי</h1>
+    <p id="jrSubtitle">המסע הרוחני האישי שלך — בלעדית עליך, נשמר במכשיר.</p>
+  </section>
+
+  <section class="jr-streaks-card card">
+    <div class="mini-title"><span class="mini-ornament">🔥</span><span>הסטריקים שלי</span></div>
+    <div class="jr-streaks-grid" id="jrStreaks"></div>
+  </section>
+
+  <section class="jr-stats card">
+    <div class="mini-title"><span class="mini-ornament">📊</span><span>הסטטיסטיקה שלי</span></div>
+    <div class="jr-stats-grid" id="jrStats"></div>
+  </section>
+
+  <section class="card jr-section">
+    <div class="mini-title"><span class="mini-ornament">🙏</span><span>אנשים שאני מתפללת עליהם</span></div>
+    <div class="jr-list" id="jrPrayed"></div>
+  </section>
+
+  <section class="card jr-section">
+    <div class="mini-title"><span class="mini-ornament">🕯</span><span>הנרות שלי</span></div>
+    <div class="jr-list" id="jrCandles"></div>
+  </section>
+
+  <section class="card jr-section">
+    <div class="mini-title"><span class="mini-ornament">📚</span><span>הסיפורים שקראתי</span></div>
+    <div class="jr-list" id="jrStories"></div>
+  </section>
+
+  <section class="card jr-actions">
+    <button class="jr-btn jr-btn-secondary" id="jrExport">⬇ ייצוא הנתונים שלי</button>
+    <button class="jr-btn jr-btn-danger" id="jrReset">🗑 אפסי את המסע</button>
+  </section>
+</main>
+
+<script src="data/kids-stories.js" defer></script>
+<script src="kz-journey.js" defer></script>
+<script src="kz-ai-chat.js" defer></script>
+<link rel="stylesheet" href="kz-ai-chat.css">
+<script src="kz-honeypot.js" defer></script>
+<script src="kz-nav.js" defer></script>
+<link rel="stylesheet" href="kz-nav.css">
+<link rel="stylesheet" href="kz-polish.css">
+</body>
+</html>

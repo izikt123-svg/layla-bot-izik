@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>בתי כנסת בישראל · אשכנזי · ספרדי · חב״ד · תימני · חסידי | מרכז התפילה</title>
+  <meta name="description" content="מאגר בתי כנסת בכל ישראל לפי עיר ולפי עדה — אשכנזי, ספרדי, חב״ד, תימני, חסידי. כל בית כנסת עם כתובת מדויקת, ניווט ב-Google Maps וב-Waze בלחיצה אחת." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta property="og:title" content="בתי כנסת בישראל · מרכז התפילה" />
+  <meta property="og:description" content="כל בתי הכנסת בישראל לפי עדה ולפי עיר — עם ניווט בלחיצה אחת." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-grain" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand-wrap" href="/index.html">
+      <div class="star" aria-hidden="true">
+        <svg viewBox="0 0 64 64" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round">
+          <polygon points="32,6 40,22 58,22 46,34 50,52 32,42 14,52 18,34 6,22 24,22" />
+        </svg>
+      </div>
+      <div class="brand">
+        <span class="brand-main">מרכז התפילה</span>
+        <span class="brand-sub">בתי כנסת בישראל</span>
+      </div>
+    </a>
+    <nav class="nav">
+      <a href="/index.html">בית</a>
+      <a href="find-jewish.html">קהילה בעולם</a>
+      <a href="unity.html">כל זכות יהודי</a>
+      <a href="ask-rabbi.html">שאל רב</a>
+    </nav>
+    <div class="top-actions">
+      <a href="/index.html#create" class="user-btn" style="text-decoration:none">
+        <span class="user-avatar">✦</span>
+        <span class="user-label">בקש תפילה</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="syn-shell">
+    <section class="syn-hero">
+      <span class="syn-hero-tag">בתי כנסת בישראל · לפי עדה ולפי עיר</span>
+      <h1>כל בתי הכנסת <span>בארץ הקודש</span></h1>
+      <p class="syn-hero-lead">
+        מאגר חי ומתעדכן של בתי כנסת בישראל — מסודר לפי עיר ולפי עדה: אשכנזי, ספרדי, חב״ד, תימני, חסידי ומעורב.
+        לכל בית כנסת מצורפת כתובת מדויקת ושני כפתורי ניווט מהירים — Google Maps ו-Waze — כך שגם תייר וגם ותיק שעבר עיר ימצאו מניין בלחיצה אחת.
+      </p>
+
+      <div class="syn-cat-tabs" role="tablist" aria-label="סינון לפי עדה">
+        <button type="button" class="syn-cat-tab active" data-cat="all" role="tab" aria-selected="true">הכל</button>
+        <button type="button" class="syn-cat-tab" data-cat="אשכנזי" role="tab">אשכנזי</button>
+        <button type="button" class="syn-cat-tab" data-cat="ספרדי" role="tab">ספרדי</button>
+        <button type="button" class="syn-cat-tab" data-cat="חב״ד" role="tab">חב״ד</button>
+        <button type="button" class="syn-cat-tab" data-cat="תימני" role="tab">תימני</button>
+        <button type="button" class="syn-cat-tab" data-cat="חסידי" role="tab">חסידי</button>
+        <button type="button" class="syn-cat-tab" data-cat="מעורב" role="tab">מעורב</button>
+      </div>
+
+      <div class="syn-search-row">
+        <input type="search" id="synSearch" placeholder="חפש לפי שם בית כנסת, רחוב או עיר…" aria-label="חיפוש בית כנסת" />
+      </div>
+    </section>
+
+    <section class="syn-cities" id="synCities" aria-live="polite"></section>
+
+    <section class="kz-block" style="max-width:780px;margin:32px auto 0;padding:0 16px;">
+      <span class="kz-tag">יודע על בית כנסת חסר?</span>
+      <h2 style="font-family:'Frank Ruhl Libre',serif;color:var(--ink)">הוסף אותו למפה</h2>
+      <p style="color:var(--muted);line-height:1.7">
+        המאגר הזה תוספתי ומתחיל בעשרות בתי כנסת מוכרים — בכוונה תחילה לא נפגעו דפי הקהילה הקיימים.
+        אם אתה מכיר בית כנסת שחסר — לחץ על
+        <a href="find-jewish.html#suggest" style="color:var(--gold-deep);font-weight:700">טופס ההוספה</a>
+        בעמוד "איתור קהילה" וכתוב לנו. נוסיף אותו לפי עדה ולפי עיר.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <div class="star" aria-hidden="true">✡</div>
+        <div>
+          <div class="brand-main">מרכז התפילה</div>
+          <div class="brand-sub">בית יהודי בכל פינה בעולם</div>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="/index.html">דף הבית</a>
+        <a href="find-jewish.html">קהילה בעולם</a>
+        <a href="unity.html">כל זכות יהודי</a>
+        <a href="ask-rabbi.html">שאל רב</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© מרכז התפילה · כל הזכויות שמורות</div>
+      <div>נוצר בשקט, באמונה.</div>
+    </div>
+  </footer>
+
+  <script>
+    // ----- Synagogue directory dataset (curated, well-known places). -----
+    // Categories: אשכנזי · ספרדי · חב״ד · תימני · חסידי · מעורב
+    var SYN_DATA = [
+      // ---------- ירושלים ----------
+      { city: "ירושלים", name: "בית הכנסת הגדול", cat: "אשכנזי",  addr: "רחוב המלך ג'ורג' 56, ירושלים" },
+      { city: "ירושלים", name: "ישורון",          cat: "אשכנזי",  addr: "רחוב המלך ג'ורג' 44, ירושלים" },
+      { city: "ירושלים", name: "היכל שלמה",       cat: "מעורב",   addr: "רחוב המלך ג'ורג' 58, ירושלים" },
+      { city: "ירושלים", name: "החורבה",          cat: "אשכנזי",  addr: "כיכר החורבה, הרובע היהודי, ירושלים" },
+      { city: "ירושלים", name: "בית הכנסת הרמב\"ן", cat: "ספרדי",  addr: "רחוב הרמב\"ן, הרובע היהודי, ירושלים" },
+      { city: "ירושלים", name: "תפארת ישראל",     cat: "אשכנזי",  addr: "רחוב תפארת ישראל, הרובע היהודי, ירושלים" },
+      { city: "ירושלים", name: "הכותל המערבי",     cat: "מעורב",   addr: "כיכר הכותל המערבי, העיר העתיקה, ירושלים" },
+      { city: "ירושלים", name: "ישיבת מיר",        cat: "אשכנזי",  addr: "רחוב בית ישראל 1, מאה שערים, ירושלים" },
+      { city: "ירושלים", name: "זכרון משה",        cat: "חסידי",   addr: "רחוב זכרון משה, מאה שערים, ירושלים" },
+      { city: "ירושלים", name: "מוסיוף (פרסי)",    cat: "ספרדי",   addr: "רחוב יואל סלומון, ירושלים" },
+      { city: "ירושלים", name: "חזון עובדיה",      cat: "ספרדי",   addr: "רחוב הקבלן, הר נוף, ירושלים" },
+      { city: "ירושלים", name: "חב\"ד מאה שערים",   cat: "חב״ד",    addr: "רחוב מאה שערים, ירושלים" },
+      { city: "ירושלים", name: "חב\"ד רוממה",       cat: "חב״ד",    addr: "רחוב יחזקאל 28, רוממה, ירושלים" },
+      { city: "ירושלים", name: "בית כנסת הר נוף הגדול", cat: "אשכנזי", addr: "רחוב אגסי, הר נוף, ירושלים" },
+      { city: "ירושלים", name: "מערת רבי יהודה החסיד", cat: "אשכנזי", addr: "הרובע היהודי, ירושלים" },
+      { city: "ירושלים", name: "בית כנסת זוהרי חמה", cat: "חסידי",  addr: "רחוב מאה שערים, ירושלים" },
+
+      // ---------- תל אביב ----------
+      { city: "תל אביב", name: "בית הכנסת הגדול", cat: "אשכנזי", addr: "רחוב אלנבי 110, תל אביב" },
+      { city: "תל אביב", name: "אוהל מועד",       cat: "ספרדי",   addr: "שדרות מאיר 5, תל אביב" },
+      { city: "תל אביב", name: "היכל יהודה",      cat: "ספרדי",   addr: "רחוב בן יהודה, תל אביב" },
+      { city: "תל אביב", name: "בית כנסת קרליבך", cat: "אשכנזי",  addr: "רחוב פרישמן 28, תל אביב" },
+      { city: "תל אביב", name: "בית כנסת התימנים אהבה ושלום", cat: "תימני", addr: "כרם התימנים, תל אביב" },
+      { city: "תל אביב", name: "חב\"ד תל אביב מרכז", cat: "חב״ד", addr: "רחוב לסקוב, תל אביב" },
+      { city: "תל אביב", name: "בית כנסת ישורון", cat: "אשכנזי",  addr: "רחוב יהודה הלוי, תל אביב" },
+
+      // ---------- בני ברק ----------
+      { city: "בני ברק", name: "בית כנסת ויז'ניץ הגדול", cat: "חסידי", addr: "רחוב ויז'ניץ 1, בני ברק" },
+      { city: "בני ברק", name: "בית אהרן (קרלין)",   cat: "חסידי", addr: "רחוב חזון איש, בני ברק" },
+      { city: "בני ברק", name: "ישיבת פוניבז'",       cat: "אשכנזי", addr: "רחוב פוניבז' 19, בני ברק" },
+      { city: "בני ברק", name: "בית כנסת חזון איש",   cat: "אשכנזי", addr: "רחוב רבי עקיבא, בני ברק" },
+      { city: "בני ברק", name: "שערי אורה (תימני)",   cat: "תימני",  addr: "רחוב הרב כהנמן, בני ברק" },
+      { city: "בני ברק", name: "חב\"ד בני ברק",        cat: "חב״ד",   addr: "רחוב מהרש\"ל, בני ברק" },
+      { city: "בני ברק", name: "בית כנסת קהילת בני יוסף", cat: "תימני", addr: "רחוב חזון איש, בני ברק" },
+
+      // ---------- חיפה ----------
+      { city: "חיפה", name: "בית הכנסת הגדול חיפה", cat: "אשכנזי", addr: "רחוב הרצל 130, חיפה" },
+      { city: "חיפה", name: "מורשת ישראל",            cat: "מעורב",  addr: "רחוב הנדיב, הדר, חיפה" },
+      { city: "חיפה", name: "חב\"ד חיפה",              cat: "חב״ד",   addr: "רחוב יל\"ג 9, חיפה" },
+      { city: "חיפה", name: "בית כנסת אהל יעקב",       cat: "ספרדי",  addr: "רחוב מסדה 12, חיפה" },
+      { city: "חיפה", name: "בית כנסת קהילת יהדות בבל",cat: "ספרדי",  addr: "רחוב בלפור, חיפה" },
+
+      // ---------- באר שבע ----------
+      { city: "באר שבע", name: "בית הכנסת הגדול",   cat: "ספרדי",  addr: "רחוב מצדה, באר שבע" },
+      { city: "באר שבע", name: "בית הכנסת המרכזי הגדול", cat: "אשכנזי", addr: "רחוב הפלמ\"ח 24, באר שבע" },
+      { city: "באר שבע", name: "חב\"ד באר שבע",       cat: "חב״ד",   addr: "רחוב מבצע יואב, באר שבע" },
+      { city: "באר שבע", name: "בית כנסת תימני שבזי", cat: "תימני",  addr: "שכונה ד', באר שבע" },
+
+      // ---------- צפת ----------
+      { city: "צפת", name: "בית הכנסת האר\"י הספרדי", cat: "ספרדי",  addr: "רחוב האר\"י, העיר העתיקה, צפת" },
+      { city: "צפת", name: "בית הכנסת האר\"י האשכנזי", cat: "אשכנזי", addr: "רחוב נג'ארה, העיר העתיקה, צפת" },
+      { city: "צפת", name: "בית הכנסת אבוהב",          cat: "ספרדי",  addr: "רחוב אבוהב, העיר העתיקה, צפת" },
+      { city: "צפת", name: "בית כנסת רבי יוסף קארו",   cat: "ספרדי",  addr: "רחוב בית יוסף, העיר העתיקה, צפת" },
+      { city: "צפת", name: "בית הכנסת בית אל",          cat: "ספרדי",  addr: "רחוב הקבלן, העיר העתיקה, צפת" },
+      { city: "צפת", name: "חב\"ד צפת",                 cat: "חב״ד",   addr: "רחוב ירושלים, צפת" },
+
+      // ---------- טבריה ----------
+      { city: "טבריה", name: "בית הכנסת אבוחצירא",   cat: "ספרדי",  addr: "רחוב הגליל, טבריה" },
+      { city: "טבריה", name: "חב\"ד טבריה",            cat: "חב״ד",   addr: "רחוב הגליל, טבריה" },
+      { city: "טבריה", name: "בית כנסת רבי מאיר בעל הנס", cat: "מעורב", addr: "קבר רבי מאיר בעל הנס, טבריה" },
+
+      // ---------- אשדוד ----------
+      { city: "אשדוד", name: "בית הכנסת הגדול",      cat: "ספרדי",  addr: "רובע ב', אשדוד" },
+      { city: "אשדוד", name: "היכל נסים",             cat: "ספרדי",  addr: "רחוב נורדאו, אשדוד" },
+      { city: "אשדוד", name: "חב\"ד אשדוד",            cat: "חב״ד",   addr: "רחוב מנחם בגין, אשדוד" },
+      { city: "אשדוד", name: "בית כנסת הרב סבג",      cat: "ספרדי",  addr: "רובע ז', אשדוד" },
+      { city: "אשדוד", name: "בית כנסת אשכנזי הגדול",  cat: "אשכנזי", addr: "רובע ג', אשדוד" },
+
+      // ---------- אשקלון ----------
+      { city: "אשקלון", name: "אוהל מועד אשקלון",  cat: "ספרדי",  addr: "רחוב צה\"ל, אשקלון" },
+      { city: "אשקלון", name: "חב\"ד אשקלון",       cat: "חב״ד",   addr: "רחוב הרצל, אשקלון" },
+      { city: "אשקלון", name: "בית כנסת המרכזי",    cat: "אשכנזי", addr: "רחוב בן גוריון, אשקלון" },
+
+      // ---------- נתניה ----------
+      { city: "נתניה", name: "בית הכנסת הגדול",      cat: "אשכנזי", addr: "רחוב הרצל, נתניה" },
+      { city: "נתניה", name: "חב\"ד נתניה",            cat: "חב״ד",   addr: "רחוב סטמפר, נתניה" },
+      { city: "נתניה", name: "בית כנסת קהילת צרפת",   cat: "ספרדי",  addr: "רחוב דיזנגוף, נתניה" },
+
+      // ---------- ראשון לציון ----------
+      { city: "ראשון לציון", name: "בית הכנסת הגדול הישן", cat: "ספרדי", addr: "רחוב רוטשילד 13, ראשון לציון" },
+      { city: "ראשון לציון", name: "חב\"ד ראשון לציון",    cat: "חב״ד",  addr: "רחוב הרצל, ראשון לציון" },
+      { city: "ראשון לציון", name: "בית כנסת אשכנזי המרכזי", cat: "אשכנזי", addr: "רחוב ז'בוטינסקי, ראשון לציון" },
+
+      // ---------- פתח תקווה ----------
+      { city: "פתח תקווה", name: "בית הכנסת הגדול",   cat: "אשכנזי", addr: "רחוב הברון הירש, פתח תקווה" },
+      { city: "פתח תקווה", name: "חב\"ד פתח תקווה",   cat: "חב״ד",   addr: "רחוב חיים עוזר, פתח תקווה" },
+      { city: "פתח תקווה", name: "בית כנסת תימני שבזי", cat: "תימני", addr: "שכונת התקווה, פתח תקווה" },
+
+      // ---------- בית שמש ----------
+      { city: "בית שמש", name: "בית כנסת בית יוסף",  cat: "ספרדי",  addr: "רחוב נחל לוז, בית שמש" },
+      { city: "בית שמש", name: "חב\"ד בית שמש",       cat: "חב״ד",   addr: "רחוב נחל שורק, בית שמש" },
+      { city: "בית שמש", name: "בית כנסת רמת בית שמש", cat: "אשכנזי", addr: "רמת בית שמש א', בית שמש" },
+
+      // ---------- רחובות ----------
+      { city: "רחובות", name: "בית הכנסת המרכזי",   cat: "אשכנזי", addr: "רחוב הרצל, רחובות" },
+      { city: "רחובות", name: "חב\"ד רחובות",        cat: "חב״ד",   addr: "רחוב בני משה, רחובות" },
+      { city: "רחובות", name: "בית כנסת תימני",      cat: "תימני",  addr: "שכונת שעריים, רחובות" },
+
+      // ---------- חולון, רמת גן, גבעתיים ----------
+      { city: "רמת גן", name: "בית כנסת המרכזי",  cat: "אשכנזי", addr: "רחוב ז'בוטינסקי, רמת גן" },
+      { city: "רמת גן", name: "חב\"ד רמת גן",      cat: "חב״ד",   addr: "רחוב ביאליק, רמת גן" },
+      { city: "חולון",  name: "בית הכנסת הגדול",   cat: "ספרדי",  addr: "רחוב סוקולוב, חולון" },
+      { city: "חולון",  name: "חב\"ד חולון",        cat: "חב״ד",   addr: "רחוב פנחס לבון, חולון" },
+      { city: "גבעתיים", name: "בית כנסת מקור חיים", cat: "אשכנזי", addr: "רחוב כצנלסון, גבעתיים" },
+
+      // ---------- מירון, יבנאל, נתיבות, אילת ----------
+      { city: "מירון",   name: "בית כנסת רשב\"י",  cat: "מעורב",  addr: "ציון רבי שמעון בר יוחאי, מירון" },
+      { city: "יבנאל",   name: "בית כנסת אבוחצירא", cat: "ספרדי", addr: "רחוב הגליל, יבנאל" },
+      { city: "נתיבות",  name: "בית כנסת הבבא סאלי", cat: "ספרדי", addr: "רחוב מימון, נתיבות" },
+      { city: "אילת",    name: "חב\"ד אילת",         cat: "חב״ד",  addr: "רחוב התמרים, אילת" },
+      { city: "אילת",    name: "בית כנסת הגדול אילת", cat: "ספרדי", addr: "רחוב התמרים 11, אילת" },
+
+      // ---------- מודיעין, ירוחם, דימונה, רעננה, הרצליה ----------
+      { city: "מודיעין",  name: "בית כנסת המרכזי",  cat: "מעורב",  addr: "רחוב יצחק רבין, מודיעין" },
+      { city: "מודיעין",  name: "חב\"ד מודיעין",     cat: "חב״ד",   addr: "רחוב עמק האלה, מודיעין" },
+      { city: "רעננה",    name: "בית כנסת אוהל אברהם", cat: "אשכנזי", addr: "רחוב אחוזה, רעננה" },
+      { city: "רעננה",    name: "חב\"ד רעננה",         cat: "חב״ד",   addr: "רחוב הרצל, רעננה" },
+      { city: "הרצליה",   name: "בית הכנסת המרכזי",   cat: "אשכנזי", addr: "רחוב סוקולוב, הרצליה" },
+      { city: "הרצליה",   name: "חב\"ד הרצליה",        cat: "חב״ד",   addr: "רחוב בן גוריון, הרצליה" },
+      { city: "דימונה",   name: "בית כנסת רבי דוד בוזגלו", cat: "ספרדי", addr: "שכונת ממשית, דימונה" }
+    ];
+
+    function escHtml(s){
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+        return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+      });
+    }
+
+    function mapBtns(query){
+      var q = encodeURIComponent(String(query || '').trim());
+      if (!q) return '';
+      var gmaps = 'https://www.google.com/maps/search/?api=1&query=' + q;
+      var waze  = 'https://www.waze.com/ul?q=' + q + '&navigate=yes';
+      return (
+        '<div class="map-actions">' +
+          '<a class="map-btn map-btn-gmaps" target="_blank" rel="noopener" href="' + gmaps + '" aria-label="פתח ב-Google Maps">' +
+            '<span class="map-btn-ico map-ico-svg" aria-hidden="true">' +
+              '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">' +
+                '<path d="M12 2C7.6 2 4 5.5 4 9.8c0 5.6 7.1 11.6 7.4 11.9.3.3.9.3 1.2 0 .3-.2 7.4-6.3 7.4-11.9C20 5.5 16.4 2 12 2z" fill="#EA4335"/>' +
+                '<circle cx="12" cy="9.8" r="3.4" fill="#fff"/>' +
+                '<path d="M12 7.4c1.3 0 2.4 1.1 2.4 2.4S13.3 12.2 12 12.2 9.6 11.1 9.6 9.8 10.7 7.4 12 7.4z" fill="#4285F4"/>' +
+                '<path d="M14.4 9.8a2.4 2.4 0 0 1-4.8 0" fill="#34A853"/>' +
+                '<path d="M9.6 9.8a2.4 2.4 0 0 1 4.5-1.2" fill="#FBBC04"/>' +
+              '</svg>' +
+            '</span>' +
+            'Google Maps' +
+          '</a>' +
+          '<a class="map-btn map-btn-waze" target="_blank" rel="noopener" href="' + waze + '" aria-label="פתח ב-Waze">' +
+            '<span class="map-btn-ico map-ico-svg" aria-hidden="true">' +
+              '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">' +
+                '<path d="M12 2.6c-5 0-9 3.6-9 8.1 0 1.6.5 3.1 1.4 4.4-.4.7-.9 1.6-.9 2.5 0 .8.7 1.4 1.6 1.4h.7c.6 1.2 2 2.1 3.5 2.1 1.7 0 3.1-1 3.6-2.5h.4c.5 1.5 1.9 2.5 3.6 2.5s3.1-1 3.6-2.5c2.5-1.4 4.1-3.9 4.1-6.7v-.4c0-4.5-4.4-8.4-9.6-8.9-.7-.1-1.3-.1-2 0z" fill="#33CCFF"/>' +
+                '<circle cx="9.2" cy="10.5" r="1.2" fill="#0B1F3A"/>' +
+                '<circle cx="14.8" cy="10.5" r="1.2" fill="#0B1F3A"/>' +
+                '<path d="M8.8 13.6c.6 1.5 1.9 2.4 3.4 2.4s2.8-.9 3.4-2.4" fill="none" stroke="#0B1F3A" stroke-width="1.2" stroke-linecap="round"/>' +
+              '</svg>' +
+            '</span>' +
+            'Waze' +
+          '</a>' +
+        '</div>'
+      );
+    }
+
+    function renderSyn(){
+      var host = document.getElementById('synCities');
+      if (!host) return;
+      var byCity = {};
+      SYN_DATA.forEach(function(s){
+        (byCity[s.city] = byCity[s.city] || []).push(s);
+      });
+      var cityOrder = Object.keys(byCity);
+      var html = cityOrder.map(function(city){
+        var items = byCity[city].map(function(s){
+          var addr = s.addr || (s.name + ', ' + s.city);
+          return (
+            '<div class="syn-item" data-cat="' + escHtml(s.cat) + '" data-text="' + escHtml((s.name + ' ' + s.cat + ' ' + s.addr + ' ' + s.city).toLowerCase()) + '">' +
+              '<span class="syn-item-cat" data-cat="' + escHtml(s.cat) + '">' + escHtml(s.cat) + '</span>' +
+              '<h3 class="syn-item-name">' + escHtml(s.name) + '</h3>' +
+              '<p class="syn-item-addr">' + escHtml(addr) + '</p>' +
+              mapBtns(addr) +
+            '</div>'
+          );
+        }).join('');
+        return (
+          '<div class="syn-city" data-city="' + escHtml(city) + '">' +
+            '<div class="syn-city-head">' +
+              '<h2 class="syn-city-name">' + escHtml(city) + '</h2>' +
+              '<span class="syn-city-count">' + byCity[city].length + ' בתי כנסת במאגר</span>' +
+            '</div>' +
+            '<div class="syn-list">' + items + '</div>' +
+          '</div>'
+        );
+      }).join('');
+      host.innerHTML = html + '<div class="syn-empty" id="synEmpty" hidden>לא נמצאו תוצאות. נסה עיר או שם אחר, או לחץ "הכל".</div>';
+    }
+
+    function applyFilter(){
+      var cat = document.querySelector('.syn-cat-tab.active').getAttribute('data-cat');
+      var q   = (document.getElementById('synSearch').value || '').trim().toLowerCase();
+      var anyVisible = false;
+      document.querySelectorAll('.syn-city').forEach(function(cityEl){
+        var visible = 0;
+        cityEl.querySelectorAll('.syn-item').forEach(function(it){
+          var c = it.getAttribute('data-cat');
+          var t = it.getAttribute('data-text') || '';
+          var match = (cat === 'all' || c === cat) && (!q || t.indexOf(q) !== -1);
+          it.classList.toggle('is-hidden', !match);
+          if (match) visible++;
+        });
+        cityEl.style.display = visible ? '' : 'none';
+        if (visible) anyVisible = true;
+        var counter = cityEl.querySelector('.syn-city-count');
+        if (counter) counter.textContent = visible + ' בתי כנסת מוצגים';
+      });
+      var empty = document.getElementById('synEmpty');
+      if (empty) empty.hidden = anyVisible;
+    }
+
+    document.addEventListener('DOMContentLoaded', function(){
+      renderSyn();
+      document.querySelectorAll('.syn-cat-tab').forEach(function(tab){
+        tab.addEventListener('click', function(){
+          document.querySelectorAll('.syn-cat-tab').forEach(function(t){
+            t.classList.remove('active');
+            t.setAttribute('aria-selected','false');
+          });
+          tab.classList.add('active');
+          tab.setAttribute('aria-selected','true');
+          applyFilter();
+        });
+      });
+      document.getElementById('synSearch').addEventListener('input', applyFilter);
+    });
+  </script>
+</body>
+</html>

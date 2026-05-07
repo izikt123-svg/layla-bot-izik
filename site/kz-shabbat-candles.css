@@ -1,0 +1,485 @@
+/* ============================================================
+   KZ SHABBAT CANDLES — virtual candle lighting + global wall
+   ============================================================ */
+.sc-shell{
+  max-width: min(960px, 96vw);
+  margin: 0 auto 40px;
+  padding: 0 12px;
+  display: grid;
+  gap: 14px;
+}
+
+.sc-pill{
+  margin-inline-start: auto;
+  padding: 4px 12px;
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+/* Hero */
+.sc-hero{
+  text-align: center;
+  padding: 28px 12px 8px;
+  position: relative;
+}
+.sc-hero-flame{
+  font-size: 64px;
+  filter: drop-shadow(0 0 24px rgba(255,200,100,.55));
+  animation: scFlamePulse 2.4s ease-in-out infinite;
+}
+@keyframes scFlamePulse{
+  0%,100%{ transform: scale(1) translateY(0); filter: drop-shadow(0 0 18px rgba(255,200,100,.4)); }
+  50%   { transform: scale(1.06) translateY(-2px); filter: drop-shadow(0 0 32px rgba(255,210,120,.7)); }
+}
+.sc-hero h1{
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: clamp(28px, 5vw, 44px);
+  margin: 6px 0;
+  background: linear-gradient(135deg, #f1d597, #d4b07a);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.sc-hero p{ opacity: .8; margin: 0 auto; max-width: 56ch; }
+
+/* City */
+.sc-city{ padding: 14px; }
+.sc-city .mini-title{ display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-weight: 700; }
+.sc-locate{
+  margin-inline-start: auto;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: rgba(212,176,122,.12);
+  border: 1px solid rgba(212,176,122,.3);
+  color: #d4b07a;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.sc-city-row{
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 12px;
+}
+.sc-city-row select{
+  flex: 1;
+  padding: 12px 14px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(212,176,122,.3);
+  color: #f6e6c2;
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+}
+.sc-city-row select option{ background: #0B1F3A; color: #f6e6c2; }
+.sc-tz{ font-size: 12px; color: #d4b07a; opacity: .7; }
+
+.sc-times{ display: grid; gap: 6px; }
+.sc-time-row{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 14px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(212,176,122,.18);
+  border-radius: 10px;
+  font-size: 14px;
+}
+.sc-time-row > :last-child{
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: #f1d597;
+  font-size: 16px;
+}
+.sc-time-row.sc-candle{
+  background: linear-gradient(135deg, rgba(241,213,151,.18), rgba(212,176,122,.1));
+  border-color: rgba(241,213,151,.4);
+}
+.sc-time-row.sc-havdala{
+  background: linear-gradient(135deg, rgba(120,80,200,.15), rgba(80,40,160,.08));
+  border-color: rgba(160,120,220,.4);
+}
+
+.sc-countdown{
+  margin-top: 10px;
+  text-align: center;
+  padding: 12px;
+  background: linear-gradient(135deg, rgba(241,213,151,.2), rgba(212,176,122,.1));
+  border: 1px solid rgba(241,213,151,.4);
+  border-radius: 12px;
+  font-size: 14px;
+  color: #f1d597;
+  font-weight: 600;
+}
+.sc-countdown b{ font-size: 18px; }
+
+/* Form */
+.sc-form-card{ padding: 14px; }
+.sc-form{ display: grid; gap: 10px; }
+.sc-form label{
+  display: grid; gap: 4px;
+  font-size: 12px; color: #d4b07a;
+}
+.sc-form input[type="text"], .sc-form input:not([type]), .sc-form textarea{
+  padding: 12px 14px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(212,176,122,.3);
+  color: #f6e6c2;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+}
+.sc-form input:focus, .sc-form textarea:focus{ border-color: #f1d597; }
+
+.sc-anon{
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #f6e6c2;
+  cursor: pointer;
+}
+.sc-anon input{ width: 16px; height: 16px; accent-color: #d4b07a; }
+
+.sc-light-btn{
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px;
+  padding: 16px;
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+  font-weight: 800;
+  font-size: 16px;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  margin-top: 6px;
+  box-shadow: 0 12px 32px rgba(241,213,151,.3);
+  transition: transform .15s, box-shadow .25s;
+}
+.sc-light-btn:hover{ transform: translateY(-2px); box-shadow: 0 16px 40px rgba(241,213,151,.45); }
+.sc-light-btn:disabled{ opacity: .55; cursor: not-allowed; transform: none; }
+.sc-flame-icn{ font-size: 22px; }
+
+.sc-hint{ display: block; text-align: center; opacity: .6; font-size: 12px; }
+
+.sc-success{
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(241,213,151,.18), rgba(212,176,122,.1));
+  border: 1px solid rgba(241,213,151,.5);
+  border-radius: 16px;
+}
+.sc-success-flame{
+  font-size: 56px;
+  filter: drop-shadow(0 0 20px rgba(255,200,100,.5));
+  animation: scFlamePulse 2.4s ease-in-out infinite;
+}
+.sc-success b{ display: block; margin: 8px 0 4px; font-size: 18px; color: #f1d597; }
+.sc-success p{ font-size: 14px; line-height: 1.6; opacity: .85; margin: 0 0 14px; }
+.sc-light-again{
+  padding: 10px 18px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(212,176,122,.4);
+  color: #d4b07a;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Wall */
+.sc-wall{ padding: 14px; min-height: 180px; }
+.sc-wall .mini-title{ display: flex; align-items: center; gap: 8px; font-weight: 700; }
+.sc-wall-count{
+  margin-inline-start: auto;
+  font-size: 12px;
+  color: #d4b07a;
+}
+.sc-wall-count b{ color: #f1d597; font-size: 14px; }
+
+.sc-wall-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+.sc-wall-grid:empty::after{
+  content: 'עדיין אין נרות דולקים. הדליקי את הראשון 🕯';
+  display: block;
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 24px 12px;
+  opacity: .55;
+  font-size: 13px;
+}
+
+.sc-candle-card{
+  position: relative;
+  padding: 14px 10px 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,210,120,.05));
+  border: 1px solid rgba(241,213,151,.25);
+  border-radius: 14px;
+  text-align: center;
+  overflow: hidden;
+  transition: transform .25s, box-shadow .25s;
+}
+.sc-candle-card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(241,213,151,.18);
+  border-color: rgba(241,213,151,.5);
+}
+
+/* Animated SVG candle */
+.sc-svg-candle{
+  width: 56px; height: 96px;
+  margin: 0 auto 8px;
+  display: block;
+  filter: drop-shadow(0 0 10px rgba(255,200,100,.4));
+}
+.sc-svg-flame{
+  transform-origin: 50% 100%;
+  animation: scFlicker 1.6s ease-in-out infinite alternate;
+}
+@keyframes scFlicker{
+  0%   { transform: scale(.95) skewX(-2deg); opacity: .92; }
+  30%  { transform: scale(1.05) skewX(3deg); opacity: 1; }
+  60%  { transform: scale(.97) skewX(-1deg); opacity: .95; }
+  100% { transform: scale(1.02) skewX(2deg); opacity: 1; }
+}
+
+.sc-candle-name{
+  font-weight: 700;
+  font-size: 13px;
+  color: #f6e6c2;
+  margin-bottom: 2px;
+}
+.sc-candle-city{
+  font-size: 11px;
+  color: #d4b07a;
+  opacity: .85;
+}
+.sc-candle-prayer{
+  margin-top: 8px;
+  padding: 8px 10px;
+  background: rgba(11,31,58,.4);
+  border: 1px solid rgba(212,176,122,.2);
+  border-radius: 8px;
+  font-size: 11px;
+  line-height: 1.5;
+  font-family: 'Frank Ruhl Libre', serif;
+  color: #f6e6c2;
+  opacity: .85;
+}
+
+.sc-candle-time{
+  position: absolute;
+  top: 6px; inset-inline-end: 8px;
+  font-size: 10px;
+  color: #d4b07a;
+  opacity: .55;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Extra media inputs (audio + photo) */
+.sc-extra{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 8px;
+  background: rgba(255,255,255,.03);
+  border: 1px dashed rgba(212,176,122,.3);
+  border-radius: 10px;
+}
+.sc-extra-btn{
+  padding: 8px 14px;
+  background: rgba(212,176,122,.12);
+  border: 1px solid rgba(212,176,122,.4);
+  color: #d4b07a;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.sc-extra-btn:hover{ background: rgba(212,176,122,.22); }
+.sc-rec-status{ font-size: 12px; color: #f1d597; }
+#scRecPreview{ height: 32px; max-width: 240px; }
+.sc-photo-preview{
+  max-width: 80px; max-height: 80px;
+  border-radius: 10px;
+  border: 1px solid rgba(212,176,122,.4);
+  object-fit: cover;
+}
+.sc-candle-photo{
+  width: 80px; height: 80px;
+  border-radius: 12px;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 8px;
+  border: 2px solid rgba(241,213,151,.45);
+}
+.sc-candle-audio{
+  width: 100%;
+  height: 28px;
+  margin-top: 6px;
+}
+
+/* Like + share */
+.sc-candle-actions{
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+.sc-like, .sc-share{
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(212,176,122,.3);
+  border-radius: 999px;
+  color: #d4b07a;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s, transform .1s;
+}
+.sc-like:hover, .sc-share:hover{ background: rgba(212,176,122,.18); }
+.sc-like.is-loved{
+  background: linear-gradient(135deg, rgba(255,91,91,.18), rgba(185,28,28,.1));
+  color: #ff8b8b;
+  border-color: rgba(255,91,91,.4);
+}
+.sc-like.is-loved .sc-heart{
+  animation: scHeartPop .4s ease-out;
+}
+@keyframes scHeartPop{
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+/* Requests */
+.sc-requests{ padding: 14px; }
+.sc-requests .mini-title{ display: flex; align-items: center; gap: 8px; font-weight: 700; margin-bottom: 8px; }
+.sc-req-intro{
+  font-size: 13px;
+  opacity: .8;
+  line-height: 1.5;
+  margin: 0 0 12px;
+}
+.sc-req-form{ display: grid; gap: 8px; margin-bottom: 14px; }
+.sc-req-form input, .sc-req-form textarea{
+  padding: 10px 14px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(212,176,122,.3);
+  color: #f6e6c2;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+}
+.sc-req-form button{
+  padding: 10px;
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sc-req-list{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+}
+.sc-req-empty{
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 24px 12px;
+  opacity: .55;
+  font-size: 13px;
+}
+.sc-req-card{
+  padding: 12px;
+  background: linear-gradient(135deg, rgba(212,176,122,.08), rgba(241,213,151,.05));
+  border: 1px solid rgba(212,176,122,.3);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.sc-req-name{ font-size: 13px; }
+.sc-req-name b{ color: #f1d597; font-weight: 700; }
+.sc-req-prayer{
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: 13px;
+  color: #f6e6c2;
+  opacity: .85;
+  line-height: 1.5;
+}
+.sc-req-claim{
+  margin-top: auto;
+  padding: 8px 12px;
+  background: rgba(74,222,128,.15);
+  border: 1px solid rgba(74,222,128,.4);
+  color: #4ade80;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.sc-req-claim:hover{ background: rgba(74,222,128,.25); }
+.sc-req-claimed{
+  display: inline-block;
+  padding: 6px 14px;
+  background: linear-gradient(135deg, #4ade80, #16a34a);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Top prayers */
+.sc-top{ padding: 14px; }
+.sc-top .mini-title{ display: flex; align-items: center; gap: 8px; font-weight: 700; margin-bottom: 12px; }
+.sc-cinema-link{
+  margin-inline-start: auto;
+  padding: 4px 12px;
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+  border-radius: 999px;
+  font-size: 11px;
+  text-decoration: none;
+  font-weight: 700;
+}
+.sc-top-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 10px;
+}
+.sc-top-empty{
+  grid-column: 1/-1;
+  text-align: center;
+  opacity: .55;
+  padding: 24px 12px;
+  font-size: 13px;
+}
+
+/* Closed-shabbat state */
+.sc-closed{
+  text-align: center;
+  padding: 32px 18px;
+  font-size: 14px;
+  color: #d4b07a;
+  opacity: .8;
+}
+.sc-closed b{ color: #f1d597; }

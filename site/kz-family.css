@@ -1,0 +1,108 @@
+.fa-shell{ max-width: min(960px, 96vw); margin: 0 auto 40px; padding: 0 12px; display: grid; gap: 14px; }
+.fa-pill{
+  margin-inline-start: auto;
+  padding: 4px 14px;
+  background: rgba(212,176,122,.15);
+  border: 1px solid rgba(212,176,122,.4);
+  color: #d4b07a;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.fa-hero{ text-align: center; padding: 24px 12px 8px; }
+.fa-icon{ font-size: 48px; }
+.fa-hero h1{
+  font-family: 'Frank Ruhl Libre', serif; font-size: clamp(28px, 5vw, 44px); margin: 6px 0;
+  background: linear-gradient(135deg, #f1d597, #d4b07a);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.fa-hero p{ opacity: .8; max-width: 60ch; margin: 0 auto; }
+
+.fa-form-card{ padding: 14px; }
+.fa-form-card .mini-title, .fa-section .mini-title, .fa-upcoming .mini-title{ display: flex; align-items: center; gap: 8px; font-weight: 700; margin-bottom: 12px; }
+.fa-form{ display: grid; gap: 8px; }
+.fa-form-row{ display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.fa-form input, .fa-form select{
+  padding: 12px 14px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(212,176,122,.3);
+  color: #f6e6c2;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+}
+.fa-form select option{ background: #0B1F3A; color: #f6e6c2; }
+.fa-form button{
+  padding: 12px;
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.fa-upcoming{ padding: 14px; }
+.fa-upcoming-list{ display: grid; gap: 6px; }
+.fa-upcoming-empty{ text-align: center; padding: 16px; opacity: .55; font-size: 13px; }
+.fa-upcoming-item{
+  display: grid;
+  grid-template-columns: 50px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 14px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(212,176,122,.2);
+  border-radius: 10px;
+}
+.fa-upcoming-item.is-today{
+  background: linear-gradient(135deg, rgba(241,213,151,.18), rgba(212,176,122,.08));
+  border-color: rgba(241,213,151,.5);
+  box-shadow: 0 0 0 0 rgba(241,213,151,.5);
+  animation: faPulse 1.6s ease-out infinite;
+}
+@keyframes faPulse{
+  0%,100%{ box-shadow: 0 0 0 0 rgba(241,213,151,.4); }
+  50%   { box-shadow: 0 0 0 12px rgba(241,213,151,0); }
+}
+.fa-upcoming-when{
+  width: 50px; height: 50px;
+  background: rgba(212,176,122,.15);
+  border-radius: 12px;
+  display: grid; place-items: center;
+  font-size: 11px; font-weight: 700; color: #d4b07a;
+  text-align: center; line-height: 1.2;
+}
+.fa-upcoming-when small{ display: block; font-size: 9px; opacity: .8; margin-top: 1px; }
+.fa-upcoming-item.is-today .fa-upcoming-when{ background: linear-gradient(135deg, #d4b07a, #f1d597); color: #0B1F3A; }
+.fa-upcoming-name{ font-weight: 700; color: #f1d597; }
+.fa-upcoming-meta{ font-size: 12px; opacity: .7; margin-top: 2px; }
+.fa-upcoming-icn{ font-size: 24px; }
+
+.fa-section{ padding: 14px; }
+.fa-list{ display: grid; gap: 6px; }
+.fa-list-empty{ text-align: center; padding: 24px 12px; opacity: .55; font-size: 13px; }
+.fa-item{
+  display: grid;
+  grid-template-columns: 32px 1fr auto auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 14px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(212,176,122,.2);
+  border-radius: 10px;
+}
+.fa-item-icn{ font-size: 18px; }
+.fa-item-name{ font-weight: 600; color: #f6e6c2; font-size: 14px; }
+.fa-item-meta{ font-size: 11px; opacity: .65; }
+.fa-item-date{ font-size: 11px; color: #d4b07a; }
+.fa-del{
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(255,91,91,.1);
+  border: 1px solid rgba(255,91,91,.3);
+  color: #ff8b8b;
+  cursor: pointer;
+  font-size: 14px;
+}

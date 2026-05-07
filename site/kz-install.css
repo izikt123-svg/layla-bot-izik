@@ -1,0 +1,140 @@
+.ins-shell{ max-width: min(960px, 96vw); margin: 0 auto 40px; padding: 0 12px; display: grid; gap: 14px; }
+
+.ins-hero{ text-align: center; padding: 24px 12px 8px; }
+.ins-icon{ font-size: 56px; }
+.ins-hero h1{
+  font-family: 'Frank Ruhl Libre', serif; font-size: clamp(28px, 5vw, 44px); margin: 6px 0;
+  background: linear-gradient(135deg, #f1d597, #d4b07a);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.ins-hero p{ opacity: .8; margin: 0 auto; max-width: 56ch; }
+
+.ins-qr-card{ padding: 20px; }
+.ins-qr-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: center;
+}
+@media (max-width: 720px){ .ins-qr-grid{ grid-template-columns: 1fr; } }
+
+.ins-qr-side{ text-align: center; }
+.ins-qr-canvas{
+  background: #fff;
+  border-radius: 18px;
+  padding: 12px;
+  display: inline-block;
+  margin-bottom: 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.4);
+}
+.ins-qr-canvas canvas, .ins-qr-canvas img, .ins-qr-canvas svg{
+  display: block;
+  width: 200px; height: 200px;
+}
+.ins-qr-url{
+  font-family: monospace;
+  color: #f1d597;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.ins-copy{
+  padding: 8px 16px;
+  background: rgba(212,176,122,.15);
+  border: 1px solid rgba(212,176,122,.4);
+  color: #d4b07a;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ins-actions-side h2{
+  font-family: 'Frank Ruhl Libre', serif;
+  font-size: 24px;
+  color: #f1d597;
+  margin: 0 0 14px;
+}
+.ins-install-btn{
+  width: 100%;
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  gap: 12px;
+  padding: 16px;
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+  border: none;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 17px;
+  cursor: pointer;
+  box-shadow: 0 12px 32px rgba(241,213,151,.3);
+  transition: transform .15s, box-shadow .25s;
+}
+.ins-install-btn:hover{ transform: translateY(-2px); box-shadow: 0 18px 44px rgba(241,213,151,.45); }
+.ins-install-btn span:first-child{ font-size: 22px; }
+
+.ins-install-state{
+  margin: 10px 0 14px;
+  font-size: 13px;
+  opacity: .75;
+  text-align: center;
+}
+.ins-install-state.is-installed{ color: #4ade80; opacity: 1; font-weight: 700; }
+.ins-install-state.is-ready{ color: #f1d597; }
+
+.ins-actions-row{ display: flex; gap: 8px; }
+.ins-share-btn{
+  flex: 1;
+  padding: 10px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(212,176,122,.3);
+  color: #d4b07a;
+  border-radius: 12px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 13px;
+}
+.ins-share-btn:hover{ background: rgba(212,176,122,.15); }
+
+.ins-platform{ padding: 18px; }
+.ins-platform .mini-title{ display: flex; align-items: center; gap: 8px; font-weight: 700; margin-bottom: 12px; }
+.ins-platform ol{
+  margin: 0;
+  padding-inline-start: 18px;
+  display: grid;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.ins-platform b{ color: #f1d597; }
+
+.ins-features{ padding: 16px; }
+.ins-features .mini-title{ display: flex; align-items: center; gap: 8px; font-weight: 700; margin-bottom: 14px; }
+.ins-features-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+}
+.ins-features-grid > div{
+  padding: 14px 10px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(212,176,122,.2);
+  border-radius: 12px;
+  text-align: center;
+}
+.ins-features-grid b{ display: block; font-size: 28px; margin-bottom: 4px; }
+.ins-features-grid span{ font-size: 12px; opacity: .85; }
+
+.ins-footer{
+  text-align: center;
+  margin-top: 20px;
+  font-size: 13px;
+}
+.ins-footer a{
+  color: #d4b07a;
+  text-decoration: none;
+  margin: 0 8px;
+}
+.ins-footer a:hover{ color: #f1d597; }

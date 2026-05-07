@@ -1,0 +1,65 @@
+.kz-nm-card{ padding: 14px; }
+.kz-nm-card .mini-title{ display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-weight: 700; }
+.kz-nm-refresh{
+  margin-inline-start: auto;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: rgba(212,176,122,.12);
+  border: 1px solid rgba(212,176,122,.3);
+  color: #d4b07a;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.kz-nm-chips{
+  display: flex; gap: 6px; flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.kz-nm-chip{
+  padding: 6px 12px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(212,176,122,.25);
+  border-radius: 999px;
+  color: #d4b07a;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background .15s;
+}
+.kz-nm-chip:hover{ background: rgba(212,176,122,.12); }
+.kz-nm-chip.is-on{
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+  border-color: transparent;
+  font-weight: 700;
+}
+
+.kz-nm-list{ list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+.kz-nm-empty{ opacity: .55; font-size: 13px; padding: 18px 8px; text-align: center; }
+.kz-nm-item{
+  display: grid;
+  grid-template-columns: 28px 1fr auto auto auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 12px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(212,176,122,.18);
+  border-radius: 12px;
+  font-size: 13px;
+}
+.kz-nm-icn{ font-size: 18px; text-align: center; }
+.kz-nm-meta b{ display: block; font-weight: 600; color: #f6e6c2; }
+.kz-nm-meta small{ display: block; opacity: .6; font-size: 11px; }
+.kz-nm-open{ color: #4ade80; font-size: 11px; font-weight: 700; }
+.kz-nm-closed{ color: #ff8b8b; font-size: 11px; }
+.kz-nm-dist{ color: #d4b07a; font-weight: 600; font-variant-numeric: tabular-nums; }
+.kz-nm-go, .kz-nm-share{
+  width: 30px; height: 30px;
+  display: grid; place-items: center;
+  border-radius: 8px;
+  background: rgba(212,176,122,.12);
+  border: 1px solid rgba(212,176,122,.3);
+  color: #d4b07a;
+  text-decoration: none;
+  font-size: 14px;
+}
+.kz-nm-go:hover, .kz-nm-share:hover{ background: rgba(212,176,122,.22); }

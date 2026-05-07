@@ -1,0 +1,166 @@
+/* ============================================================
+   KZ OR-YOM — Daily Light section (replaces logo concepts)
+   3 cards: Verse, Wisdom, Tip — each shareable to WhatsApp
+   ============================================================ */
+
+.kz-or-yom{
+  position: relative;
+  margin: 28px 0;
+  padding: 24px;
+  background:
+    radial-gradient(ellipse 60% 80% at 0% 0%, rgba(212,176,122,.16), transparent 60%),
+    linear-gradient(135deg, var(--cream), var(--bg-2));
+  border: 1px solid var(--border-strong);
+  border-radius: 22px;
+  overflow: hidden;
+}
+.kz-or-yom::before{
+  content: "";
+  position: absolute;
+  inset-inline-end: -60px;
+  bottom: -60px;
+  width: 240px; height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212,176,122,.15), transparent 60%);
+  filter: blur(40px);
+  pointer-events: none;
+}
+.kz-or-yom-head{
+  text-align: center;
+  margin-bottom: 22px;
+  position: relative;
+}
+.kz-or-tag{
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  background: rgba(212,176,122,.14);
+  color: var(--gold-deep);
+  padding: 4px 14px;
+  border-radius: 100px;
+  border: 1px solid rgba(212,176,122,.3);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.kz-or-yom-head h3{
+  font-family: var(--serif);
+  font-size: clamp(22px, 2vw + 12px, 32px) !important;
+  margin: 6px 0 8px !important;
+  background: linear-gradient(120deg, var(--gold-deep), var(--gold), var(--gold-2), var(--gold-deep));
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gold-shift 8s ease-in-out infinite;
+}
+.kz-or-yom-head p{
+  color: var(--muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+.kz-or-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  position: relative;
+}
+.kz-or-card{
+  position: relative;
+  padding: 22px 18px 18px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  text-align: center;
+  transition: transform .35s var(--ease-spring, cubic-bezier(.34,1.56,.64,1)), box-shadow .35s, border-color .25s;
+  overflow: hidden;
+}
+.kz-or-card::before{
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold-2), var(--gold), var(--gold-2), transparent);
+  opacity: 0;
+  transition: opacity .3s;
+}
+.kz-or-card:hover{
+  transform: translateY(-4px);
+  border-color: var(--gold);
+  box-shadow: 0 16px 32px rgba(184,147,90,.18);
+}
+.kz-or-card:hover::before{ opacity: 1; }
+
+.kz-or-icon{
+  font-size: 28px;
+  margin-bottom: 8px;
+  display: inline-block;
+  animation: kz-or-icon-float 4s ease-in-out infinite;
+}
+.kz-or-card:nth-child(2) .kz-or-icon{ animation-delay: 1s; }
+.kz-or-card:nth-child(3) .kz-or-icon{ animation-delay: 2s; }
+@keyframes kz-or-icon-float{
+  0%, 100% { transform: translateY(0)    rotate(0deg); }
+  50%      { transform: translateY(-6px) rotate(8deg); }
+}
+
+.kz-or-mini-tag{
+  display: block;
+  font-size: 10px;
+  letter-spacing: .14em;
+  color: var(--gold-deep);
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.kz-or-text{
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--ink);
+  margin: 8px 0;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kz-or-source{
+  font-size: 12px;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 12px;
+  letter-spacing: .04em;
+}
+
+.kz-or-share{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  color: #fff;
+  border: none;
+  border-radius: 100px;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  transition: transform .25s, box-shadow .25s;
+}
+.kz-or-share:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(37,211,102,.4);
+}
+
+@media (max-width: 600px){
+  .kz-or-grid{ grid-template-columns: 1fr; }
+  .kz-or-text{ min-height: auto; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .kz-or-icon, .kz-or-yom-head h3{ animation: none; }
+}

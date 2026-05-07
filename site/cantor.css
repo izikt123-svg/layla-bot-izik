@@ -1,0 +1,156 @@
+/* ============================================================
+   Cantor Mode — large-text prayer leader display
+   ============================================================ */
+:root{
+  --c-bg:#0B1F3A; --c-ink:#f6e6c2; --c-gold:#d4b07a; --c-gold-2:#f1d597;
+  --c-size: 64px;
+  --c-line: 1.55;
+}
+.cantor-body{
+  margin:0;
+  background: linear-gradient(180deg, #0B1F3A 0%, #14315b 100%);
+  color: var(--c-ink);
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  font-family: 'Frank Ruhl Libre','Heebo',serif;
+}
+
+/* High-contrast theme */
+.cantor-body.is-hc{
+  background: #000;
+  color: #fff;
+  --c-gold: #ffd76b;
+  --c-gold-2: #fff2c2;
+}
+
+.cantor-bar{
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px;
+  background: rgba(11,31,58,.85);
+  border-bottom: 1px solid rgba(212,176,122,.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.cantor-back{
+  text-decoration: none;
+  color: var(--c-gold);
+  font-size: 22px;
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  border-radius: 10px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(212,176,122,.3);
+}
+.cantor-back:hover{ background: rgba(212,176,122,.15); }
+
+.cantor-title{ display: flex; align-items: center; gap: 10px; flex: 1; }
+.cantor-flame{ font-size: 22px; }
+.cantor-select{
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(212,176,122,.3);
+  color: var(--c-ink);
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-family: inherit;
+  outline: none;
+}
+.cantor-select option{ background: #0B1F3A; color: #f6e6c2; }
+
+.cantor-controls{ display: flex; gap: 6px; }
+.cantor-btn{
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(212,176,122,.3);
+  color: var(--c-gold);
+  font-size: 18px;
+  cursor: pointer;
+  transition: background .15s;
+}
+.cantor-btn:hover{ background: rgba(212,176,122,.15); }
+.cantor-btn.is-on{
+  background: linear-gradient(135deg, #d4b07a, #f1d597);
+  color: #0B1F3A;
+  border-color: transparent;
+}
+
+.cantor-stage{
+  flex: 1;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  padding: clamp(20px, 6vh, 80px) clamp(20px, 6vw, 120px);
+}
+
+.cantor-text{
+  max-width: 100ch;
+  margin: 0 auto;
+  font-size: var(--c-size);
+  line-height: var(--c-line);
+  font-weight: 500;
+  text-align: center;
+  white-space: pre-wrap;
+}
+.cantor-text p{
+  margin: 0 0 .9em;
+}
+.cantor-text .accent{
+  color: var(--c-gold-2);
+  font-weight: 700;
+}
+.cantor-text .verse-num{
+  display: inline-block;
+  font-size: .55em;
+  color: var(--c-gold);
+  vertical-align: super;
+  margin-inline-end: .3em;
+  opacity: .65;
+}
+
+.cantor-foot{
+  padding: 8px 18px 14px;
+  background: rgba(11,31,58,.85);
+  border-top: 1px solid rgba(212,176,122,.3);
+}
+.cantor-progress{
+  height: 4px;
+  background: rgba(255,255,255,.06);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.cantor-progress i{
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--c-gold), var(--c-gold-2));
+  transition: width .25s linear;
+}
+.cantor-help{
+  margin-top: 6px;
+  font-size: 11px;
+  text-align: center;
+  opacity: .55;
+}
+.cantor-help kbd{
+  display: inline-block;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(212,176,122,.25);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  color: var(--c-gold);
+}
+
+/* Fullscreen tweaks */
+.cantor-body:fullscreen .cantor-bar,
+.cantor-body:fullscreen .cantor-foot{
+  background: rgba(0,0,0,.55);
+}
+
+@media (max-width: 720px){
+  :root{ --c-size: 38px; }
+  .cantor-text{ font-size: var(--c-size); }
+  .cantor-bar{ padding: 10px 12px; }
+  .cantor-controls .cantor-btn{ width: 36px; height: 36px; font-size: 16px; }
+  .cantor-help{ display: none; }
+}

@@ -1,0 +1,552 @@
+/* ============================================================
+   KZ-EXTRAS · purely additive layer
+   Adds: 20+ language dropdown, niqud title, bold nav menu,
+   family prayer room, live community search, Israel synagogue
+   list, kosher restaurant list. Does NOT modify or override
+   existing rules — every selector is uniquely prefixed kzx-.
+   ============================================================ */
+
+/* ---------- BOLD / BEAUTIFY NAV ---------- */
+.topbar .nav .nav-item > a,
+.topbar .nav > a {
+  font-weight: 800;
+  letter-spacing: .02em;
+}
+.topbar .nav .nav-item > a:hover,
+.topbar .nav > a:hover {
+  color: var(--gold-deep, #8a6a2f);
+}
+
+/* ---------- NIQUD BRAND TITLE ---------- */
+.kzx-niqud {
+  font-family: "Frank Ruhl Libre", "Heebo", serif;
+  font-weight: 900;
+  background: linear-gradient(120deg, #c6a054 0%, #f4d27a 45%, #8a6a2f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: .04em;
+  text-shadow: 0 1px 0 rgba(255,255,255,.08);
+  display: inline-block;
+}
+
+/* ---------- LANGUAGE DROPDOWN ---------- */
+.kzx-langwrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin-inline-start: 6px;
+}
+.kzx-langbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(198, 160, 84, .55);
+  background: linear-gradient(180deg, #fff, #fbf3df);
+  color: #5a4218;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .2s, border-color .2s;
+}
+.kzx-langbtn:hover, .kzx-langbtn:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(184, 147, 90, .25);
+  border-color: rgba(138, 106, 47, .9);
+  outline: none;
+}
+.kzx-langbtn::after {
+  content: "▾";
+  font-size: 11px;
+  color: #8a6a2f;
+}
+.kzx-langmenu {
+  position: absolute;
+  top: calc(100% + 8px);
+  inset-inline-end: 0;
+  min-width: 220px;
+  max-height: 360px;
+  overflow-y: auto;
+  background: #fffdf6;
+  border: 1px solid rgba(184, 147, 90, .45);
+  border-radius: 14px;
+  box-shadow: 0 16px 38px rgba(11, 31, 58, .22);
+  padding: 6px;
+  z-index: 9999;
+  display: none;
+}
+.kzx-langmenu[data-open="true"] { display: block; }
+.kzx-lang-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  background: transparent;
+  color: #2a2014;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 10px;
+  text-align: start;
+}
+.kzx-lang-item:hover, .kzx-lang-item:focus-visible {
+  background: linear-gradient(180deg, #fdf3d6, #f7e7b7);
+  outline: none;
+}
+.kzx-lang-item[aria-current="true"] {
+  background: linear-gradient(135deg, #c6a054, #8a6a2f);
+  color: #fff;
+}
+.kzx-lang-flag { font-size: 18px; line-height: 1; }
+.kzx-lang-name-en { color: #6e5a32; font-size: 12px; font-weight: 500; }
+
+/* ---------- LIVE COMMUNITY SEARCH ---------- */
+.kzx-live-suggestions {
+  position: absolute;
+  top: calc(100% + 4px);
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  background: #fff;
+  border: 1px solid rgba(184, 147, 90, .35);
+  border-radius: 14px;
+  box-shadow: 0 14px 30px rgba(11, 31, 58, .14);
+  max-height: 280px;
+  overflow-y: auto;
+  z-index: 30;
+  display: none;
+}
+.kzx-live-suggestions[data-open="true"] { display: block; }
+.kzx-live-item {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 14px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(0,0,0,.04);
+}
+.kzx-live-item:hover { background: #fbf3df; }
+.kzx-live-item strong { font-size: 14.5px; color: #1a1a1a; }
+.kzx-live-item span { font-size: 12.5px; color: #6c5a32; }
+
+/* ---------- DIRECTORY GRID (ISRAEL SHULS / KOSHER) ---------- */
+.kzx-dir {
+  margin: 22px 0 32px;
+}
+.kzx-dir-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 14px 0 18px;
+  align-items: center;
+}
+.kzx-dir-toolbar input,
+.kzx-dir-toolbar select {
+  padding: 11px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(184,147,90,.4);
+  background: #fff;
+  font-size: 14.5px;
+  min-width: 180px;
+}
+.kzx-dir-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+.kzx-dir-card {
+  background: #fff;
+  border: 1px solid rgba(184, 147, 90, .28);
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: 0 8px 18px rgba(11, 31, 58, .06);
+  display: flex;
+  flex-direction: column;
+}
+.kzx-dir-card h3 {
+  margin: 0 0 6px;
+  font-family: "Frank Ruhl Libre", serif;
+  font-size: 18px;
+  color: #1a1a1a;
+}
+.kzx-dir-loc { color: #8a6a2f; font-weight: 700; font-size: 13.5px; }
+.kzx-dir-addr { color: #555; font-size: 13px; margin: 6px 0 10px; line-height: 1.5; }
+.kzx-dir-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.kzx-dir-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #fbf3df;
+  color: #6c5a32;
+  font-size: 12px;
+  font-weight: 600;
+}
+.kzx-stars { color: #d4a017; font-size: 15px; letter-spacing: 1px; margin-bottom: 8px; }
+.kzx-stars small { color: #888; font-size: 12px; margin-inline-start: 6px; }
+.kzx-dir-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+.kzx-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(184,147,90,.4);
+  background: #fff;
+  color: #2a2014;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+.kzx-btn:hover { background: #fbf3df; }
+.kzx-btn.kzx-btn-waze { background: linear-gradient(135deg, #33ccff, #0099e6); color: #fff; border: 0; }
+.kzx-btn.kzx-btn-gmaps { background: linear-gradient(135deg, #34a853, #137333); color: #fff; border: 0; }
+
+/* ---------- FAMILY PRAYER ROOM ---------- */
+.kzx-family-section {
+  margin: 36px auto;
+  max-width: 1180px;
+  padding: 0 16px;
+}
+.kzx-family-card {
+  background: linear-gradient(180deg, #fffdf6, #fbf3df);
+  border: 1px solid rgba(184, 147, 90, .35);
+  border-radius: 22px;
+  padding: 26px;
+  box-shadow: 0 14px 34px rgba(11, 31, 58, .08);
+}
+.kzx-family-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Frank Ruhl Libre", serif;
+  color: #8a6a2f;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+.kzx-family-eyebrow::before { content: "✦"; color: #c6a054; }
+.kzx-family-card h2 {
+  font-family: "Frank Ruhl Libre", serif;
+  font-size: clamp(22px, 2.6vw, 28px);
+  margin: 0 0 8px;
+  color: #1a1a1a;
+}
+.kzx-family-lead {
+  color: #555;
+  font-size: 14.5px;
+  line-height: 1.6;
+  margin: 0 0 18px;
+  max-width: 760px;
+}
+.kzx-family-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+@media (max-width: 720px) {
+  .kzx-family-row { grid-template-columns: 1fr; }
+}
+.kzx-family-row label {
+  display: block;
+  font-weight: 700;
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: #2a2014;
+}
+.kzx-family-row input,
+.kzx-family-row select,
+.kzx-family-row textarea {
+  width: 100%;
+  border-radius: 12px;
+  padding: 11px 14px;
+  border: 1px solid rgba(184, 147, 90, .4);
+  background: #fff;
+  font-size: 14.5px;
+  font-family: inherit;
+}
+.kzx-family-row textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+.kzx-family-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+.kzx-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #c6a054, #8a6a2f);
+  color: #fff;
+  font-weight: 800;
+  text-decoration: none;
+  border: 0;
+  cursor: pointer;
+  font-size: 14.5px;
+  box-shadow: 0 6px 14px rgba(138, 106, 47, .28);
+}
+.kzx-cta:hover { transform: translateY(-1px); box-shadow: 0 10px 20px rgba(138,106,47,.36); }
+.kzx-cta-wa {
+  background: linear-gradient(135deg, #25d366, #128c7e);
+  box-shadow: 0 6px 14px rgba(18, 140, 126, .28);
+}
+.kzx-cta-thanks {
+  background: linear-gradient(135deg, #fdf3d6, #f7e7b7);
+  color: #5a4218;
+}
+.kzx-room-list {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+.kzx-room {
+  background: #fff;
+  border: 1px solid rgba(184, 147, 90, .3);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 6px 14px rgba(11, 31, 58, .06);
+  position: relative;
+}
+.kzx-room-cat {
+  display: inline-block;
+  font-size: 11.5px;
+  background: #fbf3df;
+  padding: 3px 10px;
+  border-radius: 999px;
+  color: #6c5a32;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.kzx-room h4 {
+  margin: 0 0 6px;
+  font-family: "Frank Ruhl Libre", serif;
+  font-size: 16.5px;
+  color: #1a1a1a;
+}
+.kzx-room-text { font-size: 14px; color: #444; line-height: 1.5; white-space: pre-wrap; }
+.kzx-room-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #888;
+}
+.kzx-room-countdown {
+  font-weight: 700;
+  color: #8a6a2f;
+}
+.kzx-room-thanks {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fbf3df;
+  border: 0;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #5a4218;
+  cursor: pointer;
+}
+.kzx-room-thanks:hover { background: #f4d27a; }
+.kzx-room-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.kzx-room-empty {
+  color: #888;
+  font-size: 14px;
+  text-align: center;
+  padding: 20px;
+  grid-column: 1 / -1;
+}
+
+/* ---------- LIVE PULSE INDICATOR (site is alive) ---------- */
+.kzx-live-pulse {
+  position: fixed;
+  inset-block-end: 14px;
+  inset-inline-end: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(11, 31, 58, .9);
+  color: #f4d27a;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  z-index: 60;
+  pointer-events: none;
+  box-shadow: 0 8px 18px rgba(11, 31, 58, .35);
+}
+.kzx-live-pulse i {
+  width: 8px;
+  height: 8px;
+  background: #25d366;
+  border-radius: 50%;
+  animation: kzxPulse 1.4s ease-in-out infinite;
+}
+@keyframes kzxPulse {
+  0%, 100% { transform: scale(1); opacity: .9; }
+  50% { transform: scale(1.5); opacity: .4; }
+}
+
+/* ============================================================
+   KIDDUSH-LEVANA BANNER · monumental site name (additive only)
+   ============================================================ */
+.kzx-klv-banner {
+  position: relative;
+  width: 100%;
+  padding: 26px 18px 22px;
+  background:
+    radial-gradient(60% 120% at 50% 0%, rgba(244, 210, 122, .22), transparent 70%),
+    radial-gradient(60% 120% at 50% 100%, rgba(198, 160, 84, .18), transparent 70%),
+    linear-gradient(180deg, #0b1f3a 0%, #122a4d 100%);
+  color: #f6e7c0;
+  text-align: center;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(244, 210, 122, .25);
+  box-shadow: 0 8px 24px rgba(11, 31, 58, .25);
+}
+.kzx-klv-banner::before,
+.kzx-klv-banner::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: -10%;
+  inset-inline-end: -10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #f4d27a, transparent);
+  opacity: .55;
+}
+.kzx-klv-banner::before { top: 10px; }
+.kzx-klv-banner::after  { bottom: 10px; }
+.kzx-klv-stars {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  font-size: 12px;
+  color: #f4d27a;
+  letter-spacing: .4em;
+  margin-bottom: 6px;
+  opacity: .85;
+}
+.kzx-klv-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+.kzx-klv-eyebrow {
+  font-family: "Frank Ruhl Libre", "Heebo", serif;
+  font-size: clamp(11px, 1.2vw, 13px);
+  letter-spacing: .25em;
+  color: #f4d27a;
+  text-transform: none;
+  margin-bottom: 8px;
+  opacity: .9;
+}
+.kzx-klv-title {
+  font-family: "Frank Ruhl Libre", "Heebo", serif;
+  font-weight: 900;
+  font-size: clamp(38px, 7.4vw, 86px);
+  line-height: 1.05;
+  margin: 0 auto;
+  letter-spacing: .01em;
+  text-align: center;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 .04em;
+}
+.kzx-klv-letter {
+  display: inline-block;
+  background: linear-gradient(180deg, #fff7d8 0%, #f4d27a 35%, #c6a054 70%, #8a6a2f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow:
+    0 1px 0 rgba(255, 245, 200, .15),
+    0 0 22px rgba(244, 210, 122, .35),
+    0 0 44px rgba(244, 210, 122, .15);
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, .35));
+  transition: transform .25s ease;
+}
+.kzx-klv-letter:hover { transform: translateY(-2px) scale(1.04); }
+.kzx-klv-space { display: inline-block; width: .35em; }
+.kzx-klv-sub {
+  font-family: "Frank Ruhl Libre", "Heebo", serif;
+  font-size: clamp(14px, 1.8vw, 22px);
+  color: #f4d27a;
+  margin-top: 12px;
+  letter-spacing: .03em;
+  font-weight: 600;
+}
+.kzx-klv-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 14px;
+  color: #f4d27a;
+}
+.kzx-klv-divider span {
+  flex: 0 0 90px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #f4d27a 50%, transparent);
+}
+.kzx-klv-divider i { font-style: normal; font-size: 14px; }
+
+@media (max-width: 720px) {
+  .kzx-klv-banner { padding: 18px 12px 14px; }
+  .kzx-klv-title  { font-size: clamp(34px, 11vw, 56px); }
+  .kzx-klv-divider span { flex: 0 0 50px; }
+  .kzx-klv-stars { gap: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .kzx-klv-letter { transition: none; }
+}
+
+/* ---------- LIVE-SEARCH HINT (find-jewish city input) ---------- */
+.kzx-fj-livehint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #fdf3d6, #f7e7b7);
+  color: #5a4218;
+  border: 1px solid rgba(184, 147, 90, .35);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 12.5px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  box-shadow: 0 4px 10px rgba(184, 147, 90, .15);
+}
+
+/* ---------- RESPONSIVE TIGHTENING ---------- */
+@media (max-width: 720px) {
+  .kzx-langwrap { margin-inline-start: 4px; }
+  .kzx-langbtn { padding: 6px 9px; font-size: 12px; }
+  .kzx-langmenu { min-width: 200px; max-height: 60vh; }
+  .kzx-dir-toolbar input,
+  .kzx-dir-toolbar select { min-width: 140px; flex: 1 1 100%; }
+  .kzx-dir-grid { grid-template-columns: 1fr; }
+  .kzx-family-card { padding: 18px; border-radius: 18px; }
+  .kzx-family-actions .kzx-cta { width: 100%; justify-content: center; }
+  .kzx-room-list { grid-template-columns: 1fr; }
+  .kzx-live-pulse { inset-block-end: 8px; inset-inline-end: 8px; padding: 6px 10px; font-size: 11px; }
+}
+@media (max-width: 480px) {
+  .kzx-dir-card h3 { font-size: 16px; }
+  .kzx-btn { font-size: 12px; padding: 7px 10px; }
+}

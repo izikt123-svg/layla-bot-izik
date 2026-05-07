@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>בוקר טוב לה' · מרכז התפילה</title>
+  <meta name="description" content="פתיחת היום שלך — מודה אני, ברכות השחר, וכוונה אישית לכל היום." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="critical.css" />
+  <link rel="stylesheet" href="kz-morning.css" />
+</head>
+<body class="mn-body">
+
+<header class="mn-bar">
+  <a href="/" class="mn-back">←</a>
+  <span class="mn-streak" id="mnStreak">🌅 <b>0</b> בקרים ברצף</span>
+</header>
+
+<main class="mn-shell">
+  <section class="mn-hero">
+    <div class="mn-sun">🌅</div>
+    <h1 id="mnGreet">בוקר טוב</h1>
+    <p id="mnSubGreet">היום הוא מתנה. מה תעשי איתו?</p>
+  </section>
+
+  <!-- Step 1: Modeh Ani -->
+  <section class="card mn-step is-on" data-step="modeh">
+    <div class="mn-step-icon">✦</div>
+    <h2>מודה אני</h2>
+    <p class="mn-text">
+      מוֹדָה אֲנִי לְפָנֶיךָ<br>
+      מֶלֶךְ חַי וְקַיָּם,<br>
+      שֶׁהֶחֱזַרְתָּ בִּי נִשְׁמָתִי בְּחֶמְלָה,<br>
+      <b>רַבָּה אֱמוּנָתֶךָ.</b>
+    </p>
+    <button class="mn-go" data-next>אמרתי ✦</button>
+  </section>
+
+  <!-- Step 2: Morning blessings -->
+  <section class="card mn-step" data-step="brachot">
+    <div class="mn-step-icon">🙏</div>
+    <h2>ברכות השחר</h2>
+    <p class="mn-text mn-text-small">
+      ברוך אתה ה' אלקינו מלך העולם —<br>
+      <b>הנותן לשכוי בינה.</b><br>
+      <b>פוקח עורים.</b> <b>מתיר אסורים.</b> <b>זוקף כפופים.</b><br>
+      <b>שעשה לי כל צרכי.</b> <b>שעשני בצלמו.</b><br>
+      <b>הנותן ליעף כח.</b>
+    </p>
+    <button class="mn-go" data-next>אמרתי ✦</button>
+  </section>
+
+  <!-- Step 3: Daily intent -->
+  <section class="card mn-step" data-step="intent">
+    <div class="mn-step-icon">🌟</div>
+    <h2>הכוונה היומית</h2>
+    <p class="mn-text">בחרי כוונה אחת ליום שלך. דבר אחד טוב שתעשי בשם השם.</p>
+    <div class="mn-intents">
+      <button class="mn-intent" data-i="חיוך לזר">😊 חיוך לזר</button>
+      <button class="mn-intent" data-i="צדקה">💰 צדקה קטנה</button>
+      <button class="mn-intent" data-i="לטלפן להורים">📞 לטלפן להורים</button>
+      <button class="mn-intent" data-i="פרק תהילים">📿 פרק תהילים</button>
+      <button class="mn-intent" data-i="לסלוח">🤍 לסלוח למישהו</button>
+      <button class="mn-intent" data-i="מילה טובה">💬 מילה טובה</button>
+      <button class="mn-intent" data-i="להתפלל על אחר">🙏 להתפלל על אחר</button>
+      <button class="mn-intent" data-i="לסעוד מישהי">🫂 לעודד מישהי</button>
+    </div>
+    <input type="text" id="mnCustomIntent" class="mn-custom" placeholder="או כוונה אחרת שלך…" maxlength="80"/>
+    <button class="mn-go" id="mnIntentSave">הכוונה שלי</button>
+  </section>
+
+  <!-- Step 4: Done -->
+  <section class="card mn-step mn-done-card" data-step="done">
+    <div class="mn-step-icon">🌟</div>
+    <h2>היום שייך לך</h2>
+    <div class="mn-intent-summary" id="mnIntentSummary"></div>
+    <p>תזכרי את הכוונה לאורך היום. השם איתך בכל צעד.</p>
+    <div class="mn-actions">
+      <a class="mn-link" href="/daily-tehilim.html">📿 תהילים יומי</a>
+      <a class="mn-link" href="/daily-learning.html">📚 לימוד יומי</a>
+      <a class="mn-link" href="/prayer-wall.html">🙏 קיר תפילות</a>
+      <a class="mn-link" href="/">🏠 לדף הבית</a>
+    </div>
+  </section>
+</main>
+
+<script src="kz-morning.js" defer></script>
+<script src="kz-ai-chat.js" defer></script>
+<link rel="stylesheet" href="kz-ai-chat.css">
+<script src="kz-honeypot.js" defer></script>
+<script src="kz-nav.js" defer></script>
+<link rel="stylesheet" href="kz-nav.css">
+<link rel="stylesheet" href="kz-polish.css">
+</body>
+</html>

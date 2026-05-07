@@ -1,0 +1,1323 @@
+[
+  {
+    "id": "chb-bangkok",
+    "city": "Bangkok",
+    "country": "Thailand",
+    "region": "Asia",
+    "type": "chabad",
+    "name": "Chabad of Bangkok",
+    "address": "18 Phra Athit Road, Bangkok, Thailand",
+    "phone": "66-2-629-2770",
+    "website": "https://www.jewishthailand.com",
+    "note": "מטיילים ישראלים · ארוחות שבת · כשרות",
+    "verification": "מאומת לפי Chabad Locator",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "יעד ישראלי",
+      "מאומת"
+    ]
+  },
+  {
+    "id": "chb-bangkok-jcc",
+    "city": "Bangkok",
+    "country": "Thailand",
+    "region": "Asia",
+    "type": "chabad",
+    "name": "Jewish Community Center Bangkok",
+    "address": "121 Soi Sai Nam Thip 2, Sukhumvit Soi 22, Bangkok, Thailand",
+    "phone": "66-2-4079027",
+    "website": "https://www.jewishthailand.com",
+    "note": "קהילה יהודית · תפילות · כשרות",
+    "verification": "מאומת לפי Chabad Locator",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "יעד ישראלי",
+      "מאומת"
+    ]
+  },
+  {
+    "id": "chb-phuket",
+    "city": "Phuket",
+    "country": "Thailand",
+    "region": "Asia",
+    "type": "chabad",
+    "name": "Chabad Phuket",
+    "address": "Patong, Phuket, Thailand",
+    "phone": "",
+    "website": "https://www.jewishthailand.com",
+    "note": "יעד ישראלי חזק · שבתות וחגים",
+    "verification": "דורש השלמת כתובת מדויקת",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "יעד ישראלי"
+    ]
+  },
+  {
+    "id": "chb-kosamui",
+    "city": "Koh Samui",
+    "country": "Thailand",
+    "region": "Asia",
+    "type": "chabad",
+    "name": "Chabad Koh Samui",
+    "address": "Chaweng Beach, Koh Samui, Thailand",
+    "phone": "",
+    "website": "https://www.jewishthailand.com",
+    "note": "מטיילים · אוכל כשר · שבת",
+    "verification": "דורש השלמת כתובת מדויקת",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "יעד ישראלי"
+    ]
+  },
+  {
+    "id": "chb-kophangan",
+    "city": "Koh Phangan",
+    "country": "Thailand",
+    "region": "Asia",
+    "type": "chabad",
+    "name": "Chabad Koh Phangan",
+    "address": "Koh Phangan, Thailand",
+    "phone": "",
+    "website": "https://www.jewishthailand.com",
+    "note": "מטיילים ישראלים · חגים",
+    "verification": "דורש השלמת כתובת מדויקת",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "יעד ישראלי"
+    ]
+  },
+  {
+    "id": "chb-chiangmai",
+    "city": "Chiang Mai",
+    "country": "Thailand",
+    "region": "Asia",
+    "type": "chabad",
+    "name": "Chabad Chiang Mai",
+    "address": "Chiang Mai, Thailand",
+    "phone": "",
+    "website": "https://www.jewishthailand.com",
+    "note": "צפון תאילנד · מטיילים",
+    "verification": "דורש השלמת כתובת מדויקת",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "יעד ישראלי"
+    ]
+  },
+  {
+    "id": "chb-dubai",
+    "city": "Dubai",
+    "country": "United Arab Emirates",
+    "region": "Middle East",
+    "type": "chabad",
+    "name": "Jewish Community Center Dubai",
+    "address": "Dubai, United Arab Emirates",
+    "phone": "971-56-958-2971",
+    "website": "https://www.jewishuae.com",
+    "note": "קהילה יהודית · דובאי",
+    "verification": "מאומת חלקית",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "יעד ישראלי",
+      "מאומת"
+    ]
+  },
+  {
+    "id": "chb-uae",
+    "city": "Dubai",
+    "country": "United Arab Emirates",
+    "region": "Middle East",
+    "type": "chabad",
+    "name": "Chabad of United Arab Emirates",
+    "address": "Dubai / Abu Dhabi / Ras Al Khaimah, UAE",
+    "phone": "971-56-958-2971",
+    "website": "https://www.chabad.ae",
+    "note": "איחוד האמירויות · תיירים ועסקים",
+    "verification": "מאומת חלקית",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "יעד ישראלי",
+      "מאומת"
+    ]
+  },
+  {
+    "id": "chb-athens",
+    "city": "Athens",
+    "country": "Greece",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad of Athens",
+    "address": "10 Mouson Street, Athens, Greece",
+    "phone": "",
+    "website": "https://www.chabad.gr",
+    "note": "אתונה · מטיילים וקהילה",
+    "verification": "דורש אימות טלפון",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "יעד ישראלי"
+    ]
+  },
+  {
+    "id": "chb-mykonos",
+    "city": "Mykonos",
+    "country": "Greece",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad Mykonos",
+    "address": "Mykonos, Greece",
+    "phone": "",
+    "website": "https://www.chabad.gr",
+    "note": "יעד קיץ ישראלי",
+    "verification": "דורש השלמת כתובת מדויקת",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "יעד ישראלי"
+    ]
+  },
+  {
+    "id": "chb-santorini",
+    "city": "Santorini",
+    "country": "Greece",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad Santorini",
+    "address": "Santorini, Greece",
+    "phone": "",
+    "website": "https://www.chabad.gr",
+    "note": "יעד תיירות מרכזי",
+    "verification": "דורש השלמת כתובת מדויקת",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "יעד ישראלי"
+    ]
+  },
+  {
+    "id": "chb-crete",
+    "city": "Crete",
+    "country": "Greece",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad Crete",
+    "address": "Crete, Greece",
+    "phone": "",
+    "website": "https://www.chabad.gr",
+    "note": "יעד משפחות ישראליות",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "יעד ישראלי"
+    ]
+  },
+  {
+    "id": "chb-barcelona",
+    "city": "Barcelona",
+    "country": "Spain",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad Barcelona",
+    "address": "Carrer de l'Avenir 24, Barcelona, Spain",
+    "phone": "",
+    "website": "https://www.chabadbarcelona.org",
+    "note": "ברצלונה · תיירות ישראלית",
+    "verification": "דורש אימות טלפון",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "יעד ישראלי"
+    ]
+  },
+  {
+    "id": "chb-madrid",
+    "city": "Madrid",
+    "country": "Spain",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad Madrid",
+    "address": "Calle Balmes 3, Madrid, Spain",
+    "phone": "",
+    "website": "https://www.chabadmadrid.com",
+    "note": "מדריד · קהילה ותיירות",
+    "verification": "דורש אימות טלפון",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-ibiza",
+    "city": "Ibiza",
+    "country": "Spain",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad Ibiza",
+    "address": "Ibiza, Spain",
+    "phone": "",
+    "website": "https://www.chabadibiza.com",
+    "note": "יעד קיץ וחופשות",
+    "verification": "דורש השלמת כתובת",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-rome",
+    "city": "Rome",
+    "country": "Italy",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad Rome",
+    "address": "Rome, Italy",
+    "phone": "",
+    "website": "https://www.chabadrome.com",
+    "note": "רומא · אזור הגטו היהודי",
+    "verification": "דורש השלמת כתובת",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-milan",
+    "city": "Milan",
+    "country": "Italy",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad Milan",
+    "address": "Milan, Italy",
+    "phone": "",
+    "website": "https://www.chabadmilan.com",
+    "note": "מילאנו · עסקים ותיירות",
+    "verification": "דורש השלמת כתובת",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-venice",
+    "city": "Venice",
+    "country": "Italy",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad Venice",
+    "address": "Venice, Italy",
+    "phone": "",
+    "website": "https://www.chabadvenice.com",
+    "note": "ונציה · תיירות",
+    "verification": "דורש השלמת כתובת",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-florence",
+    "city": "Florence",
+    "country": "Italy",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad Florence",
+    "address": "Florence, Italy",
+    "phone": "",
+    "website": "https://www.chabadflorence.com",
+    "note": "פירנצה · תיירות",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-paris-campus",
+    "city": "Paris",
+    "country": "France",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad on Campus Paris",
+    "address": "1 rue de l'abbé de l'épée, Paris, 75005 France",
+    "phone": "33-9-52-94-54-68",
+    "website": "https://www.bethloubavitch-etudiants.com",
+    "note": "סטודנטים · פריז",
+    "verification": "מאומת לפי Chabad Locator",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "מאומת"
+    ]
+  },
+  {
+    "id": "chb-paris-15",
+    "city": "Paris",
+    "country": "France",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Beth Loubavitch Paris 15 North",
+    "address": "2 Rue d'Arsonval, Paris, 75015 France",
+    "phone": "33-9-53-49-99-62",
+    "website": "https://www.midrach.com",
+    "note": "פריז 15",
+    "verification": "מאומת לפי Chabad Locator",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "מאומת"
+    ]
+  },
+  {
+    "id": "chb-paris-4",
+    "city": "Paris",
+    "country": "France",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Beth Loubavitch Paris 4",
+    "address": "17 Rue Des Rosiers, Paris, 75004 France",
+    "phone": "33-1-45-26-87-60",
+    "website": "",
+    "note": "מארה · אזור יהודי מרכזי",
+    "verification": "מאומת לפי Chabad Locator",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "מאומת"
+    ]
+  },
+  {
+    "id": "chb-paris-14",
+    "city": "Paris",
+    "country": "France",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Beth Loubavitch Paris 14",
+    "address": "125 Boulevard Brune, Apt. 28, Paris, 75014 France",
+    "phone": "33-1-45-39-20-34",
+    "website": "",
+    "note": "פריז 14",
+    "verification": "מאומת לפי Chabad Locator",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "מאומת"
+    ]
+  },
+  {
+    "id": "chb-nice",
+    "city": "Nice",
+    "country": "France",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad Nice",
+    "address": "Nice, France",
+    "phone": "",
+    "website": "https://www.chabadnice.com",
+    "note": "ניס · ריביירה צרפתית",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-cannes",
+    "city": "Cannes",
+    "country": "France",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad Cannes",
+    "address": "Cannes, France",
+    "phone": "",
+    "website": "https://www.chabadcannes.com",
+    "note": "קאן · ריביירה",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-london-hq",
+    "city": "London",
+    "country": "England",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad Lubavitch UK Headquarters",
+    "address": "107-115 Stamford Hill, London, N16 5RP England",
+    "phone": "44-20-8800-0022",
+    "website": "https://www.chabad.org.uk",
+    "note": "סטמפורד היל · מרכז חב״ד בריטניה",
+    "verification": "מאומת לפי Chabad Locator",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "מאומת"
+    ]
+  },
+  {
+    "id": "chb-london-bloomsbury",
+    "city": "London",
+    "country": "England",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad Lubavitch of Bloomsbury",
+    "address": "85 Great Titchfield Street, London, W1W 6RJ England",
+    "phone": "44-20-7060-9770",
+    "website": "https://www.chabadw1.org",
+    "note": "מרכז לונדון · סטודנטים",
+    "verification": "מאומת לפי Chabad Locator",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "מאומת"
+    ]
+  },
+  {
+    "id": "chb-london-israeli",
+    "city": "London",
+    "country": "England",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad Israeli Centre Golders Green",
+    "address": "1035 Finchley Road, London, NW11 7ES England",
+    "phone": "44-792-585-7050",
+    "website": "https://www.chabadisraelicentre.co.uk",
+    "note": "ישראלים · גולדרס גרין",
+    "verification": "מאומת לפי Chabad Locator",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "יעד ישראלי",
+      "מאומת"
+    ]
+  },
+  {
+    "id": "chb-london-battersea",
+    "city": "London",
+    "country": "England",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad of Battersea",
+    "address": "142 Battersea Park Road, Unit 7 Mandeville Courtyard, London, SW11 4NB England",
+    "phone": "44-771-052-4460",
+    "website": "https://www.jewishbattersea.com",
+    "note": "דרום לונדון",
+    "verification": "מאומת לפי Chabad Locator",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "מאומת"
+    ]
+  },
+  {
+    "id": "chb-london-greenwich",
+    "city": "London",
+    "country": "England",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad of Greenwich - Docklands",
+    "address": "13 Roan Street, London, SE109JY England",
+    "phone": "44-7472-255283",
+    "website": "https://www.jewishdocklands.com",
+    "note": "גריניץ׳ · Docklands",
+    "verification": "מאומת לפי Chabad Locator",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "מאומת"
+    ]
+  },
+  {
+    "id": "chb-manchester",
+    "city": "Manchester",
+    "country": "England",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad Manchester",
+    "address": "Manchester, England",
+    "phone": "",
+    "website": "https://www.chabad.org.uk",
+    "note": "מנצ׳סטר · קהילה גדולה",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-berlin",
+    "city": "Berlin",
+    "country": "Germany",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad Berlin",
+    "address": "Münstersche Str. 6, Berlin, Germany",
+    "phone": "",
+    "website": "https://www.chabadberlin.com",
+    "note": "ברלין · תיירות וקהילה",
+    "verification": "דורש אימות טלפון",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-munich",
+    "city": "Munich",
+    "country": "Germany",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad Munich",
+    "address": "Munich, Germany",
+    "phone": "",
+    "website": "https://www.chabadmunich.com",
+    "note": "מינכן",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-amsterdam",
+    "city": "Amsterdam",
+    "country": "Netherlands",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad Amsterdam",
+    "address": "Amsterdam, Netherlands",
+    "phone": "",
+    "website": "https://www.chabadamsterdamcenter.com",
+    "note": "אמסטרדם · תיירים",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-prague",
+    "city": "Prague",
+    "country": "Czech Republic",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad Prague",
+    "address": "Maiselova 18, Prague, Czech Republic",
+    "phone": "",
+    "website": "https://www.chabadprague.cz",
+    "note": "פראג · הרובע היהודי",
+    "verification": "דורש אימות טלפון",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-budapest",
+    "city": "Budapest",
+    "country": "Hungary",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad Budapest",
+    "address": "Budapest, Hungary",
+    "phone": "",
+    "website": "https://www.chabad.hu",
+    "note": "בודפשט · תיירות ישראלית",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "יעד ישראלי"
+    ]
+  },
+  {
+    "id": "chb-vienna",
+    "city": "Vienna",
+    "country": "Austria",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad Vienna",
+    "address": "Vienna, Austria",
+    "phone": "",
+    "website": "https://www.chabadvienna.com",
+    "note": "וינה",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-zurich",
+    "city": "Zurich",
+    "country": "Switzerland",
+    "region": "Europe",
+    "type": "chabad",
+    "name": "Chabad Zurich",
+    "address": "Zurich, Switzerland",
+    "phone": "",
+    "website": "https://www.chabadzurich.com",
+    "note": "ציריך",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-770",
+    "city": "Brooklyn, NY",
+    "country": "USA",
+    "region": "North America",
+    "type": "chabad",
+    "name": "Chabad Lubavitch Headquarters",
+    "address": "770 Eastern Parkway, Brooklyn, NY, 11213 USA",
+    "phone": "718-774-4000",
+    "website": "https://www.lubavitch.com",
+    "note": "מרכז חב״ד העולמי",
+    "verification": "מאומת לפי Chabad Locator",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "מאומת"
+    ]
+  },
+  {
+    "id": "chb-770-visitors",
+    "city": "Brooklyn, NY",
+    "country": "USA",
+    "region": "North America",
+    "type": "chabad",
+    "name": "770 Visitors Center",
+    "address": "770 Eastern Parkway, Brooklyn, NY, 11213 USA",
+    "phone": "718-773-7777",
+    "website": "https://www.wlcc.org",
+    "note": "מרכז מבקרים",
+    "verification": "מאומת לפי Chabad Locator",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "מאומת"
+    ]
+  },
+  {
+    "id": "chb-media",
+    "city": "Brooklyn, NY",
+    "country": "USA",
+    "region": "North America",
+    "type": "chabad",
+    "name": "Chabad Lubavitch Media Center",
+    "address": "770 Eastern Parkway, Brooklyn, NY, 11213 USA",
+    "phone": "718-735-2000",
+    "website": "https://www.chabad.org",
+    "note": "מדיה · Chabad.org",
+    "verification": "מאומת לפי Chabad Locator",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "מאומת"
+    ]
+  },
+  {
+    "id": "chb-miami",
+    "city": "Miami",
+    "country": "USA",
+    "region": "North America",
+    "type": "chabad",
+    "name": "Chabad Miami",
+    "address": "Miami, Florida, USA",
+    "phone": "",
+    "website": "https://www.chabadmiami.com",
+    "note": "מיאמי · יעד ישראלי",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "יעד ישראלי"
+    ]
+  },
+  {
+    "id": "chb-losangeles",
+    "city": "Los Angeles",
+    "country": "USA",
+    "region": "North America",
+    "type": "chabad",
+    "name": "Chabad Los Angeles",
+    "address": "Los Angeles, California, USA",
+    "phone": "",
+    "website": "https://www.chabadla.org",
+    "note": "לוס אנג׳לס",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-lasvegas",
+    "city": "Las Vegas",
+    "country": "USA",
+    "region": "North America",
+    "type": "chabad",
+    "name": "Chabad Las Vegas",
+    "address": "Las Vegas, Nevada, USA",
+    "phone": "",
+    "website": "https://www.chabadlv.com",
+    "note": "לאס וגאס · תיירות",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-sanfrancisco",
+    "city": "San Francisco",
+    "country": "USA",
+    "region": "North America",
+    "type": "chabad",
+    "name": "Chabad San Francisco",
+    "address": "San Francisco, California, USA",
+    "phone": "",
+    "website": "https://www.chabad.org",
+    "note": "סן פרנסיסקו",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-toronto",
+    "city": "Toronto",
+    "country": "Canada",
+    "region": "North America",
+    "type": "chabad",
+    "name": "Chabad Toronto",
+    "address": "Toronto, Canada",
+    "phone": "",
+    "website": "https://www.chabad.org",
+    "note": "טורונטו · קהילה גדולה",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-montreal",
+    "city": "Montreal",
+    "country": "Canada",
+    "region": "North America",
+    "type": "chabad",
+    "name": "Chabad Montreal",
+    "address": "Montreal, Canada",
+    "phone": "",
+    "website": "https://www.chabad.org",
+    "note": "מונטריאול · קהילה גדולה",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-cancun",
+    "city": "Cancun",
+    "country": "Mexico",
+    "region": "North America",
+    "type": "chabad",
+    "name": "Chabad Cancun",
+    "address": "Cancun, Mexico",
+    "phone": "",
+    "website": "https://www.chabadcancun.com",
+    "note": "קנקון · מטיילים",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "יעד ישראלי"
+    ]
+  },
+  {
+    "id": "chb-tulum",
+    "city": "Tulum",
+    "country": "Mexico",
+    "region": "North America",
+    "type": "chabad",
+    "name": "Chabad Tulum",
+    "address": "Tulum, Mexico",
+    "phone": "",
+    "website": "https://www.chabad.org",
+    "note": "טולום · מטיילים",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "יעד ישראלי"
+    ]
+  },
+  {
+    "id": "chb-rio",
+    "city": "Rio de Janeiro",
+    "country": "Brazil",
+    "region": "South America",
+    "type": "chabad",
+    "name": "Chabad Rio",
+    "address": "Rio de Janeiro, Brazil",
+    "phone": "",
+    "website": "https://www.chabad.org",
+    "note": "ריו · תיירים",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-buenos",
+    "city": "Buenos Aires",
+    "country": "Argentina",
+    "region": "South America",
+    "type": "chabad",
+    "name": "Chabad Central Argentina",
+    "address": "Buenos Aires, Argentina",
+    "phone": "",
+    "website": "https://www.chabad.org",
+    "note": "בואנוס איירס",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-sydney",
+    "city": "Sydney",
+    "country": "Australia",
+    "region": "Oceania",
+    "type": "chabad",
+    "name": "Chabad Sydney",
+    "address": "Sydney, Australia",
+    "phone": "",
+    "website": "https://www.chabad.org.au",
+    "note": "סידני",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-melbourne",
+    "city": "Melbourne",
+    "country": "Australia",
+    "region": "Oceania",
+    "type": "chabad",
+    "name": "Chabad of Melbourne",
+    "address": "Melbourne, Australia",
+    "phone": "",
+    "website": "https://www.chabad.org.au",
+    "note": "מלבורן",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-tokyo",
+    "city": "Tokyo",
+    "country": "Japan",
+    "region": "Asia",
+    "type": "chabad",
+    "name": "Chabad Tokyo",
+    "address": "Tokyo, Japan",
+    "phone": "",
+    "website": "https://www.chabad.jp",
+    "note": "טוקיו",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-hongkong",
+    "city": "Hong Kong",
+    "country": "China",
+    "region": "Asia",
+    "type": "chabad",
+    "name": "Chabad Hong Kong",
+    "address": "Hong Kong",
+    "phone": "",
+    "website": "https://www.chabad.hk",
+    "note": "הונג קונג",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-singapore",
+    "city": "Singapore",
+    "country": "Singapore",
+    "region": "Asia",
+    "type": "chabad",
+    "name": "Chabad Singapore",
+    "address": "Singapore",
+    "phone": "",
+    "website": "https://www.chabad.org.sg",
+    "note": "סינגפור",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-delhi",
+    "city": "Delhi",
+    "country": "India",
+    "region": "Asia",
+    "type": "chabad",
+    "name": "Chabad Delhi",
+    "address": "Delhi, India",
+    "phone": "",
+    "website": "https://www.chabadindia.org",
+    "note": "דלהי",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "יעד ישראלי"
+    ]
+  },
+  {
+    "id": "chb-goa",
+    "city": "Goa",
+    "country": "India",
+    "region": "Asia",
+    "type": "chabad",
+    "name": "Chabad Goa",
+    "address": "Anjuna, Goa, India",
+    "phone": "",
+    "website": "https://www.chabadindia.org",
+    "note": "גואה · מטיילים ישראלים",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "יעד ישראלי"
+    ]
+  },
+  {
+    "id": "chb-kathmandu",
+    "city": "Kathmandu",
+    "country": "Nepal",
+    "region": "Asia",
+    "type": "chabad",
+    "name": "Chabad Kathmandu",
+    "address": "Thamel, Kathmandu, Nepal",
+    "phone": "",
+    "website": "https://www.chabadnepal.com",
+    "note": "נפאל · מטיילים",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "יעד ישראלי"
+    ]
+  },
+  {
+    "id": "chb-johannesburg",
+    "city": "Johannesburg",
+    "country": "South Africa",
+    "region": "Africa",
+    "type": "chabad",
+    "name": "Chabad Johannesburg",
+    "address": "Johannesburg, South Africa",
+    "phone": "",
+    "website": "https://www.chabad.org.za",
+    "note": "יוהנסבורג",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-capetown",
+    "city": "Cape Town",
+    "country": "South Africa",
+    "region": "Africa",
+    "type": "chabad",
+    "name": "Chabad Cape Town",
+    "address": "Cape Town, South Africa",
+    "phone": "",
+    "website": "https://www.chabad.org.za",
+    "note": "קייפטאון",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-nairobi",
+    "city": "Nairobi",
+    "country": "Kenya",
+    "region": "Africa",
+    "type": "chabad",
+    "name": "Chabad Nairobi",
+    "address": "Nairobi, Kenya",
+    "phone": "",
+    "website": "https://www.chabad.org",
+    "note": "ניירובי",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-casablanca",
+    "city": "Casablanca",
+    "country": "Morocco",
+    "region": "Africa",
+    "type": "chabad",
+    "name": "Chabad Casablanca",
+    "address": "Casablanca, Morocco",
+    "phone": "",
+    "website": "https://www.chabad.org",
+    "note": "קזבלנקה",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-istanbul",
+    "city": "Istanbul",
+    "country": "Turkey",
+    "region": "Europe/Asia",
+    "type": "chabad",
+    "name": "Chabad Istanbul",
+    "address": "Istanbul, Turkey",
+    "phone": "",
+    "website": "https://www.chabad.org",
+    "note": "איסטנבול",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  },
+  {
+    "id": "chb-tlv-central",
+    "city": "Tel Aviv",
+    "country": "Israel",
+    "region": "Middle East",
+    "type": "chabad",
+    "name": "Chabad Central Tel Aviv",
+    "address": "King George Street 30, Tel Aviv, Israel",
+    "phone": "972-3-641-7224",
+    "website": "https://www.chabadtlv.org",
+    "note": "תל אביב מרכז",
+    "verification": "מאומת לפי Chabad Locator",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "מאומת"
+    ]
+  },
+  {
+    "id": "chb-tlv-yafo",
+    "city": "Tel Aviv-Yafo",
+    "country": "Israel",
+    "region": "Middle East",
+    "type": "chabad",
+    "name": "Chabad North Yafo",
+    "address": "Michelangelo St 31, Tel Aviv-Yafo, Israel",
+    "phone": "",
+    "website": "",
+    "note": "יפו",
+    "verification": "מאומת חלקית לפי Chabad Locator",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "מאומת"
+    ]
+  },
+  {
+    "id": "chb-jer-rechavia",
+    "city": "Jerusalem",
+    "country": "Israel",
+    "region": "Middle East",
+    "type": "chabad",
+    "name": "Chabad of Rechavia",
+    "address": "52 King George Street, Jerusalem, Israel",
+    "phone": "972-2-800-1717",
+    "website": "https://www.jerusalemchabad.org",
+    "note": "רחביה · מרכז העיר",
+    "verification": "מאומת לפי Chabad Locator",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "מאומת"
+    ]
+  },
+  {
+    "id": "chb-jer-oldcity",
+    "city": "Jerusalem",
+    "country": "Israel",
+    "region": "Middle East",
+    "type": "chabad",
+    "name": "Chabad of Old City Jerusalem",
+    "address": "Eretz Hefetz 114/65, Jerusalem, Israel",
+    "phone": "972-2-581-2872",
+    "website": "",
+    "note": "העיר העתיקה",
+    "verification": "מאומת לפי Chabad Locator",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "מאומת"
+    ]
+  },
+  {
+    "id": "chb-jer-eged",
+    "city": "Jerusalem",
+    "country": "Israel",
+    "region": "Middle East",
+    "type": "chabad",
+    "name": "Chabad of Eged Jerusalem",
+    "address": "Yaffo 224, Central Station, Jerusalem, Israel",
+    "phone": "",
+    "website": "",
+    "note": "תחנה מרכזית",
+    "verification": "מאומת חלקית לפי Chabad Locator",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "מאומת"
+    ]
+  },
+  {
+    "id": "chb-jer-holyland",
+    "city": "Jerusalem",
+    "country": "Israel",
+    "region": "Middle East",
+    "type": "chabad",
+    "name": "Chabad House of Holyland",
+    "address": "Michael Avi Yona St 2, Jerusalem, Israel",
+    "phone": "972-54-318-2770",
+    "website": "https://chabadholyland.com",
+    "note": "הולילנד",
+    "verification": "מאומת לפי Chabad Locator",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps",
+      "מאומת"
+    ]
+  },
+  {
+    "id": "chb-eilat",
+    "city": "Eilat",
+    "country": "Israel",
+    "region": "Middle East",
+    "type": "chabad",
+    "name": "Chabad Eilat",
+    "address": "Eilat, Israel",
+    "phone": "",
+    "website": "https://www.chabad.org.il",
+    "note": "אילת · תיירות",
+    "verification": "דורש השלמה",
+    "tags": [
+      "חב״ד",
+      "Waze",
+      "Google Maps"
+    ]
+  }
+]

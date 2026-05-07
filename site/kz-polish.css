@@ -1,0 +1,141 @@
+/* ============================================================
+   KZ POLISH — global responsive polish layered on top of everything
+   Mobile-first; safe area; touch targets; reduced motion; print.
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { padding-bottom: env(safe-area-inset-bottom); }
+
+/* Topbar normalization across pages */
+.topbar{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px clamp(12px, 3vw, 24px);
+  min-height: 56px;
+  background: linear-gradient(180deg, rgba(11,31,58,.94), rgba(11,31,58,.82));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(212,176,122,.25);
+  padding-top: max(10px, env(safe-area-inset-top));
+}
+.topbar .brand-wrap{
+  font-family: 'Frank Ruhl Libre', serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: #d4b07a;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  max-width: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.topbar .brand-wrap:hover{ color: #f1d597; }
+
+@media (max-width: 380px){
+  .topbar{ min-height: 50px; padding-inline: 10px; gap: 8px; }
+  .topbar .brand-wrap{ font-size: 13px; }
+}
+
+/* Universal card styling */
+.card{
+  background: linear-gradient(160deg, rgba(15,33,66,.96), rgba(20,49,91,.92));
+  border: 1px solid rgba(212,176,122,.25);
+  border-radius: clamp(14px, 1.5vw, 18px);
+  color: #f6e6c2;
+  padding: clamp(12px, 2vw, 18px);
+}
+
+/* Prevent iOS auto-zoom on focus */
+input, textarea, select{
+  font-family: inherit;
+  font-size: 16px;
+  -webkit-tap-highlight-color: transparent;
+}
+@media (min-width: 720px){
+  input, textarea, select{ font-size: 14px; }
+}
+
+/* Touch targets — at least 44px on mobile */
+@media (max-width: 720px){
+  button, a.kz-link, a.hm-link, a.dl-action, a.fa-link,
+  .pa-primary, .pa-secondary,
+  .sm-go, .sd-pray-go, .pw-go, .mn-go, .mo-go{
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 720px){
+  body{ line-height: 1.6; }
+  h1{ line-height: 1.15; }
+  h2, h3{ line-height: 1.25; }
+  p{ font-size: 15px; }
+}
+
+/* Single column on the smallest devices */
+@media (max-width: 540px){
+  .hm-grid, .sm-grid, .pw-grid, .sd-grid, .kd-grid,
+  .sc-wall-grid, .sc-top-grid, .sc-req-list,
+  .kz-host-list{
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Better tap feedback */
+button:active{ transform: scale(.985); }
+
+/* Reduce motion respect */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print friendliness */
+@media print{
+  .topbar, .kz-nav-toggle, .kz-nav-drawer, .kz-nav-overlay,
+  .kz-update-chip, .kz-push-bubble, .kz-i18n-offer,
+  .kz-theme-toggle, .kz-tour-card{ display: none !important; }
+  body{ background: #fff !important; color: #000 !important; }
+  .card{ background: none !important; border: 1px solid #ddd !important; color: #000 !important; }
+}
+
+/* Focus visibility for keyboard users */
+button:focus-visible, a:focus-visible, input:focus-visible,
+textarea:focus-visible, select:focus-visible{
+  outline: 2px solid #f1d597;
+  outline-offset: 2px;
+}
+
+/* Mobile hero adjustments */
+@media (max-width: 540px){
+  .kz-hero-illust{ min-height: 180px; border-radius: 16px; }
+  .kz-hero-illust > .kz-hero-content{
+    inset-inline-start: 16px;
+    bottom: 14px;
+    max-width: calc(100% - 32px);
+  }
+  .kz-hero-illust > .kz-hero-content h1{ font-size: 22px; }
+  .kz-hero-illust > .kz-hero-content p{ font-size: 12px; }
+}
+
+/* Bottom safe area for fixed bottom things */
+.kz-shabbat-banner, .kz-update-chip{
+  bottom: max(20px, env(safe-area-inset-bottom));
+}
+
+/* Pretty scrollbars */
+*::-webkit-scrollbar{ width: 8px; height: 8px; }
+*::-webkit-scrollbar-track{ background: transparent; }
+*::-webkit-scrollbar-thumb{ background: rgba(212,176,122,.3); border-radius: 4px; }
+*::-webkit-scrollbar-thumb:hover{ background: rgba(212,176,122,.5); }

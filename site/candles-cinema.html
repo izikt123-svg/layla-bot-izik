@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>קיר נרות שבת · מסך מלא · מרכז התפילה</title>
+  <meta name="description" content="קיר נרות שבת בתצוגת מסך מלא — לבית הכנסת, להקרנה, לטלוויזיה." />
+  <meta name="theme-color" content="#000" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="kz-candles-cinema.css" />
+</head>
+<body class="cin-body">
+
+<header class="cin-bar">
+  <a class="cin-back" href="/shabbat-candles.html" aria-label="חזרה">←</a>
+  <div class="cin-title">
+    <span class="cin-flame">🕯</span>
+    <span>קיר נרות שבת · חי</span>
+    <span class="cin-counter"><b id="cinCount">0</b> נרות דולקים</span>
+  </div>
+  <div class="cin-controls">
+    <button id="cinTheme" class="cin-btn" title="ניגוד גבוה">◐</button>
+    <button id="cinFs" class="cin-btn" title="מסך מלא">⛶</button>
+  </div>
+</header>
+
+<main class="cin-stage">
+  <div class="cin-grid" id="cinGrid"></div>
+  <div class="cin-empty" id="cinEmpty" hidden>
+    🕯 ממתין לנרות שיודלקו…
+  </div>
+</main>
+
+<footer class="cin-foot">
+  <span>my-hom.net</span>
+  <span class="cin-marquee" id="cinMarquee"></span>
+  <span>שבת שלום ✦</span>
+</footer>
+
+<script src="kz-candles-cinema.js" defer></script>
+<script src="kz-nav.js" defer></script>
+<link rel="stylesheet" href="kz-nav.css">
+<link rel="stylesheet" href="kz-polish.css">
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>סיפור לפני השינה · 12 סיפורי תנ"ך · מרכז התפילה</title>
+  <meta name="description" content="12 סיפורי תנ\"ך מאוירים — נח, אברהם, יוסף, משה, דוד, אסתר ועוד. סיפור היום + הקראה." />
+  <meta name="theme-color" content="#0B1F3A" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="critical.css" />
+  <link rel="stylesheet" href="kz-kids.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <a href="/" class="brand-wrap">← מרכז התפילה</a>
+  <span class="kd-pill">12 סיפורים · להורים וילדים</span>
+</header>
+
+<main class="kd-shell">
+  <section class="kd-hero">
+    <div class="kd-icon">🌙✨📖</div>
+    <h1>סיפור לפני השינה</h1>
+    <p>12 סיפורי תנ"ך — מספרים בקול חם, עם הקראה כשרוצים. סיפור היום משתנה כל יום.</p>
+  </section>
+
+  <section class="card kd-today" id="kdToday">
+    <div class="kd-today-label">⭐ סיפור היום</div>
+  </section>
+
+  <section class="card kd-grid-card">
+    <div class="mini-title"><span class="mini-ornament">📚</span><span>כל הסיפורים</span></div>
+    <div class="kd-grid" id="kdGrid"></div>
+  </section>
+</main>
+
+<!-- Story modal -->
+<div class="kd-modal" id="kdModal" hidden>
+  <div class="kd-modal-back" data-close></div>
+  <article class="kd-story" id="kdStoryContent">
+    <button class="kd-x" data-close aria-label="סגור">×</button>
+  </article>
+</div>
+
+<script src="data/kids-stories.js" defer></script>
+<script src="kz-kids.js" defer></script>
+<script src="kz-ai-chat.js" defer></script>
+<link rel="stylesheet" href="kz-ai-chat.css">
+<script src="kz-honeypot.js" defer></script>
+<script src="kz-nav.js" defer></script>
+<link rel="stylesheet" href="kz-nav.css">
+<link rel="stylesheet" href="kz-polish.css">
+</body>
+</html>
