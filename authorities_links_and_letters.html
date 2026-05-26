@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>אלון טהורי - רשויות וקישורים אמיתיים + מכתבים אוטומטיים</title>
+  <link rel="stylesheet" href="theme_navy_glass.css" />
+  <style>
+    main { padding: 24px; }
+    .section { margin-bottom: 18px; }
+    .card h2 { margin-bottom: 10px; }
+    ul { margin: 0; padding-right: 20px; }
+    li { margin: 8px 0; }
+    a { color: #9fd8ff; }
+    .template { white-space: pre-line; line-height: 1.7; background: rgba(255,255,255,0.06); border: 1px dashed rgba(255,255,255,0.26); border-radius: 12px; padding: 12px; }
+    .tag { display:inline-block; border:1px solid rgba(255,255,255,.3); border-radius:10px; padding:2px 8px; font-size:12px; margin-left:6px; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true"></div>
+      <div>
+        <h1>דף רשויות וקישורים אמיתיים</h1>
+        <p>מוכן לעבודה משרדית + מכתבים אוטומטיים</p>
+      </div>
+    </div>
+    <nav class="top-actions" aria-label="Top actions">
+      <span class="chip">עדכון: 25 במאי 2026</span>
+      <span class="chip">קישורים רשמיים בלבד</span>
+    </nav>
+  </header>
+
+  <main>
+    <section class="section card">
+      <h2>רשויות מרכזיות — קישורים אמיתיים</h2>
+      <ul>
+        <li><strong>רשות המסים — דיווח ותשלום מע"מ:</strong> <a href="https://www.gov.il/he/service/reporting-and-paying-taxes" target="_blank" rel="noopener">https://www.gov.il/he/service/reporting-and-paying-taxes</a></li>
+        <li><strong>רשות המסים — דיווח מפורט למע"מ:</strong> <a href="https://www.gov.il/he/service/detailed-vat-reporting" target="_blank" rel="noopener">https://www.gov.il/he/service/detailed-vat-reporting</a></li>
+        <li><strong>רשות המסים — תשלום מסים ניכויים:</strong> <a href="https://www.gov.il/he/service/payment-of-taxes-deductions" target="_blank" rel="noopener">https://www.gov.il/he/service/payment-of-taxes-deductions</a></li>
+        <li><strong>רשות המסים — שידור דוחות 126/856:</strong> <a href="https://www.gov.il/he/service/report126" target="_blank" rel="noopener">https://www.gov.il/he/service/report126</a></li>
+        <li><strong>רשות המסים — החזר מס (טופס 135):</strong> <a href="https://www.gov.il/he/service/itc135" target="_blank" rel="noopener">https://www.gov.il/he/service/itc135</a></li>
+        <li><strong>רשות המסים — זימון תור למשרדים:</strong> <a href="https://www.gov.il/he/service/scheduling-appointment-taxes" target="_blank" rel="noopener">https://www.gov.il/he/service/scheduling-appointment-taxes</a></li>
+        <li><strong>ביטוח לאומי — דף הבית:</strong> <a href="https://www.btl.gov.il" target="_blank" rel="noopener">https://www.btl.gov.il</a></li>
+        <li><strong>ביטוח לאומי — שירות אישי:</strong> <a href="https://ps.btl.gov.il" target="_blank" rel="noopener">https://ps.btl.gov.il</a></li>
+        <li><strong>Gov.il — שירותים ממשלתיים:</strong> <a href="https://www.gov.il" target="_blank" rel="noopener">https://www.gov.il</a></li>
+      </ul>
+    </section>
+
+    <section class="section card">
+      <h2>תבניות מכתבים אוטומטיים לרשויות</h2>
+      <p><span class="tag">AUTO_TEMPLATE</span><span class="tag">HE-IL</span><span class="tag">LEGAL_STYLE</span></p>
+
+      <h3>1) בקשת ארכה להגשת דו"ח</h3>
+      <div class="template">תאריך: {{date}}
+לכבוד {{authority_name}}
+
+הנדון: בקשה לארכה להגשת דו"ח {{report_type}} עבור תקופה {{period}}
+
+אני הח"מ {{representative_name}}, מייצג/ת את {{client_name}} (ח"פ/עוסק: {{tax_id}}), מבקש/ת בזאת ארכה בת {{days_requested}} ימים להגשת הדו"ח שבנדון.
+
+נימוקי הבקשה: {{reason}}
+
+נודה לאישורכם בהקדם.
+
+בברכה,
+{{firm_name}}
+{{phone}}
+{{email}}</div>
+
+      <h3>2) בקשה לביטול/הפחתת קנס</h3>
+      <div class="template">תאריך: {{date}}
+לכבוד {{authority_name}}
+
+הנדון: בקשה לביטול/הפחתת קנס מספר {{penalty_id}}
+
+בהמשך להודעת הקנס בגין {{penalty_reason}}, נבקש לשקול ביטול/הפחתה מהטעמים הבאים:
+{{reason}}
+
+מצ"ב מסמכים תומכים: {{attachments_list}}
+
+בברכה,
+{{firm_name}}
+{{representative_name}}</div>
+
+      <h3>3) בקשת פריסת חוב</h3>
+      <div class="template">תאריך: {{date}}
+לכבוד {{authority_name}}
+
+הנדון: בקשה לפריסת חוב — תיק {{tax_id}}
+
+בהתאם ליתרת החוב העדכנית בסך {{debt_amount}}, נבקש לפרוס את החוב ל-{{installments}} תשלומים חודשיים.
+
+רקע קצר: {{reason}}
+הצעת הסדר: {{proposal}}
+
+נודה לאישורכם ולעדכון המשך טיפול.
+
+בברכה,
+{{firm_name}}</div>
+    </section>
+
+    <section class="section card">
+      <h2>שדות חובה למנוע מכתבים אוטומטי</h2>
+      <ul>
+        <li>{{authority_name}}, {{client_name}}, {{tax_id}}, {{report_type}}, {{period}}</li>
+        <li>{{representative_name}}, {{firm_name}}, {{email}}, {{phone}}</li>
+        <li>{{reason}}, {{attachments_list}}, {{debt_amount}}, {{installments}}, {{proposal}}</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
