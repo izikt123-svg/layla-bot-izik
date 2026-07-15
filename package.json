@@ -1,11 +1,7 @@
 {
-  "name": "layla-bot-izik",
-  "version": "1.0.0",
-  "main": "index.js",
-  "dependencies": {
-    "whatsapp-web.js": "^1.23.0",
-    "qrcode-terminal": "^0.12.0",
-    "@google/generative-ai": "^0.2.1",
-    "express": "^4.18.2"
-  }
+  "name": "gotours-navigator-v26-keyless",
+  "version": "26.0.0",
+  "private": true,
+  "engines": { "node": ">=20" },
+  "dependencies": { "@netlify/blobs": "^10.7.9" }
 }

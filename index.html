@@ -1,0 +1,3913 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0E1512">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GoTours">
+<meta name="format-detection" content="telephone=no">
+<title>GoTours Navigator</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Suez+One&family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+:root{
+  --ink:#0E1512;          /* פחם-יער עמוק */
+  --panel:rgba(14,21,18,.88);
+  --panel-soft:rgba(14,21,18,.72);
+  --brass:#C9A24B;        /* פליז-זהב */
+  --brass-soft:#E3C989;
+  --ivory:#F0EAD6;        /* שנהב */
+  --mist:#9AA69E;         /* ערפל ירקרק */
+  --alert:#D9534F;
+  --safe:#5AA97C;
+  --radius:18px;
+  --shadow:0 8px 30px rgba(0,0,0,.45);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;font-family:'Heebo',sans-serif;background:var(--ink);color:var(--ivory)}
+#map{position:fixed;inset:0;z-index:1;background:#1a2620}
+.leaflet-control-attribution{direction:ltr;font-size:9px;background:rgba(14,21,18,.6)!important;color:var(--mist)!important}
+.leaflet-control-attribution a{color:var(--brass-soft)!important}
+.leaflet-control-zoom{display:none}
+
+/* ===== לוגו עליון ===== */
+#brand{
+  position:fixed;top:calc(env(safe-area-inset-top) + 10px);right:0;left:0;z-index:20;
+  display:flex;justify-content:center;pointer-events:none;
+}
+#brand .plate{
+  pointer-events:auto;display:flex;align-items:center;gap:10px;
+  background:var(--panel);backdrop-filter:blur(12px);
+  border:1px solid rgba(201,162,75,.35);border-radius:999px;
+  padding:7px 18px;box-shadow:var(--shadow);
+}
+#brand img{width:26px;height:26px}
+#brand .name{font-family:'Suez One',serif;font-size:17px;letter-spacing:.5px;color:var(--brass);line-height:1;direction:ltr}
+#brand .sub{font-size:10px;color:var(--mist);line-height:1}
+
+/* ===== שבב מזג אוויר ===== */
+#wxChip{
+  position:fixed;top:calc(env(safe-area-inset-top) + 64px);right:12px;z-index:20;
+  background:var(--panel-soft);backdrop-filter:blur(10px);
+  border:1px solid rgba(201,162,75,.25);border-radius:999px;
+  padding:6px 14px;font-size:13px;display:none;align-items:center;gap:8px;
+  box-shadow:var(--shadow);cursor:pointer;
+}
+#wxChip .t{font-weight:700;color:var(--brass-soft);font-size:15px}
+
+/* ===== שבב דיוק GPS ===== */
+#accChip{
+  position:fixed;top:calc(env(safe-area-inset-top) + 64px);left:12px;z-index:20;
+  background:var(--panel-soft);backdrop-filter:blur(10px);
+  border:1px solid rgba(201,162,75,.25);border-radius:999px;
+  padding:6px 14px;font-size:12px;display:none;align-items:center;gap:6px;
+  box-shadow:var(--shadow);
+}
+#accChip .dot{width:8px;height:8px;border-radius:50%;background:var(--safe)}
+#accChip.weak .dot{background:var(--brass)}
+#accChip.bad .dot{background:var(--alert)}
+
+/* ===== כפתורים צפים ===== */
+.fab{
+  width:52px;height:52px;border-radius:50%;border:1px solid rgba(201,162,75,.35);
+  background:var(--panel);backdrop-filter:blur(12px);color:var(--ivory);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  box-shadow:var(--shadow);font-size:22px;user-select:none;transition:transform .15s,background .2s;
+}
+.fab:active{transform:scale(.9)}
+.fab.on{background:var(--brass);color:var(--ink);border-color:var(--brass)}
+.fab svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.fab.on svg{stroke:var(--ink)}
+
+#railRight{position:fixed;right:12px;top:50%;transform:translateY(-50%);z-index:20;display:flex;flex-direction:column;gap:12px}
+#railLeft{position:fixed;left:12px;top:50%;transform:translateY(-50%);z-index:20;display:flex;flex-direction:column;gap:12px}
+
+/* SOS */
+#sosBtn{
+  position:fixed;left:14px;bottom:calc(env(safe-area-inset-bottom) + 110px);z-index:21;
+  width:60px;height:60px;border-radius:50%;border:2px solid #ff8f8c;
+  background:var(--alert);color:#fff;font-family:'Suez One',serif;font-size:16px;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  box-shadow:0 0 0 0 rgba(217,83,79,.6);animation:sospulse 2.4s infinite;letter-spacing:1px;direction:ltr;
+}
+@keyframes sospulse{0%{box-shadow:0 0 0 0 rgba(217,83,79,.55)}70%{box-shadow:0 0 0 16px rgba(217,83,79,0)}100%{box-shadow:0 0 0 0 rgba(217,83,79,0)}}
+@media (prefers-reduced-motion: reduce){#sosBtn{animation:none}}
+#navCtl{
+  position:fixed;right:14px;bottom:calc(env(safe-area-inset-bottom) + 110px);z-index:21;
+  display:flex;flex-direction:column;gap:10px;
+}
+.fab.mini{width:46px;height:46px}
+.fab.mini svg{width:21px;height:21px}
+
+/* ===== העין של המדריך ===== */
+#camView{
+  position:fixed;inset:0;z-index:82;background:rgba(5,8,7,.97);display:none;
+  flex-direction:column;align-items:center;justify-content:flex-start;
+  padding:calc(env(safe-area-inset-top) + 60px) 18px 24px;overflow-y:auto;
+}
+#camView.open{display:flex}
+#camView img{max-width:100%;max-height:38vh;border-radius:16px;box-shadow:var(--shadow);border:1px solid rgba(201,162,75,.35)}
+.cam-ans{
+  margin-top:14px;max-width:560px;width:100%;
+  background:var(--panel);border:1px solid rgba(201,162,75,.4);border-radius:16px;
+  padding:15px;font-size:14.5px;line-height:1.8;white-space:pre-wrap;
+}
+.cam-ans b,.cam-ans strong{color:var(--brass-soft)}
+
+/* ===== HUD תחתון ===== */
+#hud{
+  position:fixed;bottom:calc(env(safe-area-inset-bottom) + 12px);right:12px;left:12px;z-index:20;
+  background:var(--panel);backdrop-filter:blur(14px);
+  border:1px solid rgba(201,162,75,.3);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:10px 6px 8px;display:none;
+}
+#hud .grid{display:grid;grid-template-columns:repeat(6,1fr);gap:2px;text-align:center}
+#hud .cell .v{font-family:'Suez One',serif;font-size:19px;color:var(--brass-soft);line-height:1.1;direction:ltr}
+#hud .cell .v small{font-size:10px;color:var(--mist);font-family:'Heebo'}
+#hud .cell .k{font-size:10px;color:var(--mist);margin-top:2px}
+#hud .rec-row{display:flex;justify-content:center;gap:10px;margin-top:8px}
+.pill{
+  border:1px solid rgba(201,162,75,.4);background:transparent;color:var(--ivory);
+  border-radius:999px;padding:7px 18px;font-size:13px;font-family:'Heebo';cursor:pointer;
+  display:flex;align-items:center;gap:6px;
+}
+.pill.rec{border-color:var(--alert);color:#ffb3b1}
+.pill.gold{background:var(--brass);color:var(--ink);border-color:var(--brass);font-weight:700}
+.recdot{width:9px;height:9px;border-radius:50%;background:var(--alert);animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.2}}
+
+/* ===== פאנל נשלף ===== */
+.sheet{
+  position:fixed;right:0;left:0;bottom:0;z-index:40;max-height:72vh;
+  background:var(--panel);backdrop-filter:blur(18px);
+  border-top:1px solid rgba(201,162,75,.4);border-radius:22px 22px 0 0;
+  box-shadow:0 -10px 40px rgba(0,0,0,.5);transform:translateY(105%);
+  transition:transform .3s cubic-bezier(.3,.9,.3,1);display:flex;flex-direction:column;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+.sheet.open{transform:translateY(0)}
+.sheet .grip{width:44px;height:4px;border-radius:99px;background:rgba(201,162,75,.5);margin:10px auto 4px}
+.sheet h2{font-family:'Suez One',serif;color:var(--brass);font-size:19px;text-align:center;padding:4px 16px 10px;font-weight:400}
+.sheet .body{overflow-y:auto;padding:0 16px 18px;-webkit-overflow-scrolling:touch}
+.sheet .close{position:absolute;top:10px;left:14px;background:none;border:none;color:var(--mist);font-size:22px;cursor:pointer;padding:4px}
+
+/* מה סביבי - רשת קטגוריות */
+.catgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.cat{
+  background:rgba(240,234,214,.05);border:1px solid rgba(201,162,75,.25);border-radius:14px;
+  padding:12px 4px;text-align:center;cursor:pointer;transition:background .2s;
+}
+.cat:active{background:rgba(201,162,75,.25)}
+.cat .ic{font-size:24px;line-height:1.2}
+.cat .nm{font-size:11px;color:var(--ivory);margin-top:4px}
+
+/* תוצאות */
+.resitem{
+  display:flex;align-items:center;gap:12px;padding:12px 4px;
+  border-bottom:1px solid rgba(240,234,214,.08);cursor:pointer;
+}
+.resitem .ic{font-size:22px;width:34px;text-align:center;flex-shrink:0}
+.resitem .nb-img{width:46px;height:46px;border-radius:10px;object-fit:cover;flex-shrink:0;border:1px solid rgba(201,162,75,.3)}
+.resitem .tx{flex:1;min-width:0}
+.resitem .nm{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.resitem .ds{font-size:12px;color:var(--mist)}
+.resitem .go{
+  flex-shrink:0;border:1px solid var(--brass);color:var(--brass);border-radius:999px;
+  padding:5px 14px;font-size:12px;background:none;cursor:pointer;font-family:'Heebo';
+}
+
+/* חיפוש */
+.searchrow{display:flex;gap:8px;margin-bottom:12px}
+.searchrow input{
+  flex:1;background:rgba(240,234,214,.07);border:1px solid rgba(201,162,75,.3);
+  border-radius:12px;padding:11px 14px;color:var(--ivory);font-size:15px;font-family:'Heebo';outline:none;
+}
+.searchrow input::placeholder{color:var(--mist)}
+.searchrow button{
+  border:none;background:var(--brass);color:var(--ink);border-radius:12px;padding:0 18px;
+  font-size:15px;font-weight:700;cursor:pointer;font-family:'Heebo';
+}
+
+/* בחירת פרופיל ניווט */
+.profrow{display:flex;gap:8px;margin-bottom:12px}
+.prof{
+  flex:1;border:1px solid rgba(201,162,75,.3);background:transparent;color:var(--ivory);
+  border-radius:12px;padding:9px 0;font-size:13px;cursor:pointer;font-family:'Heebo';text-align:center;
+}
+.prof.on{background:var(--brass);color:var(--ink);font-weight:700;border-color:var(--brass)}
+
+/* באנר ניווט פעיל */
+#navBanner{
+  position:fixed;top:calc(env(safe-area-inset-top) + 64px);right:70px;left:70px;z-index:19;
+  background:var(--panel);backdrop-filter:blur(12px);border:1px solid var(--brass);
+  border-radius:14px;padding:8px 12px;display:none;text-align:center;box-shadow:var(--shadow);
+}
+#navBanner .d{font-family:'Suez One',serif;color:var(--brass-soft);font-size:17px;direction:ltr}
+#navBanner .t{font-size:11px;color:var(--mist)}
+#navBanner .turnrow{display:flex;align-items:center;gap:12px;justify-content:center}
+#navBanner .turnic{font-size:34px;line-height:1;flex-shrink:0}
+#navBanner .turntx{text-align:right;min-width:0}
+#navBanner .turnwhat{font-size:14px;color:var(--ivory);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:56vw}
+#navChips{
+  position:fixed;top:calc(env(safe-area-inset-top) + 148px);right:0;left:0;z-index:18;
+  display:none;gap:8px;overflow-x:auto;padding:4px 14px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+}
+#navChips::-webkit-scrollbar{display:none}
+#navChips.show{display:flex}
+.me-marker.driving .core{display:none}
+.me-marker.driving .puck{display:block}
+.me-marker .puck{
+  display:none;width:44px;height:44px;margin:-12px;
+  filter:drop-shadow(0 3px 8px rgba(0,0,0,.6));transition:transform .4s linear;
+}
+#navBanner .stop{
+  position:absolute;top:-8px;left:-8px;width:24px;height:24px;border-radius:50%;
+  background:var(--alert);color:#fff;border:none;font-size:13px;cursor:pointer;line-height:1;
+}
+
+/* מזג אוויר */
+.wxnow{display:flex;align-items:center;justify-content:center;gap:16px;padding:6px 0 14px}
+.wxnow .big{font-family:'Suez One',serif;font-size:44px;color:var(--brass-soft);direction:ltr}
+.wxnow .ic{font-size:44px}
+.wxnow .de{font-size:13px;color:var(--mist);text-align:right}
+.wxhours{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;direction:ltr}
+.wxh{
+  flex:0 0 62px;background:rgba(240,234,214,.05);border:1px solid rgba(201,162,75,.2);
+  border-radius:12px;padding:8px 4px;text-align:center;
+}
+.wxh .h{font-size:11px;color:var(--mist)}
+.wxh .i{font-size:20px;margin:3px 0}
+.wxh .t{font-size:13px;font-weight:700;color:var(--ivory)}
+.wxh .r{font-size:10px;color:#7fb8d9}
+
+/* שכבות */
+.layeropt{
+  display:flex;align-items:center;gap:12px;padding:13px 4px;
+  border-bottom:1px solid rgba(240,234,214,.08);cursor:pointer;font-size:15px;
+}
+.layeropt .chk{width:20px;height:20px;border-radius:50%;border:2px solid var(--mist);flex-shrink:0}
+.layeropt.on .chk{border-color:var(--brass);background:var(--brass)}
+
+/* אופליין */
+.offbox{background:rgba(240,234,214,.05);border:1px solid rgba(201,162,75,.25);border-radius:14px;padding:14px;margin-bottom:12px}
+.offbox p{font-size:13px;color:var(--mist);line-height:1.6;margin-bottom:10px}
+#dlbar{height:8px;border-radius:99px;background:rgba(240,234,214,.1);overflow:hidden;display:none;margin-top:10px}
+#dlbar .fill{height:100%;width:0%;background:var(--brass);transition:width .2s}
+#dlstat{font-size:12px;color:var(--mist);text-align:center;margin-top:6px}
+
+/* SOS sheet */
+.sosbox{text-align:center;padding:4px 0 10px}
+.sosbox .coords{
+  font-family:'Suez One',serif;direction:ltr;font-size:16px;color:var(--brass-soft);
+  background:rgba(240,234,214,.05);border-radius:12px;padding:10px;margin:10px 0;word-break:break-all;
+}
+.sosbox .row{display:flex;gap:10px;margin-top:10px}
+.sosbox .row button{flex:1}
+.bigbtn{
+  width:100%;border:none;border-radius:14px;padding:14px;font-size:16px;font-weight:700;
+  cursor:pointer;font-family:'Heebo';display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.bigbtn.wa{background:#25D366;color:#fff}
+.bigbtn.call{background:var(--alert);color:#fff}
+.bigbtn.ghost{background:transparent;border:1px solid rgba(201,162,75,.4);color:var(--ivory)}
+.contactrow{display:flex;gap:8px;margin-top:12px}
+.contactrow input{
+  flex:1;background:rgba(240,234,214,.07);border:1px solid rgba(201,162,75,.3);
+  border-radius:12px;padding:10px 12px;color:var(--ivory);font-size:14px;font-family:'Heebo';outline:none;direction:ltr;text-align:left;
+}
+
+/* טוסט */
+#toast{
+  position:fixed;bottom:calc(env(safe-area-inset-bottom) + 170px);right:0;left:0;z-index:60;
+  display:flex;justify-content:center;pointer-events:none;
+}
+#toast span{
+  background:var(--panel);border:1px solid rgba(201,162,75,.45);color:var(--ivory);
+  border-radius:999px;padding:9px 20px;font-size:13px;box-shadow:var(--shadow);
+  opacity:0;transform:translateY(8px);transition:all .3s;max-width:86vw;text-align:center;
+}
+#toast.show span{opacity:1;transform:none}
+
+/* סמן מיקום */
+.me-marker{position:relative}
+.me-marker .halo{
+  position:absolute;inset:-14px;border-radius:50%;background:rgba(201,162,75,.18);
+  animation:halo 2.2s infinite;
+}
+@keyframes halo{0%{transform:scale(.7);opacity:.9}100%{transform:scale(1.5);opacity:0}}
+.me-marker .core{
+  width:20px;height:20px;border-radius:50%;background:var(--brass);
+  border:3px solid var(--ivory);box-shadow:0 2px 8px rgba(0,0,0,.5);
+}
+.me-marker .arrow{
+  position:absolute;top:-13px;right:50%;transform:translateX(50%);
+  width:0;height:0;border-right:7px solid transparent;border-left:7px solid transparent;
+  border-bottom:11px solid var(--brass);display:none;
+}
+.poi-pin{
+  background:var(--panel);border:1px solid var(--brass);border-radius:50%;
+  width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:17px;
+  box-shadow:var(--shadow);
+}
+.leaflet-popup-content-wrapper{background:var(--panel);color:var(--ivory);border:1px solid rgba(201,162,75,.4);border-radius:14px;backdrop-filter:blur(10px)}
+.leaflet-popup-tip{background:var(--panel)}
+.leaflet-popup-content{margin:12px 14px;font-family:'Heebo';direction:rtl;text-align:right}
+.pp-name{font-weight:700;font-size:14px;margin-bottom:2px}
+.pp-dist{font-size:12px;color:var(--mist);margin-bottom:8px}
+.pp-go{
+  display:inline-block;background:var(--brass);color:var(--ink);border:none;border-radius:999px;
+  padding:6px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Heebo';
+}
+button:focus-visible,.cat:focus-visible,.resitem:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+
+/* ===== המדריך הקולי ===== */
+.autoguide{
+  display:flex;align-items:center;gap:12px;background:rgba(201,162,75,.08);
+  border:1px solid rgba(201,162,75,.35);border-radius:14px;padding:13px;margin-bottom:12px;
+}
+.autoguide .ttl{font-size:15px;font-weight:700;color:var(--brass-soft)}
+.autoguide .sub{font-size:12px;color:var(--mist);line-height:1.5}
+.autoguide .tx{flex:1}
+.toggle{
+  width:52px;height:30px;border-radius:99px;border:1px solid rgba(201,162,75,.5);
+  background:rgba(240,234,214,.08);position:relative;cursor:pointer;flex-shrink:0;transition:background .2s;
+}
+.toggle .knob{
+  position:absolute;top:3px;right:3px;width:22px;height:22px;border-radius:50%;
+  background:var(--mist);transition:all .2s;
+}
+.toggle.on{background:var(--brass)}
+.toggle.on .knob{right:25px;background:var(--ink)}
+.askrow{display:flex;gap:8px;margin-bottom:10px}
+.askrow input{
+  flex:1;background:rgba(240,234,214,.07);border:1px solid rgba(201,162,75,.3);
+  border-radius:12px;padding:11px 14px;color:var(--ivory);font-size:15px;font-family:'Heebo';outline:none;
+}
+.askrow input::placeholder{color:var(--mist)}
+.askrow button{
+  border:none;background:var(--brass);color:var(--ink);border-radius:12px;padding:0 18px;
+  font-size:15px;font-weight:700;cursor:pointer;font-family:'Heebo';
+}
+#aiAnswer{margin-bottom:6px}
+#aiAnswer .bubble{
+  background:rgba(240,234,214,.06);border:1px solid rgba(201,162,75,.3);border-radius:14px;
+  padding:13px;font-size:14px;line-height:1.75;white-space:pre-wrap;margin-bottom:10px;
+}
+#aiAnswer .actions{display:flex;gap:8px;margin-top:8px}
+.sec-title{font-size:13px;color:var(--brass);margin:12px 0 4px;font-weight:700}
+.hint{font-size:13px;color:var(--mist);text-align:center;padding:12px}
+.siteitem{
+  display:flex;align-items:center;gap:12px;padding:12px 4px;
+  border-bottom:1px solid rgba(240,234,214,.08);
+}
+.siteitem .ic{font-size:22px;width:34px;text-align:center;flex-shrink:0}
+.siteitem .tx{flex:1;min-width:0}
+.siteitem .nm{font-size:14px;font-weight:500}
+.siteitem .ds{font-size:12px;color:var(--mist)}
+.siteitem .play{
+  flex-shrink:0;border:1px solid var(--brass);color:var(--brass);border-radius:999px;
+  padding:6px 14px;font-size:12px;background:none;cursor:pointer;font-family:'Heebo';
+}
+.siteitem .play.gold{background:var(--brass);color:var(--ink);font-weight:700}
+
+/* באנר דיבור */
+#speakBar{
+  position:fixed;top:calc(env(safe-area-inset-top) + 110px);right:50%;transform:translateX(50%);
+  z-index:30;background:var(--panel);backdrop-filter:blur(12px);
+  border:1px solid var(--brass);border-radius:999px;padding:8px 14px;
+  display:none;align-items:center;gap:10px;box-shadow:var(--shadow);max-width:86vw;
+}
+#speakBar.show{display:flex}
+#speakBar #speakTitle{font-size:13px;color:var(--brass-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#speakBar #speakStop{
+  background:var(--alert);color:#fff;border:none;border-radius:50%;
+  width:24px;height:24px;font-size:12px;cursor:pointer;flex-shrink:0;line-height:1;
+}
+#speakBar .eq{display:flex;gap:2px;align-items:flex-end;height:14px;flex-shrink:0}
+#speakBar .eq i{width:3px;background:var(--brass);border-radius:2px;animation:eq 0.9s infinite ease-in-out}
+#speakBar .eq i:nth-child(1){height:6px;animation-delay:0s}
+#speakBar .eq i:nth-child(2){height:12px;animation-delay:.2s}
+#speakBar .eq i:nth-child(3){height:8px;animation-delay:.4s}
+@keyframes eq{50%{transform:scaleY(.4)}}
+@media (prefers-reduced-motion: reduce){#speakBar .eq i{animation:none}}
+.spin{display:inline-block;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ===== תוכן ההדרכה שלי ===== */
+.finput{
+  width:100%;background:rgba(240,234,214,.07);border:1px solid rgba(201,162,75,.3);
+  border-radius:12px;padding:11px 14px;color:var(--ivory);font-size:15px;font-family:'Heebo';outline:none;resize:vertical;
+}
+.finput::placeholder{color:var(--mist)}
+.row2{display:flex;gap:8px;margin-top:8px}
+.row2 .bigbtn{flex:1}
+.bigbtn.gold-b{background:var(--brass);color:var(--ink)}
+.bigbtn.recing{background:var(--alert);color:#fff;border-color:var(--alert)}
+.star-pin{
+  background:var(--brass);border:2px solid var(--ivory);border-radius:50%;
+  width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:16px;
+  box-shadow:var(--shadow);color:var(--ink);
+}
+.mypoint{
+  display:flex;align-items:center;gap:10px;padding:11px 4px;
+  border-bottom:1px solid rgba(240,234,214,.08);
+}
+.mypoint .ic{font-size:20px;width:30px;text-align:center;flex-shrink:0}
+.mypoint .tx{flex:1;min-width:0}
+.mypoint .nm{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mypoint .ds{font-size:11px;color:var(--mist)}
+.mypoint button{
+  flex-shrink:0;border:1px solid rgba(201,162,75,.5);color:var(--brass);border-radius:999px;
+  padding:5px 12px;font-size:12px;background:none;cursor:pointer;font-family:'Heebo';
+}
+.mypoint .del{border-color:rgba(217,83,79,.6);color:#ff9d9a}
+
+/* ===== הקבוצה ===== */
+.grpheader{display:flex;align-items:center;gap:10px;background:rgba(201,162,75,.08);border:1px solid rgba(201,162,75,.35);border-radius:14px;padding:13px;margin-bottom:12px}
+.grpheader .ttl{font-size:16px;font-weight:700;color:var(--brass-soft)}
+.grpheader .sub{font-size:12px;color:var(--mist)}
+.grpheader > div:first-child{flex:1}
+.member{display:flex;align-items:center;gap:10px;padding:11px 4px;border-bottom:1px solid rgba(240,234,214,.08);cursor:pointer}
+.member .avatar{
+  width:36px;height:36px;border-radius:50%;background:rgba(201,162,75,.2);border:1px solid var(--brass);
+  display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--brass-soft);flex-shrink:0;font-size:15px;
+}
+.member .tx{flex:1;min-width:0}
+.member .nm{font-size:14px;font-weight:500}
+.member .ds{font-size:11.5px;color:var(--mist)}
+.member .bat{font-size:12px;flex-shrink:0;text-align:center;min-width:44px}
+.member .bat .p{font-weight:700}
+.member.warn .nm{color:#ffcf87}
+.member.lost .nm{color:#ff9d9a}
+.member.lost .ds{color:#ff9d9a}
+.trav-pin{
+  background:var(--panel);border:2px solid var(--brass);border-radius:12px;padding:2px 8px;
+  font-family:'Heebo';font-size:11px;font-weight:700;color:var(--ivory);white-space:nowrap;
+  box-shadow:var(--shadow);text-align:center;
+}
+.trav-pin.lost{border-color:var(--alert);color:#ffb3b1}
+
+/* ===== שידור קולי (PTT) ===== */
+#pttBtn{
+  position:fixed;bottom:calc(env(safe-area-inset-bottom) + 118px);right:50%;transform:translateX(50%);
+  z-index:22;width:74px;height:74px;border-radius:50%;
+  background:var(--brass);color:var(--ink);border:3px solid var(--ivory);
+  display:none;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+  box-shadow:0 6px 24px rgba(0,0,0,.5);cursor:pointer;user-select:none;-webkit-user-select:none;
+  font-family:'Heebo';font-size:11px;font-weight:700;touch-action:none;
+}
+#pttBtn.live{display:flex}
+#pttBtn.talking{background:var(--alert);color:#fff;border-color:#ff8f8c;transform:translateX(50%) scale(1.12)}
+#pttBtn.playing{background:var(--safe);color:#fff}
+
+/* ===== צ'אט ===== */
+#chatBadge{
+  position:absolute;top:-4px;left:-4px;min-width:19px;height:19px;border-radius:99px;
+  background:var(--alert);color:#fff;font-size:11px;font-weight:700;
+  display:none;align-items:center;justify-content:center;padding:0 5px;border:2px solid var(--ink);
+}
+#chatBadge.show{display:flex}
+#chatList{flex:1;overflow-y:auto;padding:4px 0;-webkit-overflow-scrolling:touch;min-height:120px}
+.msg{max-width:82%;margin-bottom:8px;display:flex;flex-direction:column}
+.msg.mine{margin-right:auto;align-items:flex-end}
+.msg.theirs{margin-left:auto;align-items:flex-start}
+.msg .bub{
+  background:rgba(240,234,214,.07);border:1px solid rgba(201,162,75,.25);border-radius:14px;
+  padding:8px 12px;font-size:14px;line-height:1.5;word-break:break-word;
+}
+.msg.mine .bub{background:rgba(201,162,75,.18);border-color:rgba(201,162,75,.45)}
+.msg .who{font-size:10.5px;color:var(--mist);margin:2px 4px 0}
+.msg .bub img{max-width:180px;border-radius:10px;display:block}
+.msg .bub .locbtn{color:var(--brass-soft);cursor:pointer;text-decoration:underline}
+.chatbar{display:flex;gap:6px;padding-top:8px;border-top:1px solid rgba(240,234,214,.1);align-items:center}
+.cbtn{
+  width:42px;height:42px;border-radius:12px;border:1px solid rgba(201,162,75,.35);
+  background:transparent;color:var(--ivory);font-size:18px;cursor:pointer;flex-shrink:0;
+}
+.cbtn.send{background:var(--brass);color:var(--ink);border-color:var(--brass);font-size:16px}
+
+/* ===== ליווי מסלול ===== */
+#rtBanner{
+  position:fixed;top:calc(env(safe-area-inset-top) + 64px);right:70px;left:70px;z-index:19;
+  background:var(--panel);backdrop-filter:blur(12px);border:1px solid var(--safe);
+  border-radius:14px;padding:8px 12px;display:none;text-align:center;box-shadow:var(--shadow);
+}
+#rtBanner .d{font-family:'Suez One',serif;color:#8fd4ae;font-size:16px;direction:ltr}
+#rtBanner .t{font-size:11px;color:var(--mist)}
+#rtBanner .stop{
+  position:absolute;top:-8px;left:-8px;width:24px;height:24px;border-radius:50%;
+  background:var(--alert);color:#fff;border:none;font-size:13px;cursor:pointer;line-height:1;
+}
+#rtBanner .bar{height:4px;border-radius:99px;background:rgba(240,234,214,.12);margin-top:6px;overflow:hidden}
+#rtBanner .bar i{display:block;height:100%;width:0%;background:var(--safe);transition:width .5s}
+.rt-elev{width:100%;height:44px;display:block;margin-top:4px;opacity:.9}
+
+/* ===== סרגל מדידה ===== */
+#msBanner{
+  position:fixed;top:calc(env(safe-area-inset-top) + 64px);right:70px;left:70px;z-index:19;
+  background:var(--panel);backdrop-filter:blur(12px);border:1px solid var(--brass);
+  border-radius:14px;padding:8px 12px;display:none;text-align:center;box-shadow:var(--shadow);
+}
+#msBanner .d{font-family:'Suez One',serif;color:var(--brass-soft);font-size:19px;direction:ltr}
+#msBanner .t{font-size:11px;color:var(--mist)}
+#msBanner .stop{
+  position:absolute;top:-8px;left:-8px;width:24px;height:24px;border-radius:50%;
+  background:var(--alert);color:#fff;border:none;font-size:13px;cursor:pointer;line-height:1;
+}
+#msBanner .msrow{display:flex;gap:6px;justify-content:center;margin-top:6px}
+#msBanner .pill{padding:4px 12px;font-size:11.5px}
+.ms-dot{
+  width:14px;height:14px;border-radius:50%;background:var(--brass);
+  border:2.5px solid var(--ivory);box-shadow:0 1px 5px rgba(0,0,0,.5);
+}
+#wxAlert{
+  display:none;width:10px;height:10px;border-radius:50%;background:var(--alert);
+  border:2px solid var(--ink);animation:blink 1.2s infinite;
+}
+#wxAlert.show{display:block}
+.safe-card{
+  border-radius:14px;padding:12px 14px;margin-bottom:10px;font-size:13.5px;line-height:1.7;
+  border:1px solid;display:flex;gap:10px;align-items:flex-start;
+}
+.safe-card .sic{font-size:22px;flex-shrink:0}
+.safe-card.danger{background:rgba(217,83,79,.14);border-color:rgba(217,83,79,.6)}
+.safe-card.warn{background:rgba(201,162,75,.12);border-color:rgba(201,162,75,.5)}
+.safe-card.ok{background:rgba(90,169,124,.1);border-color:rgba(90,169,124,.45)}
+.safe-card b{color:var(--ivory)}
+.ms-label{
+  background:var(--panel);border:1px solid rgba(201,162,75,.5);border-radius:8px;
+  padding:1px 7px;font-family:'Heebo';font-size:10.5px;font-weight:700;color:var(--brass-soft);
+  white-space:nowrap;direction:ltr;box-shadow:0 2px 6px rgba(0,0,0,.4);
+}
+
+/* ===== אלבום הטיול ===== */
+.albgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.albgrid .ph{
+  position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;cursor:pointer;
+  border:1px solid rgba(201,162,75,.2);background:rgba(240,234,214,.04);
+}
+.albgrid .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.albgrid .ph .nm{
+  position:absolute;bottom:0;right:0;left:0;font-size:9.5px;padding:8px 5px 3px;
+  background:linear-gradient(transparent,rgba(0,0,0,.75));color:#fff;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+#photoView{
+  position:fixed;inset:0;z-index:80;background:rgba(5,8,7,.96);display:none;
+  flex-direction:column;align-items:center;justify-content:center;padding:16px;
+}
+#photoView.open{display:flex}
+#photoView img{max-width:100%;max-height:72vh;border-radius:14px;box-shadow:var(--shadow)}
+.pv-close{
+  position:absolute;top:calc(env(safe-area-inset-top) + 14px);left:16px;
+  width:40px;height:40px;border-radius:50%;border:1px solid rgba(201,162,75,.4);
+  background:var(--panel);color:var(--ivory);font-size:17px;cursor:pointer;
+}
+.pv-meta{margin-top:14px;text-align:center}
+.pv-who{font-size:13px;color:var(--mist);margin-bottom:10px}
+.pv-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.pv-actions .pill{text-decoration:none}
+
+/* ===== צ'יפים על המפה — גלילה לרוחב ===== */
+#chipsBar{
+  position:fixed;top:calc(env(safe-area-inset-top) + 106px);right:0;left:0;z-index:18;
+  display:flex;gap:8px;overflow-x:auto;padding:4px 14px 8px;scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+}
+#chipsBar::-webkit-scrollbar{display:none}
+.chip{
+  flex:0 0 auto;display:flex;align-items:center;gap:6px;
+  background:var(--panel);backdrop-filter:blur(10px);
+  border:1px solid rgba(201,162,75,.3);border-radius:999px;
+  padding:8px 14px;font-size:13px;color:var(--ivory);cursor:pointer;
+  box-shadow:0 3px 12px rgba(0,0,0,.35);white-space:nowrap;font-family:'Heebo';
+}
+.chip.on{background:var(--brass);color:var(--ink);font-weight:700;border-color:var(--brass)}
+
+/* ===== קרוסלת מקומות ===== */
+#placeCarousel{
+  position:fixed;bottom:calc(env(safe-area-inset-bottom) + 12px);right:0;left:0;z-index:21;
+  display:none;gap:10px;overflow-x:auto;padding:6px 14px;scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;
+}
+#placeCarousel::-webkit-scrollbar{display:none}
+#placeCarousel.show{display:flex}
+.pcard{
+  flex:0 0 240px;scroll-snap-align:center;background:var(--panel);backdrop-filter:blur(14px);
+  border:1px solid rgba(201,162,75,.35);border-radius:16px;overflow:hidden;
+  box-shadow:var(--shadow);cursor:pointer;
+}
+.pcard .pimg{width:100%;height:96px;object-fit:cover;display:block;background:rgba(240,234,214,.05)}
+.pcard .pimg.none{display:flex;align-items:center;justify-content:center;font-size:34px}
+.pcard .pbody{padding:8px 12px 10px}
+.pcard .pnm{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcard .pds{font-size:11.5px;color:var(--mist);margin:2px 0 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcard .pgo{
+  width:100%;border:none;background:var(--brass);color:var(--ink);border-radius:999px;
+  padding:7px 0;font-size:13px;font-weight:700;cursor:pointer;font-family:'Heebo';
+}
+.attr-pin{
+  background:rgba(14,21,18,.85);border:1px solid rgba(201,162,75,.55);border-radius:50%;
+  width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:13px;
+  box-shadow:0 2px 8px rgba(0,0,0,.4);
+}
+.pcar-close{
+  flex:0 0 34px;align-self:flex-start;width:34px;height:34px;border-radius:50%;
+  background:var(--panel);border:1px solid rgba(201,162,75,.4);color:var(--ivory);
+  font-size:14px;cursor:pointer;
+}
+
+/* ===== קבוצה ===== */
+.grpcodebox{
+  background:rgba(201,162,75,.08);border:1px solid rgba(201,162,75,.4);border-radius:14px;
+  padding:14px;text-align:center;margin-bottom:12px;
+}
+.grpcodebox .lbl{font-size:12px;color:var(--mist)}
+.grpcodebox .code{
+  font-family:'Suez One',serif;font-size:34px;color:var(--brass);letter-spacing:8px;
+  direction:ltr;margin:4px 0 10px;
+}
+.grpcodebox .row{display:flex;gap:8px;justify-content:center}
+.member{
+  display:flex;align-items:center;gap:12px;padding:11px 4px;
+  border-bottom:1px solid rgba(240,234,214,.08);
+}
+.member .av{
+  width:38px;height:38px;border-radius:50%;background:var(--safe);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px;flex-shrink:0;
+  border:2px solid rgba(240,234,214,.3);
+}
+.member.guide .av{background:var(--brass);color:var(--ink)}
+.member.stale .av{background:var(--mist)}
+.member.far .av{border-color:var(--alert)}
+.member .tx{flex:1;min-width:0}
+.member .nm{font-size:14px;font-weight:500}
+.member .nm .tag{font-size:10px;color:var(--brass);border:1px solid rgba(201,162,75,.5);border-radius:99px;padding:1px 7px;margin-right:6px}
+.member .ds{font-size:12px;color:var(--mist)}
+.member .ds .warn{color:#ffb3b1}
+.member .go{
+  flex-shrink:0;border:1px solid var(--brass);color:var(--brass);border-radius:999px;
+  padding:5px 12px;font-size:12px;background:none;cursor:pointer;font-family:'Heebo';
+}
+.mem-pin{
+  width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:13px;color:#fff;background:var(--safe);
+  border:2.5px solid var(--ivory);box-shadow:0 2px 8px rgba(0,0,0,.5);font-family:'Heebo';
+}
+.mem-pin.guide{background:var(--brass);color:var(--ink)}
+.mem-pin.stale{background:var(--mist)}
+
+
+/* ===== v26 Keyless: ממשק נייד נקי, תפריט המבורגר וחזרה קבועה ===== */
+#mobileDock{display:none}
+#navCtl{align-items:center}
+#btnMenu .hamb,#mMenu .hamb{font-size:24px;line-height:1}
+.menu-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.menu-action{
+  min-height:82px;border:1px solid rgba(201,162,75,.28);border-radius:16px;
+  background:rgba(240,234,214,.055);color:var(--ivory);font-family:'Heebo';
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  cursor:pointer;font-size:12px;text-align:center;padding:8px;
+}
+.menu-action .mi{font-size:25px;line-height:1}
+.menu-action:active{background:rgba(201,162,75,.22);transform:scale(.97)}
+.menu-note{font-size:11.5px;color:var(--mist);line-height:1.65;margin-top:12px;text-align:center}
+.privacy-consent{
+  display:flex;gap:9px;align-items:flex-start;background:rgba(90,169,124,.08);
+  border:1px solid rgba(90,169,124,.35);border-radius:12px;padding:10px 12px;
+  font-size:12px;line-height:1.55;margin:10px 0 12px;cursor:pointer;
+}
+.privacy-consent input{margin-top:3px;width:18px;height:18px;accent-color:var(--safe);flex:0 0 auto}
+.ui-disclaimer{font-size:11px;color:var(--mist);line-height:1.55;text-align:right;margin-top:8px}
+body.ui-open #railLeft,body.ui-open #railRight{opacity:.18;pointer-events:none}
+body.ui-open #chipsBar{opacity:.22;pointer-events:none}
+
+@media (max-width:760px), (max-height:760px){
+  #railRight,#railLeft,#navCtl{display:none!important}
+  #mobileDock{
+    position:fixed;right:8px;left:8px;bottom:calc(env(safe-area-inset-bottom) + 8px);z-index:76;
+    height:62px;border:1px solid rgba(201,162,75,.38);border-radius:19px;
+    background:rgba(14,21,18,.94);backdrop-filter:blur(16px);box-shadow:var(--shadow);
+    display:grid;grid-template-columns:repeat(5,1fr);gap:2px;padding:5px;
+  }
+  #mobileDock button{
+    border:0;background:transparent;color:var(--ivory);border-radius:13px;font-family:'Heebo';
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+    font-size:9.5px;cursor:pointer;min-width:0;
+  }
+  #mobileDock button .ico{font-size:20px;line-height:1.1}
+  #mobileDock button:active,#mobileDock button.on{background:rgba(201,162,75,.22);color:var(--brass-soft)}
+  .sheet{max-height:88vh;z-index:70;border-radius:20px 20px 0 0}
+  .sheet .body{padding-bottom:86px}
+  .sheet h2{padding-left:48px;padding-right:48px}
+  #hud{bottom:calc(env(safe-area-inset-bottom) + 78px);right:8px;left:8px;padding:8px 5px}
+  #hud .grid{grid-template-columns:repeat(3,1fr);row-gap:7px}
+  #hud .cell .v{font-size:17px}
+  #sosBtn{left:10px;bottom:calc(env(safe-area-inset-bottom) + 82px);width:54px;height:54px;font-size:14px}
+  #pttBtn{bottom:calc(env(safe-area-inset-bottom) + 84px)}
+  #placeCarousel{bottom:calc(env(safe-area-inset-bottom) + 76px)}
+  #brand .plate{padding:6px 12px;max-width:calc(100vw - 100px)}
+  #brand .name{font-size:15px}.sub{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #wxChip,#accChip{top:calc(env(safe-area-inset-top) + 58px);padding:5px 10px}
+  #chipsBar{top:calc(env(safe-area-inset-top) + 96px);padding-left:10px;padding-right:10px}
+  #msBanner{right:14px;left:14px;top:calc(env(safe-area-inset-top) + 98px)}
+  #navBanner{right:8px;left:8px}
+  .catgrid{grid-template-columns:repeat(3,1fr)}
+  .menu-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+@media (max-width:390px){
+  .menu-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .catgrid{grid-template-columns:repeat(3,1fr);gap:7px}
+  .cat{padding:9px 2px}.cat .ic{font-size:21px}
+  #brand .sub{display:none}
+  #brand .plate{max-width:calc(100vw - 90px)}
+}
+
+</style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<!-- לוגו -->
+<div id="brand">
+  <div class="plate">
+    <img src="icon-192.png" alt="">
+    <div>
+      <div class="name">GoTours Navigator</div>
+      <div class="sub">מערכת ההפעלה של המדריך · GoTours Group · <span id="appVer"></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- שבבים -->
+<div id="wxChip" role="button" tabindex="0"><span class="i">☀️</span><span class="t">--°</span><span id="wxAlert"></span></div>
+<div id="accChip"><span class="dot"></span><span class="txt">GPS</span></div>
+
+<!-- צ'יפים — גלילה לרוחב על המפה -->
+<div id="chipsBar"></div>
+
+<!-- קרוסלת מקומות תחתונה -->
+<div id="placeCarousel"></div>
+
+<!-- באנר ניווט -->
+<div id="msBanner">
+  <button class="stop" id="msStop" aria-label="סיים מדידה">✕</button>
+  <div class="d" id="msTotal">0 m</div>
+  <div class="t" id="msInfo">לחץ על המפה — נקודה אחרי נקודה</div>
+  <div class="msrow">
+    <button class="pill" id="msUndo">↩ נקודה אחורה</button>
+    <button class="pill" id="msClear">🗑 נקה</button>
+  </div>
+</div>
+
+<div id="rtBanner">
+  <button class="stop" id="rtStop" aria-label="עצור ליווי מסלול">✕</button>
+  <div class="d" id="rtRemain">--</div>
+  <div class="t" id="rtName">--</div>
+  <div class="bar"><i id="rtProg"></i></div>
+</div>
+
+<div id="navBanner">
+  <button class="stop" id="navStop" aria-label="עצור ניווט">✕</button>
+  <div class="turnrow">
+    <span class="turnic" id="turnIc">⬆</span>
+    <div class="turntx">
+      <div class="d" id="turnDist">--</div>
+      <div class="turnwhat" id="turnWhat">מחשב...</div>
+    </div>
+  </div>
+  <div class="t" id="navTime">--</div>
+</div>
+
+<!-- מה בדרך — מופיע רק בזמן ניווט -->
+<div id="navChips"></div>
+
+<!-- כפתורים ימין -->
+<div id="railRight">
+  <button class="fab" id="btnGroup" title="הקבוצה שלי" aria-label="הקבוצה שלי">
+    <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.6a4.6 4.6 0 0 1 5 4.4"/></svg>
+  </button>
+  <button class="fab" id="btnChat" title="צ'אט הקבוצה" aria-label="צ'אט הקבוצה" style="position:relative">
+    <svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-8 8H4l2.2-2.6A8 8 0 1 1 21 12z"/></svg>
+    <span id="chatBadge"></span>
+  </button>
+  <button class="fab" id="btnLocate" title="המיקום שלי" aria-label="המיקום שלי">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="8"/></svg>
+  </button>
+  <button class="fab" id="btnLayers" title="שכבות מפה" aria-label="שכבות מפה">
+    <svg viewBox="0 0 24 24"><path d="M12 2 2 8l10 6 10-6-10-6z"/><path d="m2 14 10 6 10-6"/></svg>
+  </button>
+  <button class="fab" id="btnNearby" title="מה סביבי" aria-label="מה סביבי">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="1.5"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/></svg>
+  </button>
+  <button class="fab" id="btnOffline" title="מפות אופליין" aria-label="מפות אופליין">
+    <svg viewBox="0 0 24 24"><path d="M12 3v10m0 0 4-4m-4 4-4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+  </button>
+</div>
+
+<!-- כפתורים שמאל -->
+<div id="railLeft">
+  <button class="fab" id="btnNav" title="ניווט וחיפוש" aria-label="ניווט וחיפוש">
+    <svg viewBox="0 0 24 24"><path d="M3 11 22 2l-9 19-2-8-8-2z"/></svg>
+  </button>
+  <button class="fab" id="btnWx" title="מזג אוויר" aria-label="מזג אוויר">
+    <svg viewBox="0 0 24 24"><path d="M17.5 19a4.5 4.5 0 1 0 0-9h-1.8A7 7 0 1 0 6 18.7"/></svg>
+  </button>
+  <button class="fab" id="btnMeasure" title="מדידת מרחק" aria-label="מדידת מרחק">
+    <svg viewBox="0 0 24 24"><path d="m3 17 14-14 4 4L7 21l-4-4z"/><path d="m7.5 12.5 1.5 1.5M10.5 9.5l1.5 1.5M13.5 6.5 15 8"/></svg>
+  </button>
+  <button class="fab" id="btnCam" title="זיהוי במצלמה" aria-label="זיהוי במצלמה">
+    <svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></svg>
+  </button>
+  <input type="file" id="camFile" accept="image/*" capture="environment" hidden>
+  <button class="fab" id="btnGuide" title="המדריך הקולי" aria-label="המדריך הקולי">
+    <svg viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+  </button>
+</div>
+
+<!-- באנר דיבור פעיל -->
+<div id="speakBar">
+  <span class="eq"><i></i><i></i><i></i></span>
+  <span id="speakTitle">המדריך מדבר...</span>
+  <button id="speakStop" aria-label="עצור הקראה">✕</button>
+</div>
+
+<!-- SOS -->
+<!-- העין של המדריך — זיהוי במצלמה -->
+<div id="camView">
+  <button class="pv-close" id="camClose" aria-label="סגור">✕</button>
+  <img id="camImg" alt="">
+  <div class="cam-ans" id="camAns"><span class="spin">⟳</span> המדריך מסתכל...</div>
+  <div class="pv-actions" style="margin-top:12px">
+    <button class="pill gold" id="camSpeak" style="display:none">🔊 הקרא לי</button>
+    <button class="pill" id="camMore" style="display:none;border-color:var(--brass);color:var(--brass-soft)">📖 ספר לי עוד</button>
+    <button class="pill" id="camAgain">📷 צלם עוד</button>
+  </div>
+</div>
+
+<button id="sosBtn" aria-label="חירום SOS">SOS</button>
+
+<!-- חזור + בית -->
+<div id="navCtl">
+  <button class="fab mini" id="btnHome" title="מסך הבית" aria-label="מסך הבית">
+    <svg viewBox="0 0 24 24"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>
+  </button>
+  <button class="fab mini" id="btnBack" title="חזור" aria-label="חזור">
+    <svg viewBox="0 0 24 24"><path d="M9 6 3 12l6 6"/><path d="M3 12h13a5 5 0 0 1 0 10h-3"/></svg>
+  </button>
+  <button class="fab mini" id="btnMenu" title="תפריט ראשי" aria-label="תפריט ראשי"><span class="hamb">☰</span></button>
+</div>
+
+<!-- ניווט קבוע באייפון ובמסכים קטנים -->
+<nav id="mobileDock" aria-label="ניווט ראשי">
+  <button id="mBack" aria-label="חזרה"><span class="ico">↩</span><span>חזרה</span></button>
+  <button id="mHome" aria-label="בית"><span class="ico">⌂</span><span>בית</span></button>
+  <button id="mNav" aria-label="ניווט"><span class="ico">➤</span><span>ניווט</span></button>
+  <button id="mLocate" aria-label="המיקום שלי"><span class="ico">◎</span><span>מיקום</span></button>
+  <button id="mMenu" aria-label="תפריט"><span class="ico">☰</span><span>תפריט</span></button>
+</nav>
+
+<!-- HUD -->
+<div id="hud">
+  <div class="grid">
+    <div class="cell"><div class="v" id="hSpeed">0<small> קמ״ש</small></div><div class="k">מהירות</div></div>
+    <div class="cell"><div class="v" id="hAlt">--<small> מ׳</small></div><div class="k">גובה</div></div>
+    <div class="cell"><div class="v" id="hHead">--</div><div class="k">כיוון</div></div>
+    <div class="cell"><div class="v" id="hDist">0<small> ק״מ</small></div><div class="k">מרחק</div></div>
+    <div class="cell"><div class="v" id="hTime">0:00</div><div class="k">זמן</div></div>
+    <div class="cell"><div class="v" id="hAcc">--<small> מ׳</small></div><div class="k">דיוק</div></div>
+  </div>
+  <div class="rec-row">
+    <button class="pill" id="btnRec">● הקלט מסלול</button>
+    <button class="pill" id="btnGpx" style="display:none">⬇ שמור GPX</button>
+  </div>
+</div>
+
+<!-- פאנל: ניווט -->
+<div class="sheet" id="shNav">
+  <div class="grip"></div>
+  <button class="close" data-close="shNav" aria-label="סגור">✕</button>
+  <h2>ניווט</h2>
+  <div class="body">
+    <div class="searchrow">
+      <input id="navQ" type="search" placeholder="לאן נוסעים? חפש מקום או כתובת...">
+      <button id="navSearch">חפש</button>
+    </div>
+    <div class="profrow">
+      <button class="prof on" data-prof="driving">🚙 רכב</button>
+      <button class="prof" data-prof="walking">🚶 הליכה</button>
+      <button class="prof" data-prof="cycling">🚴 אופניים</button>
+    </div>
+    <div class="sec-title" style="margin-top:4px">נקודת המוצא</div>
+    <div class="profrow">
+      <button class="prof oop on" data-o="me">📍 המיקום שלי</button>
+      <button class="prof oop" data-o="map">🗺 בחר במפה</button>
+      <button class="prof oop" data-o="search">🔍 חפש מוצא</button>
+    </div>
+    <div class="searchrow" id="origRow" style="display:none">
+      <input id="origQ" type="search" placeholder="מאיפה יוצאים?">
+      <button id="origSearch">חפש</button>
+    </div>
+    <div class="hint" id="origTx" style="text-align:right;padding:0 0 6px">מוצא: המיקום הנוכחי שלך</div>
+    <p style="font-size:12px;color:var(--mist);text-align:center;margin-bottom:8px">אפשר גם ללחוץ לחיצה ארוכה על המפה כדי לנווט לנקודה</p>
+    <div id="navResults"></div>
+    <div class="sec-title" style="margin-top:14px">המסלולים שלי · GPX / KML / KMZ</div>
+    <div id="routeList"><div class="hint">ייבא את מסלולי GoTours — והם יחכו לך כאן, גם אופליין</div></div>
+    <div class="row2">
+      <button class="bigbtn gold-b" id="rtImport">⬆ ייבוא מסלול</button>
+      <button class="bigbtn ghost" id="rtDiscover">🌍 גלה מסלולים סביבי</button>
+      <input type="file" id="rtFile" accept=".gpx,.kml,.kmz" multiple hidden>
+    </div>
+    <button class="bigbtn ghost" id="shareTrip" style="margin-top:8px">📲 שתף את הטיול / היעד הנוכחי</button>
+    <div id="discoverList"></div>
+  </div>
+</div>
+
+<!-- פאנל: מה סביבי -->
+<div class="sheet" id="shNearby">
+  <div class="grip"></div>
+  <button class="close" data-close="shNearby" aria-label="סגור">✕</button>
+  <h2>מה סביבי</h2>
+  <div class="body">
+    <div class="catgrid" id="catGrid"></div>
+    <div id="nearbyResults" style="margin-top:14px"></div>
+  </div>
+</div>
+
+<!-- פאנל: מזג אוויר -->
+<div class="sheet" id="shWx">
+  <div class="grip"></div>
+  <button class="close" data-close="shWx" aria-label="סגור">✕</button>
+  <h2>מזג אוויר</h2>
+  <div class="body">
+    <div id="safetyBox"></div>
+    <div class="wxnow" id="wxNow"><div class="de">טוען...</div></div>
+    <div class="wxhours" id="wxHours"></div>
+    <button class="bigbtn ghost" id="safetyCheck" style="margin-top:12px">🛡 בדיקת בטיחות לשטח עכשיו</button>
+    <div class="ui-disclaimer">הבדיקה מבוססת על תחזית מזג האוויר המקומית בלבד. לפני כניסה לנחל, קניון או אזור מבודד יש לבדוק גם התרעות רשמיות, מצב דרכים והנחיות מקומיות.</div>
+  </div>
+</div>
+
+<!-- פאנל: שכבות -->
+<div class="sheet" id="shLayers">
+  <div class="grip"></div>
+  <button class="close" data-close="shLayers" aria-label="סגור">✕</button>
+  <h2>שכבות מפה</h2>
+  <div class="body">
+    <div id="layerList"></div>
+    <div class="sec-title" style="margin-top:16px">מערכת</div>
+    <div class="hint" style="text-align:right;padding:0 0 8px">גרסה מותקנת: <b id="verLine" style="color:var(--brass-soft)"></b></div>
+    <button class="bigbtn ghost" id="freshBtn">🧹 עדכון לגרסה האחרונה — ניקוי מלא</button>
+    <button class="bigbtn ghost" id="exitBtn" style="margin-top:8px">⏻ יציאה מהאפליקציה</button>
+  </div>
+</div>
+
+<!-- פאנל: אופליין -->
+<div class="sheet" id="shOffline">
+  <div class="grip"></div>
+  <button class="close" data-close="shOffline" aria-label="סגור">✕</button>
+  <h2>מפות אופליין</h2>
+  <div class="body">
+    <div class="offbox">
+      <p>מַרכֵּז את המפה על האזור שתטייל בו ובחר את גודל האזור. אריחי המפה, ה-GPS ומסלולים שכבר יובאו ימשיכו לעבוד בלי קליטה. חיפוש יעד, חישוב מסלול חדש, מזג אוויר, AI ומרכז הקבוצה דורשים אינטרנט.</p>
+      <button class="bigbtn ghost" id="dlArea">⬇ הורד את האזור המוצג במפה</button>
+      <div id="dlbar"><div class="fill"></div></div>
+      <div id="dlstat"></div>
+    </div>
+    <div class="offbox">
+      <p id="cacheInfo">בודק אחסון...</p>
+      <button class="bigbtn ghost" id="clearCache">🗑 נקה מפות שמורות</button>
+    </div>
+  </div>
+</div>
+
+<!-- פאנל: SOS -->
+<div class="sheet" id="shSos">
+  <div class="grip"></div>
+  <button class="close" data-close="shSos" aria-label="סגור">✕</button>
+  <h2 style="color:var(--alert)">חירום · SOS</h2>
+  <div class="body">
+    <div class="sosbox">
+      <div style="font-size:13px;color:var(--mist)">המיקום המדויק שלך:</div>
+      <div class="coords" id="sosCoords">ממתין ל-GPS...</div>
+      <button class="bigbtn wa" id="sosWa">📲 שלח מיקום חירום בוואטסאפ</button>
+      <div class="row">
+        <button class="bigbtn call" onclick="location.href='tel:100'">📞 משטרה 100 · ישראל</button>
+        <button class="bigbtn call" onclick="location.href='tel:101'">🚑 מד״א 101 · ישראל</button>
+      </div>
+      <div class="row">
+        <button class="bigbtn call" onclick="location.href='tel:102'">🚒 כיבוי 102 · ישראל</button>
+        <button class="bigbtn call" onclick="location.href='tel:112'">🌍 חירום 112</button>
+      </div>
+      <button class="bigbtn ghost" id="sosCopy">📋 העתק קואורדינטות</button>
+      <div class="ui-disclaimer">SOS אינו מזעיק מוקד באופן אוטומטי. הוא מסייע לחייג או לשתף את המיקום. מחוץ לישראל יש לוודא את מספר החירום המקומי.</div>
+      <div class="contactrow">
+        <input id="sosContact" type="tel" placeholder="+9725... מספר איש קשר לחירום">
+        <button class="pill gold" id="sosSave">שמור</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- פאנל: המדריך הקולי -->
+<div class="sheet" id="shGuide">
+  <div class="grip"></div>
+  <button class="close" data-close="shGuide" aria-label="סגור">✕</button>
+  <h2>המדריך הקולי 🦁</h2>
+  <div class="body">
+    <div class="autoguide" id="autoRow">
+      <div class="tx">
+        <div class="ttl">מצב סיור אוטומטי</div>
+        <div class="sub">כשמתקרבים לאתר — המדריך מתחיל לספר לבד, בלי ללחוץ על כלום</div>
+      </div>
+      <button class="toggle" id="autoToggle" role="switch" aria-checked="false"><span class="knob"></span></button>
+    </div>
+    <div class="sec-title">הקול של המדריך</div>
+    <div class="profrow" style="flex-wrap:wrap">
+      <button class="prof vopt" data-voice="female">🎙 קול נשי</button>
+      <button class="prof vopt" data-voice="male">🎙 קול גברי</button>
+      <button class="prof vopt" data-voice="alternate">🎙 קול חלופי</button>
+      <button class="prof vopt" data-voice="auto">📱 אוטומטי</button>
+    </div>
+    <button class="bigbtn ghost" id="sysCheck" style="margin:4px 0 10px">🔧 בדיקת מערכת — מוח וקול</button>
+    <div id="sysResult"></div>
+    <div class="askrow">
+      <input id="askQ" type="search" placeholder="שאל את המדריך כל דבר על האזור...">
+      <button id="askGo">שאל</button>
+    </div>
+    <div id="aiAnswer"></div>
+    <div class="sec-title">אתרים וסיפורים סביבך</div>
+    <div id="guideSites"><div class="hint">לחץ על ⟳ רענן כדי לגלות מה מסתתר סביבך</div></div>
+    <button class="bigbtn ghost" id="guideRefresh" style="margin-top:10px">⟳ רענן אתרים סביבי</button>
+
+    <div class="sec-title" style="margin-top:18px">תוכן ההדרכה שלי · בכל מקום בעולם</div>
+    <p class="hint" style="text-align:right;padding:0 0 8px">הקלט את הקול שלך, כתוב הסבר או צרף קבצים — והצמד לכל נקודה על הגלובוס. כשהקבוצה תתקרב, ההסבר שלך יתנגן אוטומטית. עובד גם בלי אינטרנט.</p>
+    <div id="myPoints"></div>
+    <button class="bigbtn gold-b" id="addPoint" style="margin-top:8px">➕ הוסף נקודת הדרכה</button>
+    <div class="row2">
+      <button class="bigbtn ghost" id="expPoints">⬇ ייצוא הכול</button>
+      <button class="bigbtn ghost" id="impPoints">⬆ ייבוא</button>
+      <input type="file" id="impFile" accept=".json,.gotours" hidden>
+    </div>
+  </div>
+</div>
+
+<!-- פאנל: נקודת הדרכה חדשה -->
+<div class="sheet" id="shAddPoint">
+  <div class="grip"></div>
+  <button class="close" data-close="shAddPoint" aria-label="סגור">✕</button>
+  <h2>נקודת הדרכה חדשה</h2>
+  <div class="body">
+    <input class="finput" id="ptTitle" type="text" placeholder="שם הנקודה (למשל: הכניסה לוואדי ראם)">
+    <div class="profrow" style="margin-top:10px">
+      <button class="prof on" id="ptHere">📍 המיקום שלי</button>
+      <button class="prof" id="ptPick">🗺 בחר על המפה</button>
+    </div>
+    <div class="hint" id="ptLocTx" style="text-align:right;padding:2px 0 8px">מיקום: המיקום הנוכחי שלך</div>
+    <div class="sec-title">מרחק הפעלה אוטומטית</div>
+    <div class="profrow">
+      <button class="prof rop" data-r="50">50 מ׳</button>
+      <button class="prof rop on" data-r="100">100 מ׳</button>
+      <button class="prof rop" data-r="250">250 מ׳</button>
+      <button class="prof rop" data-r="500">500 מ׳</button>
+    </div>
+    <div class="sec-title">ההסבר שלך</div>
+    <div class="row2">
+      <button class="bigbtn ghost" id="recBtn">🎤 הקלט את הקול שלך</button>
+    </div>
+    <div class="hint" id="recStat" style="display:none"></div>
+    <textarea class="finput" id="ptText" rows="4" placeholder="או כתוב כאן הסבר — המדריך יקריא אותו בקול האנושי..."></textarea>
+    <div class="sec-title">קבצים מצורפים</div>
+    <input type="file" id="ptFiles" multiple accept="audio/*,image/*,.txt,.pdf" class="finput" style="padding:9px">
+    <div class="hint" style="text-align:right;padding:4px 0 0">אודיו יתנגן כמו שהוא · טקסט יוקרא · תמונות יוצגו</div>
+    <button class="bigbtn gold-b" id="ptSave" style="margin-top:14px">💾 שמור נקודה</button>
+  </div>
+</div>
+
+<div class="sheet" id="shGroup">
+  <div class="grip"></div>
+  <button class="close" data-close="shGroup" aria-label="סגור">✕</button>
+  <h2>הקבוצה שלי</h2>
+  <div class="body">
+    <div id="grpSetup">
+      <input class="finput" id="grpName" type="text" placeholder="השם שלך (כפי שהקבוצה תראה)">
+      <label class="privacy-consent"><input type="checkbox" id="grpConsent"><span>אני מאשר/ת לשתף עם חברי הקבוצה את השם, המיקום, זמן העדכון ורמת הסוללה בזמן שהקבוצה פעילה.</span></label>
+      <div class="row2">
+        <button class="bigbtn gold-b" id="grpCreate">🦁 פתח קבוצה חדשה (מדריך)</button>
+      </div>
+      <div class="sec-title">או הצטרף לקבוצה קיימת</div>
+      <div class="searchrow">
+        <input id="grpCode" type="text" placeholder="קוד קבוצה (למשל: GT-7K9QW-3M2PX)" style="text-transform:uppercase">
+        <button id="grpJoin">הצטרף</button>
+      </div>
+      <div class="hint" id="grpNoCfg" style="display:none;text-align:right">מרכז הקבוצה מובנה באתר ופועל אוטומטית לאחר העלאה ל-Netlify — ללא Firebase וללא מפתחות.</div>
+    </div>
+    <div id="grpLive" style="display:none">
+      <div class="grpheader">
+        <div>
+          <div class="ttl" id="grpTitle">קבוצה</div>
+          <div class="sub">קוד הצטרפות: <b id="grpCodeShow" style="color:var(--brass-soft);letter-spacing:2px"></b></div>
+        </div>
+        <button class="pill gold" id="grpShare">📲 שתף קוד</button>
+      </div>
+      <button class="bigbtn ghost" id="openAlbum" style="margin-bottom:4px">📸 אלבום הטיול המשותף</button>
+      <div class="ui-disclaimer">השידור הקולי הוא הודעה קולית קצרה: מקליטים בלחיצה ארוכה, והיא נשלחת לקבוצה לאחר שחרור הכפתור.</div>
+      <div class="sec-title">התראת ניתוק מהקבוצה</div>
+      <div class="profrow">
+        <button class="prof lag" data-m="200">200 מ׳</button>
+        <button class="prof lag on" data-m="400">400 מ׳</button>
+        <button class="prof lag" data-m="800">800 מ׳</button>
+        <button class="prof lag" data-m="0">כבוי</button>
+      </div>
+      <div class="sec-title">המטיילים <span id="grpCount" style="color:var(--brass-soft)"></span></div>
+      <div id="grpMembers"></div>
+      <button class="bigbtn ghost" id="grpLeave" style="margin-top:12px">🚪 עזוב את הקבוצה</button>
+    </div>
+  </div>
+</div>
+
+<!-- שידור קולי — מופיע כשנמצאים בקבוצה -->
+<button id="pttBtn" aria-label="לחץ והחזק כדי לשדר לקבוצה">
+  <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+  <span id="pttTx">שדר</span>
+</button>
+
+<!-- פאנל: צ'אט קבוצתי -->
+<div class="sheet" id="shChat">
+  <div class="grip"></div>
+  <button class="close" data-close="shChat" aria-label="סגור">✕</button>
+  <h2>צ'אט הקבוצה</h2>
+  <div class="body" style="display:flex;flex-direction:column;max-height:56vh">
+    <div id="chatList"></div>
+    <div class="chatbar">
+      <button class="cbtn" id="chatLoc" title="שלח מיקום">📍</button>
+      <button class="cbtn" id="chatImg" title="שלח תמונה">🖼</button>
+      <button class="cbtn" id="chatAlbum" title="אלבום הטיול">📸</button>
+      <input type="file" id="chatImgFile" accept="image/*" hidden>
+      <input class="finput" id="chatIn" type="text" placeholder="הודעה לקבוצה..." style="flex:1">
+      <button class="cbtn send" id="chatSend">◀</button>
+    </div>
+  </div>
+</div>
+
+<!-- פאנל: אלבום הטיול -->
+<div class="sheet" id="shAlbum">
+  <div class="grip"></div>
+  <button class="close" data-close="shAlbum" aria-label="סגור">✕</button>
+  <h2>אלבום הטיול 📸</h2>
+  <div class="body">
+    <div class="row2" style="margin-top:0;margin-bottom:12px">
+      <button class="bigbtn gold-b" id="albCam">📷 צלם עכשיו</button>
+      <button class="bigbtn ghost" id="albPick">🖼 מהגלריה</button>
+      <input type="file" id="albCamFile" accept="image/*" capture="environment" hidden>
+      <input type="file" id="albPickFile" accept="image/*" multiple hidden>
+    </div>
+    <div class="hint" id="albStat" style="display:none"></div>
+    <div id="albGrid" class="albgrid"><div class="hint">עדיין אין תמונות — תהיה הראשון שמצלם! 🦁</div></div>
+  </div>
+</div>
+
+<!-- פאנל: תפריט ראשי -->
+<div class="sheet" id="shMenu">
+  <div class="grip"></div>
+  <button class="close" data-close="shMenu" aria-label="סגור">✕</button>
+  <h2>תפריט ראשי</h2>
+  <div class="body">
+    <div class="menu-grid">
+      <button class="menu-action" data-action="nav"><span class="mi">➤</span><span>ניווט וחיפוש</span></button>
+      <button class="menu-action" data-action="nearby"><span class="mi">◎</span><span>מה סביבי</span></button>
+      <button class="menu-action" data-action="guide"><span class="mi">🔊</span><span>המדריך הקולי</span></button>
+      <button class="menu-action" data-action="group"><span class="mi">👥</span><span>הקבוצה שלי</span></button>
+      <button class="menu-action" data-action="chat"><span class="mi">💬</span><span>צ'אט</span></button>
+      <button class="menu-action" data-action="album"><span class="mi">📸</span><span>אלבום הטיול</span></button>
+      <button class="menu-action" data-action="weather"><span class="mi">☀️</span><span>מזג אוויר</span></button>
+      <button class="menu-action" data-action="layers"><span class="mi">▱</span><span>שכבות מפה</span></button>
+      <button class="menu-action" data-action="offline"><span class="mi">⬇</span><span>מפות אופליין</span></button>
+      <button class="menu-action" data-action="measure"><span class="mi">📏</span><span>מדידת מרחק</span></button>
+      <button class="menu-action" data-action="camera"><span class="mi">📷</span><span>העין של המדריך</span></button>
+      <button class="menu-action" data-action="sos"><span class="mi">🆘</span><span>חירום</span></button>
+    </div>
+    <div class="menu-note">במסכים קטנים הכפתורים הצדדיים מוסתרים כדי להשאיר את המפה נקייה. כל הכלים נמצאים כאן.<br><a href="privacy-policy.html" target="_blank" rel="noopener" style="color:var(--brass-soft);font-weight:700">מדיניות פרטיות ובטיחות</a></div>
+  </div>
+</div>
+
+<!-- צופה תמונות מסך מלא -->
+<div id="photoView">
+  <button class="pv-close" id="pvClose" aria-label="סגור">✕</button>
+  <img id="pvImg" alt="">
+  <div class="pv-meta">
+    <div class="pv-who" id="pvWho"></div>
+    <div class="pv-actions">
+      <button class="pill" id="pvLoc" style="display:none">📍 איפה צולם</button>
+      <a class="pill" id="pvSave" download>⬇ שמור</a>
+      <button class="pill" id="pvDel" style="display:none;border-color:rgba(217,83,79,.6);color:#ff9d9a">🗑 מחק</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"><span id="toastTx"></span></div>
+
+<script>
+'use strict';
+/* ================= GoTours Navigator v1 — ליבה נקייה ================= */
+
+const $ = id => document.getElementById(id);
+const toast = (m, ms=2600) => { $('toastTx').textContent = String(m || ''); $('toast').classList.add('show'); clearTimeout(toast._t); toast._t = setTimeout(()=>$('toast').classList.remove('show'), ms); };
+const escHtml = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const cleanLabel = (value, max=120) => String(value ?? '').replace(/[\u0000-\u001F\u007F]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, max);
+const isSafeDataUrl = (value, kind='image') => typeof value === 'string' && new RegExp(`^data:${kind}/[a-z0-9.+-]+;base64,`, 'i').test(value);
+
+/* ---------- מפה ---------- */
+const lastPosSaved = (() => { try { return JSON.parse(localStorage.getItem('gt_lastpos')); } catch { return null; } })();
+const map = L.map('map', { zoomControl:false, attributionControl:true })
+  .setView(lastPosSaved ? [lastPosSaved.lat, lastPosSaved.lng] : [31.78, 35.21], lastPosSaved ? 15 : 8);
+
+const layers = {
+  street: { name:'🗺 מפת דרכים — כל רחוב', layer: L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:20, maxNativeZoom:19, attribution:'© OpenStreetMap' }) },
+  israel: { name:'🥾 שבילי ישראל — כל שביל מסומן', layer: L.tileLayer('https://israelhiking.osm.org.il/Hebrew/Tiles/{z}/{x}/{y}.png', { maxZoom:19, maxNativeZoom:16, attribution:'© Israel Hiking Map' }) },
+  mtb:    { name:'🚵 סינגלים ואופניים (ישראל)', layer: L.tileLayer('https://israelhiking.osm.org.il/Hebrew/mtbTiles/{z}/{x}/{y}.png', { maxZoom:19, maxNativeZoom:16, attribution:'© Israel MTB Map' }) },
+  topo:   { name:'⛰ טופוגרפית עולמית', layer: L.tileLayer('https://tile.opentopomap.org/{z}/{x}/{y}.png', { maxZoom:19, maxNativeZoom:17, attribution:'© OpenTopoMap' }) },
+  sat:    { name:'🛰 לוויין', layer: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom:20, maxNativeZoom:19, attribution:'© Esri' }) },
+};
+const overlays = {
+  trails:  { name:'🌍 שבילי הליכה — כל העולם', on:false, layer: L.tileLayer('https://tile.waymarkedtrails.org/hiking/{z}/{x}/{y}.png', { maxZoom:20, maxNativeZoom:18, opacity:.85, attribution:'© Waymarked Trails' }) },
+  cycling: { name:'🚴 מסלולי אופניים — כל העולם', on:false, layer: L.tileLayer('https://tile.waymarkedtrails.org/cycling/{z}/{x}/{y}.png', { maxZoom:20, maxNativeZoom:18, opacity:.85, attribution:'© Waymarked Trails' }) },
+  labels:  { name:'🔤 שמות מקומות על הלוויין', on:false, layer: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', { maxZoom:20, maxNativeZoom:19 }) },
+  hills:   { name:'🌗 הצללת הרים (תלת-ממד)', on:false, layer: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}', { maxZoom:20, maxNativeZoom:16, opacity:.35 }) },
+};
+let attractionsOn = false;
+let activeLayer = 'street';
+layers.street.layer.addTo(map);
+
+const layerList = $('layerList');
+function buildLayerPanel(){
+  layerList.innerHTML = '<div class="sec-title" style="margin-top:0">מפת הבסיס</div>';
+  Object.entries(layers).forEach(([k, o]) => {
+    const d = document.createElement('div');
+    d.className = 'layeropt' + (k===activeLayer ? ' on':'');
+    d.innerHTML = `<span class="chk"></span><span>${o.name}</span>`;
+    d.onclick = () => {
+      map.removeLayer(layers[activeLayer].layer);
+      activeLayer = k;
+      o.layer.addTo(map);
+      Object.values(overlays).forEach(ov => { if (ov.on) { ov.layer.remove(); ov.layer.addTo(map); } }); // שכבות-על תמיד מעל
+      buildLayerPanel();
+    };
+    layerList.appendChild(d);
+  });
+  const st = document.createElement('div');
+  st.className = 'sec-title'; st.textContent = 'שכבות-על (אפשר לשלב)';
+  layerList.appendChild(st);
+  Object.entries(overlays).forEach(([k, o]) => {
+    const d = document.createElement('div');
+    d.className = 'layeropt' + (o.on ? ' on':'');
+    d.innerHTML = `<span class="chk"></span><span>${o.name}</span>`;
+    d.onclick = () => {
+      o.on = !o.on;
+      o.on ? o.layer.addTo(map) : map.removeLayer(o.layer);
+      buildLayerPanel();
+    };
+    layerList.appendChild(d);
+  });
+  const d2 = document.createElement('div');
+  d2.className = 'layeropt' + (attractionsOn ? ' on':'');
+  d2.innerHTML = `<span class="chk"></span><span>✨ אטרקציות חיות — מופיעות לבד על המפה</span>`;
+  d2.onclick = () => { attractionsOn = !attractionsOn; buildLayerPanel(); attractionsOn ? loadAttractions() : attrLayer.clearLayers(); };
+  layerList.appendChild(d2);
+}
+buildLayerPanel();
+
+/* ---------- פאנלים ---------- */
+const sheets = [...document.querySelectorAll('.sheet')].map(el => el.id);
+function syncUiChrome(){
+  const open = sheets.some(id => $(id)?.classList.contains('open')) || $('photoView')?.classList.contains('open') || $('camView')?.classList.contains('open');
+  document.body.classList.toggle('ui-open', !!open);
+}
+function closeSheets(exceptId=null){
+  sheets.forEach(id => { if (id !== exceptId) $(id)?.classList.remove('open'); });
+  if (exceptId !== 'shChat') chatOpen = false;
+  syncUiChrome();
+}
+function openSheet(id){
+  const hadUi = anythingOpen?.() || false;
+  closeSheets(id);
+  const el = $(id); if (!el) return;
+  el.classList.add('open');
+  if (id === 'shChat') chatOpen = true;
+  syncUiChrome();
+  if (!hadUi && typeof pushUiState === 'function') pushUiState();
+}
+function closeSheet(id, consume=true){
+  $(id)?.classList.remove('open');
+  if (id === 'shChat') chatOpen = false;
+  syncUiChrome();
+  if (consume && typeof consumeUiHistory === 'function') consumeUiHistory();
+}
+document.querySelectorAll('.close').forEach(b => b.onclick = () => closeSheet(b.dataset.close));
+map.on('click', e => {
+  if (typeof measuring !== 'undefined' && measuring) {
+    msPts.push([e.latlng.lat, e.latlng.lng]);
+    msUpdate();
+    return;
+  }
+  if (!pickMode && !window.__origPicking) {
+    closeSheets();
+    if (typeof whatTrail === 'function' && !anythingOpen()) whatTrail(e.latlng);
+  }
+});
+
+$('btnLayers').onclick = () => openSheet('shLayers');
+$('btnNearby').onclick = () => openSheet('shNearby');
+$('btnOffline').onclick = () => { openSheet('shOffline'); updateCacheInfo(); };
+$('btnNav').onclick = () => { openSheet('shNav'); setTimeout(()=>$('navQ').focus(), 350); };
+$('btnWx').onclick = () => { openSheet('shWx'); loadWeatherPanel(); };
+$('wxChip').onclick = () => { openSheet('shWx'); loadWeatherPanel(); };
+$('sosBtn').onclick = () => { openSheet('shSos'); updateSosCoords(); };
+
+/* ---------- GPS חי ---------- */
+let me = null, meMarker = null, watching = false;
+let lastPos = null, heading = null, followMe = true;
+
+map.on('dragstart', () => { if (followMe) { followMe = false; $('btnLocate').classList.remove('on'); } });
+
+const meIcon = L.divIcon({
+  className:'', iconSize:[26,26], iconAnchor:[13,13],
+  html:`<div class="me-marker" id="meEl"><div class="halo"></div><div class="arrow" id="meArrow"></div><div class="core"></div><svg class="puck" id="mePuck" viewBox="0 0 48 48"><path d="M24 4 38 40 24 32 10 40z" fill="#C9A24B" stroke="#F0EAD6" stroke-width="2.5" stroke-linejoin="round"/></svg></div>`
+});
+
+function esc(s){ return escHtml(s); }
+function isHebrew(t){
+  const he = (String(t).match(/[\u0590-\u05FF]/g) || []).length;
+  const letters = (String(t).match(/[A-Za-z\u0590-\u05FF]/g) || []).length;
+  return letters > 0 && he / letters > 0.25;
+}
+function fmtHead(h){
+  if (h==null || isNaN(h)) return '--';
+  const dirs = ['צ','צ״מ','מז','ד״מ','ד','ד״מע','מע','צ״מע'];
+  return Math.round(h) + '° ' + dirs[Math.round(h/45)%8];
+}
+
+function startGps(){
+  if (!navigator.geolocation) { toast('אין תמיכה ב-GPS במכשיר'); return; }
+  if (watching) return;
+  watching = true;
+  navigator.geolocation.watchPosition(onPos, onGpsErr, { enableHighAccuracy:true, maximumAge:2000, timeout:15000 });
+}
+
+function onGpsErr(e){
+  if (e.code === 1) toast('נדרש אישור מיקום — בדוק הרשאות בדפדפן');
+  else toast('מחפש אות GPS...');
+}
+
+function onPos(p){
+  const { latitude:lat, longitude:lng, accuracy, altitude, speed, heading:hd } = p.coords;
+  me = { lat, lng, accuracy, altitude, speed, ts: p.timestamp };
+  if (hd != null && !isNaN(hd)) heading = hd;
+
+  try { localStorage.setItem('gt_lastpos', JSON.stringify({ lat, lng })); } catch {}
+  if (!meMarker) {
+    meMarker = L.marker([lat,lng], { icon: meIcon, zIndexOffset: 900 }).addTo(map);
+    map.setView([lat,lng], Math.max(map.getZoom(), 15));
+    $('btnLocate').classList.add('on');
+  } else {
+    meMarker.setLatLng([lat,lng]);
+    if (followMe) map.panTo([lat,lng], { animate: true, duration: .5 });
+  }
+
+  const arrow = document.getElementById('meArrow');
+  if (arrow && heading != null) { arrow.style.display='block'; arrow.style.transform = `translateX(50%) rotate(${heading}deg)`; arrow.style.transformOrigin='50% 160%'; }
+  // מצב נהיגה: חץ ניווט גדול שמסתובב עם הנסיעה
+  const meEl = document.getElementById('meEl');
+  if (meEl) {
+    meEl.classList.toggle('driving', !!navTarget);
+    const puck = document.getElementById('mePuck');
+    if (puck && heading != null) puck.style.transform = `rotate(${heading}deg)`;
+  }
+
+  // שבב דיוק
+  const chip = $('accChip'); chip.style.display='flex';
+  chip.querySelector('.txt').textContent = 'GPS ±' + Math.round(accuracy) + ' מ׳';
+  chip.className = accuracy <= 15 ? '' : (accuracy <= 40 ? 'weak' : 'bad');
+  chip.id = 'accChip';
+
+  // HUD
+  $('hud').style.display='block';
+  $('hSpeed').innerHTML = (speed!=null ? Math.round(speed*3.6) : 0) + '<small> קמ״ש</small>';
+  $('hAlt').innerHTML = (altitude!=null ? Math.round(altitude) : '--') + '<small> מ׳</small>';
+  $('hHead').textContent = fmtHead(heading);
+  $('hAcc').innerHTML = Math.round(accuracy) + '<small> מ׳</small>';
+
+  if (recording) recordPoint(lat, lng, altitude);
+  if (navTarget && typeof navTick === 'function') navTick();
+  lastPos = { lat, lng };
+  if (typeof publishMe === 'function') publishMe(false);
+  if (typeof checkRoute === 'function') checkRoute();
+  if (typeof checkMyPoints === 'function') checkMyPoints();
+  if (typeof autoScan === 'function') autoScan(false);
+  updateSosCoords();
+}
+
+$('btnLocate').onclick = () => {
+  startGps();
+  followMe = true;
+  $('btnLocate').classList.add('on');
+  if (me) map.setView([me.lat, me.lng], Math.max(map.getZoom(), 16));
+  else toast('מאתר אותך... המפה תינעל עליך ברגע שיש קליטה');
+};
+
+startGps(); // מתחיל מיד עם הכניסה
+
+/* ---------- הקלטת מסלול + GPX ---------- */
+let recording = false, track = [], trackLine = null, trackDist = 0, trackStart = 0, trackTimer = null;
+
+function hav(a, b){
+  const R=6371000, toR=x=>x*Math.PI/180;
+  const dLat=toR(b.lat-a.lat), dLng=toR(b.lng-a.lng);
+  const s=Math.sin(dLat/2)**2 + Math.cos(toR(a.lat))*Math.cos(toR(b.lat))*Math.sin(dLng/2)**2;
+  return 2*R*Math.asin(Math.sqrt(s));
+}
+
+function recordPoint(lat, lng, alt){
+  const pt = { lat, lng, alt, t: Date.now() };
+  if (track.length) {
+    const d = hav(track[track.length-1], pt);
+    if (d < 2) return; // סינון רעש
+    trackDist += d;
+  }
+  track.push(pt);
+  if (!trackLine) trackLine = L.polyline([], { color:'#C9A24B', weight:4, opacity:.9 }).addTo(map);
+  trackLine.addLatLng([lat,lng]);
+  $('hDist').innerHTML = (trackDist/1000).toFixed(2) + '<small> ק״מ</small>';
+}
+
+function fmtDur(ms){
+  const s = Math.floor(ms/1000), h = Math.floor(s/3600), m = Math.floor((s%3600)/60);
+  return h ? `${h}:${String(m).padStart(2,'0')}` : `${m}:${String(s%60).padStart(2,'0')}`;
+}
+
+$('btnRec').onclick = () => {
+  recording = !recording;
+  if (recording) {
+    track = []; trackDist = 0; trackStart = Date.now();
+    if (trackLine) { map.removeLayer(trackLine); trackLine = null; }
+    $('btnRec').innerHTML = '<span class="recdot"></span> מקליט... עצור';
+    $('btnRec').classList.add('rec');
+    $('btnGpx').style.display='none';
+    trackTimer = setInterval(()=> $('hTime').textContent = fmtDur(Date.now()-trackStart), 1000);
+    startGps();
+    toast('הקלטת מסלול התחילה');
+  } else {
+    clearInterval(trackTimer);
+    $('btnRec').textContent = '● הקלט מסלול';
+    $('btnRec').classList.remove('rec');
+    if (track.length > 1) { $('btnGpx').style.display='flex'; toast('המסלול נעצר — אפשר לשמור GPX'); }
+  }
+};
+
+$('btnGpx').onclick = () => {
+  const pts = track.map(p => `<trkpt lat="${p.lat}" lon="${p.lng}">${p.alt!=null?`<ele>${Math.round(p.alt)}</ele>`:''}<time>${new Date(p.t).toISOString()}</time></trkpt>`).join('\n');
+  const gpx = `<?xml version="1.0" encoding="UTF-8"?>\n<gpx version="1.1" creator="GoTours Navigator" xmlns="http://www.topografix.com/GPX/1/1">\n<trk><name>GoTours Track ${new Date().toLocaleDateString('he-IL')}</name><trkseg>\n${pts}\n</trkseg></trk></gpx>`;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([gpx], {type:'application/gpx+xml'}));
+  a.download = `gotours-track-${Date.now()}.gpx`;
+  a.click();
+  toast('קובץ GPX נשמר 🦁');
+};
+
+/* ---------- ניווט ---------- */
+let navProfile = 'driving', navTarget = null, navLine = null, navMarker = null;
+
+document.querySelectorAll('.prof').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.prof').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  navProfile = b.dataset.prof;
+  if (navTarget) routeTo(navTarget.lat, navTarget.lng, navTarget.name);
+});
+
+$('navSearch').onclick = doSearch;
+$('navQ').addEventListener('keydown', e => { if (e.key==='Enter') doSearch(); });
+
+/* גיאוקודינג עולמי: נומינטים עם הטיה → נומינטים גלובלי → Photon (חכם לשגיאות כתיב) */
+async function geocode(q){
+  const enc = encodeURIComponent(q);
+  try {
+    const bias = me ? `&viewbox=${me.lng-1.5},${me.lat+1.5},${me.lng+1.5},${me.lat-1.5}` : '';
+    let r = await fetch(`https://nominatim.openstreetmap.org/search?q=${enc}&format=json&limit=8&accept-language=he${bias}`);
+    let list = await r.json();
+    if (list.length) return list;
+    r = await fetch(`https://nominatim.openstreetmap.org/search?q=${enc}&format=json&limit=8&accept-language=he,en`);
+    list = await r.json();
+    if (list.length) return list;
+  } catch {}
+  try {
+    const near = me ? `&lat=${me.lat}&lon=${me.lng}` : '';
+    const r = await fetch(`https://photon.komoot.io/api/?q=${enc}&limit=8${near}`);
+    const j = await r.json();
+    return (j.features || []).map(f => ({
+      lat: f.geometry.coordinates[1], lon: f.geometry.coordinates[0],
+      display_name: [f.properties.name, f.properties.city, f.properties.state, f.properties.country].filter(Boolean).join(', ')
+    }));
+  } catch { return []; }
+}
+
+async function doSearch(){
+  const q = $('navQ').value.trim();
+  if (!q) return;
+  $('navResults').innerHTML = '<div style="text-align:center;color:var(--mist);padding:14px">מחפש בכל העולם...</div>';
+  try {
+    const list = await geocode(q);
+    if (!list.length) { $('navResults').innerHTML = '<div style="text-align:center;color:var(--mist);padding:14px">לא נמצאו תוצאות — נסה באנגלית (Ella, Sri Lanka) או הוסף מדינה</div>'; return; }
+    $('navResults').innerHTML = '';
+    list.forEach(x => {
+      const d = document.createElement('div');
+      d.className = 'resitem';
+      const dist = me ? (hav(me, {lat:+x.lat, lng:+x.lon})/1000).toFixed(1) + ' ק״מ' : '';
+      const parts = cleanLabel(x.display_name, 240).split(',');
+      const destName = cleanLabel(parts[0] || 'יעד', 80);
+      d.innerHTML = `<span class="ic">📍</span><div class="tx"><div class="nm">${esc(destName)}</div><div class="ds">${esc(parts.slice(1,3).join(','))} ${dist ? '· '+esc(dist) : ''}</div></div><button class="go">נווט</button>`;
+      d.onclick = () => { closeSheets(); routeTo(+x.lat, +x.lon, destName); };
+      $('navResults').appendChild(d);
+    });
+  } catch { $('navResults').innerHTML = '<div style="text-align:center;color:var(--mist);padding:14px">שגיאת רשת — בדוק חיבור</div>'; }
+}
+
+// לחיצה ארוכה על המפה = ניווט לנקודה
+let pressTimer = null;
+map.on('mousedown touchstart', e => {
+  pressTimer = setTimeout(() => {
+    const ll = e.latlng || (e.touches && map.mouseEventToLatLng(e.touches[0]));
+    if (ll) routeTo(ll.lat, ll.lng, 'נקודה על המפה');
+  }, 650);
+});
+map.on('mouseup touchend touchmove dragstart zoomstart', () => clearTimeout(pressTimer));
+
+async function routeTo(lat, lng, name, opts){
+  const origin = (opts && opts.origin) || (typeof getOrigin === 'function' ? getOrigin() : me);
+  if (!origin) { toast('ממתין למיקום GPS לפני חישוב מסלול...'); startGps(); navTarget = {lat,lng,name}; return; }
+  navTarget = { lat, lng, name };
+  if (!opts || !opts.silent) toast('מחשב מסלול...');
+  try {
+    const bases = {
+      driving: 'https://router.project-osrm.org/route/v1/driving',
+      walking: 'https://routing.openstreetmap.de/routed-foot/route/v1/driving',
+      cycling: 'https://routing.openstreetmap.de/routed-bike/route/v1/driving'
+    };
+    const base = bases[navProfile] || bases.driving;
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), 18000);
+    const r = await fetch(`${base}/${origin.lng},${origin.lat};${lng},${lat}?overview=full&geometries=geojson&steps=true`, { signal: ctl.signal });
+    clearTimeout(timer);
+    if (!r.ok) throw new Error('routing ' + r.status);
+    const j = await r.json();
+    if (!j.routes || !j.routes.length) { toast('לא נמצא מסלול מתאים לפרופיל שנבחר'); return; }
+    const route = j.routes[0];
+    if (navLine) map.removeLayer(navLine);
+    if (navMarker) map.removeLayer(navMarker);
+    navLine = L.geoJSON(route.geometry, { style:{ color:'#C9A24B', weight:6, opacity:.85, dashArray: navProfile==='driving' ? null : '2 8' } }).addTo(map);
+    navMarker = L.marker([lat,lng], { icon: L.divIcon({ className:'', html:'<div class="poi-pin">🏁</div>', iconSize:[34,34], iconAnchor:[17,17] }) }).addTo(map);
+    navTarget.dist = route.distance; navTarget.dur = route.duration; navTarget.t0 = Date.now();
+    // גיאומטריה לבדיקת סטייה
+    navGeom = route.geometry.coordinates.map(c => ({ lat: c[1], lng: c[0] }));
+    // צעדי ההדרכה
+    navSteps = (route.legs?.[0]?.steps || []).map(s => ({
+      loc: { lat: s.maneuver.location[1], lng: s.maneuver.location[0] },
+      ...heManeuver(s), dist: s.distance
+    }));
+    navStepIdx = Math.min(1, navSteps.length - 1);
+    navAnnounced = {};
+    offRouteCount = 0;
+    $('navBanner').style.display = 'block';
+    $('chipsBar').style.display = 'none';
+    $('navChips').classList.add('show');
+    followMe = true; $('btnLocate').classList.add('on');
+    if (me) map.setView([me.lat, me.lng], navProfile==='driving' ? 17 : 16);
+    updateTurnBanner();
+    if (!opts || !opts.silent) speak('יוצאים לדרך אל ' + name + '. ' + fmtDistHe(route.distance) + ', בערך ' + fmtDurHe(route.duration) + '.', 'ניווט');
+  } catch (err) { toast(err?.name === 'AbortError' ? 'חישוב המסלול ארך זמן רב מדי — נסה שוב' : 'שגיאה בחישוב המסלול — בדוק חיבור או החלף פרופיל'); }
+}
+
+/* --- תרגום הוראות OSRM לעברית --- */
+const EXIT_HE = ['', 'הראשונה','השנייה','השלישית','הרביעית','החמישית','השישית'];
+function heManeuver(s){
+  const m = s.maneuver, mod = m.modifier || '', name = s.name ? ' לכיוון ' + s.name : '';
+  const DIR = { 'left':['פנה שמאלה','⬅'], 'right':['פנה ימינה','➡'], 'slight left':['היצמד שמאלה','↖'], 'slight right':['היצמד ימינה','↗'], 'sharp left':['פנייה חדה שמאלה','⬅'], 'sharp right':['פנייה חדה ימינה','➡'], 'uturn':['בצע פרסה','⤵'], 'straight':['המשך ישר','⬆'] };
+  let text = 'המשך ישר', ic = '⬆';
+  switch (m.type) {
+    case 'depart': text = 'יוצאים לדרך'; ic = '🚙'; break;
+    case 'arrive': text = 'הגעת ליעד'; ic = '🏁'; break;
+    case 'roundabout': case 'rotary':
+      text = 'בכיכר צא ביציאה ' + (EXIT_HE[m.exit] || 'מספר ' + (m.exit || 1)); ic = '🔄'; break;
+    case 'on ramp': text = 'עלה לכביש' + (DIR[mod] ? ' ' + DIR[mod][0].replace('פנה ','') : ''); ic = DIR[mod]?.[1] || '↗'; break;
+    case 'off ramp': text = 'רד ביציאה' + (DIR[mod] ? ' ' + (mod.includes('left')?'שמאלה':'ימינה') : ''); ic = DIR[mod]?.[1] || '↘'; break;
+    case 'merge': text = 'השתלב בתנועה'; ic = DIR[mod]?.[1] || '⬆'; break;
+    case 'fork': text = 'בהתפצלות ' + (DIR[mod]?.[0] || 'המשך ישר'); ic = DIR[mod]?.[1] || '⬆'; break;
+    default: if (DIR[mod]) { text = DIR[mod][0]; ic = DIR[mod][1]; }
+  }
+  return { text: text + name, ic };
+}
+function fmtDistHe(m){ return m >= 1000 ? (m/1000).toFixed(1).replace('.0','') + ' קילומטר' : Math.round(m/10)*10 + ' מטר'; }
+function fmtDurHe(s){ const mn = Math.round(s/60); return mn >= 60 ? Math.floor(mn/60) + ' שעות ו-' + (mn%60) + ' דקות' : mn + ' דקות'; }
+
+let navGeom = [], navSteps = [], navStepIdx = 0, navAnnounced = {}, offRouteCount = 0, stopoverFinal = null;
+
+function updateTurnBanner(){
+  if (!navTarget || !navSteps.length) return;
+  const step = navSteps[navStepIdx] || navSteps[navSteps.length-1];
+  const d = me ? hav(me, step.loc) : null;
+  $('turnIc').textContent = step.ic;
+  $('turnWhat').textContent = step.text;
+  $('turnDist').textContent = d != null ? (d >= 1000 ? (d/1000).toFixed(1)+' km' : Math.round(d/10)*10 + ' m') : '--';
+  // נותר + שעת הגעה
+  let remain = me ? hav(me, navTarget) : navTarget.dist;
+  if (navGeom.length && me) {
+    let best = 1e12, bi = 0;
+    const st = Math.max(1, Math.floor(navGeom.length/400));
+    for (let i = 0; i < navGeom.length; i += st) { const dd = hav(me, navGeom[i]); if (dd < best) { best = dd; bi = i; } }
+    remain = 0;
+    for (let i = bi; i < navGeom.length-1; i++) remain += hav(navGeom[i], navGeom[i+1]);
+  }
+  const secLeft = navTarget.dur * (remain / Math.max(navTarget.dist,1));
+  const eta = new Date(Date.now() + secLeft*1000);
+  $('navTime').textContent = `נותרו ${remain>=1000?(remain/1000).toFixed(1)+' ק״מ':Math.round(remain)+' מ׳'} · הגעה ${eta.getHours()}:${String(eta.getMinutes()).padStart(2,'0')} · ${navTarget.name}`;
+}
+
+function navTick(){
+  if (!navTarget || !me || !navSteps.length) return;
+  const TH = navProfile === 'driving' ? { far: 550, now: 60 } : navProfile === 'cycling' ? { far: 220, now: 40 } : { far: 110, now: 22 };
+  const step = navSteps[navStepIdx];
+  if (step) {
+    const d = hav(me, step.loc);
+    const key = navStepIdx;
+    if (d <= TH.far && d > TH.now && !navAnnounced[key+'-far'] && step.ic !== '🚙') {
+      navAnnounced[key+'-far'] = 1;
+      speak('עוד ' + fmtDistHe(d) + ', ' + step.text, 'ניווט');
+    }
+    if (d <= TH.now && !navAnnounced[key+'-now']) {
+      navAnnounced[key+'-now'] = 1;
+      if (step.ic === '🏁') { arriveAtTarget(); return; }
+      if (step.ic !== '🚙') speak(step.text, 'ניווט');
+    }
+    if (d <= TH.now * 0.6 && navStepIdx < navSteps.length - 1) navStepIdx++;
+  }
+  // סטייה מהמסלול → חישוב מחדש
+  if (navGeom.length > 2) {
+    let best = 1e12;
+    const st = Math.max(1, Math.floor(navGeom.length/300));
+    for (let i = 0; i < navGeom.length; i += st) { const dd = hav(me, navGeom[i]); if (dd < best) best = dd; }
+    if (best > 65) { offRouteCount++; } else offRouteCount = 0;
+    if (offRouteCount >= 2) {
+      offRouteCount = 0;
+      speak('מחשב מסלול מחדש', 'ניווט');
+      routeTo(navTarget.lat, navTarget.lng, navTarget.name, { origin: me, silent: true });
+    }
+  }
+  updateTurnBanner();
+  // הגעה גם לפי מרחק ליעד
+  if (hav(me, navTarget) < 35) arriveAtTarget();
+}
+
+function arriveAtTarget(){
+  const arrived = navTarget?.name || 'היעד';
+  toast('🏁 הגעת אל ' + arrived + '! 🦁', 4500);
+  stopNav();
+  if (stopoverFinal) {
+    const fin = stopoverFinal; stopoverFinal = null;
+    speak('הגעת אל ' + arrived + '. כשתסיים — ממשיכים אל ' + fin.name + '. מחשב את ההמשך.', 'ניווט');
+    setTimeout(() => routeTo(fin.lat, fin.lng, fin.name, { origin: me }), 5000);
+  } else {
+    speak('הגעת ליעד: ' + arrived + '. איזה כיף!', 'ניווט');
+  }
+}
+
+
+
+function stopNav(){
+  navTarget = null;
+  navSteps = []; navGeom = [];
+  $('navChips').classList.remove('show');
+  const el = document.getElementById('meEl'); if (el) el.classList.remove('driving');
+  if ($('rtBanner').style.display !== 'block') $('chipsBar').style.display = 'flex';
+  if (navLine) { map.removeLayer(navLine); navLine = null; }
+  if (navMarker) { map.removeLayer(navMarker); navMarker = null; }
+  $('navBanner').style.display='none';
+}
+$('navStop').onclick = stopNav;
+
+/* ---------- מה סביבי (Overpass) ---------- */
+function bearing(from, to){
+  const toR = x => x*Math.PI/180;
+  const y = Math.sin(toR(to.lng-from.lng))*Math.cos(toR(to.lat));
+  const x = Math.cos(toR(from.lat))*Math.sin(toR(to.lat)) - Math.sin(toR(from.lat))*Math.cos(toR(to.lat))*Math.cos(toR(to.lng-from.lng));
+  const b = (Math.atan2(y,x)*180/Math.PI+360)%360;
+  return ['צפונה','צפון-מזרחה','מזרחה','דרום-מזרחה','דרומה','דרום-מערבה','מערבה','צפון-מערבה'][Math.round(b/45)%8];
+}
+const CAT_ONE = { 'מסעדות':'מסעדה','דלק':'תחנת דלק','בתי חולים':'בית חולים','בתי מרקחת':'בית מרקחת','בתי קפה':'בית קפה','לינה':'מקום לינה','כספומט':'כספומט','בתי כנסת':'בית כנסת','מעיינות':'מעיין','תצפיות':'תצפית','חניונים':'חניון','חניוני לילה':'חניון לילה','מפלים':'מפל','מערות':'מערה','שירותים':'שירותים','מוזיאונים':'מוזיאון' };
+const CATS = [
+  { ic:'🍽', nm:'מסעדות', q:'node["amenity"="restaurant"]' },
+  { ic:'⛽', nm:'דלק', q:'node["amenity"="fuel"]' },
+  { ic:'🏥', nm:'בתי חולים', q:'node["amenity"="hospital"];way["amenity"="hospital"]' },
+  { ic:'💊', nm:'בתי מרקחת', q:'node["amenity"="pharmacy"]' },
+  { ic:'☕', nm:'בתי קפה', q:'node["amenity"="cafe"]' },
+  { ic:'🏨', nm:'לינה', q:'node["tourism"~"hotel|guest_house|hostel"]' },
+  { ic:'🏧', nm:'כספומט', q:'node["amenity"="atm"]' },
+  { ic:'🕍', nm:'בתי כנסת', q:'node["amenity"="place_of_worship"]["religion"="jewish"];way["amenity"="place_of_worship"]["religion"="jewish"]' },
+  { ic:'💧', nm:'מעיינות', q:'node["natural"="spring"]' },
+  { ic:'🌄', nm:'תצפיות', q:'node["tourism"="viewpoint"]' },
+  { ic:'🅿️', nm:'חניונים', q:'node["amenity"="parking"];way["amenity"="parking"]' },
+  { ic:'🏕', nm:'חניוני לילה', q:'node["tourism"~"camp_site|picnic_site"]' },
+  { ic:'🌊', nm:'מפלים', q:'node["waterway"="waterfall"]' },
+  { ic:'🕳', nm:'מערות', q:'node["natural"="cave_entrance"]' },
+  { ic:'🚻', nm:'שירותים', q:'node["amenity"="toilets"]' },
+  { ic:'🏛', nm:'מוזיאונים', q:'node["tourism"="museum"];way["tourism"="museum"]' },
+];
+let poiLayer = L.layerGroup().addTo(map);
+
+const catGrid = $('catGrid');
+CATS.forEach(c => {
+  const d = document.createElement('div');
+  d.className = 'cat'; d.tabIndex = 0;
+  d.innerHTML = `<div class="ic">${c.ic}</div><div class="nm">${c.nm}</div>`;
+  d.onclick = () => searchNearby(c);
+  catGrid.appendChild(d);
+});
+
+async function searchNearby(cat){
+  const center = me || map.getCenter();
+  const R = 8000;
+  $('nearbyResults').innerHTML = `<div style="text-align:center;color:var(--mist);padding:14px">מחפש ${cat.nm} ברדיוס 8 ק״מ...</div>`;
+  try {
+    const parts = cat.q.split(';').map(q => `${q}(around:${R},${center.lat},${center.lng});`).join('');
+    const query = `[out:json][timeout:20];(${parts});out center 40;`;
+    const r = await fetch('https://overpass-api.de/api/interpreter', { method:'POST', body:'data='+encodeURIComponent(query) });
+    const j = await r.json();
+    poiLayer.clearLayers();
+    const items = (j.elements||[]).map(e => {
+      const lat = e.lat ?? e.center?.lat, lng = e.lon ?? e.center?.lon;
+      if (lat==null) return null;
+      const t = e.tags || {};
+      const d = hav(center, {lat,lng});
+      const realName = t['name:he'] || t.name || null;
+      const one = CAT_ONE[cat.nm] || cat.nm;
+      // נקודה ללא שם מקבלת זהות: "תצפית 1.2 ק״מ צפון-מזרחה"
+      const name = realName || `${one} ${(d/1000).toFixed(1)} ק״מ ${bearing(center, {lat,lng})}`;
+      return { lat, lng, name, unnamed: !realName, one,
+        ele: t.ele ? Math.round(+t.ele) : null, desc: t['description:he'] || t.description || null,
+        phone: t.phone || t['contact:phone'], hours: t.opening_hours, d };
+    }).filter(Boolean).sort((a,b)=>a.d-b.d).slice(0,25);
+
+    if (!items.length) { $('nearbyResults').innerHTML = `<div style="text-align:center;color:var(--mist);padding:14px">לא נמצאו ${cat.nm} באזור הזה</div>`; return; }
+
+    $('nearbyResults').innerHTML = '';
+    items.forEach((it, idx) => {
+      // סמן על המפה
+      const mk = L.marker([it.lat, it.lng], { icon: L.divIcon({ className:'', html:`<div class="poi-pin">${cat.ic}</div>`, iconSize:[34,34], iconAnchor:[17,17] }) }).addTo(poiLayer);
+      const extra = [it.ele ? '⛰ גובה ' + it.ele + ' מ׳' : '', it.desc ? esc(it.desc).slice(0,90) : ''].filter(Boolean).join(' · ');
+      mk.bindPopup(`<div class="pp-name">${cat.ic} ${esc(it.name)}</div><div class="pp-dist">${(it.d/1000).toFixed(1)} ק״מ ממך${it.hours ? ' · '+it.hours : ''}${extra ? '<br>'+extra : ''}</div><button class="pp-go" onclick="routeTo(${it.lat},${it.lng},'${esc(it.name)}')">נווט לכאן</button> <span style="color:var(--brass-soft);font-size:13px;cursor:pointer;margin-right:8px" onclick="tellAbout(${it.lat},${it.lng},'${esc(it.name)}')">🔊 ספר לי</span>${it.phone ? ` <a href="tel:${it.phone}" style="color:var(--brass-soft);font-size:13px;margin-right:6px">📞</a>` : ''}`);
+      // שורה ברשימה
+      const d = document.createElement('div');
+      d.className = 'resitem';
+      const sub = [(it.d/1000).toFixed(1) + ' ק״מ ' + bearing(center, it), it.ele ? '⛰ ' + it.ele + ' מ׳' : '', it.hours || ''].filter(Boolean).join(' · ');
+      d.innerHTML = `<span class="ic nb-thumb">${cat.ic}</span><div class="tx"><div class="nm">${esc(it.name)}</div><div class="ds">${sub}</div></div><button class="go">נווט</button>`;
+      d.querySelector('.go').onclick = ev => { ev.stopPropagation(); closeSheets(); routeTo(it.lat, it.lng, it.name); };
+      d.onclick = () => { closeSheets(); map.setView([it.lat,it.lng], 16); mk.openPopup(); };
+      $('nearbyResults').appendChild(d);
+      if (idx < 10) placePhoto(it.lat, it.lng).then(url => {
+        if (!url) return;
+        const im = document.createElement('img');
+        im.className = 'nb-img'; im.src = url; im.loading = 'lazy'; im.alt = '';
+        d.replaceChild(im, d.querySelector('.nb-thumb'));
+      });
+    });
+    toast(`נמצאו ${items.length} ${cat.nm} — מוצגים על המפה`);
+  } catch { $('nearbyResults').innerHTML = '<div style="text-align:center;color:var(--mist);padding:14px">שגיאת רשת — נסה שוב</div>'; }
+}
+window.routeTo = routeTo;
+
+/* ---------- מזג אוויר (Open-Meteo) ---------- */
+const WMO = {0:['☀️','בהיר'],1:['🌤','בהיר ברובו'],2:['⛅','מעונן חלקית'],3:['☁️','מעונן'],45:['🌫','ערפל'],48:['🌫','ערפל'],51:['🌦','טפטוף'],53:['🌦','טפטוף'],55:['🌧','טפטוף חזק'],61:['🌧','גשם קל'],63:['🌧','גשם'],65:['🌧','גשם חזק'],71:['🌨','שלג קל'],73:['🌨','שלג'],75:['❄️','שלג כבד'],80:['🌦','ממטרים'],81:['🌧','ממטרים'],82:['⛈','ממטרים עזים'],95:['⛈','סופת רעמים'],96:['⛈','סופה + ברד'],99:['⛈','סופה + ברד']};
+let wxData = null;
+
+async function loadWeather(){
+  const c = me || map.getCenter();
+  try {
+    const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${c.lat}&longitude=${c.lng}&current=temperature_2m,weather_code,wind_speed_10m,relative_humidity_2m,uv_index&hourly=temperature_2m,weather_code,precipitation_probability,precipitation,wind_speed_10m&forecast_days=2&timezone=auto`);
+    wxData = await r.json();
+    const cur = wxData.current;
+    const [ic] = WMO[cur.weather_code] || ['🌡',''];
+    $('wxChip').style.display = 'flex';
+    $('wxChip').querySelector('.i').textContent = ic;
+    $('wxChip').querySelector('.t').textContent = Math.round(cur.temperature_2m) + '°';
+    if (typeof renderSafety === 'function') renderSafety(false);
+  } catch {}
+}
+
+function loadWeatherPanel(){
+  if (!wxData) { loadWeather().then(loadWeatherPanel); return; }
+  const cur = wxData.current;
+  const [ic, de] = WMO[cur.weather_code] || ['🌡','—'];
+  $('wxNow').innerHTML = `<div class="ic">${ic}</div><div class="big">${Math.round(cur.temperature_2m)}°</div><div class="de">${de}<br>רוח ${Math.round(cur.wind_speed_10m)} קמ״ש · לחות ${cur.relative_humidity_2m}%<br>UV ${Math.round(cur.uv_index ?? 0)}</div>`;
+  const now = new Date().getHours();
+  const H = wxData.hourly;
+  let html = '';
+  const startIdx = H.time.findIndex(t => new Date(t).getHours() === now && new Date(t).getDate() === new Date().getDate());
+  for (let i = Math.max(0,startIdx); i < Math.min(H.time.length, startIdx + 24); i++) {
+    const [hic] = WMO[H.weather_code[i]] || ['🌡'];
+    const hr = new Date(H.time[i]).getHours();
+    html += `<div class="wxh"><div class="h">${String(hr).padStart(2,'0')}:00</div><div class="i">${hic}</div><div class="t">${Math.round(H.temperature_2m[i])}°</div><div class="r">${H.precipitation_probability[i] > 5 ? H.precipitation_probability[i]+'% 💧' : ''}</div></div>`;
+  }
+  $('wxHours').innerHTML = html;
+}
+setTimeout(loadWeather, 2500);
+setInterval(loadWeather, 15*60*1000);
+
+/* ---------- SOS ---------- */
+$('sosContact').value = localStorage.getItem('gt_sos_contact') || '';
+$('sosSave').onclick = () => { localStorage.setItem('gt_sos_contact', $('sosContact').value.trim()); toast('איש הקשר נשמר'); };
+
+function updateSosCoords(){
+  if (!me) return;
+  $('sosCoords').textContent = me.lat.toFixed(6) + ', ' + me.lng.toFixed(6) + (me.altitude!=null ? '  ·  ↑' + Math.round(me.altitude) + 'm' : '');
+}
+
+async function sosMessage(){
+  let bat = '';
+  try { const b = await navigator.getBattery(); bat = `\n🔋 סוללה: ${Math.round(b.level*100)}%`; } catch {}
+  const c = me ? `${me.lat.toFixed(6)},${me.lng.toFixed(6)}` : 'לא ידוע';
+  const alt = me?.altitude!=null ? `\n⛰ גובה: ${Math.round(me.altitude)} מ׳` : '';
+  const acc = me ? `\n🎯 דיוק: ±${Math.round(me.accuracy)} מ׳` : '';
+  return `🆘 חירום — GoTours Navigator\n\n📍 מיקום: ${c}${alt}${acc}${bat}\n🕐 ${new Date().toLocaleString('he-IL')}\n\n🗺 מפה: https://maps.google.com/?q=${c}`;
+}
+
+$('sosWa').onclick = async () => {
+  const msg = encodeURIComponent(await sosMessage());
+  const contact = localStorage.getItem('gt_sos_contact')?.replace(/[^0-9+]/g,'') || '';
+  window.open(contact ? `https://wa.me/${contact.replace('+','')}?text=${msg}` : `https://wa.me/?text=${msg}`, '_blank');
+};
+
+$('sosCopy').onclick = async () => {
+  try { await navigator.clipboard.writeText(await sosMessage()); toast('הקואורדינטות הועתקו'); }
+  catch { toast('לא ניתן להעתיק במכשיר זה'); }
+};
+
+/* ---------- אופליין: הורדת אריחי מפה ---------- */
+function llToTile(lat, lng, z){
+  const n = 2**z;
+  return { x: Math.floor((lng+180)/360*n), y: Math.floor((1 - Math.log(Math.tan(lat*Math.PI/180) + 1/Math.cos(lat*Math.PI/180))/Math.PI)/2*n) };
+}
+
+$('dlArea').onclick = async () => {
+  const b = map.getBounds();
+  const baseZ = Math.max(map.getZoom(), 10);
+  const NATIVE_MAX = { street:17, israel:16, mtb:16, topo:16, sat:17 };
+  const zMax = Math.min(baseZ + 3, NATIVE_MAX[activeLayer] || 16);
+  const TILE_URLS = {
+    street: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    israel: 'https://israelhiking.osm.org.il/Hebrew/Tiles/{z}/{x}/{y}.png',
+    mtb:    'https://israelhiking.osm.org.il/Hebrew/mtbTiles/{z}/{x}/{y}.png',
+    topo:   'https://tile.opentopomap.org/{z}/{x}/{y}.png',
+    sat:    'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+  };
+  const urlT = TILE_URLS[activeLayer];
+  const urls = [];
+  for (let z = Math.min(baseZ, 8); z <= zMax; z++) {
+    const t1 = llToTile(b.getNorth(), b.getWest(), z), t2 = llToTile(b.getSouth(), b.getEast(), z);
+    for (let x = t1.x; x <= t2.x; x++) for (let y = t1.y; y <= t2.y; y++)
+      urls.push(urlT.replace('{z}',z).replace('{x}',x).replace('{y}',y));
+  }
+  if (urls.length > 2600) { toast(`האזור גדול מדי (${urls.length} אריחים) — התקרב קצת ונסה שוב`); return; }
+
+  const bar = $('dlbar'), fill = bar.querySelector('.fill');
+  bar.style.display='block'; $('dlstat').textContent = 'מוריד ' + urls.length + ' אריחי מפה...';
+  const cache = await caches.open('gt-tiles');
+  let done = 0, fail = 0;
+  const CHUNK = 8;
+  for (let i = 0; i < urls.length; i += CHUNK) {
+    await Promise.all(urls.slice(i, i+CHUNK).map(async u => {
+      try {
+        if (!(await cache.match(u))) {
+          const resp = await fetch(u, { mode:'cors' });
+          if (resp.ok) await cache.put(u, resp);
+          else fail++;
+        }
+      } catch { fail++; }
+      done++;
+    }));
+    fill.style.width = Math.round(done/urls.length*100) + '%';
+    $('dlstat').textContent = `${done} / ${urls.length}`;
+  }
+  $('dlstat').textContent = `✅ הושלם! ${done-fail} אריחים נשמרו במכשיר — המפה תעבוד גם בלי אינטרנט`;
+  toast('האזור נשמר לאופליין 🦁', 3500);
+  updateCacheInfo();
+};
+
+async function updateCacheInfo(){
+  try {
+    const cache = await caches.open('gt-tiles');
+    const keys = await cache.keys();
+    const est = await navigator.storage?.estimate?.();
+    const mb = est ? (est.usage/1048576).toFixed(1) : '?';
+    $('cacheInfo').textContent = `שמורים במכשיר: ${keys.length} אריחי מפה (~${mb} MB בשימוש כולל)`;
+  } catch { $('cacheInfo').textContent = 'אחסון אופליין לא זמין בדפדפן זה'; }
+}
+
+$('clearCache').onclick = async () => {
+  await caches.delete('gt-tiles');
+  toast('המפות השמורות נמחקו');
+  updateCacheInfo();
+};
+
+/* ---------- המדריך הקולי 🦁 ---------- */
+$('btnGuide').onclick = () => { openSheet('shGuide'); if (!guideSitesLoaded) loadGuideSites(); };
+
+/* --- הקראה מקומית: ללא מפתחות וללא שליחת הטקסט לשירות קול חיצוני --- */
+let heVoices = [];
+let gtVoice = localStorage.getItem('gt_voice') || 'female';
+let player = new Audio();
+
+function pickVoice(){
+  if (!('speechSynthesis' in window)) return;
+  heVoices = speechSynthesis.getVoices().filter(v => String(v.lang || '').toLowerCase().startsWith('he'));
+}
+if ('speechSynthesis' in window) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+
+function chooseHebrewVoice(profile){
+  if (!heVoices.length) return null;
+  const name = v => String(v.name || '').toLowerCase();
+  const femaleWords = ['female','woman','carmit','hila','yael','naama','siri 2','כרמית','הילה','יעל','נעמה'];
+  const maleWords = ['male','man','matan','siri 1','מתן'];
+  if (profile === 'female') return heVoices.find(v => femaleWords.some(w => name(v).includes(w))) || heVoices[0];
+  if (profile === 'male') return heVoices.find(v => maleWords.some(w => name(v).includes(w))) || heVoices[1] || heVoices[0];
+  if (profile === 'alternate') return heVoices[2] || heVoices[1] || heVoices[0];
+  return heVoices.find(v => v.localService) || heVoices[0];
+}
+
+function stopSpeak(){
+  try { player.pause(); player.currentTime = 0; } catch {}
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  $('speakBar').classList.remove('show');
+}
+
+function speakDevice(clean, title){
+  if (!('speechSynthesis' in window)) { toast('אין תמיכה בהקראה במכשיר זה'); return; }
+  const u = new SpeechSynthesisUtterance(clean);
+  u.lang = 'he-IL';
+  const voice = chooseHebrewVoice(gtVoice);
+  if (voice) u.voice = voice;
+  u.rate = 0.94;
+  u.pitch = 1;
+  u.onstart = () => { $('speakTitle').textContent = title || 'המדריך מדבר...'; $('speakBar').classList.add('show'); };
+  u.onend = u.onerror = () => $('speakBar').classList.remove('show');
+  speechSynthesis.speak(u);
+}
+
+async function speak(text, title){
+  stopSpeak();
+  const clean = String(text || '').replace(/\[[^\]]*\]/g, '').replace(/[*#_>`]/g, '').replace(/\s+/g, ' ').trim();
+  if (clean) speakDevice(clean.slice(0, 12000), title);
+}
+$('speakStop').onclick = stopSpeak;
+
+/* --- אתרים סביבי (ויקיפדיה עברית — חינם) --- */
+let guideSitesLoaded = false, siteCache = {};
+
+async function wikiNearby(lat, lng, radius=2500, limit=12){
+  for (const lang of ['he', 'en']) {
+    try {
+      const r = await fetch(`https://${lang}.wikipedia.org/w/api.php?action=query&list=geosearch&gscoord=${lat}%7C${lng}&gsradius=${radius}&gslimit=${limit}&format=json&origin=*`);
+      const j = await r.json();
+      const list = j.query?.geosearch || [];
+      if (list.length) return list.map(s => ({ ...s, lang }));
+    } catch {}
+  }
+  return [];
+}
+
+async function wikiExtract(pageid, lang='he'){
+  const key = lang + ':' + pageid;
+  if (siteCache[key]) return siteCache[key];
+  const r = await fetch(`https://${lang}.wikipedia.org/w/api.php?action=query&prop=extracts&exintro&explaintext&pageids=${pageid}&format=json&origin=*`);
+  const j = await r.json();
+  const tx = j.query?.pages?.[pageid]?.extract || '';
+  siteCache[key] = tx;
+  return tx;
+}
+
+/* --- ההסברים שלנו: המדריך בונה את הסיפור בסגנון GoTours --- */
+const storyCache = new Map();
+async function gtStory(title, wikiText){
+  if (storyCache.has(title)) return storyCache.get(title);
+  const system = 'אתה "המדריך של GoTours" — מדריך טיולים ישראלי ותיק, חם, סוחף וכריזמטי. אתה עומד עכשיו מול קבוצת מטיילים בשטח ומספר להם על האתר. סגנון: פתיחה שתופסת, היסטוריה חיה, אגדה או סיפור מקומי אחד לפחות, פרט גאולוגי או טבע אם רלוונטי, קורט הומור, וסיום שמחבר את המטייל למקום. עברית מדוברת וזורמת, מותאמת להקראה בקול — בלי כותרות, בלי רשימות, בלי סימנים. אורך: 6–10 משפטים. דיוק עובדתי מעל הכול — הסתמך על חומר הרקע, ואל תמציא עובדות. אם חומר הרקע באנגלית — תרגם ועבד אותו, אך ענה תמיד בעברית בלבד.';
+  const prompt = `ספר לקבוצה על: ${title}\n\nחומר רקע לדיוק (מוויקיפדיה):\n${(wikiText||'אין — ספר רק מה שידוע לך בוודאות, ואם המידע דל אמור זאת בקצרה').slice(0, 2500)}`;
+  const r = await fetch('/.netlify/functions/guide', {
+    method:'POST', headers:{ 'content-type':'application/json' },
+    body: JSON.stringify({ system, prompt })
+  });
+  if (!r.ok) throw new Error('ai');
+  const j = await r.json();
+  if (j.error || !j.text) throw new Error(j.error || 'ai');
+  let out = j.text;
+  if (!isHebrew(out)) out = await forceHebrew(out) || out;
+  storyCache.set(title, out);
+  return out;
+}
+
+/* ביטוח עברית: תרגום מיידי אם ה-AI החליק לאנגלית */
+async function forceHebrew(text){
+  try {
+    const r = await fetch('/.netlify/functions/guide', {
+      method:'POST', headers:{ 'content-type':'application/json' },
+      body: JSON.stringify({ system:'תרגם לעברית טבעית וקולחת המתאימה להקראה בקול. החזר רק את התרגום.', prompt: String(text).slice(0, 2500), fast: true })
+    });
+    const j = await r.json();
+    return isHebrew(j.text) ? j.text : null;
+  } catch { return null; }
+}
+
+// הסיפור המלא: קודם ההסבר שלנו, ואם ה-AI לא מחובר — ויקיפדיה כגיבוי
+async function tellStory(title, pageid, lang='he'){
+  let wiki = '';
+  try { wiki = pageid ? await wikiExtract(pageid, lang) : ''; } catch {}
+  try {
+    const story = await gtStory(title, wiki);
+    speak(story, title);
+    return story;
+  } catch {
+    if (wiki && isHebrew(wiki)) { speak(wiki, title); toast('המוח לא זמין — מקריא רקע מוויקיפדיה'); return wiki; }
+    toast('המדריך החכם אינו זמין כרגע — בדוק חיבור אינטרנט ולחץ "🔧 בדיקת מערכת"', 5000);
+    return '';
+  }
+}
+
+async function loadGuideSites(){
+  const c = me || map.getCenter();
+  $('guideSites').innerHTML = '<div class="hint">מגלה אתרים סביבך...</div>';
+  try {
+    const sites = await wikiNearby(c.lat, c.lng);
+    guideSitesLoaded = true;
+    if (!sites.length) { $('guideSites').innerHTML = '<div class="hint">לא נמצאו אתרים מתועדים ברדיוס 2.5 ק״מ — נסה מאזור אחר</div>'; return; }
+    $('guideSites').innerHTML = '';
+    sites.forEach(s => {
+      const d = document.createElement('div');
+      d.className = 'siteitem';
+      d.innerHTML = `<span class="ic">🏛</span><div class="tx"><div class="nm">${s.title}</div><div class="ds">${(s.dist/1000).toFixed(1)} ק״מ ממך</div></div><button class="play">▶ ספר לי</button>`;
+      d.querySelector('.play').onclick = async ev => {
+        const btn = ev.target;
+        btn.innerHTML = '<span class="spin">⟳</span>';
+        map.setView([s.lat, s.lon], 15);
+        L.marker([s.lat, s.lon], { icon: L.divIcon({ className:'', html:'<div class="poi-pin">🏛</div>', iconSize:[34,34], iconAnchor:[17,17] }) })
+          .addTo(poiLayer).bindPopup(`<div class="pp-name">🏛 ${s.title}</div>`);
+        await tellStory(s.title, s.pageid, s.lang || 'he');
+        btn.textContent = '▶ ספר לי';
+      };
+      $('guideSites').appendChild(d);
+    });
+  } catch { $('guideSites').innerHTML = '<div class="hint">שגיאת רשת — נסה שוב</div>'; }
+}
+$('guideRefresh').onclick = loadGuideSites;
+
+/* --- 🔧 בדיקת מערכת: AI Gateway, קול מקומי ומרכז קבוצה --- */
+$('sysCheck').onclick = async () => {
+  const box = $('sysResult');
+  box.innerHTML = '<div class="hint"><span class="spin">⟳</span> בודק את המערכת...</div>';
+  const rows = [];
+
+  try {
+    const r = await fetch('/.netlify/functions/guide', {
+      method:'POST', headers:{ 'content-type':'application/json' },
+      body: JSON.stringify({ system:'ענה במילה אחת בעברית.', prompt:'שלום', fast:true })
+    });
+    const j = await r.json().catch(() => ({}));
+    if (r.ok && j.text) rows.push('<div class="safe-card ok"><span class="sic">🧠</span><div><b>המדריך החכם מחובר</b><br>Netlify AI Gateway פעיל — בלי מפתח חיצוני.</div></div>');
+    else rows.push(`<div class="safe-card warn"><span class="sic">🧠</span><div><b>המדריך החכם עדיין לא הופעל</b><br>${esc(String(j.message || j.error || r.status)).slice(0,150)}<br>נדרש Deploy ייצור אחד ב-Netlify ו-AI Features פעיל.</div></div>`);
+  } catch {
+    rows.push('<div class="safe-card warn"><span class="sic">🧠</span><div><b>פונקציית המדריך לא נגישה</b><br>העלה את כל תוכן ה-ZIP ל-Netlify ובצע Deploy.</div></div>');
+  }
+
+  if ('speechSynthesis' in window) {
+    pickVoice();
+    rows.push(`<div class="safe-card ok"><span class="sic">🎙</span><div><b>הקול המקומי מוכן</b><br>${heVoices.length ? 'נמצאו '+heVoices.length+' קולות עבריים במכשיר.' : 'הדפדפן יבחר את הקול הזמין במכשיר.'}</div></div>`);
+  } else rows.push('<div class="safe-card warn"><span class="sic">🎙</span><div><b>אין מנוע הקראה בדפדפן</b><br>נסה Safari באייפון או Chrome באנדרואיד.</div></div>');
+
+  try {
+    const r = await fetch('/.netlify/functions/group', {method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({op:'ping'})});
+    const j = await r.json().catch(() => ({}));
+    if (r.ok && j.ok) rows.push('<div class="safe-card ok"><span class="sic">👥</span><div><b>מרכז הקבוצה מוכן</b><br>Netlify Blobs מחובר — ללא Firebase.</div></div>');
+    else throw new Error();
+  } catch {
+    rows.push('<div class="safe-card warn"><span class="sic">👥</span><div><b>מרכז הקבוצה עדיין לא פעיל</b><br>הוא יופעל אוטומטית לאחר Deploy ב-Netlify.</div></div>');
+  }
+
+  box.innerHTML = rows.join('');
+};
+
+/* --- בורר קולות --- */
+function renderVoiceOpts(){
+  document.querySelectorAll('.vopt').forEach(b => b.classList.toggle('on', b.dataset.voice === gtVoice));
+}
+renderVoiceOpts();
+document.querySelectorAll('.vopt').forEach(b => b.onclick = () => {
+  gtVoice = b.dataset.voice;
+  localStorage.setItem('gt_voice', gtVoice);
+  renderVoiceOpts();
+  speak('שלום, אני המדריך שלכם מבית גוֹ-טוּרְס. יאללה, יוצאים לדרך!', 'בדיקת קול');
+});
+
+/* --- סיור אוטומטי: מתקרבים לאתר — המדריך מדבר לבד --- */
+let autoGuide = localStorage.getItem('gt_autoguide') === '1';
+const announced = new Set();
+let lastScan = { lat:0, lng:0, t:0 };
+
+function renderToggle(){
+  $('autoToggle').classList.toggle('on', autoGuide);
+  $('autoToggle').setAttribute('aria-checked', autoGuide);
+  $('btnGuide').classList.toggle('on', autoGuide);
+}
+renderToggle();
+
+$('autoToggle').onclick = () => {
+  autoGuide = !autoGuide;
+  localStorage.setItem('gt_autoguide', autoGuide ? '1' : '0');
+  renderToggle();
+  if (autoGuide) { toast('הסיור האוטומטי פעיל — המדריך יתחיל לדבר כשתתקרב לאתר 🦁', 3500); speak('הסיור האוטומטי פעיל. אני איתכם.', 'GoTours'); autoScan(true); }
+  else { toast('הסיור האוטומטי כובה'); stopSpeak(); }
+};
+
+async function autoScan(force){
+  if (!autoGuide || !me) return;
+  const now = Date.now();
+  const moved = lastScan.t ? hav(me, lastScan) : 1e9;
+  if (!force && moved < 250 && now - lastScan.t < 60000) return;
+  lastScan = { lat: me.lat, lng: me.lng, t: now };
+  try {
+    const sites = await wikiNearby(me.lat, me.lng, 400, 5);
+    for (const s of sites) {
+      if (announced.has(s.pageid)) continue;
+      announced.add(s.pageid);
+      toast('🏛 מתקרבים אל: ' + s.title, 4000);
+      let wiki = '';
+      try { wiki = await wikiExtract(s.pageid, s.lang || 'he'); } catch {}
+      try {
+        const story = await gtStory(s.title, wiki);
+        speak('אנחנו מתקרבים אל ' + s.title + '. ' + story, s.title);
+      } catch {
+        if (wiki && wiki.length > 60 && isHebrew(wiki)) speak('אנחנו מתקרבים אל ' + s.title + '. ' + wiki.slice(0, 900), s.title);
+      }
+      break; // סיפור אחד בכל פעם
+    }
+  } catch {}
+}
+setInterval(() => autoScan(false), 20000);
+
+/* --- שאל את המדריך (Claude AI דרך פונקציית Netlify) --- */
+async function askAI(prompt){
+  const c = me || map.getCenter();
+  const system = 'אתה "המדריך" — מדריך טיולים ישראלי ותיק, חם וכריזמטי, של חברת GoTours. אתה עונה בעברית קולחת, בסגנון סיפורי ומרתק: היסטוריה, אגדות, גאולוגיה, טבע, פיקנטריה וקצת הומור. תשובות של 4–8 משפטים, מדויקות עובדתית. אם אינך בטוח — אמור זאת בכנות.';
+  const ctx = `מיקום המטיילים כעת: ${c.lat.toFixed(4)}, ${c.lng.toFixed(4)}. `;
+  const r = await fetch('/.netlify/functions/guide', {
+    method:'POST',
+    headers:{ 'content-type':'application/json' },
+    body: JSON.stringify({ system, prompt: ctx + prompt })
+  });
+  if (!r.ok) throw new Error('fn');
+  const j = await r.json();
+  if (j.error) throw new Error(j.error);
+  return j.text;
+}
+
+$('askGo').onclick = doAsk;
+$('askQ').addEventListener('keydown', e => { if (e.key==='Enter') doAsk(); });
+
+async function doAsk(){
+  const q = $('askQ').value.trim();
+  if (!q) return;
+  $('aiAnswer').innerHTML = '<div class="bubble"><span class="spin">⟳</span> המדריך חושב...</div>';
+  try {
+    const ans = await askAI(q);
+    $('aiAnswer').innerHTML = '';
+    const b = document.createElement('div');
+    b.className = 'bubble';
+    b.textContent = ans;
+    const act = document.createElement('div');
+    act.className = 'actions';
+    const sp = document.createElement('button');
+    sp.className = 'pill gold';
+    sp.textContent = '🔊 הקרא לי';
+    sp.onclick = () => speak(ans, 'המדריך עונה');
+    act.appendChild(sp);
+    $('aiAnswer').appendChild(b);
+    $('aiAnswer').appendChild(act);
+  } catch {
+    $('aiAnswer').innerHTML = '<div class="bubble">המדריך החכם עדיין לא הופעל באתר. אין צורך להכניס מפתח: העלה את החבילה ל-Netlify באמצעות חיבור ל-Git, בצע Deploy ייצור אחד והפעל AI Features. בינתיים הסיפורים מוויקיפדיה והקול המקומי ממשיכים לעבוד. 🦁</div>';
+  }
+}
+
+/* ---------- תוכן ההדרכה שלי: נקודות אישיות בכל העולם ---------- */
+const DB_NAME = 'gt-navigator', DB_STORE = 'points', DB_VERSION = 3;
+let dbPromise = null;
+function dbOpen(){
+  if (dbPromise) return dbPromise;
+  dbPromise = new Promise((res, rej) => {
+    const rq = indexedDB.open(DB_NAME, DB_VERSION);
+    rq.onupgradeneeded = () => {
+      const db = rq.result;
+      if (!db.objectStoreNames.contains(DB_STORE)) db.createObjectStore(DB_STORE, { keyPath:'id' });
+      if (!db.objectStoreNames.contains('routes')) db.createObjectStore('routes', { keyPath:'id' });
+      if (!db.objectStoreNames.contains('settings')) db.createObjectStore('settings', { keyPath:'key' });
+    };
+    rq.onsuccess = () => { const db = rq.result; db.onversionchange = () => db.close(); res(db); };
+    rq.onblocked = () => toast('יש חלון ישן של GoTours פתוח — סגור אותו ונסה שוב');
+    rq.onerror = () => { dbPromise = null; rej(rq.error); };
+  });
+  return dbPromise;
+}
+async function storeGetAll(store){ const db = await dbOpen(); return new Promise((res,rej)=>{ const rq = db.transaction(store).objectStore(store).getAll(); rq.onsuccess=()=>res(rq.result||[]); rq.onerror=()=>rej(rq.error); }); }
+async function storePut(store, value){ const db = await dbOpen(); return new Promise((res,rej)=>{ const tx = db.transaction(store,'readwrite'); tx.objectStore(store).put(value); tx.oncomplete=()=>res(value); tx.onerror=()=>rej(tx.error); }); }
+async function storeDel(store, id){ const db = await dbOpen(); return new Promise((res,rej)=>{ const tx = db.transaction(store,'readwrite'); tx.objectStore(store).delete(id); tx.oncomplete=()=>res(); tx.onerror=()=>rej(tx.error); }); }
+const dbAll = () => storeGetAll(DB_STORE);
+const dbPut = p => storePut(DB_STORE, p);
+const dbDel = id => storeDel(DB_STORE, id);
+
+let myPointsLayer = L.layerGroup().addTo(map);
+let ptLoc = null, ptRadius = 100, recBlob = null, mediaRec = null, pickMode = false;
+
+$('addPoint').onclick = () => {
+  ptLoc = null; recBlob = null; pickMode = false;
+  $('ptTitle').value = ''; $('ptText').value = ''; $('ptFiles').value = '';
+  $('recStat').style.display = 'none';
+  $('recBtn').textContent = '🎤 הקלט את הקול שלך'; $('recBtn').classList.remove('recing');
+  $('ptLocTx').textContent = 'מיקום: המיקום הנוכחי שלך';
+  $('ptHere').classList.add('on'); $('ptPick').classList.remove('on');
+  openSheet('shAddPoint');
+};
+
+$('ptHere').onclick = () => { pickMode=false; ptLoc=null; $('ptHere').classList.add('on'); $('ptPick').classList.remove('on'); $('ptLocTx').textContent='מיקום: המיקום הנוכחי שלך'; };
+$('ptPick').onclick = () => {
+  pickMode = true;
+  $('ptPick').classList.add('on'); $('ptHere').classList.remove('on');
+  closeSheets();
+  toast('לחץ על המפה במקום שבו תרצה את הנקודה', 4000);
+};
+map.on('click', e => {
+  if (!pickMode) return;
+  pickMode = false;
+  ptLoc = { lat: e.latlng.lat, lng: e.latlng.lng };
+  $('ptLocTx').textContent = `מיקום: ${ptLoc.lat.toFixed(5)}, ${ptLoc.lng.toFixed(5)}`;
+  openSheet('shAddPoint');
+});
+
+document.querySelectorAll('.rop').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.rop').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  ptRadius = +b.dataset.r;
+});
+
+/* הקלטת קול */
+$('recBtn').onclick = async () => {
+  if (mediaRec && mediaRec.state === 'recording') { mediaRec.stop(); return; }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio:true });
+    const chunks = [];
+    mediaRec = new MediaRecorder(stream);
+    mediaRec.ondataavailable = e => chunks.push(e.data);
+    mediaRec.onstop = () => {
+      stream.getTracks().forEach(t=>t.stop());
+      recBlob = new Blob(chunks, { type: mediaRec.mimeType || 'audio/webm' });
+      $('recBtn').textContent = '🎤 הקלט מחדש'; $('recBtn').classList.remove('recing');
+      $('recStat').style.display='block';
+      $('recStat').innerHTML = `✅ הוקלט (${(recBlob.size/1024).toFixed(0)}KB) · <span style="color:var(--brass);cursor:pointer" id="recPlay">▶ השמע</span>`;
+      $('recPlay').onclick = () => { player = new Audio(URL.createObjectURL(recBlob)); player.play(); };
+    };
+    mediaRec.start();
+    $('recBtn').textContent = '⏹ עצור הקלטה'; $('recBtn').classList.add('recing');
+    $('recStat').style.display='block'; $('recStat').textContent = '🔴 מקליט... דבר עכשיו';
+  } catch { toast('נדרש אישור מיקרופון — בדוק הרשאות'); }
+};
+
+const b64 = blob => new Promise(res => { const r = new FileReader(); r.onload = () => res(r.result); r.readAsDataURL(blob); });
+
+$('ptSave').onclick = async () => {
+  const title = cleanLabel($('ptTitle').value, 100);
+  if (!title) { toast('תן שם לנקודה'); return; }
+  const loc = ptLoc || (me ? { lat: me.lat, lng: me.lng } : null);
+  if (!loc) { toast('אין מיקום — הפעל GPS או בחר על המפה'); return; }
+  const files = [];
+  if (recBlob) files.push({ name:'הקלטה.webm', type: recBlob.type, data: await b64(recBlob) });
+  for (const f of $('ptFiles').files) {
+    if (f.size > 8*1024*1024) { toast(`${f.name} גדול מדי (מעל 8MB) — דולג`); continue; }
+    files.push({ name: f.name, type: f.type, data: await b64(f) });
+  }
+  const p = { id:'pt'+Date.now(), title, lat:+loc.lat, lng:+loc.lng, radius:ptRadius, text:cleanLabel($('ptText').value, 12000), files:files.slice(0,12), created:Date.now() };
+  await dbPut(p);
+  closeSheets();
+  toast('נקודת ההדרכה נשמרה 🦁');
+  renderMyPoints();
+};
+
+async function playPoint(p){
+  const files = Array.isArray(p.files) ? p.files : [];
+  const audio = files.find(f => String(f.type||'').startsWith('audio') && isSafeDataUrl(f.data, 'audio'));
+  if (audio) {
+    stopSpeak();
+    player = new Audio(audio.data);
+    player.onplay = () => { $('speakTitle').textContent = cleanLabel(p.title,100); $('speakBar').classList.add('show'); };
+    player.onended = player.onerror = () => $('speakBar').classList.remove('show');
+    player.play().catch(()=>toast('לא ניתן לנגן את ההקלטה במכשיר הזה'));
+  } else if (p.text) {
+    speak(String(p.text).slice(0,12000), cleanLabel(p.title,100));
+  } else {
+    const txt = files.find(f => String(f.type||'').startsWith('text') && typeof f.data === 'string');
+    if (txt) {
+      try { const t = new TextDecoder().decode(Uint8Array.from(atob(txt.data.split(',')[1]), c=>c.charCodeAt(0))); speak(t, cleanLabel(p.title,100)); }
+      catch { toast('לא ניתן לקרוא את קובץ הטקסט'); }
+    } else if (!files.some(f => String(f.type||'').includes('pdf'))) toast('אין תוכן קולי בנקודה הזו');
+  }
+  const wrap = document.createElement('div');
+  const title = document.createElement('div'); title.className='pp-name'; title.textContent = '⭐ ' + cleanLabel(p.title,100); wrap.appendChild(title);
+  const img = files.find(f => String(f.type||'').startsWith('image') && isSafeDataUrl(f.data, 'image'));
+  if (img) { const im=document.createElement('img'); im.src=img.data; im.alt='תמונה מצורפת'; im.style.cssText='max-width:210px;max-height:180px;object-fit:cover;border-radius:10px;margin-top:6px;display:block'; wrap.appendChild(im); }
+  const pdfs = files.filter(f => String(f.type||'').includes('pdf') && typeof f.data === 'string').slice(0,3);
+  pdfs.forEach((f,i)=>{ const a=document.createElement('a'); a.className='pp-go'; a.style.cssText='display:block;text-align:center;text-decoration:none;margin-top:7px'; a.href=f.data; a.target='_blank'; a.rel='noopener'; a.download=cleanLabel(f.name||`מסמך-${i+1}.pdf`,80); a.textContent='📄 פתח ' + cleanLabel(f.name||'מסמך PDF',60); wrap.appendChild(a); });
+  if (img || pdfs.length) L.popup().setLatLng([p.lat,p.lng]).setContent(wrap).openOn(map);
+}
+
+async function renderMyPoints(){
+  const pts = await dbAll();
+  myPointsLayer.clearLayers();
+  const box = $('myPoints');
+  box.innerHTML = pts.length ? '' : '<div class="hint">עדיין אין נקודות — הוסף את הראשונה</div>';
+  pts.sort((a,b)=>b.created-a.created).forEach(p => {
+    const mk = L.marker([p.lat,p.lng], { icon: L.divIcon({ className:'', html:'<div class="star-pin">⭐</div>', iconSize:[32,32], iconAnchor:[16,16] }) }).addTo(myPointsLayer);
+    mk.bindPopup(`<div class="pp-name">⭐ ${esc(cleanLabel(p.title,100))}</div><div class="pp-dist">נקודת הדרכה שלך · רדיוס ${Number(p.radius)||100} מ׳</div><button class="pp-go" onclick="window._playPt('${String(p.id).replace(/[^a-zA-Z0-9_-]/g,'')}')">▶ השמע הסבר</button>`);
+    const d = document.createElement('div');
+    d.className = 'mypoint';
+    const what = [p.files?.some(f=>f.type.startsWith('audio')) ? '🎤 קול שלך' : '', p.text ? '📝 טקסט' : '', p.files?.some(f=>f.type.startsWith('image')) ? '🖼 תמונה' : ''].filter(Boolean).join(' · ') || 'ריק';
+    d.innerHTML = `<span class="ic">⭐</span><div class="tx"><div class="nm">${esc(cleanLabel(p.title,100))}</div><div class="ds">${esc(what)} · הפעלה ב-${Number(p.radius)||100} מ׳</div></div><button class="pl">▶</button><button class="del">🗑</button>`;
+    d.querySelector('.pl').onclick = () => { closeSheets(); map.setView([p.lat,p.lng], 15); playPoint(p); };
+    d.querySelector('.del').onclick = async () => { if (confirm(`למחוק את "${p.title}"?`)) { await dbDel(p.id); renderMyPoints(); } };
+    box.appendChild(d);
+  });
+}
+window._playPt = async id => { const pts = await dbAll(); const p = pts.find(x=>x.id===id); if (p) playPoint(p); };
+renderMyPoints();
+
+/* הפעלה אוטומטית של הנקודות שלי — עדיפות ראשונה, עובד גם אופליין */
+const announcedMy = new Set();
+let myPtsCache = null;
+setInterval(async () => { myPtsCache = await dbAll(); }, 30000);
+dbAll().then(p => myPtsCache = p);
+
+function checkMyPoints(){
+  if (!autoGuide || !me || !myPtsCache) return;
+  for (const p of myPtsCache) {
+    if (announcedMy.has(p.id)) continue;
+    if (hav(me, p) <= p.radius) {
+      announcedMy.add(p.id);
+      toast('⭐ ' + p.title, 4000);
+      playPoint(p);
+      return;
+    }
+  }
+}
+
+/* ייצוא / ייבוא — העברה בין מכשירים ומדריכים */
+$('expPoints').onclick = async () => {
+  const pts = await dbAll();
+  if (!pts.length) { toast('אין נקודות לייצוא'); return; }
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify({ app:'GoTours Navigator', v:1, points:pts })], { type:'application/json' }));
+  a.download = `gotours-guide-${new Date().toISOString().slice(0,10)}.gotours.json`;
+  a.click();
+  toast(`יוצאו ${pts.length} נקודות — שלח את הקובץ לכל מדריך`);
+};
+$('impPoints').onclick = () => $('impFile').click();
+$('impFile').onchange = async e => {
+  try {
+    const j = JSON.parse(await e.target.files[0].text());
+    if (!Array.isArray(j.points) || !j.points.length) throw 0;
+    let imported = 0;
+    for (const raw of j.points.slice(0,1000)) {
+      const lat=+raw.lat, lng=+raw.lng;
+      if (!Number.isFinite(lat) || !Number.isFinite(lng) || Math.abs(lat)>90 || Math.abs(lng)>180) continue;
+      const point = { id:cleanLabel(raw.id,80)||('pt'+Date.now()+imported), title:cleanLabel(raw.title,100)||'נקודת הדרכה', lat, lng, radius:[50,100,250,500].includes(+raw.radius)?+raw.radius:100, text:String(raw.text||'').slice(0,12000), files:Array.isArray(raw.files)?raw.files.filter(f=>f&&typeof f.data==='string'&&f.data.length<12_000_000).slice(0,12):[], created:+raw.created||Date.now() };
+      await dbPut(point); imported++;
+    }
+    toast(`יובאו ${imported} נקודות הדרכה 🦁`);
+    renderMyPoints();
+  } catch { toast('קובץ לא תקין'); }
+  e.target.value = '';
+};
+
+/* ---------- הקבוצה שלי: כל המטיילים על המפה — ללא מפתחות ---------- */
+/* מרכז הקבוצה משתמש ב-Netlify Functions + Netlify Blobs שמגיעים עם האתר. */
+const GROUP_API = '/.netlify/functions/group';
+
+let fdb = null, grp = null, memberMarkers = {}, groupMembers = {}, lagDist = 400, lagWarned = {}, myBattery = null;
+let groupRefs = [], groupRenderTimer = null;
+try { navigator.getBattery?.().then(b => { myBattery = b; }); } catch {}
+
+const gtGroupAuth = (() => {
+  try { return JSON.parse(localStorage.getItem('gt_group_auth') || '{}') || {}; }
+  catch { return {}; }
+})();
+
+function gtSaveGroupAuth(code, data){
+  if (!code || !data?.token) return;
+  gtGroupAuth[code] = { token:String(data.token), role:data.role || gtGroupAuth[code]?.role || 'traveler' };
+  localStorage.setItem('gt_group_auth', JSON.stringify(gtGroupAuth));
+}
+function gtClearGroupAuth(code){
+  if (!code) return;
+  delete gtGroupAuth[code];
+  localStorage.setItem('gt_group_auth', JSON.stringify(gtGroupAuth));
+}
+function gtCodeFromPath(path){
+  const p = String(path || '').split('/');
+  return p[0] === 'groups' ? p[1] : '';
+}
+function gtTail(path){
+  const p = String(path || '').split('/');
+  return p[p.length - 1] || '';
+}
+
+async function gtGroupApi(payload, allowedStatuses=[]){
+  const r = await fetch(GROUP_API, {
+    method:'POST',
+    headers:{'content-type':'application/json'},
+    body:JSON.stringify(payload)
+  });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok && !allowedStatuses.includes(r.status)) {
+    const err = new Error(j.message || j.error || `HTTP ${r.status}`);
+    err.status = r.status; err.code = j.error || '';
+    throw err;
+  }
+  return { status:r.status, ...j };
+}
+
+class GTSnapshot {
+  constructor(key, value){ this.key = key; this._value = value; }
+  val(){ return this._value; }
+  exists(){ return this._value !== null && this._value !== undefined; }
+}
+
+const gtPollers = new Map();
+
+function gtPollerFor(code){
+  if (!gtPollers.has(code)) {
+    gtPollers.set(code, {
+      code, since:0, running:false, timer:null,
+      subs:[],
+      state:{ members:{}, chat:{}, ptt:{}, album:{} }
+    });
+  }
+  return gtPollers.get(code);
+}
+
+function gtEmit(poller, path, event, key, value){
+  poller.subs
+    .filter(s => s.path === path && s.event === event)
+    .forEach(s => { try { s.cb(new GTSnapshot(key, value)); } catch (e) { console.error(e); } });
+}
+
+function gtDiffCollection(poller, section, payload){
+  const path = `groups/${poller.code}/${section}`;
+  const prev = poller.state[section] || {};
+  const next = { ...prev };
+  const incoming = payload?.items || [];
+  for (const item of incoming) {
+    if (!item?.key || item.value == null) continue;
+    const existed = Object.prototype.hasOwnProperty.call(prev, item.key);
+    const changed = existed && JSON.stringify(prev[item.key]) !== JSON.stringify(item.value);
+    next[item.key] = item.value;
+    if (!existed) gtEmit(poller, path, 'child_added', item.key, item.value);
+    else if (changed) gtEmit(poller, path, 'child_changed', item.key, item.value);
+  }
+  const keys = new Set(payload?.keys || Object.keys(next));
+  for (const key of Object.keys(next)) {
+    if (!keys.has(key)) {
+      const old = next[key];
+      delete next[key];
+      gtEmit(poller, path, 'child_removed', key, old);
+    }
+  }
+  poller.state[section] = next;
+}
+
+function gtDiffMembers(poller, members){
+  const path = `groups/${poller.code}/members`;
+  const prev = poller.state.members || {};
+  const next = members || {};
+  for (const [key, value] of Object.entries(next)) {
+    if (!Object.prototype.hasOwnProperty.call(prev, key)) gtEmit(poller, path, 'child_added', key, value);
+    else if (JSON.stringify(prev[key]) !== JSON.stringify(value)) gtEmit(poller, path, 'child_changed', key, value);
+  }
+  for (const [key, value] of Object.entries(prev)) {
+    if (!Object.prototype.hasOwnProperty.call(next, key)) gtEmit(poller, path, 'child_removed', key, value);
+  }
+  poller.state.members = next;
+}
+
+async function gtPollNow(poller){
+  if (poller.running) return;
+  const auth = gtGroupAuth[poller.code];
+  if (!auth?.token) { gtSchedulePoll(poller, 1200); return; }
+  poller.running = true;
+  try {
+    const out = await gtGroupApi({
+      op:'sync', code:poller.code, clientId:myId,
+      token:auth.token, since:poller.since
+    });
+    gtDiffMembers(poller, out.members || {});
+    gtDiffCollection(poller, 'chat', out.chat || {});
+    gtDiffCollection(poller, 'ptt', out.ptt || {});
+    gtDiffCollection(poller, 'album', out.album || {});
+    poller.since = Math.max(poller.since, Number(out.serverTime || Date.now()));
+  } catch (err) {
+    if (err.status === 401) gtClearGroupAuth(poller.code);
+    console.warn('group sync', err);
+  } finally {
+    poller.running = false;
+    gtSchedulePoll(poller, document.hidden ? 15000 : 6500);
+  }
+}
+
+function gtSchedulePoll(poller, ms){
+  clearTimeout(poller.timer);
+  if (!poller.subs.length) return;
+  poller.timer = setTimeout(() => gtPollNow(poller), ms);
+}
+
+function gtSubscribe(path, limit, event, cb){
+  const code = gtCodeFromPath(path);
+  const poller = gtPollerFor(code);
+  const sub = { path, limit, event, cb };
+  poller.subs.push(sub);
+  if (event === 'child_added') {
+    const section = path.split('/')[2];
+    const entries = Object.entries(poller.state[section] || {});
+    const sliced = limit ? entries.slice(-limit) : entries;
+    queueMicrotask(() => sliced.forEach(([key,value]) => cb(new GTSnapshot(key, value))));
+  }
+  gtPollNow(poller);
+}
+
+function gtUnsubscribe(path, event, cb){
+  const code = gtCodeFromPath(path);
+  const poller = gtPollers.get(code);
+  if (!poller) return;
+  poller.subs = poller.subs.filter(s => {
+    if (s.path !== path) return true;
+    if (event && s.event !== event) return true;
+    if (cb && s.cb !== cb) return true;
+    return false;
+  });
+  if (!poller.subs.length) {
+    clearTimeout(poller.timer);
+    gtPollers.delete(code);
+  }
+}
+
+class GTRef {
+  constructor(path, limit=0){ this.path = String(path || '').replace(/^\/+|\/+$/g, ''); this.limit = limit; }
+  async transaction(mutator){
+    const code = gtCodeFromPath(this.path);
+    const next = mutator(null);
+    const out = await gtGroupApi({ op:'create', code, clientId:myId, meta:next, memberName:cleanLabel($('grpName').value,40) }, [409]);
+    if (out.status === 409) return { committed:false, snapshot:new GTSnapshot('meta', null) };
+    gtSaveGroupAuth(code, out);
+    return { committed:true, snapshot:new GTSnapshot('meta', out.meta) };
+  }
+  async get(){
+    const code = gtCodeFromPath(this.path);
+    const out = await gtGroupApi({ op:'get', code, clientId:myId, path:this.path });
+    return new GTSnapshot(gtTail(this.path), out.value ?? null);
+  }
+  async _write(value){
+    const code = gtCodeFromPath(this.path);
+    const out = await gtGroupApi({
+      op:'write', code, clientId:myId, path:this.path,
+      token:gtGroupAuth[code]?.token || '', value
+    });
+    if (out.token) gtSaveGroupAuth(code, out);
+    if (out.key) {
+      const parts = this.path.split('/');
+      parts[parts.length - 1] = out.key;
+      this.path = parts.join('/');
+    }
+    return out;
+  }
+  update(value){ return this._write(value); }
+  set(value){ return this._write(value); }
+  async remove(){
+    const code = gtCodeFromPath(this.path);
+    return gtGroupApi({
+      op:'remove', code, clientId:myId, path:this.path,
+      token:gtGroupAuth[code]?.token || ''
+    });
+  }
+  push(){
+    const id = `${Date.now().toString(36)}-${crypto.getRandomValues(new Uint32Array(1))[0].toString(36)}`;
+    return new GTRef(`${this.path}/${id}`);
+  }
+  limitToLast(n){ return new GTRef(this.path, Math.max(0, Number(n)||0)); }
+  on(event, cb){ gtSubscribe(this.path, this.limit, event, cb); }
+  off(event, cb){ gtUnsubscribe(this.path, event, cb); }
+  onDisconnect(){ return { update:async()=>{}, remove:async()=>{} }; }
+}
+
+$('btnGroup').onclick = async () => {
+  openSheet('shGroup');
+  $('grpNoCfg').style.display = 'none';
+  $('grpName').value = localStorage.getItem('gt_name') || '';
+  $('grpConsent').checked = localStorage.getItem('gt_group_consent') === '1';
+};
+
+async function fbInit(){
+  if (fdb) return true;
+  try {
+    await gtGroupApi({ op:'ping' });
+    fdb = { ref:path => new GTRef(path) };
+    return true;
+  } catch (err) {
+    console.error(err);
+    toast('מרכז הקבוצה יפעל לאחר העלאת הקובץ ל-Netlify — אין צורך במפתחות');
+    return false;
+  }
+}
+
+let myId = localStorage.getItem('gt_uid') || ('u' + Math.random().toString(36).slice(2, 14));
+localStorage.setItem('gt_uid', myId);
+
+function grpCodeGen(){
+  const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const bytes = new Uint8Array(10); crypto.getRandomValues(bytes);
+  const raw = [...bytes].map(b => alphabet[b % alphabet.length]).join('');
+  return `GT-${raw.slice(0,5)}-${raw.slice(5)}`;
+}
+function normalizeGroupCode(value){ return cleanLabel(value,24).toUpperCase().replace(/\s+/g,'').replace(/[^A-Z0-9-]/g,''); }
+async function createUniqueGroup(name){
+  for (let i=0;i<8;i++) {
+    const code = grpCodeGen();
+    const ref = fdb.ref('groups/' + code + '/meta');
+    const result = await ref.transaction(current => current ? undefined : ({ name:'הקבוצה של '+name, guideUid:myId, created:Date.now(), version:26 }));
+    if (result.committed) return code;
+  }
+  throw new Error('לא הצלחנו ליצור קוד ייחודי');
+}
+
+$('grpCreate').onclick = () => startGroup(true);
+$('grpJoin').onclick = () => startGroup(false);
+
+async function startGroup(isGuide){
+  const name = cleanLabel($('grpName').value, 40);
+  if (!name) { toast('כתוב את השם שלך קודם'); return; }
+  if (!$('grpConsent').checked) { toast('כדי להפעיל קבוצה יש לאשר שיתוף מיקום עם חברי הקבוצה'); return; }
+  localStorage.setItem('gt_name', name);
+  localStorage.setItem('gt_group_consent', '1');
+  if (!await fbInit()) return;
+  try {
+    const code = isGuide ? await createUniqueGroup(name) : normalizeGroupCode($('grpCode').value);
+    if (!code) { toast('הזן קוד קבוצה'); return; }
+    const metaSnap = await fdb.ref('groups/' + code + '/meta').get();
+    if (!metaSnap.exists()) { toast('קבוצה בקוד הזה לא נמצאה — בדוק את הקוד'); return; }
+    const meta = metaSnap.val() || {};
+    const actualGuide = meta.guideUid === myId;
+    grp = { code, isGuide:actualGuide, name };
+    localStorage.setItem('gt_grp', JSON.stringify(grp));
+    const memberRef = fdb.ref(`groups/${code}/members/${myId}`);
+    memberRef.onDisconnect().update({ online:false, ts:Date.now() });
+    await memberRef.update({ name, guide:actualGuide, online:true, ts:Date.now() });
+    detachGroupListeners();
+    listenGroup(); listenPtt(); listenChat(); pttShow();
+    if (me) await publishMe(true);
+    $('grpSetup').style.display = 'none';
+    $('grpLive').style.display = 'block';
+    $('grpCodeShow').textContent = code;
+    $('btnGroup').classList.add('on');
+    startGps();
+    toast(actualGuide ? `הקבוצה נפתחה! הקוד: ${code} 🦁` : 'הצטרפת לקבוצה 🦁', 3500);
+    $('grpTitle').textContent = cleanLabel(meta.name,80) || 'קבוצה';
+  } catch (err) { console.error(err); toast('לא ניתן לפתוח את הקבוצה כרגע — בדוק שהאתר הועלה ל-Netlify'); }
+}
+
+let lastPub = 0, lastPubPos = null;
+async function publishMe(force){
+  if (!grp || !fdb || !me) return;
+  const now = Date.now();
+  const moved = lastPubPos ? hav(lastPubPos, me) : Infinity;
+  if (!force && now - lastPub < 20000) return;
+  if (!force && moved < 8 && now - lastPub < 60000) return;
+  lastPub = now; lastPubPos = {lat:me.lat,lng:me.lng};
+  return fdb.ref(`groups/${grp.code}/members/${myId}`).update({
+    name: cleanLabel(grp.name,40), lat:+me.lat, lng:+me.lng, acc: Math.round(me.accuracy || 0),
+    bat: myBattery ? Math.round(myBattery.level * 100) : null,
+    guide: !!grp.isGuide, online: true, ts: Date.now()
+  });
+}
+
+function trackGroupRef(ref, event, cb){ ref.on(event, cb); groupRefs.push([ref,event,cb]); }
+function detachGroupListeners(){
+  groupRefs.forEach(([ref,event,cb])=>{ try{ ref.off(event,cb); }catch{} }); groupRefs=[];
+  groupMembers={}; clearTimeout(groupRenderTimer);
+}
+function scheduleMembersRender(){ clearTimeout(groupRenderTimer); groupRenderTimer=setTimeout(()=>renderMembers(groupMembers),180); }
+function listenGroup(){
+  const ref = fdb.ref(`groups/${grp.code}/members`);
+  const up = snap => { const m=snap.val(); if (m) groupMembers[snap.key]=m; scheduleMembersRender(); };
+  const rm = snap => { delete groupMembers[snap.key]; if(memberMarkers[snap.key]){map.removeLayer(memberMarkers[snap.key]);delete memberMarkers[snap.key];} scheduleMembersRender(); };
+  trackGroupRef(ref,'child_added',up); trackGroupRef(ref,'child_changed',up); trackGroupRef(ref,'child_removed',rm);
+}
+
+function fmtAgo(ts){
+  const s = Math.floor((Date.now() - ts) / 1000);
+  if (s < 20) return 'עכשיו';
+  if (s < 60) return 'לפני ' + s + ' שנ׳';
+  return 'לפני ' + Math.floor(s/60) + ' דק׳';
+}
+
+function renderMembers(members){
+  const list = $('grpMembers'); list.textContent = '';
+  const arr = Object.entries(members || {}).map(([id,m])=>({id,...m})).filter(m=>m && cleanLabel(m.name,40));
+  $('grpCount').textContent = '(' + arr.length + ')';
+  Object.keys(memberMarkers).forEach(id => { if (!members[id]) { map.removeLayer(memberMarkers[id]); delete memberMarkers[id]; } });
+  arr.sort((a,b)=>(b.guide?1:0)-(a.guide?1:0)).forEach(m=>{
+    const stale = Date.now()-(+m.ts||0)>150000 || m.online===false;
+    const d = me && Number.isFinite(+m.lat) && Number.isFinite(+m.lng) ? hav(me,{lat:+m.lat,lng:+m.lng}) : null;
+    const isLost = !!grp?.isGuide && lagDist>0 && d!=null && d>lagDist && m.id!==myId;
+    const safeName = cleanLabel(m.name,40) || 'מטייל';
+    if (Number.isFinite(+m.lat) && Number.isFinite(+m.lng) && m.id!==myId) {
+      const html = `<div class="trav-pin${isLost||stale?' lost':''}">${m.guide?'🦁 ':''}${esc(safeName)}${stale?' ⚠':''}</div>`;
+      const icon=L.divIcon({className:'',html,iconSize:null,iconAnchor:[30,12]});
+      if(memberMarkers[m.id]){memberMarkers[m.id].setLatLng([+m.lat,+m.lng]);memberMarkers[m.id].setIcon(icon);}
+      else memberMarkers[m.id]=L.marker([+m.lat,+m.lng],{icon,zIndexOffset:800}).addTo(map);
+    }
+    const row=document.createElement('div'); row.className='member'+(isLost?' lost':stale?' warn':'');
+    const avatar=document.createElement('div'); avatar.className='avatar'; avatar.textContent=m.guide?'🦁':safeName[0];
+    const tx=document.createElement('div'); tx.className='tx';
+    const nm=document.createElement('div'); nm.className='nm'; nm.textContent=safeName+(m.id===myId?' (אני)':'');
+    const ds=document.createElement('div'); ds.className='ds';
+    ds.textContent=(stale?'אין אות · ':'')+(d!=null&&m.id!==myId?(d<1000?Math.round(d)+' מ׳ ממני':(d/1000).toFixed(1)+' ק״מ ממני')+' · ':'')+(m.ts?fmtAgo(+m.ts):'');
+    tx.append(nm,ds); row.append(avatar,tx);
+    if(m.bat!=null){const bat=document.createElement('div');bat.className='bat';bat.textContent='🔋 '+Math.max(0,Math.min(100,+m.bat))+'%';bat.style.color=+m.bat<20?'#ff9d9a':+m.bat<50?'#ffcf87':'var(--safe)';row.appendChild(bat);}
+    row.onclick=()=>{if(Number.isFinite(+m.lat)&&Number.isFinite(+m.lng)){closeSheets();map.setView([+m.lat,+m.lng],16);}};
+    list.appendChild(row);
+    if(isLost&&!stale&&(!lagWarned[m.id]||Date.now()-lagWarned[m.id]>300000)){
+      lagWarned[m.id]=Date.now(); toast(`⚠ ${safeName} התרחק/ה ${d<1000?Math.round(d)+' מ׳':(d/1000).toFixed(1)+' ק״מ'} מהקבוצה`,5000);
+      speak(`שים לב: ${safeName} התרחק מהקבוצה`, 'התראת קבוצה');
+    }
+  });
+}
+
+document.querySelectorAll('.lag').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.lag').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  lagDist = +b.dataset.m;
+  toast(lagDist ? `התראה כשמטייל מתרחק מעל ${lagDist} מ׳` : 'התראות ניתוק כבויות');
+});
+
+async function shareText(title, text, url=location.origin){
+  try { if (navigator.share) { await navigator.share({title,text,url}); return true; } } catch (e) { if (e?.name==='AbortError') return false; }
+  try { await navigator.clipboard.writeText(`${text}
+${url}`); toast('הפרטים הועתקו — אפשר להדביק בוואטסאפ'); return true; } catch {}
+  window.open('https://wa.me/?text=' + encodeURIComponent(`${text}
+${url}`), '_blank', 'noopener'); return true;
+}
+$('grpShare').onclick = () => {
+  if (!grp) return;
+  shareText('קבוצת GoTours', `🦁 מצטרפים לקבוצה שלי ב-GoTours Navigator!
+קוד הקבוצה: ${grp.code}
+פתחו את האפליקציה, לחצו על הקבוצה והזינו את הקוד.`);
+};
+
+$('grpLeave').onclick = async () => {
+  if (!confirm('לעזוב את הקבוצה?')) return;
+  if (fdb && grp) await fdb.ref(`groups/${grp.code}/members/${myId}`).remove();
+  detachGroupListeners();
+  if (fdb && grp) { fdb.ref(`groups/${grp.code}/ptt`).off(); fdb.ref(`groups/${grp.code}/chat`).off(); fdb.ref(`groups/${grp.code}/album`).off(); }
+  Object.values(memberMarkers).forEach(mk => map.removeLayer(mk));
+  const leftCode = grp?.code;
+  memberMarkers = {}; grp = null; pttShow(); $('chatList').innerHTML=''; unread=0; renderBadge();
+  albListening=false; albPhotos={}; $('albGrid').innerHTML='<div class="hint">עדיין אין תמונות — תהיה הראשון שמצלם! 🦁</div>';
+  localStorage.removeItem('gt_grp');
+  if (leftCode) gtClearGroupAuth(leftCode);
+  $('grpSetup').style.display = 'block';
+  $('grpLive').style.display = 'none';
+  $('btnGroup').classList.remove('on');
+  toast('עזבת את הקבוצה');
+};
+
+// חזרה אוטומטית לקבוצה אחרי רענון
+(async () => {
+  const saved = localStorage.getItem('gt_grp');
+  if (saved) {
+    try {
+      const parsed = JSON.parse(saved); const code = normalizeGroupCode(parsed.code);
+      if (!code || !await fbInit()) return;
+      const snap = await fdb.ref('groups/' + code + '/meta').get();
+      if (!snap.exists()) { localStorage.removeItem('gt_grp'); return; }
+      const meta=snap.val()||{};
+      grp={code,isGuide:meta.guideUid===myId,name:cleanLabel(parsed.name,40)||localStorage.getItem('gt_name')||'מטייל'};
+      localStorage.setItem('gt_grp',JSON.stringify(grp));
+      const memberRef=fdb.ref(`groups/${code}/members/${myId}`); memberRef.onDisconnect().update({online:false,ts:Date.now()});
+      await memberRef.update({name:grp.name,guide:grp.isGuide,online:true,ts:Date.now()});
+      detachGroupListeners(); listenGroup(); listenPtt(); listenChat(); pttShow();
+      $('grpSetup').style.display='none'; $('grpLive').style.display='block'; $('grpCodeShow').textContent=code; $('btnGroup').classList.add('on');
+      $('grpTitle').textContent=cleanLabel(meta.name,80)||'קבוצה';
+      if(me) publishMe(true);
+    } catch(err){ console.error(err); localStorage.removeItem('gt_grp'); }
+  }
+})();
+
+/* ---------- שידור קולי: המדריך מדבר — כולם שומעים ---------- */
+const joinTime = Date.now();
+let pttRec = null, pttStream = null, pttQueue = [], pttPlaying = false;
+
+function pttShow(){ $('pttBtn').classList.toggle('live', !!grp); }
+
+async function pttStart(e){
+  e.preventDefault();
+  if (!grp || !fdb || pttRec) return;
+  try {
+    pttStream = await navigator.mediaDevices.getUserMedia({ audio:true });
+    const chunks = [];
+    pttRec = new MediaRecorder(pttStream, { audioBitsPerSecond: 24000 });
+    pttRec.ondataavailable = ev => chunks.push(ev.data);
+    pttRec.onstop = async () => {
+      pttStream.getTracks().forEach(t=>t.stop());
+      const blob = new Blob(chunks, { type: pttRec.mimeType || 'audio/webm' });
+      pttRec = null;
+      $('pttBtn').classList.remove('talking'); $('pttTx').textContent = 'שדר';
+      if (blob.size < 1500) return; // לחיצה קצרה מדי
+      if (blob.size > 420000) { toast('השידור ארוך מדי — עד ~30 שניות'); return; }
+      const data = await b64(blob);
+      const ref = fdb.ref(`groups/${grp.code}/ptt`).push();
+      await ref.set({ from: myId, name: grp.name, guide: !!grp.isGuide, ts: Date.now(), data });
+      setTimeout(() => ref.remove().catch(()=>{}), 120000); // ניקוי אוטומטי
+      toast('השידור נשלח לקבוצה 📡');
+    };
+    pttRec.start();
+    stopSpeak();
+    $('pttBtn').classList.add('talking'); $('pttTx').textContent = 'משדר';
+    if (navigator.vibrate) navigator.vibrate(40);
+  } catch { toast('נדרש אישור מיקרופון'); }
+}
+function pttStop(){ if (pttRec && pttRec.state === 'recording') pttRec.stop(); }
+
+$('pttBtn').addEventListener('pointerdown', pttStart);
+$('pttBtn').addEventListener('pointerup', pttStop);
+$('pttBtn').addEventListener('pointerleave', pttStop);
+$('pttBtn').addEventListener('contextmenu', e => e.preventDefault());
+
+function listenPtt(){
+  const ref=fdb.ref(`groups/${grp.code}/ptt`).limitToLast(3);
+  const cb=snap=>{ const m=snap.val(); if(!m||m.from===myId||+m.ts<joinTime||!isSafeDataUrl(m.data,'audio'))return; m.name=cleanLabel(m.name,40)||'מטייל'; pttQueue.push(m); playPttQueue(); };
+  trackGroupRef(ref,'child_added',cb);
+}
+async function playPttQueue(){
+  if (pttPlaying || !pttQueue.length) return;
+  pttPlaying = true;
+  const m = pttQueue.shift();
+  stopSpeak();
+  $('pttBtn').classList.add('playing'); $('pttTx').textContent = m.name.slice(0,6);
+  $('speakTitle').textContent = (m.guide?'🦁 ':'🎙 ') + m.name + ' משדר';
+  $('speakBar').classList.add('show');
+  if (navigator.vibrate) navigator.vibrate([30,60,30]);
+  await new Promise(res => {
+    player = new Audio(m.data);
+    player.onended = player.onerror = res;
+    player.play().catch(res);
+  });
+  $('speakBar').classList.remove('show');
+  $('pttBtn').classList.remove('playing'); $('pttTx').textContent = 'שדר';
+  pttPlaying = false;
+  playPttQueue();
+}
+
+/* ---------- צ'אט הקבוצה ---------- */
+let unread = 0, chatOpen = false;
+
+$('btnChat').onclick = () => {
+  if (!grp) { openSheet('shGroup'); toast('קודם פותחים או מצטרפים לקבוצה'); return; }
+  chatOpen = true; unread = 0; renderBadge();
+  openSheet('shChat');
+  setTimeout(()=>{ const l=$('chatList'); l.scrollTop = l.scrollHeight; }, 350);
+};
+document.querySelector('[data-close="shChat"]').addEventListener('click', () => chatOpen = false);
+
+function renderBadge(){
+  const b = $('chatBadge');
+  b.textContent = unread > 9 ? '9+' : unread;
+  b.classList.toggle('show', unread > 0);
+}
+
+function chatPush(msg){
+  if (!grp || !fdb) return;
+  const ref = fdb.ref(`groups/${grp.code}/chat`).push();
+  ref.set({ from: myId, name: grp.name, guide: !!grp.isGuide, ts: Date.now(), ...msg });
+}
+
+$('chatSend').onclick = sendText;
+$('chatIn').addEventListener('keydown', e => { if (e.key==='Enter') sendText(); });
+function sendText(){
+  const t = $('chatIn').value.trim();
+  if (!t) return;
+  chatPush({ type:'text', text: t.slice(0, 500) });
+  $('chatIn').value = '';
+}
+
+$('chatLoc').onclick = () => {
+  if (!me) { toast('ממתין ל-GPS...'); return; }
+  chatPush({ type:'loc', lat: me.lat, lng: me.lng });
+  toast('המיקום נשלח לקבוצה 📍');
+};
+
+$('chatImg').onclick = () => $('chatImgFile').click();
+$('chatImgFile').onchange = async e => {
+  const f = e.target.files[0]; e.target.value = '';
+  if (!f) return;
+  // כיווץ אגרסיבי כדי שהצ'אט יישאר מהיר גם בקבוצה גדולה.
+  let data = await compressPhoto(f, 720, 0.50);
+  if (data.length > 140000) data = await compressPhoto(f, 560, 0.42);
+  if (data.length > 145000) { toast('התמונה כבדה מדי גם אחרי כיווץ'); return; }
+  chatPush({ type:'img', img: data });
+};
+
+function listenChat(){
+  const ref=fdb.ref(`groups/${grp.code}/chat`).limitToLast(60);
+  const cb=snap=>{ const m=snap.val(); if(!m)return; m.name=cleanLabel(m.name,40)||'מטייל'; addMsg(m); if(m.from!==myId&&+m.ts>joinTime&&!chatOpen){unread++;renderBadge();toast(`💬 ${m.name}: ${m.type==='text'?cleanLabel(m.text,40):m.type==='loc'?'שיתף מיקום':'שלח תמונה'}`,3000);} };
+  trackGroupRef(ref,'child_added',cb);
+}
+
+function addMsg(m){
+  if(!['text','loc','img'].includes(m.type))return;
+  const d=document.createElement('div');d.className='msg '+(m.from===myId?'mine':'theirs');
+  const bub=document.createElement('div');bub.className='bub';
+  if(m.type==='text') bub.textContent=String(m.text||'').slice(0,500);
+  else if(m.type==='loc'){
+    const lat=+m.lat,lng=+m.lng;if(!Number.isFinite(lat)||!Number.isFinite(lng))return;
+    const b=document.createElement('button');b.className='locbtn';b.textContent='📍 מיקום — לחץ להצגה במפה';
+    b.onclick=()=>{closeSheets();chatOpen=false;map.setView([lat,lng],16);const wrap=document.createElement('div');const nm=document.createElement('div');nm.className='pp-name';nm.textContent='📍 המיקום של '+cleanLabel(m.name,40);const go=document.createElement('button');go.className='pp-go';go.textContent='נווט אליו';go.onclick=()=>routeTo(lat,lng,cleanLabel(m.name,40));wrap.append(nm,go);L.popup().setLatLng([lat,lng]).setContent(wrap).openOn(map);};
+    bub.appendChild(b);
+  } else if(m.type==='img'){
+    if(!isSafeDataUrl(m.img,'image')||m.img.length>450000)return;
+    const im=document.createElement('img');im.src=m.img;im.alt='תמונה שנשלחה לקבוצה';im.loading='lazy';bub.appendChild(im);
+  }
+  const who=document.createElement('div');who.className='who';who.textContent=(m.guide?'🦁 ':'')+cleanLabel(m.name,40)+' · '+new Date(+m.ts||Date.now()).toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'});
+  d.append(bub,who);const list=$('chatList');list.appendChild(d);while(list.children.length>80)list.removeChild(list.firstChild);list.scrollTop=list.scrollHeight;
+}
+
+/* ---------- המסלולים שלי: GPX / KML / KMZ ---------- */
+const dbRoutes = dbOpen;
+const rtAll = () => storeGetAll('routes');
+const rtPut = r => storePut('routes', r);
+const rtDel = id => storeDel('routes', id);
+
+/* --- פירוק קבצים --- */
+function parseGpx(xml){
+  const doc = new DOMParser().parseFromString(xml, 'text/xml');
+  const pts = [...doc.querySelectorAll('trkpt, rtept')].map(p => ({
+    lat: +p.getAttribute('lat'), lng: +p.getAttribute('lon'),
+    ele: p.querySelector('ele') ? +p.querySelector('ele').textContent : null
+  }));
+  const wpts = [...doc.querySelectorAll('wpt')].map(p => ({
+    lat: +p.getAttribute('lat'), lng: +p.getAttribute('lon'),
+    name: p.querySelector('name')?.textContent || 'נקודת ציון'
+  }));
+  const name = doc.querySelector('trk > name, rte > name, metadata > name')?.textContent;
+  return { pts, wpts, name };
+}
+function parseKml(xml){
+  const doc = new DOMParser().parseFromString(xml, 'text/xml');
+  let pts = [];
+  doc.querySelectorAll('LineString coordinates, gx\\:Track').forEach(c => {
+    if (c.tagName.toLowerCase().includes('coordinates')) {
+      c.textContent.trim().split(/\s+/).forEach(t => {
+        const [lng, lat, ele] = t.split(',').map(Number);
+        if (!isNaN(lat)) pts.push({ lat, lng, ele: isNaN(ele) ? null : ele });
+      });
+    }
+  });
+  const wpts = [...doc.querySelectorAll('Placemark')].filter(p => p.querySelector('Point coordinates')).map(p => {
+    const [lng, lat] = p.querySelector('Point coordinates').textContent.trim().split(',').map(Number);
+    return { lat, lng, name: p.querySelector('name')?.textContent || 'נקודת ציון' };
+  });
+  const name = doc.querySelector('Document > name, Placemark > name')?.textContent;
+  return { pts, wpts, name };
+}
+async function parseKmz(buf){
+  if (!window.JSZip) await new Promise((res, rej) => {
+    const s = document.createElement('script');
+    s.src = 'https://unpkg.com/jszip@3.10.1/dist/jszip.min.js';
+    s.onload = res; s.onerror = rej;
+    document.head.appendChild(s);
+  });
+  const zip = await JSZip.loadAsync(buf);
+  const kmlFile = Object.keys(zip.files).find(f => f.toLowerCase().endsWith('.kml'));
+  if (!kmlFile) throw new Error('no kml');
+  return parseKml(await zip.files[kmlFile].async('string'));
+}
+
+function rtStats(pts){
+  let dist = 0, ascent = 0;
+  for (let i = 1; i < pts.length; i++) {
+    dist += hav(pts[i-1], pts[i]);
+    if (pts[i].ele != null && pts[i-1].ele != null) {
+      const d = pts[i].ele - pts[i-1].ele;
+      if (d > 0.5) ascent += d;
+    }
+  }
+  return { dist, ascent };
+}
+
+$('rtImport').onclick = () => $('rtFile').click();
+$('rtFile').onchange = async e => {
+  for (const f of e.target.files) {
+    try {
+      let parsed;
+      const nm = f.name.toLowerCase();
+      if (nm.endsWith('.kmz')) parsed = await parseKmz(await f.arrayBuffer());
+      else if (nm.endsWith('.kml')) parsed = parseKml(await f.text());
+      else parsed = parseGpx(await f.text());
+      if (!parsed.pts.length && !parsed.wpts.length) { toast(f.name + ' — לא נמצא מסלול בקובץ'); continue; }
+      const { dist, ascent } = rtStats(parsed.pts);
+      const r = {
+        id: 'rt' + Date.now() + Math.random().toString(36).slice(2,5),
+        name: parsed.name || f.name.replace(/\.(gpx|kml|kmz)$/i, ''),
+        pts: parsed.pts.map(p => [ +p.lat.toFixed(6), +p.lng.toFixed(6), p.ele!=null?Math.round(p.ele):null ]),
+        wpts: parsed.wpts, dist, ascent, created: Date.now()
+      };
+      await rtPut(r);
+      toast(`✅ "${r.name}" יובא — ${(dist/1000).toFixed(1)} ק״מ`);
+    } catch { toast(f.name + ' — קובץ לא תקין'); }
+  }
+  e.target.value = '';
+  renderRoutes();
+};
+
+/* --- גלה מסלולים סביבי: מסלולי הליכה בשם, בכל העולם --- */
+const NETWORK_HE = { iwn:'🌍 בינלאומי', nwn:'🏳 ארצי', rwn:'🗺 אזורי', lwn:'📍 מקומי' };
+let discShown = null;
+
+$('rtDiscover').onclick = async () => {
+  const c = me || map.getCenter();
+  $('discoverList').innerHTML = '<div class="hint"><span class="spin">⟳</span> מחפש מסלולים רשמיים ברדיוס 30 ק״מ...</div>';
+  try {
+    const q = `[out:json][timeout:25];relation["route"~"hiking|foot"]["name"](around:30000,${c.lat},${c.lng});out tags 30;`;
+    const r = await fetch('https://overpass-api.de/api/interpreter', { method:'POST', body:'data='+encodeURIComponent(q) });
+    const j = await r.json();
+    const rels = (j.elements || []).filter(e => e.tags?.name);
+    if (!rels.length) { $('discoverList').innerHTML = '<div class="hint">לא נמצאו מסלולים רשמיים ברדיוס 30 ק״מ — נסה מאזור אחר או הדלק את שכבת "שבילי הליכה — כל העולם"</div>'; return; }
+    // מיון: בינלאומי/ארצי קודם, אחר כך לפי שם
+    const rank = { iwn:0, nwn:1, rwn:2, lwn:3 };
+    rels.sort((a,b) => (rank[a.tags.network] ?? 4) - (rank[b.tags.network] ?? 4));
+    $('discoverList').innerHTML = '';
+    rels.slice(0, 20).forEach(rel => {
+      const t = rel.tags;
+      const nm = t['name:he'] || t.name;
+      const d = document.createElement('div');
+      d.className = 'mypoint';
+      const meta = [NETWORK_HE[t.network], t.distance ? t.distance + ' ק״מ' : '', t.ref ? 'סימון ' + t.ref : ''].filter(Boolean).join(' · ');
+      d.innerHTML = `<span class="ic">🥾</span><div class="tx"><div class="nm">${esc(nm)}</div><div class="ds">${meta || 'מסלול הליכה רשמי'}</div></div><button class="pl">🗺 הצג</button>`;
+      d.querySelector('.pl').onclick = () => showDiscovered(rel.id, nm);
+      $('discoverList').appendChild(d);
+    });
+    toast(`נמצאו ${rels.length} מסלולים רשמיים סביבך 🦁`);
+  } catch { $('discoverList').innerHTML = '<div class="hint">שגיאת רשת — נסה שוב</div>'; }
+};
+
+async function showDiscovered(relId, name){
+  toast('טוען את המסלול "' + name + '"...');
+  const c = me || map.getCenter();
+  try {
+    // גיאומטריה חתוכה לאזור (מסלולים בינלאומיים ארוכים מאוד)
+    const bbox = `${c.lat-0.35},${c.lng-0.35},${c.lat+0.35},${c.lng+0.35}`;
+    const q = `[out:json][timeout:25][bbox:${bbox}];relation(${relId});out geom;`;
+    const r = await fetch('https://overpass-api.de/api/interpreter', { method:'POST', body:'data='+encodeURIComponent(q) });
+    const j = await r.json();
+    const rel = (j.elements || [])[0];
+    if (!rel?.members) { toast('לא הצלחתי לטעון את הגיאומטריה'); return; }
+    if (discShown) map.removeLayer(discShown);
+    discShown = L.layerGroup().addTo(map);
+    let firstPt = null, allPts = [];
+    rel.members.forEach(m => {
+      if (m.type === 'way' && m.geometry?.length) {
+        const pts = m.geometry.map(g => [g.lat, g.lon]);
+        if (!firstPt) firstPt = pts[0];
+        allPts.push(...pts);
+        L.polyline(pts, { color:'#5AA97C', weight:5, opacity:.9 }).addTo(discShown);
+      }
+    });
+    if (!allPts.length) { toast('המסלול מחוץ לאזור הנוכחי'); return; }
+    map.fitBounds(L.latLngBounds(allPts), { padding:[60,60] });
+    closeSheets();
+    // הנקודה הקרובה אליך על המסלול — לניווט לתחילת ההליכה
+    let best = 1e12, bp = firstPt;
+    for (let i = 0; i < allPts.length; i += Math.max(1, Math.floor(allPts.length/300))) {
+      const dd = hav(c, { lat: allPts[i][0], lng: allPts[i][1] });
+      if (dd < best) { best = dd; bp = allPts[i]; }
+    }
+    L.popup().setLatLng(bp).setContent(
+      `<div class="pp-name">🥾 ${esc(name)}</div><div class="pp-dist">הנקודה הקרובה אליך: ${fmtDist(best)}</div>` +
+      `<button class="pp-go" onclick="routeTo(${bp[0]},${bp[1]},'${esc(name)}')">נווט לשביל</button> ` +
+      `<span style="color:var(--brass-soft);font-size:13px;cursor:pointer;margin-right:8px" onclick="tellStory('${esc(name)}', null)">🔊 ספר לי</span>` +
+      `<div style="margin-top:6px"><span style="color:#ff9d9a;font-size:12px;cursor:pointer" onclick="window._discClear()">✕ הסר מסלול מהמפה</span></div>`
+    ).openOn(map);
+  } catch { toast('שגיאה בטעינת המסלול'); }
+}
+window._discClear = () => { if (discShown) { map.removeLayer(discShown); discShown = null; map.closePopup(); } };
+
+/* --- הצגה וליווי --- */
+let shownRoutes = {}, followRt = null, offRouteWarn = 0;
+
+function drawElev(cv, pts){
+  const eles = pts.map(p => p[2]).filter(e => e != null);
+  if (eles.length < 10) { cv.style.display='none'; return; }
+  const ctx = cv.getContext('2d');
+  const W = cv.width = cv.offsetWidth * 2, H = cv.height = 88;
+  const mn = Math.min(...eles), mx = Math.max(...eles), rng = Math.max(mx - mn, 10);
+  ctx.beginPath(); ctx.moveTo(0, H);
+  eles.forEach((e, i) => ctx.lineTo(i / (eles.length-1) * W, H - ((e - mn) / rng) * (H - 12)));
+  ctx.lineTo(W, H); ctx.closePath();
+  ctx.fillStyle = 'rgba(201,162,75,.25)'; ctx.fill();
+  ctx.strokeStyle = '#C9A24B'; ctx.lineWidth = 2; ctx.stroke();
+}
+
+async function renderRoutes(){
+  const routes = await rtAll();
+  const box = $('routeList');
+  box.innerHTML = routes.length ? '' : '<div class="hint">ייבא את מסלולי GoTours — והם יחכו לך כאן, גם אופליין</div>';
+  routes.sort((a,b)=>b.created-a.created).forEach(r => {
+    const d = document.createElement('div');
+    d.className = 'mypoint';
+    const on = !!shownRoutes[r.id];
+    d.innerHTML = `<span class="ic">🥾</span>
+      <div class="tx"><div class="nm">${esc(cleanLabel(r.name,120))}</div>
+      <div class="ds">${(Number(r.dist||0)/1000).toFixed(1)} ק״מ · ↗ ${Math.round(Number(r.ascent||0))} מ׳ טיפוס · ${r.wpts?.length||0} נק׳ ציון</div>
+      <canvas class="rt-elev"></canvas></div>
+      <button class="pl">${on?'🙈':'🗺'}</button><button class="fol" style="border-color:var(--safe);color:#8fd4ae">▶</button><button class="del">🗑</button>`;
+    d.querySelector('.pl').onclick = () => { toggleRoute(r); renderRoutes(); };
+    d.querySelector('.fol').onclick = () => { startFollow(r); };
+    d.querySelector('.del').onclick = async () => { if (confirm(`למחוק את "${r.name}"?`)) { hideRoute(r.id); await rtDel(r.id); renderRoutes(); } };
+    box.appendChild(d);
+    requestAnimationFrame(()=>drawElev(d.querySelector('canvas'), r.pts || []));
+  });
+}
+
+function toggleRoute(r){
+  if (shownRoutes[r.id]) { hideRoute(r.id); return; }
+  const lg = L.layerGroup().addTo(map);
+  const line = L.polyline(r.pts.map(p=>[p[0],p[1]]), { color:'#5AA97C', weight:5, opacity:.9 }).addTo(lg);
+  (r.wpts||[]).forEach(w => L.marker([w.lat, w.lng], { icon: L.divIcon({ className:'', html:'<div class="poi-pin" style="font-size:13px">🚩</div>', iconSize:[30,30], iconAnchor:[15,15] }) }).addTo(lg).bindPopup(`<div class="pp-name">🚩 ${esc(cleanLabel(w.name,100))}</div>`));
+  shownRoutes[r.id] = lg;
+  map.fitBounds(line.getBounds(), { padding:[60,60] });
+  closeSheets();
+}
+function hideRoute(id){
+  if (shownRoutes[id]) { map.removeLayer(shownRoutes[id]); delete shownRoutes[id]; }
+}
+
+function startFollow(r){
+  if (!shownRoutes[r.id]) toggleRoute(r);
+  followRt = r;
+  offRouteWarn = 0;
+  $('rtBanner').style.display = 'block';
+  $('chipsBar').style.display = 'none';
+  $('rtName').textContent = r.name;
+  closeSheets();
+  startGps();
+  toast(`ליווי מסלול "${r.name}" התחיל — אני שומר עליך 🦁`, 3500);
+}
+function stopFollow(){
+  followRt = null;
+  $('rtBanner').style.display = 'none';
+  if (!navTarget) $('chipsBar').style.display = 'flex';
+}
+$('rtStop').onclick = stopFollow;
+
+function checkRoute(){
+  if (!followRt || !me) return;
+  const pts = followRt.pts;
+  // הנקודה הקרובה ביותר (דגימה חסכונית)
+  const step = Math.max(1, Math.floor(pts.length / 600));
+  let best = 1e12, bi = 0;
+  for (let i = 0; i < pts.length; i += step) {
+    const d = hav(me, { lat: pts[i][0], lng: pts[i][1] });
+    if (d < best) { best = d; bi = i; }
+  }
+  // מרחק שנותר
+  let remain = 0;
+  for (let i = bi; i < pts.length - 1; i++) remain += hav({lat:pts[i][0],lng:pts[i][1]}, {lat:pts[i+1][0],lng:pts[i+1][1]});
+  $('rtRemain').textContent = remain >= 1000 ? (remain/1000).toFixed(1) + ' km' : Math.round(remain) + ' m';
+  $('rtProg').style.width = Math.round(bi / (pts.length-1) * 100) + '%';
+  // התראת סטייה
+  if (best > 70 && Date.now() - offRouteWarn > 120000) {
+    offRouteWarn = Date.now();
+    toast(`⚠ סטית מהמסלול ב-${Math.round(best)} מ׳`, 4500);
+    speak(`שים לב, סטית מהמסלול בכ-${Math.round(best)} מטר. חזור ${best > 200 ? 'אחורה' : 'ימינה או שמאלה'} לשביל.`, 'ליווי מסלול');
+  }
+  // הגעה לסוף
+  if (bi >= pts.length - 3 && remain < 40) {
+    speak('כל הכבוד! סיימתם את המסלול. איזו קבוצה!', followRt.name);
+    toast('🏁 המסלול הושלם! 🦁', 5000);
+    stopFollow();
+  }
+}
+renderRoutes();
+
+/* ---------- אלבום הטיול המשותף ---------- */
+let albListening = false, albPhotos = {};
+
+function openAlbum(){
+  if (!grp) { openSheet('shGroup'); toast('האלבום שייך לקבוצה — קודם פותחים או מצטרפים'); return; }
+  openSheet('shAlbum');
+  if (!albListening) listenAlbum();
+}
+$('openAlbum').onclick = openAlbum;
+$('chatAlbum').onclick = openAlbum;
+
+async function compressPhoto(f, max=900, q=0.58){
+  const img = await createImageBitmap(f);
+  const scale = Math.min(1, max / Math.max(img.width, img.height));
+  const cv = document.createElement('canvas');
+  cv.width = Math.round(img.width*scale); cv.height = Math.round(img.height*scale);
+  cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+  return cv.toDataURL('image/jpeg', q);
+}
+
+$('albCam').onclick = () => $('albCamFile').click();
+$('albPick').onclick = () => $('albPickFile').click();
+$('albCamFile').onchange = e => uploadPhotos([...e.target.files], e.target);
+$('albPickFile').onchange = e => uploadPhotos([...e.target.files], e.target);
+
+async function uploadPhotos(files, input){
+  if (!grp || !fdb) return;
+  const st = $('albStat'); st.style.display = 'block';
+  let n = 0;
+  for (const f of files.slice(0, 10)) {
+    n++;
+    st.textContent = `מעלה תמונה ${n} מתוך ${Math.min(files.length,10)}...`;
+    try {
+      let data = await compressPhoto(f);
+      if (data.length > 185000) data = await compressPhoto(f, 700, 0.46);
+      if (data.length > 195000) { toast('תמונה אחת כבדה מדי — דולגה'); continue; }
+      await fdb.ref(`groups/${grp.code}/album`).push().set({
+        from: myId, name: grp.name, guide: !!grp.isGuide, ts: Date.now(),
+        img: data, lat: me?.lat ?? null, lng: me?.lng ?? null
+      });
+    } catch { toast('שגיאה בהעלאה — בדוק חיבור'); }
+  }
+  st.textContent = '✅ הועלה לאלבום הקבוצה';
+  setTimeout(() => st.style.display = 'none', 2500);
+  input.value = '';
+}
+
+function listenAlbum(){
+  albListening = true;
+  const ref=fdb.ref(`groups/${grp.code}/album`).limitToLast(8);
+  const added=snap=>{ const m=snap.val(); if(!m||!isSafeDataUrl(m.img,'image')||m.img.length>210000)return; m.name=cleanLabel(m.name,40)||'מטייל'; albPhotos[snap.key]=m; const grid=$('albGrid');grid.querySelector('.hint')?.remove();const d=document.createElement('div');d.className='ph';d.dataset.key=snap.key;const im=document.createElement('img');im.src=m.img;im.loading='lazy';im.alt='תמונה של '+m.name;const nm=document.createElement('div');nm.className='nm';nm.textContent=(m.guide?'🦁 ':'')+m.name;d.append(im,nm);d.onclick=()=>viewPhoto(snap.key);grid.prepend(d);if(m.from!==myId&&+m.ts>joinTime)toast(`📸 ${m.name} הוסיף/ה תמונה לאלבום`,2500);};
+  const removed=snap=>{delete albPhotos[snap.key];document.querySelector(`.ph[data-key="${CSS.escape(snap.key)}"]`)?.remove();};
+  trackGroupRef(ref,'child_added',added); trackGroupRef(fdb.ref(`groups/${grp.code}/album`),'child_removed',removed);
+}
+
+let pvKey = null;
+function viewPhoto(key){
+  const m = albPhotos[key]; if (!m) return;
+  pvKey = key;
+  $('pvImg').src = m.img;
+  $('pvWho').textContent = `${m.guide?'🦁 ':''}${m.name} · ${new Date(m.ts).toLocaleString('he-IL',{day:'numeric',month:'numeric',hour:'2-digit',minute:'2-digit'})}`;
+  $('pvSave').href = m.img;
+  $('pvSave').setAttribute('download', `gotours-${m.ts}.jpg`);
+  $('pvLoc').style.display = m.lat != null ? 'inline-flex' : 'none';
+  $('pvDel').style.display = (m.from === myId || grp?.isGuide) ? 'inline-flex' : 'none';
+  const hadUi=anythingOpen(); $('photoView').classList.add('open'); syncUiChrome();
+  if (!hadUi && typeof pushUiState === 'function') pushUiState();
+}
+$('pvClose').onclick = () => { $('photoView').classList.remove('open'); syncUiChrome(); consumeUiHistory(); };
+$('pvLoc').onclick = () => {
+  const m = albPhotos[pvKey]; if (!m || m.lat == null) return;
+  $('photoView').classList.remove('open');
+  closeSheets();
+  map.setView([m.lat, m.lng], 16);
+  const wrap=document.createElement('div');wrap.className='pp-name';wrap.textContent='📸 כאן צילם/ה '+cleanLabel(m.name,40);L.popup().setLatLng([m.lat,m.lng]).setContent(wrap).openOn(map);
+};
+$('pvDel').onclick = async () => {
+  if (!confirm('למחוק את התמונה מהאלבום של כולם?')) return;
+  await fdb.ref(`groups/${grp.code}/album/${pvKey}`).remove();
+  $('photoView').classList.remove('open');
+  toast('התמונה נמחקה');
+};
+
+/* ---------- כמו גוגל, רק שלנו: צ'יפים, קרוסלה עם תמונות, מ→אל ---------- */
+
+/* --- צ'יפים אופקיים על המפה --- */
+const CHIP_CATS = [0,4,1,9,5,2,3,10,8,12,15,6]; // מסעדות, קפה, דלק, תצפיות, לינה...
+const chipsBar = $('chipsBar');
+CHIP_CATS.forEach(i => {
+  const c = CATS[i];
+  const b = document.createElement('button');
+  b.className = 'chip';
+  b.innerHTML = `${c.ic} ${c.nm}`;
+  b.onclick = async () => {
+    document.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    closeSheets();
+    toast(`מחפש ${c.nm} סביבך...`);
+    await chipSearch(c);
+  };
+  chipsBar.appendChild(b);
+});
+
+/* --- מה בדרך: עצירות בזמן ניווט, ממשיכים ליעד אחרי --- */
+const NAV_CHIP_CATS = [1, 0, 4, 10, 14]; // דלק, מסעדות, קפה, חניונים, שירותים
+const navChipsEl = $('navChips');
+NAV_CHIP_CATS.forEach(i => {
+  const c = CATS[i];
+  const b = document.createElement('button');
+  b.className = 'chip';
+  b.innerHTML = `${c.ic} ${c.nm}`;
+  b.onclick = async () => {
+    toast(`מחפש ${c.nm} בדרך...`);
+    window.__stopoverMode = true;
+    await chipSearch(c);
+    window.__stopoverMode = false;
+  };
+  navChipsEl.appendChild(b);
+});
+
+/* --- תמונת מקום (ויקיפדיה/קומונס — חינם) --- */
+const photoCache = new Map();
+async function placePhoto(lat, lng){
+  const k = lat.toFixed(3) + ',' + lng.toFixed(3);
+  if (photoCache.has(k)) return photoCache.get(k);
+  let url = null;
+  try {
+    for (const lang of ['he', 'en']) {
+      const r = await fetch(`https://${lang}.wikipedia.org/w/api.php?action=query&generator=geosearch&ggscoord=${lat}%7C${lng}&ggsradius=300&ggslimit=1&prop=pageimages&piprop=thumbnail&pithumbsize=480&format=json&origin=*`);
+      const j = await r.json();
+      const p = Object.values(j.query?.pages || {})[0];
+      url = p?.thumbnail?.source || null;
+      if (url) break;
+    }
+    if (!url) {
+      const r2 = await fetch(`https://commons.wikimedia.org/w/api.php?action=query&generator=geosearch&ggscoord=${lat}%7C${lng}&ggsradius=600&ggslimit=1&ggsnamespace=6&prop=imageinfo&iiprop=url&iiurlwidth=480&format=json&origin=*`);
+      const j2 = await r2.json();
+      const p2 = Object.values(j2.query?.pages || {})[0];
+      url = p2?.imageinfo?.[0]?.thumburl || null;
+    }
+  } catch {}
+  photoCache.set(k, url);
+  return url;
+}
+
+/* --- חיפוש צ'יפ → סיכות + קרוסלה --- */
+async function chipSearch(cat){
+  const center = me || map.getCenter();
+  try {
+    const parts = cat.q.split(';').map(q => `${q}(around:6000,${center.lat},${center.lng});`).join('');
+    const r = await fetch('https://overpass-api.de/api/interpreter', { method:'POST', body:'data='+encodeURIComponent(`[out:json][timeout:20];(${parts});out center 30;`) });
+    const j = await r.json();
+    poiLayer.clearLayers();
+    const items = (j.elements||[]).map(e => {
+      const lat = e.lat ?? e.center?.lat, lng = e.lon ?? e.center?.lon;
+      if (lat==null) return null;
+      return { lat, lng, name: e.tags?.['name:he'] || e.tags?.name || cat.nm, phone: e.tags?.phone || e.tags?.['contact:phone'], hours: e.tags?.opening_hours, d: hav(center, {lat,lng}) };
+    }).filter(Boolean).sort((a,b)=>a.d-b.d).slice(0, 12);
+    if (!items.length) { toast(`לא נמצאו ${cat.nm} באזור`); $('placeCarousel').classList.remove('show'); return; }
+    renderCarousel(items, cat);
+    const bounds = L.latLngBounds(items.slice(0,8).map(i=>[i.lat,i.lng]));
+    map.fitBounds(bounds, { padding:[70,150] });
+  } catch { toast('שגיאת רשת בחיפוש'); }
+}
+
+function renderCarousel(items, cat){
+  const car = $('placeCarousel');
+  car.innerHTML = '<button class="pcar-close" aria-label="סגור">✕</button>';
+  car.querySelector('.pcar-close').onclick = () => {
+    car.classList.remove('show');
+    poiLayer.clearLayers();
+    document.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));
+  };
+  const marks = [];
+  items.forEach((it, idx) => {
+    const mk = L.marker([it.lat, it.lng], { icon: L.divIcon({ className:'', html:`<div class="poi-pin">${cat.ic}</div>`, iconSize:[34,34], iconAnchor:[17,17] }) }).addTo(poiLayer);
+    mk.bindPopup(`<div class="pp-name">${cat.ic} ${esc(it.name)}</div><div class="pp-dist">${(it.d/1000).toFixed(1)} ק״מ</div><button class="pp-go" onclick="routeTo(${it.lat},${it.lng},'${esc(it.name)}')">נווט</button> <span style="color:var(--brass-soft);font-size:13px;cursor:pointer;margin-right:8px" onclick="tellAbout(${it.lat},${it.lng},'${esc(it.name)}')">🔊 ספר לי</span>`);
+    marks.push(mk);
+
+    const card = document.createElement('div');
+    card.className = 'pcard';
+    card.innerHTML = `<div class="pimg none">${cat.ic}</div>
+      <div class="pbody"><div class="pnm">${it.name}</div>
+      <div class="pds">${(it.d/1000).toFixed(1)} ק״מ${it.hours ? ' · ' + it.hours : ''}${it.phone ? ' · 📞' : ''}</div>
+      <button class="pgo">נווט לכאן</button></div>`;
+    card.onclick = () => { map.setView([it.lat, it.lng], 16); mk.openPopup(); };
+    card.querySelector('.pgo').onclick = ev => {
+      ev.stopPropagation();
+      if (navTarget && (navTarget.lat !== it.lat || navTarget.lng !== it.lng)) {
+        stopoverFinal = { ...navTarget };
+        toast('עצירה בדרך — אחרי ' + it.name + ' נמשיך אל ' + stopoverFinal.name + ' 🦁', 4000);
+      }
+      routeTo(it.lat, it.lng, it.name, navTarget ? { origin: me } : undefined);
+      car.classList.remove('show');
+    };
+    car.appendChild(card);
+
+    // תמונה אמיתית של המקום — נטענת ברקע
+    placePhoto(it.lat, it.lng).then(url => {
+      if (!url) return;
+      const img = document.createElement('img');
+      img.className = 'pimg'; img.loading = 'lazy'; img.alt = it.name; img.src = url;
+      card.replaceChild(img, card.firstChild);
+    });
+  });
+  car.classList.add('show');
+  car.scrollLeft = 0;
+}
+
+/* --- ניווט מ → אל --- */
+let origMode = 'me', origPoint = null, origPick = false, origMarker = null;
+
+document.querySelectorAll('.oop').forEach(b => b.onclick = () => {
+  document.querySelectorAll('.oop').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  origMode = b.dataset.o;
+  $('origRow').style.display = origMode === 'search' ? 'flex' : 'none';
+  if (origMode === 'me') { origPoint = null; $('origTx').textContent = 'מוצא: המיקום הנוכחי שלך'; }
+  if (origMode === 'map') {
+    origPick = true; window.__origPicking = true;
+    closeSheets();
+    toast('לחץ על המפה בנקודת המוצא', 4000);
+  }
+});
+
+$('origSearch').onclick = doOrigSearch;
+$('origQ').addEventListener('keydown', e => { if (e.key==='Enter') doOrigSearch(); });
+async function doOrigSearch(){
+  const q = $('origQ').value.trim();
+  if (!q) return;
+  const list = await geocode(q);
+  if (!list.length) { toast('נקודת המוצא לא נמצאה — נסה באנגלית'); return; }
+  setOrigin(+list[0].lat, +list[0].lon, list[0].display_name.split(',')[0]);
+}
+
+function setOrigin(lat, lng, name){
+  origPoint = { lat, lng, name };
+  $('origTx').textContent = 'מוצא: ' + name;
+  if (origMarker) map.removeLayer(origMarker);
+  origMarker = L.marker([lat,lng], { icon: L.divIcon({ className:'', html:'<div class="poi-pin">🟢</div>', iconSize:[34,34], iconAnchor:[17,17] }) }).addTo(map);
+  toast('נקודת המוצא נקבעה: ' + name);
+  if (navTarget) routeTo(navTarget.lat, navTarget.lng, navTarget.name);
+}
+
+function getOrigin(){
+  if (origMode !== 'me' && origPoint) return origPoint;
+  return me;
+}
+
+map.on('click', e => {
+  if (!origPick) return;
+  origPick = false; window.__origPicking = false;
+  setOrigin(e.latlng.lat, e.latlng.lng, 'נקודה על המפה');
+  openSheet('shNav');
+});
+
+/* ---------- אטרקציות חיות: מה יש בסביבה — לבד, על המפה ---------- */
+const attrLayer = L.layerGroup().addTo(map);
+const attrLoaded = new Set();
+let attrTimer = null;
+
+const ATTR_ICONS = {
+  attraction:'✨', viewpoint:'🌄', museum:'🏛', ruins:'🏺', archaeological_site:'🏺',
+  waterfall:'🌊', spring:'💧', cave_entrance:'🕳', picnic_site:'🧺', camp_site:'🏕',
+  artwork:'🎨', zoo:'🦁', theme_park:'🎡', beach:'🏖', peak:'⛰', monument:'🗿', memorial:'🕯'
+};
+
+async function loadAttractions(){
+  if (!attractionsOn || map.getZoom() < 12) return;
+  const b = map.getBounds();
+  const key = [b.getSouth().toFixed(2), b.getWest().toFixed(2), b.getNorth().toFixed(2), b.getEast().toFixed(2), activeLayer].join(',');
+  if (attrLoaded.has(key)) return;
+  attrLoaded.add(key);
+  const bbox = `${b.getSouth()},${b.getWest()},${b.getNorth()},${b.getEast()}`;
+  const q = `[out:json][timeout:20];(
+    node["tourism"~"attraction|viewpoint|museum|artwork|zoo|theme_park|picnic_site|camp_site"](${bbox});
+    node["historic"~"ruins|archaeological_site|monument|memorial|castle"](${bbox});
+    node["natural"~"waterfall|spring|cave_entrance|peak|beach"](${bbox});
+    way["historic"~"ruins|archaeological_site|castle"](${bbox});
+  );out center 70;`;
+  try {
+    const r = await fetch('https://overpass-api.de/api/interpreter', { method:'POST', body:'data='+encodeURIComponent(q) });
+    const j = await r.json();
+    (j.elements||[]).forEach(e => {
+      const lat = e.lat ?? e.center?.lat, lng = e.lon ?? e.center?.lon;
+      if (lat==null) return;
+      const t = e.tags || {};
+      const kind = t.tourism || t.historic || t.natural || 'attraction';
+      const ic = ATTR_ICONS[kind] || '✨';
+      const name = t['name:he'] || t.name || '';
+      if (!name && !['viewpoint','waterfall','spring','cave_entrance','peak'].includes(kind)) return;
+      const mk = L.marker([lat,lng], { icon: L.divIcon({ className:'', html:`<div class="attr-pin">${ic}</div>`, iconSize:[26,26], iconAnchor:[13,13] }), zIndexOffset: 200 }).addTo(attrLayer);
+      mk.bindPopup(`<div class="pp-name">${ic} ${name || kind}</div>${t.ele ? `<div class="pp-dist">גובה ${Math.round(t.ele)} מ׳</div>` : ''}<button class="pp-go" onclick="routeTo(${lat},${lng},'${esc(name||kind)}')">נווט</button> <span style="color:var(--brass-soft);font-size:13px;cursor:pointer;margin-right:8px" onclick="tellAbout(${lat},${lng},'${esc(name||kind)}')">🔊 ספר לי</span>`);
+    });
+  } catch {}
+}
+map.on('moveend zoomend', () => {
+  clearTimeout(attrTimer);
+  attrTimer = setTimeout(loadAttractions, 900);
+});
+window.tellStory = tellStory;
+
+/* ספר לי על כל נקודה — גם בלי שם, בכל מקום בעולם */
+window.tellAbout = async (lat, lng, label) => {
+  toast('המדריך בודק את הנקודה...');
+  let wiki = '', wikiTitle = '';
+  try {
+    const near = await wikiNearby(lat, lng, 900, 1);
+    if (near.length) { wikiTitle = near[0].title; wiki = await wikiExtract(near[0].pageid, near[0].lang); }
+  } catch {}
+  try {
+    const system = 'אתה מדריך טיולים ותיק של GoTours שעומד עם הקבוצה בנקודה בשטח. תאר מה יש בנקודה ומה מיוחד באזור: נוף, גאוגרפיה, טבע, היסטוריה מקומית. עברית קולחת להקראה, 5-8 משפטים, בלי כותרות. אם אינך בטוח בפרט — אמור זאת בפשטות, אל תמציא.';
+    const prompt = `הנקודה: ${label}. קואורדינטות: ${lat.toFixed(5)}, ${lng.toFixed(5)}.` +
+      (wiki ? ` רקע ממאמר קרוב (${wikiTitle}): ${wiki.slice(0, 1800)}` : ' אין רקע כתוב — תאר לפי הידע שלך על האזור הגאוגרפי הזה.');
+    const r = await fetch('/.netlify/functions/guide', {
+      method:'POST', headers:{ 'content-type':'application/json' },
+      body: JSON.stringify({ system, prompt })
+    });
+    const j = await r.json();
+    if (j.error || !j.text) throw 0;
+    let out = j.text;
+    if (!isHebrew(out)) out = await forceHebrew(out) || out;
+    speak(out, label);
+  } catch {
+    if (wiki && isHebrew(wiki)) speak(wiki, wikiTitle || label);
+    else toast('המוח לא עונה — לחץ "🔧 בדיקת מערכת" במדריך הקולי', 5000);
+  }
+};
+
+/* ---------- העין של המדריך: זיהוי במצלמה ⚡ ---------- */
+let camAnswer = '', camImgData = null;
+
+$('btnCam').onclick = () => $('camFile').click();
+$('camAgain').onclick = () => $('camFile').click();
+$('camClose').onclick = () => { $('camView').classList.remove('open'); syncUiChrome(); consumeUiHistory(); };
+
+$('camFile').onchange = async e => {
+  const f = e.target.files[0]; e.target.value = '';
+  if (!f) return;
+  // דחיסה אגרסיבית = שליחה מהירה = תשובה מהירה
+  const img = await createImageBitmap(f);
+  const scale = Math.min(1, 768 / Math.max(img.width, img.height));
+  const cv = document.createElement('canvas');
+  cv.width = Math.round(img.width*scale); cv.height = Math.round(img.height*scale);
+  cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+  const dataUrl = cv.toDataURL('image/jpeg', 0.65);
+  camImgData = dataUrl.split(',')[1];
+
+  $('camImg').src = dataUrl;
+  $('camAns').innerHTML = '<span class="spin">⟳</span> המדריך מסתכל...';
+  $('camSpeak').style.display = 'none';
+  $('camMore').style.display = 'none';
+  const hadUi=anythingOpen(); $('camView').classList.add('open'); syncUiChrome();
+  if (!hadUi && typeof pushUiState === 'function') pushUiState();
+
+  const t0 = Date.now();
+  try {
+    const c = me || map.getCenter();
+    const system = 'אתה "העין של המדריך" של GoTours — מומחה זיהוי בשטח: הרים, ואדיות, אתרים, מבנים, פרחים, עצים, בעלי חיים, סלעים. אתה מקבל תמונה + קואורדינטות GPS של המצלם — השתמש בהן לזיהוי המקום המדויק. ענה בעברית, מהר ולעניין: שורה ראשונה — הזיהוי עצמו (מודגש, ואם יש ספק ציין רמת ביטחון). אחר כך 2-4 משפטים מרתקים בסגנון מדריך. בלי הקדמות, בלי "בתמונה נראה". ישר לתכלס.';
+    const prompt = `מיקום הצילום: ${c.lat.toFixed(5)}, ${c.lng.toFixed(5)}${me?.altitude!=null ? ' | גובה: '+Math.round(me.altitude)+' מ׳' : ''}${heading!=null ? ' | כיוון המצלמה: '+Math.round(heading)+'°' : ''}. מה אני רואה?`;
+    const r = await fetch('/.netlify/functions/guide', {
+      method:'POST', headers:{ 'content-type':'application/json' },
+      body: JSON.stringify({ system, prompt, image: dataUrl.split(',')[1], fast: true })
+    });
+    if (!r.ok) throw new Error('fn');
+    const j = await r.json();
+    if (j.error || !j.text) throw new Error(j.error || 'empty');
+    camAnswer = j.text;
+    const secs = ((Date.now()-t0)/1000).toFixed(1);
+    $('camAns').innerHTML = camAnswer.replace(/</g,'&lt;').replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>') + `<div style="font-size:11px;color:var(--mist);margin-top:8px">⚡ ${secs} שניות</div>`;
+    $('camSpeak').style.display = 'inline-flex';
+    $('camMore').style.display = 'inline-flex';
+    speak(camAnswer, 'העין של המדריך'); // מתחיל לדבר מיד
+  } catch {
+    $('camAns').textContent = 'העין של המדריך עדיין לא זמינה. לאחר Deploy ייצור ב-Netlify, AI Gateway יופעל אוטומטית בלי מפתח. 🦁';
+  }
+};
+$('camSpeak').onclick = () => speak(camAnswer, 'העין של המדריך');
+
+/* ספר לי עוד — הסיפור המלא, כמו מדריך מול הקולוסיאום */
+$('camMore').onclick = async () => {
+  if (!camImgData) return;
+  $('camMore').style.display = 'none';
+  $('camAns').innerHTML += '<hr style="border-color:rgba(201,162,75,.25);margin:12px 0"><span class="spin">⟳</span> המדריך נכנס לעומק...';
+  try {
+    const c = me || map.getCenter();
+    const system = 'אתה מדריך טיולים ותיק וסוחף של GoTours, עומד מול הקבוצה מול האתר שבתמונה. פתח את הסיפור המלא: היסטוריה עשירה, אגדות וסיפורים מקומיים, פרטים אדריכליים או גאולוגיים מרתקים, אנקדוטות ופיקנטריה, וקצת הומור. עברית קולחת המותאמת להקראה בקול, 10-14 משפטים, בלי כותרות ורשימות. דיוק עובדתי מעל הכול.';
+    const prompt = `זיהית קודם: "${camAnswer.slice(0, 300)}". מיקום: ${c.lat.toFixed(4)}, ${c.lng.toFixed(4)}. עכשיו ספר לקבוצה את הסיפור המלא של מה שבתמונה.`;
+    const r = await fetch('/.netlify/functions/guide', {
+      method:'POST', headers:{ 'content-type':'application/json' },
+      body: JSON.stringify({ system, prompt, image: camImgData })
+    });
+    const j = await r.json();
+    if (j.error || !j.text) throw 0;
+    const full = j.text;
+    $('camAns').innerHTML = camAnswer.replace(/</g,'&lt;').replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>')
+      + '<hr style="border-color:rgba(201,162,75,.25);margin:12px 0">'
+      + full.replace(/</g,'&lt;').replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>');
+    camAnswer = full;
+    $('camSpeak').style.display = 'inline-flex';
+    speak(full, 'הסיפור המלא');
+  } catch {
+    $('camAns').innerHTML += ' לא הצלחתי להרחיב — נסה שוב.';
+    $('camMore').style.display = 'inline-flex';
+  }
+};
+
+/* ---------- סרגל מדידה: נקודה לנקודה בשטח ---------- */
+let measuring = false, msPts = [], msLayer = L.layerGroup().addTo(map), msLine = null;
+
+function fmtDist(m){ return m >= 1000 ? (m/1000).toFixed(2) + ' km' : Math.round(m) + ' m'; }
+
+$('btnMeasure').onclick = () => {
+  measuring = !measuring;
+  $('btnMeasure').classList.toggle('on', measuring);
+  if (measuring) {
+    closeSheets();
+    $('msBanner').style.display = 'block';
+    $('chipsBar').style.display = 'none';
+    toast('מצב מדידה: לחץ על המפה נקודה אחרי נקודה 📏', 3000);
+  } else msEnd();
+};
+
+function msUpdate(){
+  msLayer.clearLayers();
+  let total = 0;
+  msPts.forEach((p, i) => {
+    L.marker(p, { icon: L.divIcon({ className:'', html:'<div class="ms-dot"></div>', iconSize:[14,14], iconAnchor:[7,7] }) }).addTo(msLayer);
+    if (i > 0) {
+      const seg = hav({lat:msPts[i-1][0],lng:msPts[i-1][1]}, {lat:p[0],lng:p[1]});
+      total += seg;
+      // תווית מרחק באמצע כל קטע
+      const mid = [(msPts[i-1][0]+p[0])/2, (msPts[i-1][1]+p[1])/2];
+      L.marker(mid, { icon: L.divIcon({ className:'', html:`<div class="ms-label">${fmtDist(seg)}</div>`, iconSize:null, iconAnchor:[20,10] }), interactive:false }).addTo(msLayer);
+    }
+  });
+  if (msPts.length > 1) {
+    msLine = L.polyline(msPts, { color:'#C9A24B', weight:4, dashArray:'6 8', opacity:.95 }).addTo(msLayer);
+  }
+  $('msTotal').textContent = fmtDist(total);
+  const walkMin = Math.round(total / 1000 / 4 * 60); // 4 קמ"ש הליכת שטח
+  $('msInfo').textContent = msPts.length < 2
+    ? (msPts.length === 0 ? 'לחץ על המפה — נקודה אחרי נקודה' : 'לחץ על הנקודה הבאה')
+    : `${msPts.length} נקודות · ~${walkMin >= 60 ? Math.floor(walkMin/60)+' שע׳ '+(walkMin%60)+' דק׳' : walkMin + ' דק׳'} הליכה`;
+}
+
+$('msUndo').onclick = () => { msPts.pop(); msUpdate(); };
+$('msClear').onclick = () => { msPts = []; msUpdate(); };
+$('msStop').onclick = () => { measuring = false; $('btnMeasure').classList.remove('on'); msEnd(); };
+function msEnd(){
+  $('msBanner').style.display = 'none';
+  msPts = []; msLayer.clearLayers();
+  if (!navTarget && !followRt) $('chipsBar').style.display = 'flex';
+}
+
+/* ---------- מגן הבטיחות 🛡: שיטפונות, חום, רוח — לפני שהם מסוכנים ---------- */
+const safetyAlerted = {}; // התראה קולית פעם ב-3 שעות לכל סוג
+
+function analyzeSafety(){
+  if (!wxData) return [];
+  const cur = wxData.current, H = wxData.hourly;
+  const alerts = [];
+  const now = new Date();
+  const idx0 = Math.max(0, H.time.findIndex(t => new Date(t) >= now));
+  const next12 = (arr) => arr.slice(idx0, idx0 + 12);
+
+  // 🌊 סכנת שיטפונות: גשם משמעותי בשעות הקרובות (בנחלי מדבר גם גשם רחוק מסוכן)
+  const rain12 = next12(H.precipitation || []).reduce((a,b)=>a+(b||0), 0);
+  const maxProb = Math.max(0, ...next12(H.precipitation_probability || []));
+  if (rain12 >= 8 || (rain12 >= 3 && maxProb >= 70)) {
+    alerts.push({ lvl:'danger', ic:'🌊', title:'סכנת שיטפונות',
+      msg:`צפויים ~${rain12.toFixed(0)} מ״מ גשם ב-12 השעות הקרובות (הסתברות עד ${maxProb}%). להתרחק מנחלים, ואדיות וגבים — שיטפון מגיע גם מגשם שיורד רחוק במעלה הנחל.` });
+  } else if (rain12 >= 1 || maxProb >= 45) {
+    alerts.push({ lvl:'warn', ic:'🌧', title:'גשם צפוי באזור',
+      msg:`יש סיכוי לגשם בשעות הקרובות. בנחלי מדבר — לתכנן נקודות יציאה ולעקוב.` });
+  }
+
+  // 🥵 חום
+  const maxT = Math.max(cur.temperature_2m, ...next12(H.temperature_2m || []));
+  if (maxT >= 38) alerts.push({ lvl:'danger', ic:'🥵', title:'חום קיצוני',
+    msg:`עד ${Math.round(maxT)}° היום. עומס חום מסוכן: 4-5 ליטר מים לאדם, לצאת מוקדם, הפסקות צל כל 40 דק׳, לזהות סימני מכת חום.` });
+  else if (maxT >= 34) alerts.push({ lvl:'warn', ic:'☀️', title:'חם מאוד',
+    msg:`עד ${Math.round(maxT)}° — הרבה מים, כובעים, ולתזמן את הקטעים הקשים לבוקר.` });
+
+  // 💨 רוח
+  const maxW = Math.max(cur.wind_speed_10m, ...next12(H.wind_speed_10m || []));
+  if (maxW >= 55) alerts.push({ lvl:'danger', ic:'💨', title:'רוחות עזות',
+    msg:`עד ${Math.round(maxW)} קמ״ש. להתרחק ממצוקים ותצפיות חשופות, לעגן אוהלים, זהירות מענפים.` });
+  else if (maxW >= 38) alerts.push({ lvl:'warn', ic:'💨', title:'רוח חזקה',
+    msg:`עד ${Math.round(maxW)} קמ״ש — זהירות בקטעים חשופים ובתצפיות.` });
+
+  // ☀️ קרינה
+  if ((cur.uv_index ?? 0) >= 8) alerts.push({ lvl:'warn', ic:'🧴', title:'קרינה קיצונית',
+    msg:`מדד UV ${Math.round(cur.uv_index)} — מסנן קרינה, שרוולים ארוכים, כובע רחב.` });
+
+  // 🥶 קור
+  const minT = Math.min(cur.temperature_2m, ...next12(H.temperature_2m || []));
+  if (minT <= 3) alerts.push({ lvl:'warn', ic:'🥶', title:'קור משמעותי',
+    msg:`עד ${Math.round(minT)}° — שכבות, כובעי צמר, וזהירות מהיפותרמיה אצל מטיילים רטובים.` });
+
+  return alerts;
+}
+
+function renderSafety(spoken){
+  const alerts = analyzeSafety();
+  const box = $('safetyBox');
+  if (box) {
+    box.innerHTML = alerts.length
+      ? alerts.map(a => `<div class="safe-card ${a.lvl}"><span class="sic">${a.ic}</span><div><b>${a.title}</b><br>${a.msg}</div></div>`).join('')
+      : '<div class="safe-card ok"><span class="sic">🛡</span><div><b>לא זוהתה התראה בתחזית המקומית</b><br>הבדיקה אינה מחליפה התרעות רשמיות, בדיקת אגן ניקוז, מצב שבילים והנחיות הרשויות.</div></div>';
+  }
+  const danger = alerts.filter(a => a.lvl === 'danger');
+  $('wxAlert').classList.toggle('show', alerts.length > 0);
+
+  // התראה קולית אוטומטית על סכנה — פעם ב-3 שעות לכל סוג
+  if (!spoken) danger.forEach(a => {
+    if (safetyAlerted[a.title] && Date.now() - safetyAlerted[a.title] < 3*60*60*1000) return;
+    safetyAlerted[a.title] = Date.now();
+    toast(`${a.ic} ${a.title} — פתח את מזג האוויר לפרטים`, 6000);
+    speak(`התראת בטיחות: ${a.title}. ${a.msg}`, '🛡 מגן הבטיחות');
+  });
+  return alerts;
+}
+
+$('safetyCheck').onclick = async () => {
+  $('safetyBox').innerHTML = '<div class="hint"><span class="spin">⟳</span> בודק את תנאי השטח...</div>';
+  await loadWeather();
+  const alerts = renderSafety(true);
+  const summary = alerts.length
+    ? 'שימו לב. ' + alerts.map(a => a.title + '. ' + a.msg).join(' ')
+    : 'לא זוהתה התראה בתחזית המקומית. יש לבדוק גם התרעות רשמיות ומצב השטח לפני היציאה.';
+  speak(summary, '🛡 דוח בטיחות');
+};
+
+/* ---------- מה השביל הזה? לחיצה על שביל = שם, סימון וקושי ---------- */
+const OSMC_HE = { red:'אדום', blue:'כחול', green:'ירוק', black:'שחור', orange:'כתום', purple:'סגול', yellow:'צהוב', white:'לבן', brown:'חום' };
+const SAC_HE = { hiking:'קל', mountain_hiking:'בינוני', demanding_mountain_hiking:'מאתגר', alpine_hiking:'קשה', demanding_alpine_hiking:'קשה מאוד', difficult_alpine_hiking:'למיטיבי לכת בלבד' };
+let trailBusy = false;
+
+async function whatTrail(latlng){
+  if (trailBusy || map.getZoom() < 13) return;
+  trailBusy = true;
+  setTimeout(() => trailBusy = false, 1500);
+  const { lat, lng } = latlng;
+  const q = `[out:json][timeout:10];(
+    way(around:30,${lat},${lng})["highway"~"path|track|footway|bridleway"];
+    relation(around:30,${lat},${lng})["route"~"hiking|foot|bicycle|mtb"];
+  );out tags 6;`;
+  try {
+    const r = await fetch('https://overpass-api.de/api/interpreter', { method:'POST', body:'data='+encodeURIComponent(q) });
+    const j = await r.json();
+    const els = j.elements || [];
+    if (!els.length) return;
+
+    const seen = new Set(); const lines = [];
+    // קודם מסלולים רשמיים (שביל ישראל, שביל הגולן...), אחר כך הדרך עצמה
+    els.filter(e => e.type === 'relation').forEach(e => {
+      const t = e.tags || {};
+      const nm = t['name:he'] || t.name || (t.ref ? 'שביל ' + t.ref : null);
+      if (!nm || seen.has(nm)) return; seen.add(nm);
+      const color = (t['osmc:symbol']||'').split(':')[0];
+      lines.push(`🥾 <b>${esc(nm)}</b>${OSMC_HE[color] ? ' · סימון ' + OSMC_HE[color] : ''}`);
+    });
+    els.filter(e => e.type === 'way').forEach(e => {
+      const t = e.tags || {};
+      const nm = t['name:he'] || t.name;
+      const color = (t['osmc:symbol']||t.colour||'').split(':')[0];
+      const sac = SAC_HE[t.sac_scale];
+      const bits = [];
+      if (nm && !seen.has(nm)) { seen.add(nm); bits.push('<b>' + esc(nm) + '</b>'); }
+      if (OSMC_HE[color] && !lines.some(l=>l.includes('סימון'))) bits.push('סימון ' + OSMC_HE[color]);
+      if (sac) bits.push('קושי: ' + sac);
+      if (t.surface === 'ground' || t.highway === 'track') bits.push(t.highway === 'track' ? 'דרך עפר' : '');
+      const line = bits.filter(Boolean).join(' · ');
+      if (line) lines.push((nm ? '🥾 ' : '') + line);
+    });
+    if (!lines.length) return;
+    L.popup({ closeButton: true, autoClose: true })
+      .setLatLng(latlng)
+      .setContent(`<div class="pp-name" style="line-height:1.9">${lines.slice(0,3).join('<br>')}</div><span style="color:var(--brass-soft);font-size:13px;cursor:pointer" onclick="tellStory('${lines[0].replace(/<[^>]+>/g,'').replace(/[🥾·]/g,'').trim().replace(/['"]/g,'')}', null)">🔊 ספר לי על השביל</span>`)
+      .openOn(map);
+  } catch {}
+}
+
+/* ---------- חזור מכל מקום + בית ---------- */
+function anySheetOpen(){ return sheets.some(id => $(id)?.classList.contains('open')); }
+function anythingOpen(){
+  return $('photoView').classList.contains('open') || $('camView').classList.contains('open') || anySheetOpen() || $('placeCarousel').classList.contains('show');
+}
+function uiBack(){
+  if ($('camView').classList.contains('open')) { $('camView').classList.remove('open'); syncUiChrome(); return true; }
+  if ($('photoView').classList.contains('open')) { $('photoView').classList.remove('open'); syncUiChrome(); return true; }
+  const openSheetEl=[...document.querySelectorAll('.sheet.open')].pop();
+  if(openSheetEl){closeSheet(openSheetEl.id,false);return true;}
+  if ($('placeCarousel').classList.contains('show')) {
+    $('placeCarousel').classList.remove('show'); poiLayer.clearLayers(); document.querySelectorAll('.chip').forEach(x=>x.classList.remove('on')); syncUiChrome(); return true;
+  }
+  return false;
+}
+let suppressPop=false;
+function pushUiState(){ if(!history.state?.gtui) history.pushState({gtui:1},''); }
+function consumeUiHistory(){ if(history.state?.gtui){suppressPop=true;history.back();} }
+function goBackUi(){ if(!uiBack()) toast('אתה במסך הבית 🦁'); else consumeUiHistory(); }
+function goHome(){
+  while(uiBack()); map.closePopup(); pickMode=false;origPick=false;window.__origPicking=false;followMe=true;$('btnLocate').classList.add('on');
+  if(me)map.setView([me.lat,me.lng],15);else startGps();syncUiChrome();toast('חזרת הביתה 🏠');
+}
+$('btnBack').onclick=goBackUi; $('btnHome').onclick=goHome;
+$('mBack').onclick=goBackUi; $('mHome').onclick=goHome;
+$('mNav').onclick=()=>$('btnNav').click(); $('mLocate').onclick=()=>$('btnLocate').click();
+window.addEventListener('popstate',()=>{if(suppressPop){suppressPop=false;return;}uiBack();});
+
+
+
+/* ---------- v26 Keyless: תפריט מרכזי ושיתוף טיול ---------- */
+function openMainMenu(){ openSheet('shMenu'); }
+$('btnMenu').onclick=openMainMenu; $('mMenu').onclick=openMainMenu;
+document.querySelectorAll('.menu-action').forEach(btn=>btn.onclick=()=>{
+  const a=btn.dataset.action;
+  const mapActions={nav:'btnNav',nearby:'btnNearby',guide:'btnGuide',group:'btnGroup',chat:'btnChat',weather:'btnWx',layers:'btnLayers',offline:'btnOffline',measure:'btnMeasure',camera:'btnCam',sos:'sosBtn'};
+  if(a==='album'){closeSheets();openAlbum();return;}
+  const id=mapActions[a]; if(id)$(id)?.click();
+});
+$('shareTrip').onclick=async()=>{
+  const c=me||map.getCenter();
+  const bits=['🦁 טיול GoTours'];
+  if(navTarget?.name)bits.push('יעד: '+cleanLabel(navTarget.name,100));
+  if(followRt?.name)bits.push('מסלול: '+cleanLabel(followRt.name,100));
+  if(grp?.code)bits.push('קוד קבוצה: '+grp.code);
+  bits.push(`מיקום: ${(+c.lat).toFixed(5)}, ${(+c.lng).toFixed(5)}`);
+  bits.push(`מפה: https://www.openstreetmap.org/?mlat=${(+c.lat).toFixed(6)}&mlon=${(+c.lng).toFixed(6)}#map=16/${(+c.lat).toFixed(6)}/${(+c.lng).toFixed(6)}`);
+  await shareText('טיול GoTours',bits.join('\n'),location.origin);
+};
+
+/* ---------- Service Worker ---------- */
+const APP_VERSION = 'v26.0-keyless';
+$('appVer').textContent = APP_VERSION;
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
+  // גרסה חדשה הותקנה ברקע → רענון אוטומטי חד-פעמי
+  let reloaded = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (reloaded) return; reloaded = true;
+    toast('גרסה חדשה נטענה — מרענן ✨');
+    setTimeout(() => location.reload(), 800);
+  });
+}
+
+/* שחרור אודיו במגע ראשון — מובייל חוסם ניגון אוטומטי לפני אינטראקציה */
+let audioUnlocked = false;
+document.addEventListener('pointerdown', function unlockAudio(){
+  if (audioUnlocked) return;
+  audioUnlocked = true;
+  try {
+    const a = new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=');
+    a.volume = 0; a.play().catch(()=>{});
+    if ('speechSynthesis' in window) { speechSynthesis.resume(); }
+  } catch {}
+  document.removeEventListener('pointerdown', unlockAudio);
+}, { once: false });
+
+/* 🧹 ניקוי מלא: מוחק את שלד האפליקציה הישן, שומר את מפות האופליין, וטוען מחדש */
+$('verLine').textContent = APP_VERSION;
+$('freshBtn').onclick = async () => {
+  if (!confirm('לנקות את הגרסה הישנה ולטעון את האחרונה?\n(מפות האופליין שהורדת נשמרות)')) return;
+  toast('מנקה וטוען את הגרסה האחרונה... 🧹');
+  try {
+    const keys = await caches.keys();
+    await Promise.all(keys.filter(k => k !== 'gt-tiles').map(k => caches.delete(k)));
+    const regs = await navigator.serviceWorker?.getRegistrations?.() || [];
+    await Promise.all(regs.map(r => r.unregister()));
+  } catch {}
+  setTimeout(() => { location.href = location.pathname + '?fresh=' + Date.now(); }, 600);
+};
+
+/* ⏻ יציאה */
+$('exitBtn').onclick = () => {
+  stopSpeak();
+  window.close();
+  setTimeout(() => toast('אם החלון לא נסגר — החלק את האפליקציה מרשימת האחרונים 📱', 4500), 400);
+};
+
+window.addEventListener('online', () => toast('חזרת לקליטה — מסונכרן'));
+window.addEventListener('offline', () => toast('אין אינטרנט — מצב אופליין פעיל, GPS והמפות השמורות עובדים', 4000));
+</script>
+</body>
+</html>

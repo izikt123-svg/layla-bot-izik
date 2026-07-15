@@ -1,0 +1,24 @@
+{
+  "id": "./",
+  "name": "GoTours Navigator",
+  "short_name": "GoTours",
+  "description": "מערכת ניווט, הדרכה וניהול קבוצה למדריכי ומטיילי GoTours Group",
+  "lang": "he",
+  "dir": "rtl",
+  "start_url": "./index.html?source=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#0E1512",
+  "theme_color": "#0E1512",
+  "categories": ["travel", "navigation", "education"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "ניווט", "short_name": "ניווט", "url": "./index.html?action=nav", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
+    { "name": "חירום SOS", "short_name": "SOS", "url": "./index.html?action=sos", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] }
+  ]
+}

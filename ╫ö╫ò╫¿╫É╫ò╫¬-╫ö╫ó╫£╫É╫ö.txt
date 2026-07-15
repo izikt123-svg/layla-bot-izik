@@ -1,0 +1,10 @@
+GoTours Navigator v26 — אין צורך במפתחות
+
+הדרך המומלצת:
+1. העלה את כל התיקייה למאגר GitHub.
+2. ב-Netlify: Add new site > Import an existing project.
+3. בחר את המאגר ולחץ Deploy.
+4. הפעל AI Features ב-Netlify.
+5. באתר לחץ על "בדיקת מערכת".
+
+אין להעלות רק את index.html. חייבים להעלות את כל הקבצים והתיקיות.
